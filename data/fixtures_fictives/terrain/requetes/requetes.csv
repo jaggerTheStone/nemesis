@@ -1,0 +1,4 @@
+﻿id;date;heure;enqueteur;lieu_enquete;commune_enquete;formulation;mode_saisie;langue;type_lieu;expression_relative;lieu_compris;commune_visee;latitude;longitude;remarques;is_fictional
+RQ-0001;2099-12-31;06:40;E01;Gare des Flamboyants (fictif);autre;flamboyant marché;oral;francais;marche;aucune;Marché des Flamboyants (fictif);autre;;;Ville Lagune-Fictive;true
+RQ-0002;2099-12-31;06:55;E01;Gare des Flamboyants (fictif);autre;derriere pharmacie Lagune;ecrit;francais;pharmacie;derriere;Rue derrière la pharmacie de la Lagune (fictif);autre;;;Abréviations conservées telles quelles;true
+RQ-0003;2099-12-31;07:10;E02;Embarcadère Sud (fictif);autre;on va a carrefour Baobab;oral;francais_nouchi;carrefour;aucune;Carrefour du Baobab (fictif);inconnue;;;;true

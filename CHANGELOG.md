@@ -14,3 +14,12 @@ publication.
   outillage par écosystème (pnpm, Cargo, uv, Flutter, buf), `Makefile` racine,
   intégration continue GitHub Actions par composant, analyse de sécurité Trivy,
   audits de dépendances, licence, politique de sécurité, modèle de pull request.
+- I0.2 : kits de terrain.
+  - Protocoles : requêtes réelles, trajets de référence avec la règle de notation
+    du réalisme, tests de maquettes et d'icônes.
+  - Quatre fiches papier imprimables, en HTML et en PDF.
+  - Schémas des six jeux de terrain, dont sont générés les modèles CSV et le
+    dictionnaire des données.
+  - Validateur `nemesis-terrain`, exécuté en intégration continue, et rapport de
+    reconnaissance des icônes.
+  - Exemples fictifs et modèle de compte rendu des tests utilisateurs.

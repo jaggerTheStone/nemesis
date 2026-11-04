@@ -42,6 +42,7 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Consentement oral lu au participant, sans nom ni numéro (H-020).
 - Un script de la CI valide les CSV remplis contre leur schéma.
 - **Terminé quand** : les fiches sont imprimables et le validateur CSV tourne en CI.
+- **Réalisé** (2026-11-04) : protocoles dans `docs/TERRAIN/` et `docs/UX/`, fiches HTML et PDF, validateur `nemesis-terrain` (schémas, modèles et dictionnaire générés), exemples fictifs. Ajouts à l'arborescence : `data/terrain`, `tools/terrain` (H-022). En plus du plan : un test de reconnaissance des icônes avec son rapport, et une règle de notation du réalisme avec des « pièges ».
 
 ### I0.3 — Documents fondateurs et ADR
 

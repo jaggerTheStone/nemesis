@@ -30,7 +30,9 @@ L'environnement local complet (`docker compose up`) arrive avec l'incrément I0.
 | `packages/proto` | Schémas Protocol Buffers partagés |
 | `data/pipelines` | Imports OSM et GTFS, tuiles, packs hors ligne |
 | `data/fixtures_fictives` | Jeux de test fictifs |
+| `data/terrain` | Modèles de saisie et données collectées sur le terrain |
 | `tools/simulator` | Simulateur par agents |
+| `tools/terrain` | Rendu des fiches de terrain en PDF |
 | `infra` | Docker, puis Terraform et Ansible |
 | `docs` | Documentation vivante et ADR |
 
@@ -39,6 +41,7 @@ L'environnement local complet (`docker compose up`) arrive avec l'incrément I0.
 - [Cahier des charges](docs/CAHIER_DES_CHARGES.md) : la référence du projet.
 - [Plan de la phase 0](docs/PHASE-0.md).
 - [Hypothèses](docs/HYPOTHESES.md).
+- [Kits de terrain](docs/TERRAIN/README.md) : protocoles, fiches à imprimer, dictionnaire des données.
 - [Décisions d'architecture](docs/DECISIONS/README.md).
 - [État du projet](docs/ETAT.md).
 - [Journal des modifications](CHANGELOG.md) et [sécurité](SECURITY.md).

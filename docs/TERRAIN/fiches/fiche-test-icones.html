@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche · test des icônes</title>
+    <link rel="stylesheet" href="fiches.css" />
+  </head>
+  <body data-jeux="participants icones">
+    <div class="entete">
+      <h1>Test de reconnaissance des icônes</h1>
+      <span class="version">Fiche v1 · 2026-11-04</span>
+    </div>
+    <p class="version">Protocole : docs/UX/PROTOCOLE-TESTS-MAQUETTES.md</p>
+    <p class="anonyme">
+      Fiche anonyme : ne jamais noter de nom, de numéro de téléphone, d'adresse privée ni de photo
+      de personne.
+    </p>
+    <div class="bloc">
+      <h2>Participant</h2>
+      <div class="champs">
+        <div class="champ" data-champ="session">
+          <span class="libelle">Session (S20261120-01)</span>
+        </div>
+        <div class="champ" data-champ="participant">
+          <span class="libelle">Participant (P01…)</span>
+        </div>
+        <div class="champ" data-champ="lieu_session">
+          <span class="libelle">Lieu de la session</span>
+        </div>
+        <div class="champ" data-champ="enqueteur">
+          <span class="libelle">Code animateur (E01…)</span>
+        </div>
+      </div>
+      <p class="script">
+        <strong>Vérifier que la personne a plus de 18 ans, puis lire :</strong> « Nous préparons une
+        application pour aider à trouver son transport. Nous voulons voir si elle est facile à
+        utiliser : c'est l'application que nous testons, pas vous. Cela prend environ 10 minutes. Je
+        ne note ni votre nom ni votre numéro, et nous n'enregistrons ni votre voix ni votre image.
+        Vous pouvez arrêter à tout moment, sans donner de raison. Vous acceptez ? »
+      </p>
+      <p class="cases" data-champ="consentement_oral">
+        <strong>Consentement oral :</strong>
+        <span class="case">Oui, accepté <span class="code">oui</span></span> (sinon, ne rien noter
+        et remercier)
+      </p>
+      <p class="cases" data-champ="tranche_age">
+        <strong>Âge :</strong>
+        <span class="case">Moins de 25 ans <span class="code">moins_25</span></span>
+        <span class="case">25 à 44 ans <span class="code">de_25_a_44</span></span>
+        <span class="case">45 à 59 ans <span class="code">de_45_a_59</span></span>
+        <span class="case">60 ans et plus <span class="code">plus_60</span></span>
+      </p>
+      <p class="cases" data-champ="lecture">
+        <strong>Lecture, selon la personne :</strong>
+        <span class="case">Lit facilement <span class="code">facile</span></span>
+        <span class="case">Lit difficilement <span class="code">difficile</span></span>
+        <span class="case">Ne lit pas <span class="code">ne_lit_pas</span></span>
+      </p>
+      <p class="cases" data-champ="telephone">
+        <strong>Téléphone :</strong>
+        <span class="case">Smartphone personnel <span class="code">smartphone_perso</span></span>
+        <span class="case">Smartphone partagé <span class="code">smartphone_partage</span></span>
+        <span class="case">Téléphone basique <span class="code">basique</span></span>
+        <span class="case">Pas de téléphone <span class="code">aucun</span></span>
+      </p>
+      <p class="cases" data-champ="langue_preferee">
+        <strong>Langue préférée :</strong>
+        <span class="case">Français <span class="code">francais</span></span>
+        <span class="case">Dioula <span class="code">dioula</span></span>
+        <span class="case">Autre <span class="code">autre</span></span>
+      </p>
+    </div>
+    <div class="champs trois">
+      <div class="champ" data-champ="version_icone">
+        <span class="libelle">Version du jeu d&#x27;icônes (v1…)</span>
+      </div>
+      <div class="champ" data-champ="codeur">
+        <span class="libelle">Code du codeur (E02…)</span>
+      </div>
+    </div>
+    <p class="script">
+      Montrer chaque carte seule, sans texte, dans l'ordre du paquet. Demander : « Qu'est-ce que ça
+      représente ? À quoi ça sert ? » Noter la réponse mot pour mot, sans aider.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th data-champ="icone" style="width: 26%">Icône (code au dos de la carte)</th>
+          <th data-champ="reponse">Réponse, mot pour mot</th>
+          <th data-champ="reconnue" style="width: 24%">Codage (au bureau, avec le guide)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">7</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">8</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">9</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">10</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">11</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">12</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">13</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">14</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">15</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">16</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">17</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">18</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">19</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">20</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">21</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">22</td>
+          <td></td>
+          <td></td>
+          <td class="cases">
+            <span class="case">oui</span> <span class="case">partiel</span>
+            <span class="case">non</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <footer>
+      Fiche v1 · 2026-11-04 · projet nemesis (nom de code) · Saisie :
+      <span class="code">data/terrain/modeles</span> · Codes :
+      <span class="code">docs/TERRAIN/DICTIONNAIRE.md</span>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche · test des maquettes</title>
+    <link rel="stylesheet" href="fiches.css" />
+  </head>
+  <body data-jeux="participants observations">
+    <div class="entete">
+      <h1>Test des maquettes</h1>
+      <span class="version">Fiche v1 · 2026-11-04</span>
+    </div>
+    <p class="version">Protocole : docs/UX/PROTOCOLE-TESTS-MAQUETTES.md</p>
+    <p class="anonyme">
+      Fiche anonyme : ne jamais noter de nom, de numéro de téléphone, d'adresse privée ni de photo
+      de personne.
+    </p>
+    <div class="bloc">
+      <h2>Participant</h2>
+      <div class="champs">
+        <div class="champ" data-champ="session">
+          <span class="libelle">Session (S20261120-01)</span>
+        </div>
+        <div class="champ" data-champ="participant">
+          <span class="libelle">Participant (P01…)</span>
+        </div>
+        <div class="champ" data-champ="lieu_session">
+          <span class="libelle">Lieu de la session</span>
+        </div>
+        <div class="champ" data-champ="enqueteur">
+          <span class="libelle">Code animateur (E01…)</span>
+        </div>
+      </div>
+      <p class="script">
+        <strong>Vérifier que la personne a plus de 18 ans, puis lire :</strong> « Nous préparons une
+        application pour aider à trouver son transport. Nous voulons voir si elle est facile à
+        utiliser : c'est l'application que nous testons, pas vous. Cela prend environ 25 minutes. Je
+        ne note ni votre nom ni votre numéro, et nous n'enregistrons ni votre voix ni votre image.
+        Vous pouvez arrêter à tout moment, sans donner de raison. Vous acceptez ? »
+      </p>
+      <p class="cases" data-champ="consentement_oral">
+        <strong>Consentement oral :</strong>
+        <span class="case">Oui, accepté <span class="code">oui</span></span> (sinon, ne rien noter
+        et remercier)
+      </p>
+      <p class="cases" data-champ="tranche_age">
+        <strong>Âge :</strong>
+        <span class="case">Moins de 25 ans <span class="code">moins_25</span></span>
+        <span class="case">25 à 44 ans <span class="code">de_25_a_44</span></span>
+        <span class="case">45 à 59 ans <span class="code">de_45_a_59</span></span>
+        <span class="case">60 ans et plus <span class="code">plus_60</span></span>
+      </p>
+      <p class="cases" data-champ="lecture">
+        <strong>Lecture, selon la personne :</strong>
+        <span class="case">Lit facilement <span class="code">facile</span></span>
+        <span class="case">Lit difficilement <span class="code">difficile</span></span>
+        <span class="case">Ne lit pas <span class="code">ne_lit_pas</span></span>
+      </p>
+      <p class="cases" data-champ="telephone">
+        <strong>Téléphone :</strong>
+        <span class="case">Smartphone personnel <span class="code">smartphone_perso</span></span>
+        <span class="case">Smartphone partagé <span class="code">smartphone_partage</span></span>
+        <span class="case">Téléphone basique <span class="code">basique</span></span>
+        <span class="case">Pas de téléphone <span class="code">aucun</span></span>
+      </p>
+      <p class="cases" data-champ="langue_preferee">
+        <strong>Langue préférée :</strong>
+        <span class="case">Français <span class="code">francais</span></span>
+        <span class="case">Dioula <span class="code">dioula</span></span>
+        <span class="case">Autre <span class="code">autre</span></span>
+      </p>
+    </div>
+    <div class="champs trois">
+      <div class="champ" data-champ="observateur">
+        <span class="libelle">Code observateur (E02…)</span>
+      </div>
+    </div>
+    <h2>Tâches (lire chaque consigne à voix haute ; ne jamais faire lire la personne)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th data-champ="tache">Tâche</th>
+          <th data-champ="reussite">Résultat</th>
+          <th data-champ="duree_secondes">Durée (s)</th>
+          <th data-champ="pressions">Pressions</th>
+          <th data-champ="aide_donnee">Aide donnée</th>
+          <th data-champ="notes">Observations (hésitations, erreurs, mots dits)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>T1 · Planifier le trajet du matin (parcours 1)</td>
+          <td class="cases">
+            <span class="case">Réussie sans aide</span> <span class="case">Réussie avec aide</span>
+            <span class="case">Échec</span> <span class="case">Abandon</span>
+            <span class="case">Non tentée</span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td>T2 · Arrivée à une gare saturée (parcours 2)</td>
+          <td class="cases">
+            <span class="case">Réussie sans aide</span> <span class="case">Réussie avec aide</span>
+            <span class="case">Échec</span> <span class="case">Abandon</span>
+            <span class="case">Non tentée</span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td>T3 · Attendre au bord de la route (parcours 3)</td>
+          <td class="cases">
+            <span class="case">Réussie sans aide</span> <span class="case">Réussie avec aide</span>
+            <span class="case">Échec</span> <span class="case">Abandon</span>
+            <span class="case">Non tentée</span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td>T4 · Contribuer en deux pressions (parcours 5)</td>
+          <td class="cases">
+            <span class="case">Réussie sans aide</span> <span class="case">Réussie avec aide</span>
+            <span class="case">Échec</span> <span class="case">Abandon</span>
+            <span class="case">Non tentée</span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td>T5 · Sans smartphone, menu USSD simulé (parcours 7)</td>
+          <td class="cases">
+            <span class="case">Réussie sans aide</span> <span class="case">Réussie avec aide</span>
+            <span class="case">Échec</span> <span class="case">Abandon</span>
+            <span class="case">Non tentée</span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style="width: 30%"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Questions de compréhension (réponses dans le compte rendu de session)</h2>
+    <ol class="consignes">
+      <li>« Ici, c'est écrit “10 à 20 min”. Ça veut dire quoi pour vous ? »</li>
+      <li>« Et “il y a 4 min” ? »</li>
+      <li>« Ce petit signe [badge de confiance], il vous dit quoi ? »</li>
+      <li>« Qu'est-ce qui vous a gêné ? Qu'est-ce qui vous a aidé ? »</li>
+    </ol>
+    <footer>
+      Fiche v1 · 2026-11-04 · projet nemesis (nom de code) · Saisie :
+      <span class="code">data/terrain/modeles</span> · Codes :
+      <span class="code">docs/TERRAIN/DICTIONNAIRE.md</span>
+    </footer>
+  </body>
+</html>

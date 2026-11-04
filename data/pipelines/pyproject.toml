@@ -5,6 +5,9 @@ description = "Pipelines d'import OSM et GTFS, génération des tuiles et des pa
 requires-python = ">=3.12"
 dependencies = []
 
+[project.scripts]
+nemesis-terrain = "nemesis_pipelines.terrain.cli:main"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

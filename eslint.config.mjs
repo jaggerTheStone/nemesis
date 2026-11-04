@@ -23,6 +23,12 @@ export default tseslint.config(
     },
   },
   {
+    // CommonJS tooling scripts (for example tools/terrain/fiches-pdf.cjs).
+    files: ["**/*.cjs"],
+    languageOptions: { sourceType: "commonjs" },
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
+  {
     files: ["apps/admin/**/*.{ts,tsx}"],
     languageOptions: {
       globals: { ...globals.browser },

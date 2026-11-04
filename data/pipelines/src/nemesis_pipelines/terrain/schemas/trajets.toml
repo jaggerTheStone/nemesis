@@ -1,0 +1,147 @@
+name = "trajets"
+title = "Trajets de référence"
+purpose = "Suite de non-régression du moteur d'itinéraires (partie 14.1) : au moins 85 % des options proposées jugées réalistes."
+protocol = "docs/TERRAIN/PROTOCOLE-TRAJETS-REFERENCE.md"
+forms = ["docs/TERRAIN/fiches/fiche-trajet-reference.html"]
+key = ["id"]
+
+[[fields]]
+name = "id"
+label = "Identifiant du trajet"
+type = "code"
+pattern = "TR-[0-9]{3}"
+required = true
+entry = "office"
+help = "TR-001 à TR-200. Un identifiant n'est jamais réutilisé."
+
+[[fields]]
+name = "origine"
+label = "Départ"
+type = "text"
+max_length = 160
+required = true
+help = "Repère public tel qu'on le dit à Abidjan."
+
+[[fields]]
+name = "origine_commune"
+label = "Commune de départ"
+type = "enum"
+vocabulary = "communes"
+required = true
+
+[[fields]]
+name = "origine_latitude"
+label = "Latitude du départ"
+type = "decimal"
+min = 4.3
+max = 10.8
+required = false
+entry = "office"
+
+[[fields]]
+name = "origine_longitude"
+label = "Longitude du départ"
+type = "decimal"
+min = -8.7
+max = -2.4
+required = false
+entry = "office"
+
+[[fields]]
+name = "destination"
+label = "Arrivée"
+type = "text"
+max_length = 160
+required = true
+
+[[fields]]
+name = "destination_commune"
+label = "Commune d'arrivée"
+type = "enum"
+vocabulary = "communes"
+required = true
+
+[[fields]]
+name = "destination_latitude"
+label = "Latitude de l'arrivée"
+type = "decimal"
+min = 4.3
+max = 10.8
+required = false
+entry = "office"
+
+[[fields]]
+name = "destination_longitude"
+label = "Longitude de l'arrivée"
+type = "decimal"
+min = -8.7
+max = -2.4
+required = false
+entry = "office"
+
+[[fields]]
+name = "heure_depart"
+label = "Heure de départ"
+type = "time"
+required = true
+
+[[fields]]
+name = "type_jour"
+label = "Type de jour"
+type = "enum"
+vocabulary = "types_jour"
+required = true
+
+[[fields]]
+name = "conditions"
+label = "Conditions particulières"
+type = "list"
+vocabulary = "conditions"
+required = false
+help = "Plusieurs valeurs séparées par « + » : pluie+fin_de_mois."
+
+[[fields]]
+name = "profil"
+label = "Profil de l'usager"
+type = "enum"
+vocabulary = "profils"
+required = true
+
+[[fields]]
+name = "validateurs"
+label = "Codes des validateurs"
+type = "list"
+pattern = "V[0-9]{2}"
+min_items = 2
+distinct = true
+required = true
+help = "Au moins deux personnes qui font ce trajet, codes séparés par « + » : V01+V07."
+
+[[fields]]
+name = "date_validation"
+label = "Date de validation"
+type = "date"
+required = true
+
+[[fields]]
+name = "remarques"
+label = "Remarques"
+type = "text"
+max_length = 300
+required = false
+
+[[rules]]
+type = "all_or_none"
+fields = ["origine_latitude", "origine_longitude"]
+
+[[rules]]
+type = "all_or_none"
+fields = ["destination_latitude", "destination_longitude"]
+
+[[rules]]
+type = "at_least_one"
+message = "chaque trajet doit avoir au moins une réponse acceptable dans reponses.csv"
+within = "reponses"
+fields = ["id"]
+target_fields = ["trajet_id"]
+filter = { field = "statut", value = "acceptable" }

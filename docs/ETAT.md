@@ -8,10 +8,17 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 
 - **Phase** : 0, Fondations (plan : `docs/PHASE-0.md`, validé le 2026-11-04).
 - **Hypothèses** : toutes validées le 2026-11-04 (`docs/HYPOTHESES.md`).
-- **Incrément terminé** : I0.1, socle du dépôt et intégration continue.
-- **Prochain incrément** : I0.2, kits de terrain prioritaires (gabarits des 300 requêtes et des 200 trajets, protocole de test des maquettes).
+- **Incréments terminés** :
+  - I0.1, socle du dépôt et intégration continue ;
+  - I0.2, kits de terrain (`docs/TERRAIN/README.md`).
+- **Prochain incrément** : I0.3, documents fondateurs et ADR (ARCHITECTURE, DATA, PRIVACY, COUTS, ALGORITHMES, ADR-001 à 007).
+- **En attente côté porteur** :
+  - une équipe sur place pour lancer les collectes (Q-03) ;
+  - les contreparties des participants et des validateurs ;
+  - la relecture juridique des consentements ;
+  - la validation des hypothèses H-022 à H-026.
 
-## Ce que contient le dépôt après I0.1
+## Ce que contient le dépôt après I0.2
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
@@ -22,11 +29,11 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `packages/proto` | `EstimateMeta` (fraîcheur, confiance, source), contrôlé par buf | lint |
 | `services/routing` | Espace Cargo : `routing-core` et le binaire `routing` | 4 |
 | `services/ml` | FastAPI, `GET /health` | 1 |
-| `data/pipelines` | Vérification d'empreinte SHA-256 | 3 |
+| `data/pipelines` | Vérification d'empreinte SHA-256 ; données de terrain (`nemesis-terrain` : schémas, validateur, modèles et dictionnaire générés, rapport d'icônes) | 3 + 47 |
 | `tools/simulator` | Générateur aléatoire à graine fixe | 2 |
 | `apps/mobile` | Flutter 3.47.7, `minSdk 26`, traductions ARB | 1 |
 
-Commandes : `make check` (tout, hors réseau), `make audit` (audits de dépendances), `make fmt`.
+Commandes : `make check` (tout, hors réseau, y compris `check-terrain`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
 
 ## Versions figées
 
@@ -43,4 +50,6 @@ Garde-fous de la chaîne d'approvisionnement : pnpm refuse les versions publiée
 - **Audit** : `pnpm audit` signale une vulnérabilité modérée dans `minimatch`, tirée par ESLint, en développement seulement. Le seuil bloquant est « élevée » ; à corriger dès qu'ESLint publie une version corrigée.
 - **CI** : les 5 workflows sont verts sur le commit d'I0.1. GitHub avertit que `actions/checkout@v4`, `actions/setup-node@v4` et `actions/cache@v4` ciblent Node 20, déprécié et exécuté de force sous Node 24. Passer à leurs versions majeures suivantes lors d'un prochain incrément, après avoir vérifié qu'elles existent.
 - **Licences** : la politique « dépendances permissives » n'est vérifiée automatiquement que pour Rust (cargo-deny). La vérification pour JavaScript, Python et Dart reste à ajouter.
+- **Fiches papier** : les fichiers HTML de `docs/TERRAIN/fiches/` en sont la source. Après toute modification, lancer `make fiches-pdf` ; sinon, un test échoue. La CI n'a pas Chromium et ne régénère pas les PDF.
+- **Schémas de terrain** : après toute modification, lancer `uv run nemesis-terrain generer` pour régénérer les modèles et le dictionnaire.
 - Aucune donnée personnelle réelle ne doit être collectée avant la déclaration ARTCI ou un avis juridique (H-020).

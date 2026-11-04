@@ -1,0 +1,61 @@
+name = "icones"
+title = "Test de reconnaissance des icônes"
+purpose = "Chaque icône de mode et d'action doit être reconnue sans légende par au moins 85 % de 20 personnes (partie 10.1)."
+protocol = "docs/UX/PROTOCOLE-TESTS-MAQUETTES.md"
+forms = ["docs/TERRAIN/fiches/fiche-test-icones.html"]
+key = ["session", "participant", "icone", "version_icone"]
+
+[[fields]]
+name = "session"
+label = "Code de session"
+type = "code"
+pattern = "S[0-9]{8}-[0-9]{2}"
+required = true
+
+[[fields]]
+name = "participant"
+label = "Code participant"
+type = "code"
+pattern = "P[0-9]{2}"
+required = true
+
+[[fields]]
+name = "icone"
+label = "Icône"
+type = "enum"
+vocabulary = "icones"
+required = true
+
+[[fields]]
+name = "version_icone"
+label = "Version du jeu d'icônes"
+type = "code"
+pattern = "v[0-9]+"
+required = true
+
+[[fields]]
+name = "reponse"
+label = "Réponse mot pour mot"
+type = "text"
+max_length = 200
+required = true
+
+[[fields]]
+name = "reconnue"
+label = "Codage"
+type = "enum"
+vocabulary = "reconnaissances"
+required = true
+help = "Selon le guide de codage du protocole ; en cas de doute, « partiel » et second codeur."
+
+[[fields]]
+name = "codeur"
+label = "Code du codeur"
+type = "code"
+pattern = "E[0-9]{2}"
+required = true
+
+[[references]]
+fields = ["session", "participant"]
+target = "participants"
+target_fields = ["session", "participant"]

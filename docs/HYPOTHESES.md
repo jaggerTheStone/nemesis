@@ -61,3 +61,23 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
 ## Environnement de développement
 
 - **H-021** (constat du 2026-11-04) — La politique réseau de l'environnement cloud refuse : `download.geofabrik.de`, `hub.tumidata.org`, `transit.land`, `api.transitland.org`, `dl.google.com`, ainsi que `github.com` hors de ce dépôt (téléchargements du validateur GTFS et des outils PMTiles). Sont accessibles : Docker Hub, Maven Central, npm, PyPI, crates.io, pub.dev et le stockage des versions de Flutter. Sans élargissement de cette politique, les imports de données et le build Android ne sont exécutés et vérifiés que dans GitHub Actions.
+
+## Données de terrain (I0.2)
+
+- **H-022** (proposée) — Conventions des fichiers de terrain :
+  - les schémas TOML du paquet `nemesis_pipelines.terrain` sont la source unique ; modèles CSV et dictionnaire en sont générés ;
+  - les modèles sont en UTF-8 avec BOM et séparateur « ; », pour s'ouvrir tels quels dans un tableur réglé en français ; le validateur accepte aussi « , » et les décimales à virgule ;
+  - les codes sont sans accents ; plusieurs valeurs dans une cellule se séparent par « + » ;
+  - deux dossiers s'ajoutent à l'arborescence de la partie 9.7 : `data/terrain` (modèles et collecte) et `tools/terrain` (rendu des fiches en PDF).
+- **H-023** (proposée) — Pseudonymes :
+  - enquêteurs E01…, validateurs V01…, participants P01… dans chaque session ;
+  - pour les enquêteurs et validateurs, la correspondance avec leur identité (contrat, paiement) est tenue par le coordinateur, hors du dépôt ; pour les participants, elle n'existe nulle part ;
+  - aucun enregistrement audio, vidéo ni photo de personne en phase 0 ;
+  - participants de 18 ans et plus uniquement.
+- **H-024** (proposée) — Les textes de consentement vouvoient, car on s'adresse à des inconnus dans un lieu public. Le tutoiement de l'appli (H-005) n'est pas concerné. La traduction en dioula est faite oralement en attendant une version écrite validée.
+- **H-025** (proposée) — Quotas proposés pour les collectes, à recalibrer après les premiers jours de terrain. Le détail figure dans chaque protocole :
+  - 300 requêtes, sur au moins 6 lieux d'enquête dans au moins 4 communes, avec au moins un tiers de requêtes dites ;
+  - 200 trajets, dont au moins 150 touchant le corridor pilote, avec des heures et des types de jour répartis ;
+  - pour les tests de maquettes, en plus des minimums de la partie 10.1 : au moins 1 personne qui préfère le dioula, 2 femmes et 1 téléphone basique par tour ;
+  - pour le test des icônes, au moins un tiers de personnes qui lisent difficilement.
+- **H-026** (proposée) — Le jeu de 300 requêtes sert uniquement au test. On vise 400 requêtes pour développer la clé phonétique et les synonymes sur 100 requêtes distinctes ; sinon, on répartit en 100 pour le développement et 200 pour le test, et on le signale.

@@ -1,0 +1,4 @@
+﻿session;participant;tache;reussite;duree_secondes;pressions;aide_donnee;notes;observateur;is_fictional
+S20991231-01;P01;T1;seul;95;;;A lu le prix à voix haute sans hésiter (exemple fictif);E02;true
+S20991231-01;P01;T4;avec_aide;40;3;Montré le bouton Signaler;A cherché le bouton en haut de l'écran (exemple fictif);E02;true
+S20991231-01;P02;T5;seul;120;;;Menu USSD papier suivi sans aide (exemple fictif);E02;true

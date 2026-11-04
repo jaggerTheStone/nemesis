@@ -1,0 +1,77 @@
+name = "participants"
+title = "Participants aux tests utilisateurs"
+purpose = "Profil anonyme des participants (partie 10.1) : vérifier la composition des groupes (au moins 2 personnes qui lisent difficilement et 1 personne âgée par tour)."
+protocol = "docs/UX/PROTOCOLE-TESTS-MAQUETTES.md"
+forms = ["docs/TERRAIN/fiches/fiche-test-maquettes.html", "docs/TERRAIN/fiches/fiche-test-icones.html"]
+key = ["session", "participant"]
+
+[[fields]]
+name = "session"
+label = "Code de session"
+type = "code"
+pattern = "S[0-9]{8}-[0-9]{2}"
+required = true
+help = "S + date AAAAMMJJ + numéro : S20261120-01."
+
+[[fields]]
+name = "participant"
+label = "Code participant"
+type = "code"
+pattern = "P[0-9]{2}"
+required = true
+help = "P01, P02… dans la session. Aucune table ne relie ce code à une identité."
+
+[[fields]]
+name = "consentement_oral"
+label = "Consentement oral recueilli"
+type = "enum"
+vocabulary = "oui_non"
+required = true
+
+[[fields]]
+name = "tranche_age"
+label = "Tranche d'âge"
+type = "enum"
+vocabulary = "tranches_age"
+required = true
+
+[[fields]]
+name = "lecture"
+label = "Lecture (déclarée)"
+type = "enum"
+vocabulary = "lectures"
+required = true
+
+[[fields]]
+name = "telephone"
+label = "Téléphone utilisé"
+type = "enum"
+vocabulary = "telephones"
+required = true
+
+[[fields]]
+name = "langue_preferee"
+label = "Langue préférée"
+type = "enum"
+vocabulary = "langues"
+required = true
+
+[[fields]]
+name = "lieu_session"
+label = "Lieu de la session"
+type = "text"
+max_length = 120
+required = true
+
+[[fields]]
+name = "enqueteur"
+label = "Code de l'animateur"
+type = "code"
+pattern = "E[0-9]{2}"
+required = true
+
+[[rules]]
+type = "equals"
+field = "consentement_oral"
+value = "oui"
+message = "sans consentement, aucune donnée ne doit être saisie : supprimer la ligne"

@@ -6,6 +6,10 @@ on:
       - "services/ml/**"
       - "data/pipelines/**"
       - "tools/simulator/**"
+      - "data/terrain/**"
+      - "data/fixtures_fictives/**"
+      - "docs/TERRAIN/**"
+      - "docs/UX/**"
       - "pyproject.toml"
       - "uv.lock"
       - ".python-version"
@@ -15,6 +19,10 @@ on:
       - "services/ml/**"
       - "data/pipelines/**"
       - "tools/simulator/**"
+      - "data/terrain/**"
+      - "data/fixtures_fictives/**"
+      - "docs/TERRAIN/**"
+      - "docs/UX/**"
       - "pyproject.toml"
       - "uv.lock"
       - ".python-version"
@@ -44,6 +52,11 @@ jobs:
         run: uv run ruff format --check .
       - name: Tests
         run: uv run pytest
+      - name: Données de terrain (fichiers générés, exemples fictifs, collecte)
+        run: |
+          uv run nemesis-terrain generer --verifier
+          uv run nemesis-terrain valider --fictif data/fixtures_fictives/terrain
+          uv run nemesis-terrain valider data/terrain/collecte
       - name: Audit des dépendances
         run: >
           uv export --frozen --all-packages --no-emit-workspace --format requirements-txt --quiet

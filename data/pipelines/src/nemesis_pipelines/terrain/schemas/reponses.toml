@@ -1,0 +1,230 @@
+name = "reponses"
+title = "Réponses des trajets de référence"
+purpose = "Réponses jugées acceptables par des habitants, et pièges à ne jamais proposer, pour chaque trajet de référence."
+protocol = "docs/TERRAIN/PROTOCOLE-TRAJETS-REFERENCE.md"
+forms = ["docs/TERRAIN/fiches/fiche-trajet-reference.html"]
+key = ["trajet_id", "reponse_no"]
+
+[[fields]]
+name = "trajet_id"
+label = "Identifiant du trajet"
+type = "code"
+pattern = "TR-[0-9]{3}"
+required = true
+entry = "office"
+
+[[fields]]
+name = "reponse_no"
+label = "Numéro de la réponse"
+type = "integer"
+min = 1
+max = 9
+required = true
+entry = "office"
+help = "Numéro du bloc sur la fiche (1, 2, 3…)."
+
+[[fields]]
+name = "statut"
+label = "Statut"
+type = "enum"
+vocabulary = "statuts_reponse"
+required = true
+help = "« piege » : réponse plausible mais fausse (ligne supprimée, accès interdit…) que le moteur ne doit jamais proposer."
+
+[[fields]]
+name = "categories"
+label = "Étiquettes visées"
+type = "list"
+vocabulary = "categories_reponse"
+required = false
+help = "Étiquettes auxquelles cette réponse correspond : moins_cher+plus_simple."
+
+[[fields]]
+name = "etape1_mode"
+label = "Étape 1 : véhicule"
+type = "enum"
+vocabulary = "modes"
+required = false
+
+[[fields]]
+name = "etape1_montee"
+label = "Étape 1 : où monter"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "etape1_ligne"
+label = "Étape 1 : ligne ou destination annoncée"
+type = "text"
+max_length = 120
+required = false
+help = "Comme on la dit ou comme l'apprenti la crie."
+
+[[fields]]
+name = "etape1_descente"
+label = "Étape 1 : où descendre"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "etape2_mode"
+label = "Étape 2 : véhicule"
+type = "enum"
+vocabulary = "modes"
+required = false
+
+[[fields]]
+name = "etape2_montee"
+label = "Étape 2 : où monter"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "etape2_ligne"
+label = "Étape 2 : ligne ou destination annoncée"
+type = "text"
+max_length = 120
+required = false
+help = "Comme on la dit ou comme l'apprenti la crie."
+
+[[fields]]
+name = "etape2_descente"
+label = "Étape 2 : où descendre"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "etape3_mode"
+label = "Étape 3 : véhicule"
+type = "enum"
+vocabulary = "modes"
+required = false
+
+[[fields]]
+name = "etape3_montee"
+label = "Étape 3 : où monter"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "etape3_ligne"
+label = "Étape 3 : ligne ou destination annoncée"
+type = "text"
+max_length = 120
+required = false
+help = "Comme on la dit ou comme l'apprenti la crie."
+
+[[fields]]
+name = "etape3_descente"
+label = "Étape 3 : où descendre"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "etape4_mode"
+label = "Étape 4 : véhicule"
+type = "enum"
+vocabulary = "modes"
+required = false
+
+[[fields]]
+name = "etape4_montee"
+label = "Étape 4 : où monter"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "etape4_ligne"
+label = "Étape 4 : ligne ou destination annoncée"
+type = "text"
+max_length = 120
+required = false
+help = "Comme on la dit ou comme l'apprenti la crie."
+
+[[fields]]
+name = "etape4_descente"
+label = "Étape 4 : où descendre"
+type = "text"
+max_length = 120
+required = false
+
+[[fields]]
+name = "duree_min_minutes"
+label = "Durée totale minimale (min)"
+type = "integer"
+min = 1
+max = 300
+required = false
+help = "Porte à porte, attente comprise."
+
+[[fields]]
+name = "duree_max_minutes"
+label = "Durée totale maximale (min)"
+type = "integer"
+min = 1
+max = 300
+required = false
+
+[[fields]]
+name = "prix_min_fcfa"
+label = "Prix total minimal (FCFA)"
+type = "integer"
+min = 0
+max = 20000
+required = false
+
+[[fields]]
+name = "prix_max_fcfa"
+label = "Prix total maximal (FCFA)"
+type = "integer"
+min = 0
+max = 20000
+required = false
+
+[[fields]]
+name = "marche_max_minutes"
+label = "Marche totale maximale (min)"
+type = "integer"
+min = 0
+max = 120
+required = false
+
+[[fields]]
+name = "justification"
+label = "Justification"
+type = "text"
+max_length = 400
+required = true
+help = "Pourquoi cette réponse est acceptable, ou pourquoi c'est un piège."
+
+[[rules]]
+type = "steps"
+prefix = "etape"
+count = 4
+required_fields = ["mode", "montee", "descente"]
+optional_fields = ["ligne"]
+
+[[rules]]
+type = "required_if"
+fields = ["duree_min_minutes", "duree_max_minutes", "prix_min_fcfa", "prix_max_fcfa"]
+when = { field = "statut", value = "acceptable" }
+
+[[rules]]
+type = "ordered"
+fields = ["duree_min_minutes", "duree_max_minutes"]
+
+[[rules]]
+type = "ordered"
+fields = ["prix_min_fcfa", "prix_max_fcfa"]
+
+[[references]]
+fields = ["trajet_id"]
+target = "trajets"
+target_fields = ["id"]

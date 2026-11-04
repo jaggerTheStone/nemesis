@@ -1,0 +1,171 @@
+# Référentiels partagés par les schémas de terrain : code (sans accent, facile
+# à saisir) = libellé (affiché sur les fiches et dans le dictionnaire).
+
+[communes]
+# Communes du District d'Abidjan citées dans le cahier des charges. Liste
+# provisoire, remplacée par les limites administratives importées d'OSM (I0.7).
+abobo = "Abobo"
+adjame = "Adjamé"
+anyama = "Anyama"
+attecoube = "Attécoubé"
+bingerville = "Bingerville"
+cocody = "Cocody"
+koumassi = "Koumassi"
+marcory = "Marcory"
+plateau = "Plateau"
+port_bouet = "Port-Bouët"
+songon = "Songon"
+treichville = "Treichville"
+yopougon = "Yopougon"
+autre = "Autre (préciser en remarque)"
+
+[modes]
+# Modes de la partie 7.2 (route.mode).
+bus_sotra = "Bus SOTRA"
+bus_express = "Bus express"
+bateau_bus = "Bateau-bus"
+pinasse = "Pinasse"
+gbaka = "Gbaka"
+woro_communal = "Wôrô-wôrô communal"
+woro_intercommunal = "Wôrô-wôrô intercommunal"
+taxi_compteur = "Taxi-compteur"
+moto_taxi = "Moto-taxi"
+tricycle = "Tricycle"
+metro = "Métro"
+brt = "BRT"
+car_interurbain = "Car interurbain"
+
+[modes_saisie]
+oral = "Dit à voix haute"
+ecrit = "Écrit"
+
+[langues_requete]
+francais = "Français"
+francais_nouchi = "Français mêlé de nouchi"
+dioula = "Dioula"
+autre = "Autre"
+
+[types_lieu]
+# Repères de F-01 et partie 8.4.
+carrefour = "Carrefour"
+pharmacie = "Pharmacie"
+eglise = "Église"
+mosquee = "Mosquée"
+maquis = "Maquis"
+marche = "Marché"
+gare = "Gare"
+terminus = "Terminus"
+ecole = "École, université"
+quartier = "Quartier"
+commune = "Commune"
+batiment_public = "Bâtiment public, hôpital"
+entreprise = "Entreprise, bureau, boutique"
+autre = "Autre"
+
+[expressions_relatives]
+aucune = "Aucune"
+derriere = "Derrière"
+en_face = "En face de"
+a_cote = "À côté de"
+apres = "Après"
+avant = "Avant"
+autre = "Autre"
+
+[types_jour]
+ouvrable = "Jour ouvrable"
+samedi = "Samedi"
+dimanche = "Dimanche"
+ferie = "Jour férié"
+
+[conditions]
+pluie = "Pluie"
+vacances_scolaires = "Vacances scolaires"
+fin_de_mois = "Fin de mois"
+fete_ou_evenement = "Fête ou grand événement"
+
+[profils]
+standard = "Standard"
+mobilite_reduite = "Mobilité réduite"
+
+[statuts_reponse]
+acceptable = "Acceptable"
+piege = "Piège (à ne jamais proposer)"
+
+[categories_reponse]
+moins_cher = "Le moins cher"
+plus_rapide = "Le plus rapide"
+plus_simple = "Le plus simple"
+plus_sur = "Le plus sûr"
+
+[oui_non]
+oui = "Oui"
+non = "Non"
+
+[tranches_age]
+moins_25 = "Moins de 25 ans"
+de_25_a_44 = "25 à 44 ans"
+de_45_a_59 = "45 à 59 ans"
+plus_60 = "60 ans et plus"
+
+[lectures]
+# Déclaré par la personne, sans test.
+facile = "Lit facilement"
+difficile = "Lit difficilement"
+ne_lit_pas = "Ne lit pas"
+
+[telephones]
+smartphone_perso = "Smartphone personnel"
+smartphone_partage = "Smartphone partagé"
+basique = "Téléphone basique"
+aucun = "Pas de téléphone"
+
+[langues]
+francais = "Français"
+dioula = "Dioula"
+autre = "Autre"
+
+[taches]
+# Tâches du test de maquettes, tirées des parcours clés de la partie 4.2.
+T1 = "T1 · Planifier le trajet du matin (parcours 1)"
+T2 = "T2 · Arrivée à une gare saturée (parcours 2)"
+T3 = "T3 · Attendre au bord de la route (parcours 3)"
+T4 = "T4 · Contribuer en deux pressions (parcours 5)"
+T5 = "T5 · Sans smartphone, menu USSD simulé (parcours 7)"
+
+[reussites]
+seul = "Réussie sans aide"
+avec_aide = "Réussie avec aide"
+echec = "Échec"
+abandon = "Abandon"
+non_tentee = "Non tentée"
+
+[reconnaissances]
+oui = "Reconnue"
+partiel = "Partiellement reconnue"
+non = "Non reconnue"
+
+[icones]
+# Icônes à tester sans légende (partie 10.1). Liste initiale, ajustée avec
+# les maquettes (I0.11). Seuil : 85 % de « oui » sur au moins 20 personnes.
+mode_bus_sotra = "Mode · bus SOTRA"
+mode_bus_express = "Mode · bus express"
+mode_bateau_bus = "Mode · bateau-bus"
+mode_pinasse = "Mode · pinasse"
+mode_gbaka = "Mode · gbaka"
+mode_woro_communal = "Mode · wôrô-wôrô communal"
+mode_woro_intercommunal = "Mode · wôrô-wôrô intercommunal"
+mode_taxi_compteur = "Mode · taxi-compteur"
+mode_moto_taxi = "Mode · moto-taxi"
+mode_car_interurbain = "Mode · car interurbain"
+action_signaler = "Action · signaler"
+action_je_pars = "Action · je pars"
+action_partager = "Action · partager le trajet"
+action_urgence = "Action · urgence"
+action_micro = "Action · dicter"
+onglet_trajet = "Onglet · trajet"
+onglet_carte = "Onglet · carte"
+onglet_moi = "Onglet · moi"
+file_peu = "État · peu de monde"
+file_moyen = "État · moyen"
+file_beaucoup = "État · beaucoup de monde"
+file_tres_long = "État · file très longue"

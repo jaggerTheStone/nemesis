@@ -2,16 +2,17 @@
 #   make check   lint, typage et tests de tous les composants (hors réseau)
 #   make audit   audits de dépendances (réseau requis)
 #   make fmt     formatage automatique
-# Chaque écosystème a aussi sa cible : check-ts, check-rust, check-py, check-mobile.
+#   make fiches-pdf  PDF des fiches de terrain (Playwright requis)
+# Chaque écosystème a aussi sa cible : check-ts, check-rust, check-py, check-terrain, check-mobile.
 # `make dev` arrive avec Docker Compose en I0.4.
 
 ROUTING := services/routing
 MOBILE := apps/mobile
 
-.PHONY: check check-ts check-proto check-rust check-py check-mobile \
-        audit audit-ts audit-rust audit-py fmt install
+.PHONY: check check-ts check-proto check-rust check-py check-terrain check-mobile \
+        audit audit-ts audit-rust audit-py fmt install fiches-pdf
 
-check: check-ts check-proto check-rust check-py check-mobile
+check: check-ts check-proto check-rust check-py check-terrain check-mobile
 	@echo "Tous les contrôles sont au vert."
 
 install:
@@ -39,6 +40,16 @@ check-py:
 	uv run ruff check .
 	uv run ruff format --check .
 	uv run pytest
+
+# Données de terrain (I0.2) : fichiers générés à jour, exemples fictifs et collecte réelle valides.
+check-terrain:
+	uv run nemesis-terrain generer --verifier
+	uv run nemesis-terrain valider --fictif data/fixtures_fictives/terrain
+	uv run nemesis-terrain valider data/terrain/collecte
+
+# Régénère les PDF des fiches (Playwright et Chromium requis, hors CI).
+fiches-pdf:
+	node tools/terrain/fiches-pdf.cjs
 
 check-mobile:
 	cd $(MOBILE) && flutter pub get

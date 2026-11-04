@@ -1,0 +1,3 @@
+﻿id;origine;origine_commune;origine_latitude;origine_longitude;destination;destination_commune;destination_latitude;destination_longitude;heure_depart;type_jour;conditions;profil;validateurs;date_validation;remarques;is_fictional
+TR-001;Gare des Flamboyants (fictif);autre;;;Marché des Flamboyants (fictif);autre;;;06:30;ouvrable;;standard;V01+V02;2099-12-31;Ville Lagune-Fictive;true
+TR-002;Carrefour du Baobab (fictif);autre;;;Embarcadère Sud (fictif);autre;;;18:15;ouvrable;pluie;standard;V02+V03;2099-12-31;;true

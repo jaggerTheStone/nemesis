@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche · trajet de référence</title>
+    <link rel="stylesheet" href="fiches.css" />
+  </head>
+  <body data-jeux="trajets reponses">
+    <div class="entete">
+      <h1>Trajet de référence</h1>
+      <span class="version">Fiche v1 · 2026-11-04</span>
+    </div>
+    <p class="version">Protocole : docs/TERRAIN/PROTOCOLE-TRAJETS-REFERENCE.md</p>
+    <p class="anonyme">
+      Fiche anonyme : ne jamais noter de nom, de numéro de téléphone, d'adresse privée ni de photo
+      de personne.
+    </p>
+    <div class="bloc">
+      <h2>Le trajet</h2>
+      <div class="champs">
+        <div class="champ large" data-champ="origine">
+          <span class="libelle">Départ (repère tel qu&#x27;on le dit)</span>
+        </div>
+        <div class="champ" data-champ="origine_commune">
+          <span class="libelle">Commune de départ (code)</span>
+        </div>
+        <div class="champ" data-champ="heure_depart">
+          <span class="libelle">Heure de départ (HH:MM)</span>
+        </div>
+        <div class="champ large" data-champ="destination">
+          <span class="libelle">Arrivée (repère tel qu&#x27;on le dit)</span>
+        </div>
+        <div class="champ" data-champ="destination_commune">
+          <span class="libelle">Commune d&#x27;arrivée (code)</span>
+        </div>
+        <div class="champ" data-champ="validateurs">
+          <span class="libelle">Codes validateurs (V01+V02)</span>
+        </div>
+      </div>
+      <p class="cases" data-champ="type_jour">
+        <strong>Jour :</strong>
+        <span class="case">Jour ouvrable <span class="code">ouvrable</span></span>
+        <span class="case">Samedi <span class="code">samedi</span></span>
+        <span class="case">Dimanche <span class="code">dimanche</span></span>
+        <span class="case">Jour férié <span class="code">ferie</span></span>
+      </p>
+      <p class="cases" data-champ="conditions">
+        <strong>Conditions :</strong>
+        <span class="case">Pluie <span class="code">pluie</span></span>
+        <span class="case">Vacances scolaires <span class="code">vacances_scolaires</span></span>
+        <span class="case">Fin de mois <span class="code">fin_de_mois</span></span>
+        <span class="case"
+          >Fête ou grand événement <span class="code">fete_ou_evenement</span></span
+        >
+      </p>
+      <p class="cases" data-champ="profil">
+        <strong>Profil :</strong>
+        <span class="case">Standard <span class="code">standard</span></span>
+        <span class="case">Mobilité réduite <span class="code">mobilite_reduite</span></span>
+      </p>
+      <div class="champs">
+        <div class="champ" data-champ="date_validation">
+          <span class="libelle">Date de validation</span>
+        </div>
+        <div class="champ large" data-champ="remarques"><span class="libelle">Remarques</span></div>
+      </div>
+    </div>
+    <p class="libelle"><strong>Véhicules</strong> (écrire le code)</p>
+    <div class="legende">
+      <div><span class="code">bus_sotra</span> Bus SOTRA</div>
+      <div><span class="code">bus_express</span> Bus express</div>
+      <div><span class="code">bateau_bus</span> Bateau-bus</div>
+      <div><span class="code">pinasse</span> Pinasse</div>
+      <div><span class="code">gbaka</span> Gbaka</div>
+      <div><span class="code">woro_communal</span> Wôrô-wôrô communal</div>
+      <div><span class="code">woro_intercommunal</span> Wôrô-wôrô intercommunal</div>
+      <div><span class="code">taxi_compteur</span> Taxi-compteur</div>
+      <div><span class="code">moto_taxi</span> Moto-taxi</div>
+      <div><span class="code">tricycle</span> Tricycle</div>
+      <div><span class="code">metro</span> Métro</div>
+      <div><span class="code">brt</span> BRT</div>
+      <div><span class="code">car_interurbain</span> Car interurbain</div>
+    </div>
+    <p class="libelle"><strong>Communes</strong> (écrire le code)</p>
+    <div class="legende">
+      <div><span class="code">abobo</span> Abobo</div>
+      <div><span class="code">adjame</span> Adjamé</div>
+      <div><span class="code">anyama</span> Anyama</div>
+      <div><span class="code">attecoube</span> Attécoubé</div>
+      <div><span class="code">bingerville</span> Bingerville</div>
+      <div><span class="code">cocody</span> Cocody</div>
+      <div><span class="code">koumassi</span> Koumassi</div>
+      <div><span class="code">marcory</span> Marcory</div>
+      <div><span class="code">plateau</span> Plateau</div>
+      <div><span class="code">port_bouet</span> Port-Bouët</div>
+      <div><span class="code">songon</span> Songon</div>
+      <div><span class="code">treichville</span> Treichville</div>
+      <div><span class="code">yopougon</span> Yopougon</div>
+      <div><span class="code">autre</span> Autre (préciser en remarque)</div>
+    </div>
+    <div class="bloc">
+      <h2>Réponse 1</h2>
+      <p class="cases" data-champ="statut">
+        <strong>Statut :</strong>
+        <span class="case">Acceptable <span class="code">acceptable</span></span>
+        <span class="case">Piège (à ne jamais proposer) <span class="code">piege</span></span>
+      </p>
+      <p class="cases" data-champ="categories">
+        <strong>Étiquettes :</strong>
+        <span class="case">Le moins cher <span class="code">moins_cher</span></span>
+        <span class="case">Le plus rapide <span class="code">plus_rapide</span></span>
+        <span class="case">Le plus simple <span class="code">plus_simple</span></span>
+        <span class="case">Le plus sûr <span class="code">plus_sur</span></span>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Étape</th>
+            <th>Véhicule (code)</th>
+            <th>Où monter</th>
+            <th>Ligne ou destination criée</th>
+            <th>Où descendre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">1</td>
+            <td data-champ="etape1_mode"></td>
+            <td data-champ="etape1_montee"></td>
+            <td data-champ="etape1_ligne"></td>
+            <td data-champ="etape1_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">2</td>
+            <td data-champ="etape2_mode"></td>
+            <td data-champ="etape2_montee"></td>
+            <td data-champ="etape2_ligne"></td>
+            <td data-champ="etape2_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">3</td>
+            <td data-champ="etape3_mode"></td>
+            <td data-champ="etape3_montee"></td>
+            <td data-champ="etape3_ligne"></td>
+            <td data-champ="etape3_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">4</td>
+            <td data-champ="etape4_mode"></td>
+            <td data-champ="etape4_montee"></td>
+            <td data-champ="etape4_ligne"></td>
+            <td data-champ="etape4_descente"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="champs">
+        <div class="champ" data-champ="duree_min_minutes">
+          <span class="libelle">Durée totale min (min)</span>
+        </div>
+        <div class="champ" data-champ="duree_max_minutes">
+          <span class="libelle">Durée totale max (min)</span>
+        </div>
+        <div class="champ" data-champ="prix_min_fcfa">
+          <span class="libelle">Prix total min (F)</span>
+        </div>
+        <div class="champ" data-champ="prix_max_fcfa">
+          <span class="libelle">Prix total max (F)</span>
+        </div>
+        <div class="champ" data-champ="marche_max_minutes">
+          <span class="libelle">Marche totale max (min)</span>
+        </div>
+        <div class="champ entier" data-champ="justification">
+          <span class="libelle">Justification : pourquoi acceptable, ou pourquoi piège</span>
+        </div>
+      </div>
+    </div>
+    <div class="saut"></div>
+    <div class="bloc">
+      <h2>Réponse 2</h2>
+      <p class="cases" data-champ="statut">
+        <strong>Statut :</strong>
+        <span class="case">Acceptable <span class="code">acceptable</span></span>
+        <span class="case">Piège (à ne jamais proposer) <span class="code">piege</span></span>
+      </p>
+      <p class="cases" data-champ="categories">
+        <strong>Étiquettes :</strong>
+        <span class="case">Le moins cher <span class="code">moins_cher</span></span>
+        <span class="case">Le plus rapide <span class="code">plus_rapide</span></span>
+        <span class="case">Le plus simple <span class="code">plus_simple</span></span>
+        <span class="case">Le plus sûr <span class="code">plus_sur</span></span>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Étape</th>
+            <th>Véhicule (code)</th>
+            <th>Où monter</th>
+            <th>Ligne ou destination criée</th>
+            <th>Où descendre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">1</td>
+            <td data-champ="etape1_mode"></td>
+            <td data-champ="etape1_montee"></td>
+            <td data-champ="etape1_ligne"></td>
+            <td data-champ="etape1_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">2</td>
+            <td data-champ="etape2_mode"></td>
+            <td data-champ="etape2_montee"></td>
+            <td data-champ="etape2_ligne"></td>
+            <td data-champ="etape2_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">3</td>
+            <td data-champ="etape3_mode"></td>
+            <td data-champ="etape3_montee"></td>
+            <td data-champ="etape3_ligne"></td>
+            <td data-champ="etape3_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">4</td>
+            <td data-champ="etape4_mode"></td>
+            <td data-champ="etape4_montee"></td>
+            <td data-champ="etape4_ligne"></td>
+            <td data-champ="etape4_descente"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="champs">
+        <div class="champ" data-champ="duree_min_minutes">
+          <span class="libelle">Durée totale min (min)</span>
+        </div>
+        <div class="champ" data-champ="duree_max_minutes">
+          <span class="libelle">Durée totale max (min)</span>
+        </div>
+        <div class="champ" data-champ="prix_min_fcfa">
+          <span class="libelle">Prix total min (F)</span>
+        </div>
+        <div class="champ" data-champ="prix_max_fcfa">
+          <span class="libelle">Prix total max (F)</span>
+        </div>
+        <div class="champ" data-champ="marche_max_minutes">
+          <span class="libelle">Marche totale max (min)</span>
+        </div>
+        <div class="champ entier" data-champ="justification">
+          <span class="libelle">Justification : pourquoi acceptable, ou pourquoi piège</span>
+        </div>
+      </div>
+    </div>
+    <div class="bloc">
+      <h2>Réponse 3</h2>
+      <p class="cases" data-champ="statut">
+        <strong>Statut :</strong>
+        <span class="case">Acceptable <span class="code">acceptable</span></span>
+        <span class="case">Piège (à ne jamais proposer) <span class="code">piege</span></span>
+      </p>
+      <p class="cases" data-champ="categories">
+        <strong>Étiquettes :</strong>
+        <span class="case">Le moins cher <span class="code">moins_cher</span></span>
+        <span class="case">Le plus rapide <span class="code">plus_rapide</span></span>
+        <span class="case">Le plus simple <span class="code">plus_simple</span></span>
+        <span class="case">Le plus sûr <span class="code">plus_sur</span></span>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Étape</th>
+            <th>Véhicule (code)</th>
+            <th>Où monter</th>
+            <th>Ligne ou destination criée</th>
+            <th>Où descendre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">1</td>
+            <td data-champ="etape1_mode"></td>
+            <td data-champ="etape1_montee"></td>
+            <td data-champ="etape1_ligne"></td>
+            <td data-champ="etape1_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">2</td>
+            <td data-champ="etape2_mode"></td>
+            <td data-champ="etape2_montee"></td>
+            <td data-champ="etape2_ligne"></td>
+            <td data-champ="etape2_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">3</td>
+            <td data-champ="etape3_mode"></td>
+            <td data-champ="etape3_montee"></td>
+            <td data-champ="etape3_ligne"></td>
+            <td data-champ="etape3_descente"></td>
+          </tr>
+          <tr>
+            <td class="num">4</td>
+            <td data-champ="etape4_mode"></td>
+            <td data-champ="etape4_montee"></td>
+            <td data-champ="etape4_ligne"></td>
+            <td data-champ="etape4_descente"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="champs">
+        <div class="champ" data-champ="duree_min_minutes">
+          <span class="libelle">Durée totale min (min)</span>
+        </div>
+        <div class="champ" data-champ="duree_max_minutes">
+          <span class="libelle">Durée totale max (min)</span>
+        </div>
+        <div class="champ" data-champ="prix_min_fcfa">
+          <span class="libelle">Prix total min (F)</span>
+        </div>
+        <div class="champ" data-champ="prix_max_fcfa">
+          <span class="libelle">Prix total max (F)</span>
+        </div>
+        <div class="champ" data-champ="marche_max_minutes">
+          <span class="libelle">Marche totale max (min)</span>
+        </div>
+        <div class="champ entier" data-champ="justification">
+          <span class="libelle">Justification : pourquoi acceptable, ou pourquoi piège</span>
+        </div>
+      </div>
+    </div>
+    <footer>
+      Fiche v1 · 2026-11-04 · projet nemesis (nom de code) · Saisie :
+      <span class="code">data/terrain/modeles</span> · Codes :
+      <span class="code">docs/TERRAIN/DICTIONNAIRE.md</span>
+    </footer>
+  </body>
+</html>

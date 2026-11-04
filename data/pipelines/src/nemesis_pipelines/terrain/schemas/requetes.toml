@@ -1,0 +1,133 @@
+name = "requetes"
+title = "Requêtes réelles de destination"
+purpose = "Jeu d'évaluation du géocodage (F-01) : au moins 90 % de réussite au premier essai sur 300 requêtes réelles."
+protocol = "docs/TERRAIN/PROTOCOLE-REQUETES.md"
+forms = ["docs/TERRAIN/fiches/fiche-requetes.html"]
+key = ["id"]
+
+[[fields]]
+name = "id"
+label = "Identifiant"
+type = "code"
+pattern = "RQ-[0-9]{4}"
+required = true
+entry = "office"
+help = "Attribué à la saisie, unique dans tout le jeu : RQ-0001, RQ-0002…"
+
+[[fields]]
+name = "date"
+label = "Date de l'enquête"
+type = "date"
+required = true
+
+[[fields]]
+name = "heure"
+label = "Heure"
+type = "time"
+required = false
+
+[[fields]]
+name = "enqueteur"
+label = "Code enquêteur"
+type = "code"
+pattern = "E[0-9]{2}"
+required = true
+help = "Code attribué à l'enquêteur (E01, E02…), jamais son nom."
+
+[[fields]]
+name = "lieu_enquete"
+label = "Lieu de l'enquête"
+type = "text"
+max_length = 120
+required = true
+help = "Gare, marché ou arrêt où l'enquête a lieu."
+
+[[fields]]
+name = "commune_enquete"
+label = "Commune du lieu de l'enquête"
+type = "enum"
+vocabulary = "communes"
+required = true
+
+[[fields]]
+name = "formulation"
+label = "Formulation exacte"
+type = "text"
+max_length = 200
+required = true
+help = "Mot pour mot, sans corriger l'orthographe ni ajouter d'accents : « Adj Liberté », « derrière pharmacie Sipo »."
+
+[[fields]]
+name = "mode_saisie"
+label = "Dit ou écrit"
+type = "enum"
+vocabulary = "modes_saisie"
+required = true
+
+[[fields]]
+name = "langue"
+label = "Langue"
+type = "enum"
+vocabulary = "langues_requete"
+required = true
+
+[[fields]]
+name = "type_lieu"
+label = "Type de lieu visé"
+type = "enum"
+vocabulary = "types_lieu"
+required = true
+
+[[fields]]
+name = "expression_relative"
+label = "Expression relative"
+type = "enum"
+vocabulary = "expressions_relatives"
+required = true
+help = "« derrière », « en face de »… ; « aucune » sinon."
+
+[[fields]]
+name = "lieu_compris"
+label = "Lieu visé, confirmé avec la personne"
+type = "text"
+max_length = 200
+required = true
+help = "Ce que la personne voulait dire, vérifié avec elle (« Vous voulez dire… ? »). Jamais une adresse privée : le repère public le plus proche."
+
+[[fields]]
+name = "commune_visee"
+label = "Commune du lieu visé"
+type = "enum"
+vocabulary = "communes"
+extra_values = { inconnue = "Inconnue" }
+required = true
+
+[[fields]]
+name = "latitude"
+label = "Latitude du lieu visé"
+type = "decimal"
+min = 4.3
+max = 10.8
+required = false
+entry = "office"
+help = "Ajoutée au bureau à partir d'une carte, en degrés décimaux (WGS 84)."
+
+[[fields]]
+name = "longitude"
+label = "Longitude du lieu visé"
+type = "decimal"
+min = -8.7
+max = -2.4
+required = false
+entry = "office"
+
+[[fields]]
+name = "remarques"
+label = "Remarques"
+type = "text"
+max_length = 300
+required = false
+
+[[rules]]
+type = "all_or_none"
+fields = ["latitude", "longitude"]
