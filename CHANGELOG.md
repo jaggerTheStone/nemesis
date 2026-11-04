@@ -23,3 +23,16 @@ publication.
   - Validateur `nemesis-terrain`, exécuté en intégration continue, et rapport de
     reconnaissance des icônes.
   - Exemples fictifs et modèle de compte rendu des tests utilisateurs.
+- I0.3 : documents fondateurs.
+  - `ARCHITECTURE.md` : vues C4 de contexte et de conteneurs, flux principaux,
+    parité en ligne et hors ligne.
+  - `DATA.md` : sources et licences, provenance, fraîcheur et confiance,
+    spécification de l'extension GTFS v0.
+  - `PRIVACY.md` : registre des traitements, analyse d'impact de la
+    géolocalisation (brouillon), brouillon du dossier ARTCI, questions au juriste.
+  - `COUTS.md` : modèle de volumes par palier, formules, prix à collecter,
+    coût en data pour l'usager.
+  - `ALGORITHMES.md` : régimes d'attente A, B et C avec exemples chiffrés,
+    calibration, itinéraires, prix, géocodage, détection.
+  - ADR-001 à ADR-007, au statut « proposé ».
+  - Vérification des liens de la documentation en CI.

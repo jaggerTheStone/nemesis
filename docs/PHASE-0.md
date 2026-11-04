@@ -60,6 +60,15 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - `docs/COUTS.md` v0 : modèle de coût par palier (pilote de 50 usagers, 10 000, 100 000 et 300 000 utilisateurs actifs par jour), avec formules et sources ; tout tarif non vérifié est marqué comme tel.
 - `docs/ALGORITHMES.md` v0 : formules des régimes d'attente A, B et C et paramètres.
 - **Terminé quand** : les documents sont relus par toi ; ADR-002, 004, 005, 006 et 007 sont au statut « proposé ».
+- **Réalisé** (2026-11-04), en attente de ta relecture :
+  - `docs/ARCHITECTURE.md`, avec diagrammes Mermaid validés ;
+  - `docs/DATA.md`, `docs/PRIVACY.md`, `docs/COUTS.md`, `docs/ALGORITHMES.md` ;
+  - ADR-001 à ADR-007, tous au statut « proposé » ;
+  - un vérificateur de liens de la documentation, exécuté en CI.
+
+  Deux écarts au cahier des charges sont signalés :
+  - ADR-006 : la carte en direct passe par interrogation périodique, et non par connexion permanente ;
+  - ALGORITHMES.md, section 1.7 : le conseil « remonter à la gare » tient compte du trajet entre la gare et le point de départ.
 
 ### I0.4 — Schéma de base de données et environnement local
 

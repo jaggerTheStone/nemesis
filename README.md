@@ -40,6 +40,8 @@ L'environnement local complet (`docker compose up`) arrive avec l'incrément I0.
 
 - [Cahier des charges](docs/CAHIER_DES_CHARGES.md) : la référence du projet.
 - [Plan de la phase 0](docs/PHASE-0.md).
+- [Architecture](docs/ARCHITECTURE.md), [données](docs/DATA.md), [algorithmes](docs/ALGORITHMES.md).
+- [Vie privée](docs/PRIVACY.md) et [coûts](docs/COUTS.md).
 - [Hypothèses](docs/HYPOTHESES.md).
 - [Kits de terrain](docs/TERRAIN/README.md) : protocoles, fiches à imprimer, dictionnaire des données.
 - [Décisions d'architecture](docs/DECISIONS/README.md).

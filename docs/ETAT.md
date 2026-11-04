@@ -10,13 +10,22 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 - **Hypothèses** : toutes validées le 2026-11-04 (`docs/HYPOTHESES.md`).
 - **Incréments terminés** :
   - I0.1, socle du dépôt et intégration continue ;
-  - I0.2, kits de terrain (`docs/TERRAIN/README.md`).
-- **Prochain incrément** : I0.3, documents fondateurs et ADR (ARCHITECTURE, DATA, PRIVACY, COUTS, ALGORITHMES, ADR-001 à 007).
+  - I0.2, kits de terrain (`docs/TERRAIN/README.md`) ;
+  - I0.3, documents fondateurs et ADR, en attente de relecture par le porteur :
+    - ARCHITECTURE, DATA, PRIVACY, COUTS, ALGORITHMES ;
+    - ADR-001 à ADR-007 au statut « proposé ».
+- **Prochain incrément** : I0.4, schéma de base de données complet (partie 7.2, ADR-005) et `docker compose up`.
 - **En attente côté porteur** :
   - une équipe sur place pour lancer les collectes (Q-03) ;
   - les contreparties des participants et des validateurs ;
   - la relecture juridique des consentements ;
-  - la validation des hypothèses H-022 à H-026.
+  - la validation des hypothèses H-022 à H-026 ;
+  - la relecture des documents d'I0.3, en particulier :
+    - ADR-004, hébergement : décision du porteur ;
+    - ADR-006 : écart signalé à la partie 9.1 ;
+    - le conseil « remonter à la gare », corrigé dans ALGORITHMES.md, section 1.7 ;
+  - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
+  - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
 ## Ce que contient le dépôt après I0.2
 
@@ -33,7 +42,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `tools/simulator` | Générateur aléatoire à graine fixe | 2 |
 | `apps/mobile` | Flutter 3.47.7, `minSdk 26`, traductions ARB | 1 |
 
-Commandes : `make check` (tout, hors réseau, y compris `check-terrain`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
+Commandes : `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
 
 ## Versions figées
 

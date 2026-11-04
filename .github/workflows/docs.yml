@@ -1,0 +1,30 @@
+name: Documentation
+
+on:
+  push:
+    paths:
+      - "**.md"
+      - "tools/docs/**"
+      - ".github/workflows/docs.yml"
+  pull_request:
+    paths:
+      - "**.md"
+      - "tools/docs/**"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  links:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Liens relatifs de la documentation
+        run: python3 tools/docs/check_links.py
