@@ -181,6 +181,9 @@ join gap_osm_route o
   on (g.route_short_name is not null and upper(g.route_short_name) = upper(o.ref))
   or (st_dwithin(st_startpoint(g.geom_m), o.geom_m, %s::float8)
       and st_dwithin(st_endpoint(g.geom_m), o.geom_m, %s::float8))
+-- A line already matched by identity needs no other candidate.
+where not (g.shape_id ~ '^[0-9]{{1,18}}$'
+           and exists (select from gap_osm_route i where i.relation_id = g.shape_id::bigint))
 """
 
 
