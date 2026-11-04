@@ -1,0 +1,2 @@
+extension_name,extension_version,network_version,produced_at,is_fictional
+ext,0.1.0,1,2026-11-04T00:00:00Z,1

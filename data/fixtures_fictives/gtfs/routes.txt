@@ -1,0 +1,13 @@
+route_id,agency_id,route_short_name,route_long_name,route_type,route_color,route_text_color,continuous_pickup,continuous_drop_off,network_id,is_fictional
+g1,artisanal,G1,Flamboyants–Grand Marché (fictif),3,1F4E79,FFFFFF,0,0,gbaka,1
+g2,artisanal,G2,Palmiers–Grand Marché (fictif),3,2E75B6,FFFFFF,0,0,gbaka,1
+g3,artisanal,G3,Cocotiers–Lagune-Sud (fictif),3,203864,FFFFFF,0,0,gbaka,1
+g4,artisanal,G4,Flamboyants–Lagune-Sud (fictif),3,0B3D91,FFFFFF,0,0,gbaka,1
+w1,artisanal,W1,Flamboyants–Palmiers (fictif),3,FFD966,000000,0,0,woro-communal,1
+w2,artisanal,W2,Baobab–Embarcadère Nord (fictif),3,A9D18E,000000,0,0,woro-communal,1
+w3,artisanal,W3,Lagune-Sud–Embarcadère Sud (fictif),3,9DC3E6,000000,0,0,woro-communal,1
+i1,artisanal,I1,Baobab–Lagune-Sud (fictif),3,C9B18B,000000,0,0,woro-intercommunal,1
+i2,artisanal,I2,Palmiers–Cocotiers (fictif),3,D6C29E,000000,0,0,woro-intercommunal,1
+b1,regie,B1,Flamboyants–Lagune-Sud par le pont (fictif),3,E46C0A,000000,1,1,regie-bus,1
+e1,regie,E1,Palmiers–Grand Marché direct (fictif),3,C00000,FFFFFF,1,1,regie-express,1
+l1,regie,L1,Embarcadère Nord–Embarcadère Sud (fictif),4,00B0F0,000000,1,1,regie-bateau,1

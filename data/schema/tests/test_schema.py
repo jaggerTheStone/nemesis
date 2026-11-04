@@ -14,7 +14,8 @@ import pytest
 from nemesis_schema.migrations import MIGRATIONS_DIR, apply_migrations, load_migrations
 from nemesis_schema.testing import Db
 
-SEED = Path(__file__).resolve().parents[2] / "fixtures_fictives" / "db" / "seed.sql"
+FIXTURES = Path(__file__).resolve().parents[2] / "fixtures_fictives"
+SEED = FIXTURES / "db" / "seed.sql"
 
 # Vocabulary and configuration tables: not business data, no is_fictional.
 NON_BUSINESS_TABLES = {"network.mode", "network.stop_kind", "ops.partition_policy"}
@@ -509,5 +510,9 @@ def test_development_seed_is_fictional_and_idempotent(fresh_database: dict[str, 
         "(select count(*) from network.stop where not is_fictional), "
         "(select count(*) from network.network_version)"
     )
-    assert tuple(cursor.fetchone()) == (4, 2, 0, 0, 1)
+    gtfs = FIXTURES / "gtfs"
+    stops = len((gtfs / "stops.txt").read_text(encoding="utf-8").splitlines()) - 1
+    routes = len((gtfs / "routes.txt").read_text(encoding="utf-8").splitlines()) - 1
+    # The seed and the GTFS feed come from the same description of the city (I0.5).
+    assert tuple(cursor.fetchone()) == (stops, routes, 0, 0, 1)
     connection.close()

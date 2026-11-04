@@ -83,7 +83,7 @@ La confiance est affichée par un badge à trois niveaux (10.3), plus un état �
 
 La politique est fixée par la règle 1.3.1 et l'hypothèse H-007 :
 
-- **Pour les tests automatiques** : `data/fixtures_fictives/`. On y trouve la ville « Lagune-Fictive », avec des noms inventés impossibles à confondre avec des lieux réels, et chaque enregistrement porte `is_fictional = true`.
+- **Pour les tests automatiques** : `data/fixtures_fictives/`. On y trouve la ville « Lagune-Fictive », avec des noms inventés impossibles à confondre avec des lieux réels, et chaque enregistrement porte `is_fictional = true`. Le GTFS (avec l'extension) et le jeu SQL sont générés à partir d'une seule description, avec une graine fixe ; le GTFS passe le validateur de MobilityData en CI ([README](../data/fixtures_fictives/README.md)).
 - **Pour les maquettes testées en gare** : des lieux réels issus d'OSM, mais des gares, lignes, prix et attentes fictifs, marqués « (fictif) ».
 - **Dans les builds de développement** : le bandeau « DONNÉES FICTIVES » s'affiche.
 - **Garde-fous** :

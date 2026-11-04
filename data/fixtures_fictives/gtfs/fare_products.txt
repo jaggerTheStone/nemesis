@@ -1,0 +1,6 @@
+fare_product_id,fare_product_name,fare_media_id,amount,currency,is_fictional
+xof-150,150 F (fictif),especes,150,XOF,1
+xof-200,200 F (fictif),especes,200,XOF,1
+xof-250,250 F (fictif),especes,250,XOF,1
+xof-300,300 F (fictif),especes,300,XOF,1
+xof-400,400 F (fictif),especes,400,XOF,1

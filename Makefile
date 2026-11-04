@@ -3,7 +3,7 @@
 #   make audit   audits de dépendances (réseau requis)
 #   make fmt     formatage automatique
 #   make fiches-pdf  PDF des fiches de terrain (Playwright requis)
-# Chaque écosystème a aussi sa cible : check-ts, check-rust, check-py, check-terrain, check-docs, check-mobile.
+# Chaque écosystème a aussi sa cible : check-ts, check-rust, check-py, check-terrain, check-fixtures, check-docs, check-mobile.
 #   make dev     environnement local (docker compose) : base migrée et jeu fictif
 #   make db-test tests du schéma contre une base PostGIS jetable
 
@@ -13,11 +13,11 @@ MOBILE := apps/mobile
 POSTGIS_IMAGE := $(shell awk '/image: postgis\//{print $$2; exit}' docker-compose.yml)
 DB_TEST_PORT ?= 55432
 
-.PHONY: check check-ts check-proto check-rust check-py check-terrain check-docs check-mobile \
+.PHONY: check check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile \
         audit audit-ts audit-rust audit-py fmt install fiches-pdf \
-        dev dev-down dev-reset db-migrate db-test
+        dev dev-down dev-reset db-migrate db-test gtfs-validate
 
-check: check-ts check-proto check-rust check-py check-terrain check-docs check-mobile
+check: check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile
 	@echo "Tous les contrôles sont au vert."
 
 install:
@@ -51,6 +51,18 @@ check-terrain:
 	uv run nemesis-terrain generer --verifier
 	uv run nemesis-terrain valider --fictif data/fixtures_fictives/terrain
 	uv run nemesis-terrain valider data/terrain/collecte
+
+# Jeu fictif Lagune-Fictive (I0.5) : GTFS et jeu SQL à jour par rapport au générateur.
+check-fixtures:
+	uv run nemesis-fixtures generer --verifier
+
+# Validateur canonique de MobilityData sur le GTFS fictif (image GHCR, Docker requis).
+GTFS_VALIDATOR_IMAGE := $(shell awk '/VALIDATOR_IMAGE:/{print $$2; exit}' .github/workflows/ci-gtfs.yml)
+gtfs-validate:
+	rm -rf data/work/gtfs && mkdir -p data/work/gtfs
+	cd data/fixtures_fictives/gtfs && zip -q -X ../../work/gtfs/lagune-fictive.zip ./*.txt
+	docker run --rm -v "$(CURDIR)/data/work/gtfs:/work" $(GTFS_VALIDATOR_IMAGE) -i /work/lagune-fictive.zip -o /work/rapport
+	uv run nemesis-fixtures verifier-rapport data/work/gtfs/rapport/report.json
 
 # Liens relatifs de toute la documentation Markdown.
 check-docs:

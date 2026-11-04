@@ -1,0 +1,3 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,is_fictional
+regie,Régie des transports de Lagune-Fictive (fictif),https://example.org/nemesis/lagune-fictive/regie,Africa/Abidjan,fr,1
+artisanal,Transport artisanal de Lagune-Fictive (fictif),https://example.org/nemesis/lagune-fictive/artisanal,Africa/Abidjan,fr,1

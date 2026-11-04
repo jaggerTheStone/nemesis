@@ -45,3 +45,10 @@ publication.
   - `docker-compose.yml` (PostGIS, Valkey, NATS, Caddy pour les tuiles), avec
     migration et jeu fictif au démarrage ; `make dev`, `make db-test`.
   - 23 tests du schéma et un workflow de CI « Base de données ».
+- I0.5 : jeu fictif « Lagune-Fictive ».
+  - Générateur `nemesis-fixtures` à graine fixe, avec une seule description de
+    la ville pour deux sorties.
+  - GTFS : fréquences, montée continue, Fares v2 et extension `ext_` (profils
+    publiés seulement à partir de 20 contributeurs).
+  - Jeu SQL de la base de développement.
+  - Validateur MobilityData en CI, avec rapport conservé ; `make gtfs-validate`.

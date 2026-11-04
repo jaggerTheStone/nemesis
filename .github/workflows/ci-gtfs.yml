@@ -1,0 +1,52 @@
+name: GTFS fictif (validateur MobilityData)
+
+on:
+  push:
+    paths:
+      - "data/fixtures_fictives/gtfs/**"
+      - "data/pipelines/src/nemesis_pipelines/fixtures/**"
+      - ".github/workflows/ci-gtfs.yml"
+  pull_request:
+    paths:
+      - "data/fixtures_fictives/gtfs/**"
+      - "data/pipelines/src/nemesis_pipelines/fixtures/**"
+      - ".github/workflows/ci-gtfs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Validateur canonique de MobilityData (partie 7.1), épinglé par empreinte.
+  VALIDATOR_IMAGE: ghcr.io/mobilitydata/gtfs-validator:8.0.1@sha256:26624464be966808662a78c85661b63a313ea936f3a3ee1dbb92c968415275ca
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Archive GTFS
+        run: |
+          mkdir -p work
+          cd data/fixtures_fictives/gtfs
+          zip -q -X ../../../work/lagune-fictive.zip ./*.txt
+      - name: Validateur MobilityData
+        run: docker run --rm -v "$PWD/work:/work" "$VALIDATOR_IMAGE" -i /work/lagune-fictive.zip -o /work/rapport
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances
+        run: uv sync --locked --all-packages
+      - name: Aucune erreur dans le rapport
+        run: uv run nemesis-fixtures verifier-rapport work/rapport/report.json
+      - name: Conserver le rapport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapport-validateur-gtfs-fictif
+          path: work/rapport
+          if-no-files-found: warn

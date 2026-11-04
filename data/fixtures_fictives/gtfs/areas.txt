@@ -1,0 +1,4 @@
+area_id,area_name,is_fictional
+nord,Lagune-Fictive Nord (fictif),1
+centre,Lagune-Fictive Centre (fictif),1
+sud,Lagune-Fictive Sud (fictif),1

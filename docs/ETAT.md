@@ -14,8 +14,9 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - I0.3, documents fondateurs et ADR, en attente de relecture par le porteur :
     - ARCHITECTURE, DATA, PRIVACY, COUTS, ALGORITHMES ;
     - ADR-001 à ADR-007 au statut « proposé ».
-  - I0.4, base de données et environnement local (`data/schema/README.md`).
-- **Prochain incrément** : I0.5, jeu `fixtures_fictives` complet, au format GTFS et avec l'extension du projet (ADR-007).
+  - I0.4, base de données et environnement local (`data/schema/README.md`) ;
+  - I0.5, jeu fictif « Lagune-Fictive » en GTFS et en SQL (`data/fixtures_fictives/README.md`).
+- **Prochain incrément** : I0.6, OpenAPI v0, Protocol Buffers et squelette de l'API sur les fixtures.
 - **En attente côté porteur** :
   - une équipe sur place pour lancer les collectes (Q-03) ;
   - les contreparties des participants et des validateurs ;
@@ -29,7 +30,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
   - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
-## Ce que contient le dépôt après I0.4
+## Ce que contient le dépôt après I0.5
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
@@ -40,7 +41,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `packages/proto` | `EstimateMeta` (fraîcheur, confiance, source), contrôlé par buf | lint |
 | `services/routing` | Espace Cargo : `routing-core` et le binaire `routing` | 4 |
 | `services/ml` | FastAPI, `GET /health` | 1 |
-| `data/pipelines` | Vérification d'empreinte SHA-256 ; données de terrain (`nemesis-terrain` : schémas, validateur, modèles et dictionnaire générés, rapport d'icônes) | 3 + 47 |
+| `data/pipelines` | Vérification d'empreinte SHA-256 ; données de terrain (`nemesis-terrain`) ; générateur du jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, résumé du rapport du validateur) | 3 + 47 + 11 |
 | `data/schema` | Sept migrations dbmate (40 tables, partitions, rôles, audit chaîné, versions du réseau), jeu de départ fictif ; `make db-test` | 23 |
 | `tools/simulator` | Générateur aléatoire à graine fixe | 2 |
 | `apps/mobile` | Flutter 3.47.7, `minSdk 26`, traductions ARB | 1 |
@@ -62,6 +63,8 @@ Garde-fous de la chaîne d'approvisionnement : pnpm refuse les versions publiée
   - le stockage des images de GitHub (GHCR) est bloqué : l'image dbmate est prise sur Docker Hub, avec la même empreinte.
 - **Images épinglées par empreinte** dans `docker-compose.yml` (PostGIS 16-3.5, Valkey 9.1.1, NATS 2.15.0, Caddy 2.10.2, dbmate 2.36.0). Le workflow « Base de données » vérifie que l'image PostGIS de la CI est la même.
 - **Maintenance de la base** : `ops.maintain_partitions()` et `ops.purge_expired()` ne sont pas encore planifiées. En développement, elles tournent au démarrage ; leur planification quotidienne relève de la phase 1.
+- **Validateur GTFS** : MobilityData 8.0.1, épinglé par empreinte depuis GHCR. Il ne tourne qu'en CI, parce que GHCR est bloqué dans l'environnement cloud. Sa date de publication n'a pas pu être vérifiée depuis l'environnement ; c'est une version corrective de la 8.0.0.
+- **Jeu fictif** : une base de développement créée avant I0.5 doit être recréée (`make dev-reset`, puis `make dev`).
 - **Valkey** remplace Redis pour une raison de licence (ADR-005, mise à jour) : dans la documentation, « Redis » désigne ce stockage compatible.
 - **NestJS 12** est distribué en ESM uniquement : l'API est un paquet ESM, avec des imports relatifs en `.js`. Point à reprendre dans l'ADR-002, avec le choix de Fastify.
 - **Starlette** déprécie `httpx` pour son client de test : on utilise `httpx2`.

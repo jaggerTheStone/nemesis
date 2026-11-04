@@ -7,6 +7,7 @@ dependencies = []
 
 [project.scripts]
 nemesis-terrain = "nemesis_pipelines.terrain.cli:main"
+nemesis-fixtures = "nemesis_pipelines.fixtures.cli:main"
 
 [build-system]
 requires = ["hatchling"]

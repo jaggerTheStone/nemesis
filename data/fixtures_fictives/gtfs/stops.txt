@@ -1,0 +1,36 @@
+stop_id,stop_name,stop_lat,stop_lon,location_type,is_fictional
+flamboyants,Gare des Flamboyants (fictif),2.045000,-4.020000,0,1
+palmiers,Gare des Palmiers (fictif),2.040000,-3.965000,0,1
+cocotiers,Gare des Cocotiers (fictif),2.005000,-4.040000,0,1
+baobab,Gare du Baobab (fictif),2.010000,-4.000000,0,1
+grand-marche,Gare du Grand Marché (fictif),1.995000,-3.980000,0,1
+lagune-sud,Gare de la Lagune-Sud (fictif),1.955000,-4.010000,0,1
+embarcadere-nord,Embarcadère Nord (fictif),1.986000,-3.990000,0,1
+embarcadere-sud,Embarcadère Sud (fictif),1.966000,-3.990000,0,1
+pont,Arrêt du Pont (fictif),1.978000,-4.045000,0,1
+arret-01,Carrefour des Manguiers (fictif),2.018517,-4.004807,0,1
+arret-02,Arrêt des Fromagers (fictif),2.027282,-4.009927,0,1
+arret-03,Rond-point des Acacias (fictif),2.036319,-4.014711,0,1
+arret-04,Carrefour des Hibiscus (fictif),2.002123,-3.990099,0,1
+arret-05,Arrêt des Bougainvilliers (fictif),2.006041,-3.976273,0,1
+arret-06,Rond-point des Tecks (fictif),2.017270,-3.972349,0,1
+arret-07,Carrefour des Karités (fictif),2.028748,-3.968747,0,1
+arret-08,Arrêt des Avocatiers (fictif),1.996382,-4.041641,0,1
+arret-09,Rond-point des Goyaviers (fictif),1.986769,-4.043400,0,1
+arret-10,Carrefour des Citronniers (fictif),1.960379,-4.018974,0,1
+arret-11,Arrêt des Orangers (fictif),1.966110,-4.027506,0,1
+arret-12,Rond-point des Papayers (fictif),1.972005,-4.036345,0,1
+arret-13,Carrefour des Bambous (fictif),2.015027,-4.034801,0,1
+arret-14,Arrêt des Lauriers (fictif),2.024950,-4.029657,0,1
+arret-15,Rond-point des Frangipaniers (fictif),2.034875,-4.024994,0,1
+arret-16,Carrefour des Jacarandas (fictif),2.044176,-4.008806,0,1
+arret-17,Arrêt des Eucalyptus (fictif),2.042897,-3.997910,0,1
+arret-18,Rond-point des Filaos (fictif),2.042310,-3.986728,0,1
+arret-19,Carrefour des Kapokiers (fictif),2.040792,-3.975606,0,1
+arret-20,Arrêt des Irokos (fictif),1.960334,-4.000268,0,1
+arret-21,Rond-point des Ébéniers (fictif),2.008902,-4.010095,0,1
+arret-22,Carrefour des Acajous (fictif),2.007409,-4.019910,0,1
+arret-23,Arrêt des Rôniers (fictif),2.006344,-4.029895,0,1
+arret-24,Rond-point des Raphias (fictif),2.017687,-3.991027,0,1
+arret-25,Carrefour des Caïlcédrats (fictif),2.024789,-3.982353,0,1
+arret-26,Arrêt des Nérés (fictif),2.032677,-3.973898,0,1

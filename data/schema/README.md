@@ -45,4 +45,4 @@ Schéma de la base PostgreSQL 16, avec PostGIS et pg_trgm (partie 7.2, ADR-005, 
 ## Données de développement
 
 - `dev/roles.sql` crée les comptes de connexion locaux (`nemesis_api_dev`, etc.). Mot de passe : variable `NEMESIS_DEV_PASSWORD`, voir `.env.example`.
-- `../fixtures_fictives/db/seed.sql` charge la ville fictive « Lagune-Fictive », placée en pleine mer pour ne jamais être confondue avec un lieu réel (H-027). Le jeu complet, généré, arrive en I0.5.
+- `../fixtures_fictives/db/seed.sql` charge la ville fictive « Lagune-Fictive », placée en pleine mer pour ne jamais être confondue avec un lieu réel (H-027). Ce fichier est généré à partir de la même description que le GTFS fictif ([data/fixtures_fictives](../fixtures_fictives/README.md)).

@@ -1,0 +1,13 @@
+route_id,body_color,color_pattern,markings,announced_as,source,verified_at,is_fictional
+g1,blanc,bande bleue,Inscription « FLAMBOYANTS–GRAND MARCHÉ »,Grand Marché ! Grand Marché !,fixtures_fictives,2026-11-01,1
+g2,blanc,bande bleue,Inscription « PALMIERS–GRAND MARCHÉ »,Palmiers ! Palmiers !,fixtures_fictives,2026-11-01,1
+g3,blanc,bande verte,Inscription « COCOTIERS–LAGUNE-SUD »,Lagune-Sud ! Lagune-Sud !,fixtures_fictives,2026-11-01,1
+g4,blanc,bande rouge,Inscription « FLAMBOYANTS–LAGUNE-SUD »,Lagune-Sud par le pont !,fixtures_fictives,2026-11-01,1
+w1,jaune,,Inscription « FLAMBOYANTS–PALMIERS »,,fixtures_fictives,2026-11-01,1
+w2,vert,,Inscription « BAOBAB–EMBARCADÈRE NORD »,,fixtures_fictives,2026-11-01,1
+w3,bleu,,Inscription « LAGUNE-SUD–EMBARCADÈRE SUD »,,fixtures_fictives,2026-11-01,1
+i1,beige,bande marron,Inscription « BAOBAB–LAGUNE-SUD »,,fixtures_fictives,2026-11-01,1
+i2,beige,bande marron,Inscription « PALMIERS–COCOTIERS »,,fixtures_fictives,2026-11-01,1
+b1,orange,,Inscription « FLAMBOYANTS–LAGUNE-SUD PAR LE PONT »,,fixtures_fictives,2026-11-01,1
+e1,orange,bande rouge,Inscription « PALMIERS–GRAND MARCHÉ DIRECT »,,fixtures_fictives,2026-11-01,1
+l1,blanc,,Inscription « EMBARCADÈRE NORD–EMBARCADÈRE SUD »,,fixtures_fictives,2026-11-01,1

@@ -94,6 +94,11 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Ville « Lagune-Fictive » : géographie synthétique, 3 communes, environ 8 gares, environ 12 lignes couvrant gbaka, wôrô-wôrô communal et intercommunal, bus et bateau-bus ; profils de service par tranche de 15 minutes ; prix ; repères avec alias et variantes orales.
 - Fourni au format GTFS (`frequencies.txt`, `continuous_pickup`, GTFS-Fares v2) avec l'extension du projet ; généré par un script à graine fixe ; chaque enregistrement porte `is_fictional = true`.
 - **Terminé quand** : le validateur GTFS de MobilityData passe sur le jeu, avec un rapport conservé en CI ; le jeu se charge en base.
+- **Réalisé** (2026-11-04) : générateur `nemesis-fixtures`, avec une seule description de la ville et une graine fixe.
+  - GTFS : 35 arrêts, 12 lignes, 72 courses à fréquences, Fares v2 et huit fichiers `ext_`.
+  - Jeu SQL chargé par `docker compose up` (0,3 s, rejouable).
+  - Validateur MobilityData 8.0.1 en CI, avec rapport conservé en artefact ; 11 tests du générateur.
+  - Écart au plan : 27 arrêts informels en plus des 8 gares, pour exercer la montée continue.
 
 ### I0.6 — OpenAPI v0, Protocol Buffers et squelette de l'API
 
