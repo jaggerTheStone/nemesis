@@ -1,0 +1,90 @@
+name: Base de données
+
+on:
+  push:
+    paths:
+      - "data/schema/**"
+      - "data/fixtures_fictives/db/**"
+      - "docker-compose.yml"
+      - "infra/docker/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/ci-database.yml"
+  pull_request:
+    paths:
+      - "data/schema/**"
+      - "data/fixtures_fictives/db/**"
+      - "docker-compose.yml"
+      - "infra/docker/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/ci-database.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  schema:
+    name: Tests du schéma
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgis:
+        # Même image que docker-compose.yml.
+        image: postgis/postgis:16-3.5@sha256:94146ac37bc61e2322f88016056c5920729cb8c64c8542ed590af8fc2abdac07
+        env:
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier que l'image est celle de docker-compose.yml
+        run: grep -q "postgis/postgis:16-3.5@sha256:94146ac37bc61e2322f88016056c5920729cb8c64c8542ed590af8fc2abdac07" docker-compose.yml
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances
+        run: uv sync --locked --all-packages
+      - name: Tests du schéma (migrations, contraintes, rôles, partitions, audit)
+        env:
+          NEMESIS_TEST_DATABASE_URL: postgres://postgres:test@localhost:5432/postgres
+          NEMESIS_REQUIRE_DB: "1"
+        run: uv run pytest data/schema -rs
+
+  compose:
+    name: Environnement local (docker compose up)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fichier de tuiles de test
+        run: mkdir -p data/work/tiles && printf 'PMTiles-test-0123456789' > data/work/tiles/essai.pmtiles
+      - name: Démarrer l'environnement
+        run: |
+          docker compose up -d --wait
+          docker compose wait migrate
+      - name: Vérifier chaque service
+        run: |
+          set -e
+          stops=$(docker compose exec -T db psql -U nemesis_admin -d nemesis -Atc "select count(*) from network.stop")
+          test "$stops" = "4"
+          docker compose exec -T valkey valkey-cli ping | grep -q PONG
+          curl -fsS http://127.0.0.1:8222/healthz | grep -q ok
+          code=$(curl -s -o /dev/null -w "%{http_code}" -H "Range: bytes=0-7" http://127.0.0.1:8080/essai.pmtiles)
+          test "$code" = "206"
+      - name: Relancer (le jeu de départ doit être idempotent)
+        run: |
+          docker compose run --rm migrate
+      - name: Journaux en cas d'échec
+        if: failure()
+        run: docker compose logs
+      - name: Arrêter
+        if: always()
+        run: docker compose down -v

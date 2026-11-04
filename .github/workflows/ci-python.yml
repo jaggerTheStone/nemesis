@@ -5,6 +5,7 @@ on:
     paths:
       - "services/ml/**"
       - "data/pipelines/**"
+      - "data/schema/**"
       - "tools/simulator/**"
       - "data/terrain/**"
       - "data/fixtures_fictives/**"
@@ -18,6 +19,7 @@ on:
     paths:
       - "services/ml/**"
       - "data/pipelines/**"
+      - "data/schema/**"
       - "tools/simulator/**"
       - "data/terrain/**"
       - "data/fixtures_fictives/**"

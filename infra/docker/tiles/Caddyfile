@@ -1,0 +1,14 @@
+# Serveur de tuiles statique pour le développement : fichiers PMTiles lus par
+# requêtes de plages d'octets (Range), que file_server gère nativement.
+:8080 {
+	respond /healthz 200
+
+	header {
+		Access-Control-Allow-Origin *
+		Access-Control-Allow-Headers Range
+		Access-Control-Expose-Headers "Content-Length, Content-Range, ETag"
+	}
+
+	root * /srv/tiles
+	file_server
+}

@@ -81,3 +81,9 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
   - pour les tests de maquettes, en plus des minimums de la partie 10.1 : au moins 1 personne qui préfère le dioula, 2 femmes et 1 téléphone basique par tour ;
   - pour le test des icônes, au moins un tiers de personnes qui lisent difficilement.
 - **H-026** (proposée) — Le jeu de 300 requêtes sert uniquement au test. On vise 400 requêtes pour développer la clé phonétique et les synonymes sur 100 requêtes distinctes ; sinon, on répartit en 100 pour le développement et 200 pour le test, et on le signale.
+
+## Base de données (I0.4)
+
+- **H-027** (proposée) — La ville fictive « Lagune-Fictive » est placée en pleine mer, dans le golfe de Guinée (autour de 2° N et 4° O). Ses coordonnées ne peuvent donc jamais coïncider avec un lieu réel, tout en restant dans la projection UTM 30 N d'Abidjan. Cela précise la « géographie synthétique » de H-007.
+- **H-028** (proposée) — Les comptes de connexion de développement (`nemesis_*_dev`) ont un mot de passe local par défaut, modifiable dans `.env`. Ils n'existent que dans l'environnement Docker Compose et n'exposent leurs ports que sur 127.0.0.1. En production, les comptes sont créés par l'exploitation, hors du dépôt.
+

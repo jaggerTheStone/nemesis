@@ -14,7 +14,15 @@ make check     # lint, typage et tests de tous les composants
 make audit     # audits de dépendances (réseau requis)
 ```
 
-L'environnement local complet (`docker compose up`) arrive avec l'incrément I0.4.
+Environnement local, avec Docker :
+
+```bash
+make dev       # PostgreSQL et PostGIS, Valkey, NATS, tuiles ; base migrée et jeu fictif
+make db-test   # tests du schéma contre une base jetable
+make dev-down  # arrêt (make dev-reset efface aussi les données)
+```
+
+`docker compose up` seul fonctionne aussi. Les ports ne sont exposés que sur 127.0.0.1, et les variables sont décrites dans `.env.example`.
 
 ## Organisation du dépôt
 
@@ -29,6 +37,7 @@ L'environnement local complet (`docker compose up`) arrive avec l'incrément I0.
 | `services/channels` | WhatsApp, SMS, USSD, serveur vocal |
 | `packages/proto` | Schémas Protocol Buffers partagés |
 | `data/pipelines` | Imports OSM et GTFS, tuiles, packs hors ligne |
+| `data/schema` | Schéma de la base : migrations dbmate et tests |
 | `data/fixtures_fictives` | Jeux de test fictifs |
 | `data/terrain` | Modèles de saisie et données collectées sur le terrain |
 | `tools/simulator` | Simulateur par agents |

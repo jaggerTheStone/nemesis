@@ -36,3 +36,12 @@ publication.
     calibration, itinéraires, prix, géocodage, détection.
   - ADR-001 à ADR-007, au statut « proposé ».
   - Vérification des liens de la documentation en CI.
+- I0.4 : base de données et environnement local.
+  - Sept migrations dbmate : schémas `network`, `mobility`, `identity` et `ops`,
+    40 tables, partitions quotidiennes, rôles séparés, journal d'audit chaîné,
+    versions du réseau (ADR-008).
+  - Contraintes : cohérence des données fictives et entre villes, honnêteté
+    des estimations, conservation.
+  - `docker-compose.yml` (PostGIS, Valkey, NATS, Caddy pour les tuiles), avec
+    migration et jeu fictif au démarrage ; `make dev`, `make db-test`.
+  - 23 tests du schéma et un workflow de CI « Base de données ».

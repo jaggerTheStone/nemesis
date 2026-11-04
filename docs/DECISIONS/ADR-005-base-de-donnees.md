@@ -40,7 +40,7 @@ Ces volumes concernent surtout le capteur passif et le mode Pro, qui arrivent en
 | Partitions | Créées à l'avance et supprimées à échéance par une fonction de maintenance planifiée. Durées de conservation de [PRIVACY.md](../PRIVACY.md), à valider : positions brutes 30 jours, observations brutes 12 mois |
 | Agrégats | Tables ordinaires (`queue_state`, profils d'attente et de prix, vitesses par tronçon), sans limite de durée car anonymes, avec k ≥ 20 pour tout export |
 | Géométries | WGS 84 (EPSG:4326). Les calculs de distance se font dans la projection métrique de la ville (EPSG:32630 pour Abidjan), déclarée dans `city` (H-014) |
-| État en direct | Redis, reconstructible à partir de PostgreSQL et du flux NATS |
+| État en direct | Stockage compatible Redis (Valkey, voir plus bas), reconstructible à partir de PostgreSQL et du flux NATS |
 | Migrations | SQL brut versionné, indépendant du langage de l'API (H-013) |
 
 **Version.** On reste sur PostgreSQL 16, comme le demande la partie 9.1. Des versions plus récentes existent : passer à une version majeure plus récente fera l'objet d'une décision avant la mise en production, en fonction de la durée de support et des extensions disponibles.
@@ -52,3 +52,15 @@ Ces volumes concernent surtout le capteur passif et le mode Pro, qui arrivent en
 - **La conservation est garantie par la structure** : supprimer la partition d'un jour efface toutes ses lignes d'un coup, sans requête de suppression coûteuse. C'est un argument fort pour le dossier ARTCI.
 - **Réversibilité** : bonne. Passer à TimescaleDB transforme les tables partitionnées en hypertables, sans changer l'API.
 - **Mise en œuvre** : le schéma complet et ses tests arrivent en I0.4.
+
+## Mise à jour du 2026-11-04 (I0.4, mise en œuvre)
+
+- **Valkey plutôt que Redis.** Depuis la version 8, Redis n'est plus sous licence permissive (AGPL, RSAL ou SSPL). Or la politique du projet n'accepte que des dépendances sous licence permissive (Q-06). Valkey est un fork de Redis sous licence BSD, compatible au niveau du protocole. Dans la documentation, « Redis » désigne désormais ce stockage compatible.
+- **Migrations par dbmate** (licence MIT), au format SQL brut `-- migrate:up` / `-- migrate:down`. dbmate est utilisé par Docker Compose et en CI ; les tests rejouent les mêmes fichiers.
+- **Contraintes ajoutées par rapport à la version initiale de cet ADR** :
+  - **Cohérence fictive** : clé étrangère composite `(city_id, is_fictional)` vers `network.city`.
+  - **Cohérence entre villes** : les références passent par `(id, city_id)`.
+  - **Honnêteté (règle 1.3.2)** : la confiance, la source et la date de dernière observation sont obligatoires sur les états publiés et les estimations.
+  - **Audit** : journal en ajout seul, chaîné par empreintes, vérifiable par `ops.verify_audit_chain()`.
+- **Maintenance** : `ops.maintain_partitions()` crée les partitions de 7 jours en arrière à 7 jours en avance, et supprime celles qui ont dépassé leur durée de conservation. `ops.purge_expired()` purge les tables non partitionnées. Leur planification quotidienne reste à mettre en place en phase 1. En développement, elles sont lancées au démarrage.
+- **Versionnement du réseau** : voir l'[ADR-008](ADR-008-versionnement-reseau.md).

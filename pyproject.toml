@@ -11,11 +11,12 @@ package = false
 exclude-newer = "2026-10-21T00:00:00Z"
 
 [tool.uv.workspace]
-members = ["services/ml", "data/pipelines", "tools/simulator"]
+members = ["services/ml", "data/pipelines", "data/schema", "tools/simulator"]
 
 [tool.uv.sources]
 nemesis-ml = { workspace = true }
 nemesis-pipelines = { workspace = true }
+nemesis-schema = { workspace = true }
 nemesis-simulator = { workspace = true }
 
 [dependency-groups]
@@ -29,8 +30,8 @@ target-version = "py312"
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["nemesis_ml", "nemesis_pipelines", "nemesis_simulator"]
+known-first-party = ["nemesis_ml", "nemesis_pipelines", "nemesis_schema", "nemesis_simulator"]
 
 [tool.pytest.ini_options]
-testpaths = ["services/ml/tests", "data/pipelines/tests", "tools/simulator/tests"]
+testpaths = ["services/ml/tests", "data/pipelines/tests", "data/schema/tests", "tools/simulator/tests"]
 addopts = ["--import-mode=importlib", "--strict-markers"]

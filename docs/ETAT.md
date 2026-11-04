@@ -14,12 +14,14 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - I0.3, documents fondateurs et ADR, en attente de relecture par le porteur :
     - ARCHITECTURE, DATA, PRIVACY, COUTS, ALGORITHMES ;
     - ADR-001 à ADR-007 au statut « proposé ».
-- **Prochain incrément** : I0.4, schéma de base de données complet (partie 7.2, ADR-005) et `docker compose up`.
+  - I0.4, base de données et environnement local (`data/schema/README.md`).
+- **Prochain incrément** : I0.5, jeu `fixtures_fictives` complet, au format GTFS et avec l'extension du projet (ADR-007).
 - **En attente côté porteur** :
   - une équipe sur place pour lancer les collectes (Q-03) ;
   - les contreparties des participants et des validateurs ;
   - la relecture juridique des consentements ;
-  - la validation des hypothèses H-022 à H-026 ;
+  - la validation des hypothèses H-022 à H-028 ;
+  - la relecture de l'ADR-008 (versionnement du réseau) ;
   - la relecture des documents d'I0.3, en particulier :
     - ADR-004, hébergement : décision du porteur ;
     - ADR-006 : écart signalé à la partie 9.1 ;
@@ -27,7 +29,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
   - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
-## Ce que contient le dépôt après I0.2
+## Ce que contient le dépôt après I0.4
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
@@ -39,10 +41,11 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `services/routing` | Espace Cargo : `routing-core` et le binaire `routing` | 4 |
 | `services/ml` | FastAPI, `GET /health` | 1 |
 | `data/pipelines` | Vérification d'empreinte SHA-256 ; données de terrain (`nemesis-terrain` : schémas, validateur, modèles et dictionnaire générés, rapport d'icônes) | 3 + 47 |
+| `data/schema` | Sept migrations dbmate (40 tables, partitions, rôles, audit chaîné, versions du réseau), jeu de départ fictif ; `make db-test` | 23 |
 | `tools/simulator` | Générateur aléatoire à graine fixe | 2 |
 | `apps/mobile` | Flutter 3.47.7, `minSdk 26`, traductions ARB | 1 |
 
-Commandes : `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
+Commandes : `make dev` (environnement Docker Compose), `make db-test` (tests du schéma, Docker requis), `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
 
 ## Versions figées
 
@@ -53,7 +56,13 @@ Garde-fous de la chaîne d'approvisionnement : pnpm refuse les versions publiée
 ## Points d'attention pour la reprise
 
 - **Environnement cloud** (H-021) : `download.geofabrik.de`, `hub.tumidata.org`, `transit.land`, `dl.google.com` et `github.com` hors de ce dépôt sont bloqués. Les imports (I0.7) et le build Android (I0.11) ne sont vérifiables qu'en GitHub Actions. Flutter s'installe depuis `storage.googleapis.com`, qui reste accessible.
-- **Docker** est installé, mais son démon n'est pas lancé dans l'environnement cloud ; à démarrer pour vérifier `docker compose up` en I0.4.
+- **Docker dans l'environnement cloud** :
+  - le démon n'est pas lancé au démarrage : `nohup dockerd > /tmp/dockerd.log 2>&1 &` suffit ;
+  - Docker Hub est accessible, mais limite le nombre de requêtes anonymes ;
+  - le stockage des images de GitHub (GHCR) est bloqué : l'image dbmate est prise sur Docker Hub, avec la même empreinte.
+- **Images épinglées par empreinte** dans `docker-compose.yml` (PostGIS 16-3.5, Valkey 9.1.1, NATS 2.15.0, Caddy 2.10.2, dbmate 2.36.0). Le workflow « Base de données » vérifie que l'image PostGIS de la CI est la même.
+- **Maintenance de la base** : `ops.maintain_partitions()` et `ops.purge_expired()` ne sont pas encore planifiées. En développement, elles tournent au démarrage ; leur planification quotidienne relève de la phase 1.
+- **Valkey** remplace Redis pour une raison de licence (ADR-005, mise à jour) : dans la documentation, « Redis » désigne ce stockage compatible.
 - **NestJS 12** est distribué en ESM uniquement : l'API est un paquet ESM, avec des imports relatifs en `.js`. Point à reprendre dans l'ADR-002, avec le choix de Fastify.
 - **Starlette** déprécie `httpx` pour son client de test : on utilise `httpx2`.
 - **Audit** : `pnpm audit` signale une vulnérabilité modérée dans `minimatch`, tirée par ESLint, en développement seulement. Le seuil bloquant est « élevée » ; à corriger dès qu'ESLint publie une version corrigée.

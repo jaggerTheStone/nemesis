@@ -76,8 +76,18 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - `is_fictional` sur toutes les tables métier ; une contrainte empêche la publication d'une version de réseau contenant des enregistrements fictifs.
 - Identité et mobilité dans deux schémas, avec deux rôles distincts (H-016) ; `audit_log` en ajout seul, chaîné par empreintes.
 - `observation` et `position_event` partitionnées par jour ; fonction de maintenance qui crée et purge les partitions selon les durées de conservation.
-- `docker-compose.yml` : PostgreSQL 16 + PostGIS, Redis, NATS JetStream, serveur de tuiles statique (requêtes par plages d'octets pour PMTiles) ; migrations et fixtures appliquées au démarrage.
+- `docker-compose.yml` : PostgreSQL 16 + PostGIS, Redis (Valkey), NATS JetStream, serveur de tuiles statique (requêtes par plages d'octets pour PMTiles) ; migrations et fixtures appliquées au démarrage.
 - **Terminé quand** : la base se crée de zéro par `docker compose up` ; les tests de schéma (contraintes, rôles, partitions, refus des fixtures à la publication) passent en CI.
+- **Réalisé** (2026-11-04) :
+  - sept migrations dbmate : 40 tables dans quatre schémas, trois tables partitionnées par jour, rôles, audit chaîné, maintenance ;
+  - `docker-compose.yml` avec PostGIS, Valkey, NATS, Caddy et le service `migrate` ;
+  - jeu de départ fictif ;
+  - 23 tests du schéma (`make db-test`) et un workflow de CI dédié.
+
+  Choix signalés :
+  - Valkey à la place de Redis, pour la licence ;
+  - versionnement du réseau décrit dans l'ADR-008 ;
+  - planification quotidienne de la maintenance reportée à la phase 1 : en développement, elle est lancée au démarrage.
 
 ### I0.5 — Jeu `fixtures_fictives`
 

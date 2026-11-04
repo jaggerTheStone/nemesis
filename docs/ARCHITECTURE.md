@@ -66,7 +66,7 @@ flowchart TB
 
     subgraph donnees["Données"]
         pg[("PostgreSQL 16<br/>PostGIS, pg_trgm")]
-        redis[("Redis<br/>état en direct")]
+        redis[("Valkey, compatible Redis<br/>état en direct")]
         nats[["NATS JetStream<br/>observations"]]
         objet[("Stockage objet et CDN<br/>PMTiles, packs ville")]
     end
@@ -111,7 +111,7 @@ sequenceDiagram
     participant A as Appli
     participant API as API /v1/routes
     participant R as Moteur Rust
-    participant Re as Redis (état en direct)
+    participant Re as Valkey (état en direct)
     A->>API: origine, destination, heure, préférences
     API->>R: requête et version du réseau
     R->>Re: attentes et prix en direct des arrêts candidats
@@ -140,7 +140,7 @@ sequenceDiagram
     participant N as NATS JetStream
     participant Ag as Module aggregation
     participant DB as PostgreSQL
-    participant Re as Redis
+    participant Re as Valkey
     A->>API: signalement, clé d'idempotence, horodatage local
     API->>API: contrôles (distance, débit, intégrité, vitesse impossible)
     API->>N: observation acceptée, avec son poids initial
@@ -196,6 +196,7 @@ Un curateur propose une modification dans le back-office (`change_request`). Un 
 |-------|--------------------|
 | Flutter ou Kotlin | ADR-001, après mesure sur le prototype (I0.11) |
 | Moteur A ou B | ADR-003, après le spike (I0.8) |
+| Versionnement du réseau | ADR-008 (proposé) |
 | Hébergement et transfert des données | ADR-004 : décision du porteur du projet |
 | Mode Pro dans la même appli ou dans une appli séparée | ADR à rédiger avant la V2 (partie 6.1) |
 | Schéma des tuiles (OpenMapTiles ou Shortbread) et attribution | I0.7, voir [DATA.md](DATA.md) |

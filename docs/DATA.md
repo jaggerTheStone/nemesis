@@ -41,7 +41,7 @@ Les entités de la partie 7.2 sont réparties en quatre schémas (ADR-005) :
 | `identity` | `user`, `device`, `trust_score`, `contribution` (lien vers l'appareil), `reward_ledger` |
 | `ops` | `audit_log`, état des flux partenaires |
 
-Le schéma complet, ses migrations et ses tests arrivent en I0.4.
+Le schéma est en place depuis I0.4 : [data/schema](../data/schema/README.md), avec ses migrations, ses tests et les règles qu'il impose (données fictives, honnêteté des estimations, conservation, audit).
 
 ## Fraîcheur
 

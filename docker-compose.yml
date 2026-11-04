@@ -1,0 +1,91 @@
+# Environnement de développement local (I0.4) : « docker compose up -d --wait ».
+# Images épinglées par empreinte (versions publiées depuis plus de deux semaines).
+# Ports exposés sur 127.0.0.1 uniquement. Variables : voir .env.example.
+name: nemesis
+
+x-database-url: &database-url postgres://nemesis_admin:${NEMESIS_DB_PASSWORD:-nemesis_dev}@db:5432/nemesis?sslmode=disable
+
+services:
+  db:
+    image: postgis/postgis:16-3.5@sha256:94146ac37bc61e2322f88016056c5920729cb8c64c8542ed590af8fc2abdac07
+    environment:
+      POSTGRES_DB: nemesis
+      POSTGRES_USER: nemesis_admin
+      POSTGRES_PASSWORD: ${NEMESIS_DB_PASSWORD:-nemesis_dev}
+    ports:
+      - "127.0.0.1:${NEMESIS_DB_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nemesis_admin -d nemesis"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # Migrations (dbmate), comptes de développement, jeu fictif, partitions.
+  migrate:
+    image: amacneil/dbmate:2.36.0@sha256:520c740c6e0ad73fde2cd1ea7e2b779aaf789d22aca8858f87a478e7094535fb
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: *database-url
+      DBMATE_MIGRATIONS_DIR: /sql/migrations
+      DBMATE_NO_DUMP_SCHEMA: "true"
+      NEMESIS_DEV_PASSWORD: ${NEMESIS_DEV_PASSWORD:-nemesis_dev}
+    volumes:
+      - ./data/schema/migrations:/sql/migrations:ro
+      - ./data/schema/dev:/sql/dev:ro
+      - ./data/fixtures_fictives/db:/sql/fixtures:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -e
+        dbmate --wait up
+        psql "$$DATABASE_URL" -q -v ON_ERROR_STOP=1 -v dev_password="$$NEMESIS_DEV_PASSWORD" -f /sql/dev/roles.sql
+        psql "$$DATABASE_URL" -q -v ON_ERROR_STOP=1 -f /sql/fixtures/seed.sql
+        psql "$$DATABASE_URL" -q -v ON_ERROR_STOP=1 -c "select count(*) from ops.maintain_partitions()" > /dev/null
+        echo "Base prête."
+    restart: "no"
+
+  valkey:
+    image: valkey/valkey:9.1.1-alpine@sha256:15568b9cb7eb67f4aed4de018c23f13d344e0e6437b31fe8fb8823dc81ebb3a9
+    ports:
+      - "127.0.0.1:${NEMESIS_VALKEY_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  nats:
+    image: nats:2.15.0-alpine@sha256:ac8f88a6494bffc2c2a5289a0ca61cb28a9145c11ba5677cf24265d07f46d8d4
+    command: ["--jetstream", "--store_dir", "/data", "--http_port", "8222"]
+    ports:
+      - "127.0.0.1:${NEMESIS_NATS_PORT:-4222}:4222"
+      - "127.0.0.1:${NEMESIS_NATS_MONITOR_PORT:-8222}:8222"
+    volumes:
+      - nats-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8222/healthz"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # Tuiles PMTiles produites par data/pipelines (I0.7) dans data/work/tiles.
+  tiles:
+    image: caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
+    volumes:
+      - ./infra/docker/tiles/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./data/work/tiles:/srv/tiles:ro
+    ports:
+      - "127.0.0.1:${NEMESIS_TILES_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  db-data:
+  nats-data:
