@@ -52,3 +52,9 @@ publication.
     publiés seulement à partir de 20 contributeurs).
   - Jeu SQL de la base de développement.
   - Validateur MobilityData en CI, avec rapport conservé ; `make gtfs-validate`.
+
+### Corrigé
+
+- `make dev` et la CI ne dépendent plus de la durée de la migration :
+  `docker compose up --wait` échouait parfois quand le conteneur de migration se
+  terminait pendant l'attente.

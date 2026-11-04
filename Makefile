@@ -99,9 +99,12 @@ fmt:
 	cd $(MOBILE) && dart format lib test
 
 # Environnement local : PostgreSQL et PostGIS, Valkey, NATS, serveur de tuiles.
+# Les services permanents d'abord, puis la migration en avant-plan : « up --wait »
+# échouerait si le conteneur de migration se terminait pendant l'attente.
+DEV_SERVICES := db valkey nats tiles
 dev:
-	docker compose up -d --wait
-	docker compose wait migrate
+	docker compose up -d --wait $(DEV_SERVICES)
+	docker compose run --rm migrate
 	@echo "Environnement prêt : base sur 127.0.0.1:5432, tuiles sur http://127.0.0.1:8080"
 
 dev-down:

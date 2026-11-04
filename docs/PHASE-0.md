@@ -97,7 +97,8 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - **Réalisé** (2026-11-04) : générateur `nemesis-fixtures`, avec une seule description de la ville et une graine fixe.
   - GTFS : 35 arrêts, 12 lignes, 72 courses à fréquences, Fares v2 et huit fichiers `ext_`.
   - Jeu SQL chargé par `docker compose up` (0,3 s, rejouable).
-  - Validateur MobilityData 8.0.1 en CI, avec rapport conservé en artefact ; 11 tests du générateur.
+  - Validateur MobilityData 8.0.1 en CI, avec rapport conservé en artefact : 0 erreur, 0 avertissement. Les 3 informations restantes sont attendues : fichiers `ext_`, colonne `is_fictional`, calendrier jusqu'en 2030.
+  - 11 tests du générateur.
   - Écart au plan : 27 arrêts informels en plus des 8 gares, pour exercer la montée continue.
 
 ### I0.6 — OpenAPI v0, Protocol Buffers et squelette de l'API
