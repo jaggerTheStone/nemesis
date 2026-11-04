@@ -68,7 +68,66 @@ Particularités :
 - les lignes et les tracés portent des numéros de relations OSM ;
 - aucune ligne n'a de nom court : seul le nom long (« gbaka : Adjamé Liberté ↔ Treichville Gare de Bassam ») les identifie.
 
-**Extrait OSM de la Côte d'Ivoire, avis du validateur, écarts et tuiles** : produits par la première exécution du workflow hebdomadaire ; voir l'état du projet ([ETAT.md](ETAT.md)). Ils ne sont pas reportés ici avant d'avoir été mesurés.
+**Validation du GTFS 2023** (validateur MobilityData de l'image 8.0.1, code pays `ci`, 2026-11-04). Aucun avis n'est corrigé ; tous sont à voir avec le producteur des données.
+
+| Gravité | Code | Occurrences |
+|---------|------|-------------|
+| Erreur | — | 0 |
+| Avertissement | `non_ascii_or_non_printable_char` | 187 |
+| Avertissement | `mixed_case_recommended_field` | 55 |
+| Avertissement | `expired_calendar` | 1 |
+| Avertissement | `feed_expiration_date7_days` | 1 |
+| Avertissement | `trip_coverage_not_active_for_next7_days` | 1 |
+| Information | `unsorted_stop_times` | 957 |
+| Information | `trip_headsign_matches_intermediate_stop` | 17 |
+
+**Extrait OSM de la Côte d'Ivoire** (Geofabrik, publié le 2026-11-04 à 05:19 UTC, récupéré à 17:19 UTC, MD5 vérifiée) :
+- fichier de 85,6 Mo : 14 746 594 nœuds, 1 786 874 chemins, 10 108 relations ;
+- en staging, dans tout le pays :
+
+| Table | Lignes |
+|-------|--------|
+| `road` | 217 443 |
+| `poi` | 61 855 |
+| `transit_stop` | 8 266 : 6 680 quais, 1 001 positions d'arrêt, 362 gares routières, 116 stations, 98 embarcadères, 9 arrêts de bus |
+| `route` | 1 257 : 1 241 bus, 14 bateaux, 1 métro, 1 train |
+| `route_master` | 611 |
+| `route_member` | 80 340 |
+| `boundary` | 197 |
+
+Particularité d'OSM : les gbakas et les wôrô-wôrôs y sont des relations `route=bus`, comme les bus. Le mode seul ne les distingue donc pas : le réseau (`network`) et le nom le font.
+
+**Lieux promus dans l'emprise d'Abidjan** (H-029) : 33 284 lieux et 34 455 alias, tous à confiance « faible » et « non vérifiés ».
+
+**Écarts GTFS 2023 ↔ OSM du 2026-11-04** (rapport complet et GeoJSON dans l'artefact du workflow) :
+
+| Mesure | Valeur |
+|--------|--------|
+| Arrêts du GTFS | 4 834 |
+| Appariés, dont par identifiant OSM | 4 815, dont 4 812 |
+| Déplacés de plus de 20 m | 14, de 22 m à 852 m |
+| Nom différent | 11, dont 3 « [Arret sans nom] » sans nom dans OSM |
+| Absents d'OSM | 19 |
+| Arrêts d'OSM dans la zone, absents du GTFS | 2 004, sur 6 819 |
+| Tracés du GTFS, tous appariés par identifiant | 974 |
+| Tracé différent (moins de 95 % en commun dans un sens) | 71 |
+| Nom de ligne différent | 2 |
+| Lignes d'OSM dans la zone, absentes du GTFS | 282, sur 1 256, dont des lignes de bus numérotées (06, 702, 705…) et le train Abidjan–Ouagadougou |
+
+En résumé, OSM a gardé presque tous les arrêts et tracés de 2023, et en compte d'autres. Le rapport mesure seulement l'écart à OSM : il ne dit rien du terrain actuel (interdiction d'Adjamé aux gbakas, réorganisation par l'AMUGA).
+
+**Tuiles du fond léger** (Planetiler 0.10.2, schéma de l'ADR-009) :
+
+| Archive | Taille | Tuiles | Budget F-12 (45 Mo pour le fond, H-031) |
+|---------|--------|--------|------------------------------------------|
+| Côte d'Ivoire | 57,6 Mo | 78 546 | sans objet |
+| Abidjan, emprise de H-029 | 4,5 Mo | 577 | dans le budget, à 10 % |
+
+- La plus grosse tuile d'Abidjan pèse 104 Ko compressée, au zoom 12 sur le centre, presque entièrement de voirie.
+- Planetiler signale ses propres réparations, sans qu'on les masque :
+  - 9 053 géométries recalées sur la grille des tuiles, pour le pays ;
+  - 7 multipolygones auxquels il manque un chemin dans l'extrait ;
+  - 1 multipolygone invalide, vide après réparation, donc absent des tuiles.
 
 ## Organisation de la base
 

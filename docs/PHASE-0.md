@@ -139,7 +139,14 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
   - Tuiles : schéma Planetiler maison (ADR-009), archive du pays et extrait d'Abidjan, mesurés face aux 45 Mo de F-12 (H-031).
   - Tests : 33 sans base, plus 6 contre une base PostGIS avec osm2pgsql (`make pipelines-test`) et 2 du schéma.
   - CI : la chaîne fictive tourne à chaque modification des pipelines, la chaîne réelle chaque semaine.
-    - Geofabrik et GHCR (validateur, Planetiler) sont bloqués dans l'environnement cloud. L'import OSM réel, le rapport du validateur sur le GTFS réel, les écarts réels et les tuiles ne sont donc produits qu'en CI ; leurs volumes sont reportés dans ETAT.md après la première exécution.
+    - Geofabrik et GHCR (validateur, Planetiler) sont bloqués dans l'environnement cloud : l'import OSM réel, le validateur, les écarts réels et les tuiles ne tournent qu'en CI.
+    - Première exécution réelle verte le 2026-11-04 :
+      - GTFS : 0 erreur, 245 avertissements et 974 informations, tous listés ;
+      - 4 815 arrêts sur 4 834 et les 974 tracés retrouvés dans OSM, dont 71 tracés différents ;
+      - 33 284 lieux promus ;
+      - tuiles : 4,5 Mo pour Abidjan, face à un budget de 45 Mo.
+
+      Volumes consignés dans DATA.md.
 
   Écarts au plan :
   - extrait OSM fictif et GTFS d'identifiants OSM pour tester les rapports sans données réelles ;

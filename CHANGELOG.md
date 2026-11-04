@@ -84,6 +84,10 @@ publication.
   - `make data-import`, `make data-import-fictif`, `make pipelines-test` ;
     workflows « Pipelines de données (chaîne fictive) » et « Imports de données
     réelles (hebdomadaire) ».
+  - Première chaîne réelle verte (2026-11-04) : GTFS 2023 sans erreur
+    (245 avertissements, 974 informations) ; 4 815 arrêts sur 4 834 et les
+    974 tracés retrouvés dans OSM ; 33 284 lieux promus ; extrait de tuiles
+    d'Abidjan de 4,5 Mo pour un budget de 45 Mo.
 
 ### Corrigé
 

@@ -63,8 +63,17 @@ Garde-fous de la chaîne d'approvisionnement : pnpm refuse les versions publiée
 
 Le workflow « Imports de données réelles (hebdomadaire) » produit, en artefacts, les rapports de la chaîne réelle : validation du GTFS 2023, écarts GTFS ↔ OSM, tailles des tuiles, volumes. Il se déclenche aussi quand le manifeste, le style OSM, le rapport ou le schéma de tuiles changent.
 
-- Volumes du GTFS 2023 : dans [DATA.md](DATA.md).
-- Première exécution de la chaîne réelle : en attente des runners GitHub au moment de la livraison ; ses chiffres sont à reporter ici.
+Première exécution le 2026-11-04, verte, en moins de 3 minutes. Chiffres détaillés dans [DATA.md](DATA.md), section « Volumes importés ».
+
+| Étape | Résultat |
+|-------|----------|
+| Extrait OSM | 85,6 Mo, MD5 de Geofabrik vérifiée ; 217 443 voies, 61 855 points d'intérêt, 8 266 arrêts, 1 257 lignes en staging |
+| Validation du GTFS 2023 | 0 erreur, 245 avertissements, 974 informations |
+| Lieux d'Abidjan | 33 284 lieux et 34 455 alias promus |
+| Écarts | 4 815 arrêts sur 4 834 retrouvés dans OSM, 974 tracés sur 974 ; 71 tracés différents ; 2 004 arrêts et 282 lignes d'OSM absents du GTFS |
+| Tuiles | 57,6 Mo pour le pays ; **4,5 Mo pour Abidjan**, dans le budget de 45 Mo |
+
+Les rapports complets (`rapports-reels`) et les tuiles d'Abidjan (`tuiles-abidjan`) sont conservés en artefacts ; ils sont aussi écrits dans le journal du workflow, l'hôte des artefacts étant bloqué dans l'environnement cloud.
 
 ## Points d'attention pour la reprise
 
@@ -76,7 +85,9 @@ Le workflow « Imports de données réelles (hebdomadaire) » produit, en artefa
 - **osm2pgsql en local** : `apt-get install osm2pgsql` donne la version 1.11.0 d'Ubuntu 24.04, la même qu'en CI. Les workflows épinglent les paquets (`osm2pgsql=1.11.0+ds-1`, `osmium-tool=1.16.0-1build1`) : une mise à jour de sécurité d'Ubuntu fera échouer l'installation, et il faudra alors mettre la version à jour.
 - **Chaîne fictive en local, sans GHCR** : `make data-import-fictif DATA_OPTIONS="--sans-validation --sans-tuiles"`.
 - **Licence du GTFS 2023** : `usage = "evaluation"` dans `sources.toml`. C'est ce réglage qui fait refuser par la base toute entrée de ce GTFS dans le réseau : ne jamais le passer en `produit` sans l'autorisation écrite demandée en H-030.
-- **Fond léger sans océan** (ADR-009) : à reprendre avec le style de carte.
+- **Fond léger sans océan** (ADR-009) : à reprendre avec le style de carte. La plus grosse tuile d'Abidjan pèse 104 Ko compressée (zoom 12, voirie) : à surveiller pour la data consommée par la carte en 3G.
+- **Version du validateur** : l'image `gtfs-validator:8.0.1` se déclare « 8.0.1-SNAPSHOT » dans ses rapports. À vérifier lors de sa prochaine mise à jour.
+- **Lieux promus** : la chaîne réelle crée la ville réelle « abidjan » et ses lieux dans la base où elle tourne (celle de `make dev` par défaut). La recherche de l'API les sert alors, avec la source `osm_cote_divoire`.
 - **File d'attente de GitHub Actions** : le 2026-11-04, les workflows d'I0.6 ont attendu un runner pendant plus de 10 minutes, puis sont passés au vert. Une attente n'est pas un échec.
 - **Docker dans l'environnement cloud** :
   - le démon n'est pas lancé au démarrage : `nohup dockerd > /tmp/dockerd.log 2>&1 &` suffit ;
