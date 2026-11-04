@@ -14,3 +14,4 @@ Statuts : proposé, accepté, remplacé par ADR-NNN, abandonné.
 | [ADR-006](ADR-006-temps-reel-clients.md) | Temps réel vers les clients (écart signalé à la partie 9.1) | proposé | I0.3 |
 | [ADR-007](ADR-007-extension-gtfs.md) | Extension GTFS propre au projet | proposé | I0.3 |
 | [ADR-008](ADR-008-versionnement-reseau.md) | Versionnement du réseau | proposé | I0.4 |
+| [ADR-009](ADR-009-schema-tuiles.md) | Schéma des tuiles du fond de carte léger | proposé | I0.7 |

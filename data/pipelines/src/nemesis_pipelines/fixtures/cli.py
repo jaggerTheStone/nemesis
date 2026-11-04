@@ -1,4 +1,7 @@
-"""Command line: `nemesis-fixtures generer [--verifier]` and `verifier-rapport`."""
+"""Command line: `nemesis-fixtures generer [--verifier]` and `verifier-rapport`.
+
+`generer` writes the fictional GTFS, the SQL seed and the fictional OSM extract.
+"""
 
 from __future__ import annotations
 
@@ -9,16 +12,19 @@ from pathlib import Path
 
 from nemesis_pipelines.fixtures.city import build_city
 from nemesis_pipelines.fixtures.gtfs import gtfs_files
+from nemesis_pipelines.fixtures.osm import osm_xml
 from nemesis_pipelines.fixtures.sql import seed_sql
 
 GTFS_DIR = Path("data/fixtures_fictives/gtfs")
 SEED_PATH = Path("data/fixtures_fictives/db/seed.sql")
+OSM_PATH = Path("data/fixtures_fictives/osm/lagune-fictive.osm")
 
 
 def generated_files() -> dict[Path, str]:
     city = build_city()
     files = {GTFS_DIR / name: content for name, content in gtfs_files(city).items()}
     files[SEED_PATH] = seed_sql(city)
+    files[OSM_PATH] = osm_xml(city)
     return files
 
 
@@ -71,7 +77,9 @@ def main(argv: list[str] | None = None) -> int:
         prog="nemesis-fixtures", description="Jeu fictif Lagune-Fictive (I0.5)."
     )
     commands = parser.add_subparsers(dest="command", required=True)
-    generate = commands.add_parser("generer", help="régénérer le GTFS fictif et le jeu SQL")
+    generate = commands.add_parser(
+        "generer", help="régénérer le GTFS fictif, le jeu SQL et l'extrait OSM fictif"
+    )
     generate.add_argument("--racine", type=Path, default=Path("."))
     generate.add_argument(
         "--verifier", action="store_true", help="échouer si un fichier est périmé"

@@ -23,6 +23,14 @@ make api-test  # tests de contrat de l'API contre une base jetable
 make dev-down  # arrêt (make dev-reset efface aussi les données)
 ```
 
+Imports de données ([data/pipelines/README.md](data/pipelines/README.md)), avec osm2pgsql 1.11 et Docker :
+
+```bash
+make data-import-fictif  # chaîne complète sur les données fictives du dépôt
+make data-import         # OSM Côte d'Ivoire et GTFS « Abidjan 2023 » (réseau requis)
+make pipelines-test      # tests des pipelines contre une base jetable
+```
+
 `docker compose up` seul fonctionne aussi. Les ports ne sont exposés que sur 127.0.0.1, et les variables sont décrites dans `.env.example`.
 
 ## Organisation du dépôt

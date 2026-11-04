@@ -1,0 +1,90 @@
+name: Imports de données réelles (hebdomadaire)
+
+# Chaîne réelle d'I0.7 : extrait Côte d'Ivoire de Geofabrik (MD5 publiée vérifiée),
+# GTFS « Abidjan 2023 » (SHA-256 épinglée), validateur MobilityData, import OSM,
+# promotion des lieux, rapport d'écarts, tuiles du pays et extrait d'Abidjan.
+# Trop lourde pour chaque pull request : chaque semaine, à la demande, et quand les
+# sources, le style OSM, le rapport ou le schéma de tuiles changent.
+
+on:
+  schedule:
+    - cron: "17 2 * * 1" # le lundi à 02:17 UTC
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/pipelines/sources.toml"
+      - "data/pipelines/src/nemesis_pipelines/osm/**"
+      - "data/pipelines/src/nemesis_pipelines/reports/**"
+      - "data/pipelines/src/nemesis_pipelines/tiles/**"
+      - ".github/workflows/data-import.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  reel:
+    name: Chaîne réelle
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      DATABASE_URL: postgres://nemesis_admin:nemesis_dev@127.0.0.1:5432/nemesis
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer osm2pgsql (paquet Ubuntu 24.04 épinglé)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends osm2pgsql=1.11.0+ds-1
+          osm2pgsql --version
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances
+        run: uv sync --locked --all-packages
+      - name: Base de développement (comme make dev)
+        run: |
+          docker compose up -d --wait db
+          docker compose run --rm migrate
+      - name: Chaîne réelle (make data-import)
+        run: make data-import
+      - name: Volumes et place disque
+        if: always()
+        run: |
+          ls -l data/work/sources/*/ data/work/tiles/ || true
+          df -h .
+      - name: Résumé
+        if: always()
+        run: |
+          for f in validation-gtfs/resume.md ecarts.md tuiles.md; do
+            path="data/work/rapports/reel/$f"
+            if [ -f "$path" ]; then
+              # Le rapport complet est dans l'artefact ; le résumé s'arrête aux tableaux de tête.
+              awk 'NR > 1 && /^## / && ++sections > 1 { exit } { print }' "$path" >> "$GITHUB_STEP_SUMMARY"
+              echo >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+      - name: Conserver les rapports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapports-reels
+          path: data/work/rapports/reel
+          if-no-files-found: warn
+          retention-days: 30
+      # Seul l'extrait d'Abidjan est conservé : l'archive du pays est mesurée, pas gardée.
+      - name: Conserver les tuiles d'Abidjan
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tuiles-abidjan
+          path: data/work/tiles/abidjan.pmtiles
+          if-no-files-found: error
+          retention-days: 14
+      - name: Journaux en cas d'échec
+        if: failure()
+        run: docker compose logs db
+      - name: Arrêter
+        if: always()
+        run: docker compose down -v

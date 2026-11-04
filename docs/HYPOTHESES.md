@@ -61,6 +61,7 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
 ## Environnement de développement
 
 - **H-021** (constat du 2026-11-04) — La politique réseau de l'environnement cloud refuse : `download.geofabrik.de`, `hub.tumidata.org`, `transit.land`, `api.transitland.org`, `dl.google.com`, ainsi que `github.com` hors de ce dépôt (téléchargements du validateur GTFS et des outils PMTiles). Sont accessibles : Docker Hub, Maven Central, npm, PyPI, crates.io, pub.dev et le stockage des versions de Flutter. Sans élargissement de cette politique, les imports de données et le build Android ne sont exécutés et vérifiés que dans GitHub Actions.
+  - Complément du 2026-11-04 (I0.7) : `gitlab.com` et `raw.githubusercontent.com` sont accessibles. Le GTFS « Abidjan 2023 » se télécharge donc depuis son dépôt d'origine, et sa chaîne d'import se vérifie aussi dans l'environnement cloud. Restent bloqués pour OSM : Geofabrik, `download.openstreetmap.fr`, Overpass, `osmdata.openstreetmap.de`, ainsi que Mobility Database. L'import OSM réel et les tuiles réelles ne se vérifient qu'en CI ; le GHCR (validateur, Planetiler) aussi.
 
 ## Données de terrain (I0.2)
 
@@ -87,3 +88,14 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
 - **H-027** (proposée) — La ville fictive « Lagune-Fictive » est placée en pleine mer, dans le golfe de Guinée (autour de 2° N et 4° O). Ses coordonnées ne peuvent donc jamais coïncider avec un lieu réel, tout en restant dans la projection UTM 30 N d'Abidjan. Cela précise la « géographie synthétique » de H-007.
 - **H-028** (proposée) — Les comptes de connexion de développement (`nemesis_*_dev`) ont un mot de passe local par défaut, modifiable dans `.env`. Ils n'existent que dans l'environnement Docker Compose et n'exposent leurs ports que sur 127.0.0.1. En production, les comptes sont créés par l'exploitation, hors du dépôt.
 
+
+## Imports de données (I0.7)
+
+- **H-029** (proposée) — Emprise de travail d'Abidjan : celle des arrêts du GTFS 2023, élargie d'environ 2 km, soit de −4,25 à −3,70 en longitude et de 5,18 à 5,53 en latitude. Elle couvre le terrain de la collecte de 2023 : les 13 communes du district et Grand-Bassam, selon le dépôt d'origine. Elle borne la promotion des lieux, le rapport d'écarts et l'extrait de tuiles (`data/pipelines/sources.toml`). À remplacer par la limite administrative du district tirée d'OSM, ou par l'emprise du corridor pilote quand il sera choisi.
+- **H-030** (proposée, **décision du porteur**) — Le GTFS « Abidjan 2023 » est publié sous licence **CC BY-NC 4.0** (pas d'usage commercial), selon le README de son dépôt d'origine. Tant qu'une autorisation écrite de DigitalTransport4Africa n'est pas obtenue :
+  - il ne sert qu'à l'évaluation interne : validation, rapport d'écarts, banc d'essai du moteur d'itinéraires ;
+  - il reste dans le schéma intermédiaire `staging_gtfs`, que l'API ne peut pas lire ;
+  - la base refuse toute ligne du réseau qui le cite comme source (`usage = 'evaluation'`, code d'erreur NM004).
+
+  Le dépôt invite à écrire à DigitalTransport4Africa pour d'autres permissions : c'est une démarche de partenariat (15.6), à faire valider par un juriste avec H-019. Le même GTFS a été produit à partir d'OSM : ce qui en reste à jour dans OSM est utilisable sous ODbL.
+- **H-031** (proposée) — Budget du fond de carte : F-12 donne au pack d'Abidjan 15 Mo sans fond et 60 Mo avec. Le fond léger a donc au plus 45 Mo, en mégaoctets de 10⁶ octets (lecture la plus stricte). La mesure est faite à chaque exécution de la chaîne réelle (ADR-009).

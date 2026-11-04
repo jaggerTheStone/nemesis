@@ -22,9 +22,10 @@ Elle est placée en pleine mer, dans le golfe de Guinée (H-027), pour ne jamais
 |--------|---------|
 | `gtfs/` | GTFS Schedule (dont `frequencies.txt`), GTFS-Fares v2 et extension du projet (`ext_*.txt`, ADR-007) |
 | `db/seed.sql` | La même ville pour la base de développement, chargée par `docker compose up` |
+| `osm/lagune-fictive.osm` | La même ville en OSM XML, pour la chaîne d'import d'I0.7 : voirie, arrêts, relations de lignes et `route_master`, repères avec leurs alias, limite de la ville. Chaque élément porte `fictional=yes` |
 | `terrain/` | Exemples fictifs des données de terrain (I0.2) |
 
-`gtfs/` et `db/seed.sql` sont **générés** à partir d'une seule description de la ville (`data/pipelines/src/nemesis_pipelines/fixtures/city.py`), avec une graine fixe :
+`gtfs/`, `db/seed.sql` et `osm/` sont **générés** à partir d'une seule description de la ville (`data/pipelines/src/nemesis_pipelines/fixtures/city.py`), avec une graine fixe :
 
 ```bash
 uv run nemesis-fixtures generer            # régénérer après une modification
@@ -33,5 +34,20 @@ make gtfs-validate                         # validateur MobilityData (Docker, ac
 ```
 
 Comme l'exige l'ADR-007, le GTFS ne publie que les profils et estimations qui reposent sur au moins 20 contributeurs distincts. La base de développement les reçoit tous, avec une confiance « faible » sous ce seuil.
+
+## Écarts volontaires entre l'OSM fictif et le GTFS fictif (I0.7)
+
+Pour éprouver le rapport d'écarts, l'extrait OSM s'écarte du GTFS, et seulement ainsi (`DIVERGENCES` dans `fixtures/osm.py`). Les tests vérifient que le rapport trouve exactement ces écarts.
+
+| Écart | Dans l'OSM fictif |
+|-------|-------------------|
+| Arrêt déplacé | `arret-05` à 35 m vers l'est : toujours apparié, signalé comme déplacé |
+| Arrêt trop éloigné | `arret-08` à 150 m vers le nord : n'est plus apparié, ni d'un côté ni de l'autre |
+| Nom différent | `arret-11` s'appelle « Arrêt du Vieux Fromager (fictif) » |
+| Arrêt absent d'OSM | `arret-14` |
+| Arrêt absent du GTFS | « Arrêt du Nouveau Marché (fictif) » |
+| Ligne absente d'OSM | W3, dans les deux sens |
+| Tracé différent | G3 fait un détour de 400 m sur son plus long tronçon |
+| Ligne absente du GTFS | W9, Palmiers–Embarcadère Nord |
 
 Après la mise à jour d'I0.5, une base de développement créée en I0.4 doit être recréée avec `make dev-reset`, puis `make dev` : les identifiants du jeu de départ ont changé.

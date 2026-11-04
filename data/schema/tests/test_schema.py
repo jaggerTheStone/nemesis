@@ -516,3 +516,35 @@ def test_development_seed_is_fictional_and_idempotent(fresh_database: dict[str, 
     # The seed and the GTFS feed come from the same description of the city (I0.5).
     assert tuple(cursor.fetchone()) == (stops, routes, 0, 0, 1)
     connection.close()
+
+
+# --- Imports (I0.7) ------------------------------------------------------------------------
+
+IMPORT_RUN = (
+    "insert into ops.import_run (source_id, is_fictional, kind, url, file_name, sha256, "
+    "size_bytes, verified_by, retrieved_at, status, finished_at) "
+    "values ('test', %s, 'gtfs', 'https://example.org/gtfs.zip', 'gtfs.zip', %s, 10, "
+    "'sha256_epinglee', now(), %s, %s) returning id::text"
+)
+
+
+def test_an_import_run_has_the_fictional_status_of_its_source(db: Db) -> None:
+    make_city(db, "ville-import")
+    code, _ = db.error(IMPORT_RUN, True, "a" * 64, "en_cours", None)
+    assert code == "23503"
+    assert db.value(IMPORT_RUN, False, "a" * 64, "en_cours", None)
+
+
+def test_an_import_run_is_finished_exactly_when_it_has_an_end(db: Db) -> None:
+    make_city(db, "ville-import")
+    assert db.error(IMPORT_RUN, False, "a" * 64, "termine", None)[0] == "23514"
+    assert db.error(IMPORT_RUN, False, "a" * 64, "en_cours", datetime.now(UTC))[0] == "23514"
+    assert db.error(IMPORT_RUN, False, "pas-une-empreinte", "en_cours", None)[0] == "23514"
+    run = db.value(IMPORT_RUN, False, "a" * 64, "termine", datetime.now(UTC))
+    # A staged GTFS row belongs to a declared file of the run.
+    code, _ = db.error(
+        "insert into staging_gtfs.record (import_run_id, file_name, line_no, data) "
+        "values (%s::uuid, 'stops.txt', 2, '{}')",
+        run,
+    )
+    assert code == "23503"

@@ -2,21 +2,59 @@
 
 from __future__ import annotations
 
+import os
 import urllib.parse
+import uuid
+from collections.abc import Iterator
+from contextlib import contextmanager
 from typing import Any
 
 import pg8000.dbapi
 
+from nemesis_schema.connection import connection_parameters
+from nemesis_schema.migrations import apply_migrations
 
-def connection_parameters(url: str) -> dict[str, Any]:
-    parts = urllib.parse.urlsplit(url)
-    return {
-        "user": urllib.parse.unquote(parts.username or "postgres"),
-        "password": urllib.parse.unquote(parts.password) if parts.password else None,
-        "host": parts.hostname or "localhost",
-        "port": parts.port or 5432,
-        "database": parts.path.lstrip("/") or "postgres",
-    }
+__all__ = [
+    "URL_VARIABLE",
+    "Db",
+    "connection_parameters",
+    "database_url",
+    "server_url",
+    "throwaway_database",
+]
+
+URL_VARIABLE = "NEMESIS_TEST_DATABASE_URL"
+
+
+def server_url() -> str | None:
+    """Administrator URL of the test server, or None (tests are then skipped, or fail in CI)."""
+    return os.environ.get(URL_VARIABLE) or None
+
+
+def database_url(params: dict[str, Any]) -> str:
+    """postgres:// URL of a connection, for tools such as osm2pgsql."""
+    user = urllib.parse.quote(params["user"], safe="")
+    password = params.get("password")
+    credentials = f"{user}:{urllib.parse.quote(password, safe='')}" if password else user
+    return f"postgres://{credentials}@{params['host']}:{params['port']}/{params['database']}"
+
+
+@contextmanager
+def throwaway_database(url: str) -> Iterator[dict[str, Any]]:
+    """Creates a migrated database on the server of `url`, then drops it."""
+    params = connection_parameters(url)
+    name = f"nemesis_test_{uuid.uuid4().hex[:12]}"
+    admin = pg8000.dbapi.connect(**params)
+    admin.autocommit = True
+    admin.cursor().execute(f'create database "{name}"')
+    try:
+        connection = pg8000.dbapi.connect(**{**params, "database": name})
+        apply_migrations(connection)
+        connection.close()
+        yield {**params, "database": name}
+    finally:
+        admin.cursor().execute(f'drop database "{name}" with (force)')
+        admin.close()
 
 
 class Db:

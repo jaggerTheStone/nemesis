@@ -7,6 +7,9 @@
 #   make dev     environnement local (docker compose) : base migrée et jeu fictif
 #   make db-test tests du schéma contre une base PostGIS jetable
 #   make api-test tests de contrat de l'API contre une base PostGIS jetable
+#   make data-import         imports réels : OSM, GTFS 2023, rapports et tuiles (réseau requis)
+#   make data-import-fictif  la même chaîne sur les données fictives du dépôt
+#   make pipelines-test      tests des pipelines contre une base PostGIS jetable (osm2pgsql requis)
 
 ROUTING := services/routing
 MOBILE := apps/mobile
@@ -14,10 +17,12 @@ MOBILE := apps/mobile
 POSTGIS_IMAGE := $(shell awk '/image: postgis\//{print $$2; exit}' docker-compose.yml)
 DB_TEST_PORT ?= 55432
 API_TEST_PORT ?= 55433
+PIPELINES_TEST_PORT ?= 55434
 
 .PHONY: check check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile \
         audit audit-ts audit-rust audit-py fmt install fiches-pdf \
-        dev dev-down dev-reset db-migrate db-test gtfs-validate api-test proto-breaking
+        dev dev-down dev-reset db-migrate db-test gtfs-validate api-test proto-breaking \
+        data-import data-import-fictif data-tiles-verify pipelines-test
 
 check: check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile
 	@echo "Tous les contrôles sont au vert."
@@ -68,7 +73,8 @@ check-fixtures:
 	uv run nemesis-fixtures generer --verifier
 
 # Validateur canonique de MobilityData sur le GTFS fictif (image GHCR, Docker requis).
-GTFS_VALIDATOR_IMAGE := $(shell awk '/VALIDATOR_IMAGE:/{print $$2; exit}' .github/workflows/ci-gtfs.yml)
+# Image déclarée dans data/pipelines/sources.toml ; un test vérifie que la CI utilise la même.
+GTFS_VALIDATOR_IMAGE := $(shell awk -F'"' '/^gtfs_validator = /{print $$2; exit}' data/pipelines/sources.toml)
 gtfs-validate:
 	rm -rf data/work/gtfs && mkdir -p data/work/gtfs
 	cd data/fixtures_fictives/gtfs && zip -q -X ../../work/gtfs/lagune-fictive.zip ./*.txt
@@ -147,3 +153,27 @@ api-test:
 	NEMESIS_TEST_DATABASE_URL=postgres://postgres:test@127.0.0.1:$(API_TEST_PORT)/postgres \
 		NEMESIS_REQUIRE_DB=1 pnpm --filter @nemesis/api test; \
 		status=$$?; docker rm -f nemesis-api-test >/dev/null; exit $$status
+
+# Imports de données (I0.7), contre la base de make dev par défaut. Il faut osm2pgsql 1.11,
+# Docker (validateur GTFS et Planetiler) et, pour le jeu fictif, osmium-tool.
+# DATA_OPTIONS="--sans-validation --sans-tuiles" quand les images GHCR sont inaccessibles.
+DATABASE_URL ?= postgres://nemesis_admin:$(or $(NEMESIS_DB_PASSWORD),nemesis_dev)@127.0.0.1:$(or $(NEMESIS_DB_PORT),5432)/nemesis
+DATA_OPTIONS ?=
+data-import:
+	DATABASE_URL=$(DATABASE_URL) uv run nemesis-data chaine reel $(DATA_OPTIONS)
+
+data-import-fictif:
+	DATABASE_URL=$(DATABASE_URL) uv run nemesis-data chaine fictif $(DATA_OPTIONS)
+
+# Exemples du schéma de tuiles (planetiler verify).
+data-tiles-verify:
+	uv run nemesis-data verifier-schema-tuiles
+
+pipelines-test:
+	@docker rm -f nemesis-pipelines-test >/dev/null 2>&1 || true
+	docker run -d --name nemesis-pipelines-test -e POSTGRES_PASSWORD=test \
+		-p 127.0.0.1:$(PIPELINES_TEST_PORT):5432 $(POSTGIS_IMAGE) >/dev/null
+	@until docker exec nemesis-pipelines-test pg_isready -h 127.0.0.1 -U postgres -q; do sleep 1; done
+	NEMESIS_TEST_DATABASE_URL=postgres://postgres:test@127.0.0.1:$(PIPELINES_TEST_PORT)/postgres \
+		NEMESIS_REQUIRE_DB=1 NEMESIS_REQUIRE_OSM2PGSQL=1 uv run pytest data/pipelines -rs; \
+		status=$$?; docker rm -f nemesis-pipelines-test >/dev/null; exit $$status

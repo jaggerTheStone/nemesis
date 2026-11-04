@@ -1,0 +1,89 @@
+# Sources des imports (I0.7). Licences et usages : docs/DATA.md.
+#
+# Chaque fichier téléchargé est vérifié avant import :
+#   sha256      empreinte épinglée ici (fichier figé, par exemple à un commit donné) ;
+#   md5_url     empreinte publiée par la source à côté du fichier (extrait mis à jour
+#               chaque jour) ;
+#   path        fichier du dépôt (données fictives), versionné par git.
+# Sans l'une des trois, le téléchargement est refusé.
+#
+# usage = "produit"     données publiables dans l'appli ;
+# usage = "evaluation"  analyse interne seulement (licence non commerciale, H-030) :
+#                       jamais dans les tables du réseau, ce que la base vérifie.
+
+# Outils, épinglés par version et empreinte (images publiées depuis plus de deux semaines).
+[tools]
+gtfs_validator = "ghcr.io/mobilitydata/gtfs-validator:8.0.1@sha256:26624464be966808662a78c85661b63a313ea936f3a3ee1dbb92c968415275ca"
+planetiler = "ghcr.io/onthegomap/planetiler:0.10.2@sha256:cf32202dbc001a9ab4bc11534b642b13de3798179817da8558e567a3d13dd403"
+# Paquet Ubuntu 24.04 (osm2pgsql=1.11.0+ds-1) ; le style Lua est écrit pour cette version.
+osm2pgsql = "1.11.0"
+
+[sources.osm_cote_divoire]
+kind = "osm"
+name = "OpenStreetMap, extrait Côte d'Ivoire (Geofabrik)"
+url = "https://download.geofabrik.de/africa/ivory-coast-latest.osm.pbf"
+md5_url = "https://download.geofabrik.de/africa/ivory-coast-latest.osm.pbf.md5"
+page_url = "https://download.geofabrik.de/africa/ivory-coast.html"
+license = "ODbL-1.0"
+license_url = "https://www.openstreetmap.org/copyright"
+attribution = "© les contributeurs d'OpenStreetMap"
+usage = "produit"
+
+[sources.gtfs_abidjan_2023]
+kind = "gtfs"
+name = "GTFS « Abidjan 2023 » (Ewarren et DigitalTransport4Africa)"
+# Fichier figé au commit da5d9faf du dépôt d'origine ; empreinte publiée par GitLab.
+url = "https://gitlab.com/api/v4/projects/48670567/repository/files/Abidjan_2023%2FDonn%C3%A9es%2FAbidjan_Paratransit_GTFS_20230726.zip/raw?ref=da5d9fafc21d75d355ba9cc41df7a6e1a3734d52"
+file_name = "Abidjan_Paratransit_GTFS_20230726.zip"
+sha256 = "c17e7d92dc80dc58167d9cedd9688aabddca2dfdd430132cf6fef39bdc1f63f0"
+page_url = "https://gitlab.com/digitaltransport/data/africa/abidjan_2/-/tree/main/Abidjan_2023"
+license = "CC-BY-NC-4.0"
+license_url = "https://creativecommons.org/licenses/by-nc/4.0/"
+attribution = "GTFS Abidjan 2023, Ewarren Financial Services et DigitalTransport4Africa, CC BY-NC 4.0"
+usage = "evaluation"
+
+[sources.osm_lagune_fictive]
+kind = "osm"
+name = "OSM fictif de Lagune-Fictive"
+path = "data/fixtures_fictives/osm/lagune-fictive.osm"
+license = "Données de test, sans valeur réelle"
+usage = "produit"
+is_fictional = true
+
+[sources.gtfs_lagune_fictive]
+kind = "gtfs"
+name = "GTFS fictif de Lagune-Fictive"
+path = "data/fixtures_fictives/gtfs"
+license = "Données de test, sans valeur réelle"
+usage = "produit"
+is_fictional = true
+
+# Villes couvertes. L'emprise borne la promotion des lieux, le rapport d'écarts et
+# l'extrait de tuiles (H-029).
+[cities.abidjan]
+name = "Abidjan"
+timezone = "Africa/Abidjan"
+metric_srid = 32630
+# Emprise des arrêts du GTFS 2023, plus une marge d'environ 2 km (H-029).
+bbox = [-4.25, 5.18, -3.70, 5.53]
+
+[cities.lagune-fictive]
+name = "Lagune-Fictive"
+timezone = "Africa/Abidjan"
+metric_srid = 32630
+bbox = [-4.06, 1.94, -3.94, 2.06]
+is_fictional = true
+
+# Chaînes complètes : « make data-import » (reel) et « make data-import-fictif ».
+[profiles.reel]
+city = "abidjan"
+osm = "osm_cote_divoire"
+gtfs = "gtfs_abidjan_2023"
+promote_places = true
+
+[profiles.fictif]
+city = "lagune-fictive"
+osm = "osm_lagune_fictive"
+gtfs = "gtfs_lagune_fictive"
+# Les lieux fictifs viennent déjà du jeu SQL (I0.5) : pas de doublons.
+promote_places = false

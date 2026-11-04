@@ -1,0 +1,1415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="nemesis-fixtures (données fictives, I0.7)">
+  <bounds minlat="1.94" minlon="-4.06" maxlat="2.06" maxlon="-3.94"/>
+  <node id="1" version="1" lat="2.0450000" lon="-4.0200000">
+    <tag k="alt_name" v="gare flamboyant"/>
+    <tag k="amenity" v="bus_station"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Gare des Flamboyants (fictif)"/>
+    <tag k="public_transport" v="station"/>
+    <tag k="short_name" v="Flambo"/>
+  </node>
+  <node id="2" version="1" lat="2.0400000" lon="-3.9650000">
+    <tag k="alt_name" v="gare palmier"/>
+    <tag k="amenity" v="bus_station"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Gare des Palmiers (fictif)"/>
+    <tag k="public_transport" v="station"/>
+    <tag k="short_name" v="G. Palmiers"/>
+  </node>
+  <node id="3" version="1" lat="2.0050000" lon="-4.0400000">
+    <tag k="alt_name" v="gare cocotier"/>
+    <tag k="amenity" v="bus_station"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Gare des Cocotiers (fictif)"/>
+    <tag k="public_transport" v="station"/>
+    <tag k="short_name" v="Coco"/>
+  </node>
+  <node id="4" version="1" lat="2.0100000" lon="-4.0000000">
+    <tag k="alt_name" v="gare baobab"/>
+    <tag k="amenity" v="bus_station"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Gare du Baobab (fictif)"/>
+    <tag k="old_name" v="Ancienne gare du Baobab"/>
+    <tag k="public_transport" v="station"/>
+  </node>
+  <node id="5" version="1" lat="1.9950000" lon="-3.9800000">
+    <tag k="alt_name" v="gare grand marche"/>
+    <tag k="amenity" v="bus_station"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Gare du Grand Marché (fictif)"/>
+    <tag k="public_transport" v="station"/>
+    <tag k="short_name" v="Gd Marché"/>
+  </node>
+  <node id="6" version="1" lat="1.9550000" lon="-4.0100000">
+    <tag k="alt_name" v="gare lagune sud"/>
+    <tag k="amenity" v="bus_station"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="public_transport" v="station"/>
+    <tag k="short_name" v="Lag-Sud"/>
+  </node>
+  <node id="7" version="1" lat="1.9860000" lon="-3.9900000">
+    <tag k="alt_name" v="embarcadere nord"/>
+    <tag k="amenity" v="ferry_terminal"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Embarcadère Nord (fictif)"/>
+    <tag k="public_transport" v="station"/>
+  </node>
+  <node id="8" version="1" lat="1.9660000" lon="-3.9900000">
+    <tag k="alt_name" v="embarcadere sud"/>
+    <tag k="amenity" v="ferry_terminal"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Embarcadère Sud (fictif)"/>
+    <tag k="public_transport" v="station"/>
+  </node>
+  <node id="9" version="1" lat="1.9780000" lon="-4.0450000">
+    <tag k="alt_name" v="arret pont"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt du Pont (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+  </node>
+  <node id="10" version="1" lat="2.0185170" lon="-4.0048070">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Manguiers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="manguiers"/>
+  </node>
+  <node id="11" version="1" lat="2.0272820" lon="-4.0099270">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt des Fromagers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="fromagers"/>
+  </node>
+  <node id="12" version="1" lat="2.0363190" lon="-4.0147110">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Acacias (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="acacias"/>
+  </node>
+  <node id="13" version="1" lat="2.0021230" lon="-3.9900990">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Hibiscus (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="hibiscus"/>
+  </node>
+  <node id="14" version="1" lat="2.0060410" lon="-3.9759584">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt des Bougainvilliers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="bougainvilliers"/>
+  </node>
+  <node id="15" version="1" lat="2.0172700" lon="-3.9723490">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Tecks (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="tecks"/>
+  </node>
+  <node id="16" version="1" lat="2.0287480" lon="-3.9687470">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Karités (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="karités"/>
+  </node>
+  <node id="17" version="1" lat="1.9977295" lon="-4.0416410">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt des Avocatiers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="avocatiers"/>
+  </node>
+  <node id="18" version="1" lat="1.9867690" lon="-4.0434000">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Goyaviers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="goyaviers"/>
+  </node>
+  <node id="19" version="1" lat="1.9603790" lon="-4.0189740">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Citronniers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="citronniers"/>
+  </node>
+  <node id="20" version="1" lat="1.9661100" lon="-4.0275060">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt du Vieux Fromager (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+  </node>
+  <node id="21" version="1" lat="1.9720050" lon="-4.0363450">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Papayers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="papayers"/>
+  </node>
+  <node id="22" version="1" lat="2.0150270" lon="-4.0348010">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Bambous (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="bambous"/>
+  </node>
+  <node id="23" version="1" lat="2.0348750" lon="-4.0249940">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Frangipaniers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="frangipaniers"/>
+  </node>
+  <node id="24" version="1" lat="2.0441760" lon="-4.0088060">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Jacarandas (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="jacarandas"/>
+  </node>
+  <node id="25" version="1" lat="2.0428970" lon="-3.9979100">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt des Eucalyptus (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="eucalyptus"/>
+  </node>
+  <node id="26" version="1" lat="2.0423100" lon="-3.9867280">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Filaos (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="filaos"/>
+  </node>
+  <node id="27" version="1" lat="2.0407920" lon="-3.9756060">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Kapokiers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="kapokiers"/>
+  </node>
+  <node id="28" version="1" lat="1.9603340" lon="-4.0002680">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt des Irokos (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="irokos"/>
+  </node>
+  <node id="29" version="1" lat="2.0089020" lon="-4.0100950">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Ébéniers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="ébéniers"/>
+  </node>
+  <node id="30" version="1" lat="2.0074090" lon="-4.0199100">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Acajous (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="acajous"/>
+  </node>
+  <node id="31" version="1" lat="2.0063440" lon="-4.0298950">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt des Rôniers (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="rôniers"/>
+  </node>
+  <node id="32" version="1" lat="2.0176870" lon="-3.9910270">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Rond-point des Raphias (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="raphias"/>
+  </node>
+  <node id="33" version="1" lat="2.0247890" lon="-3.9823530">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Carrefour des Caïlcédrats (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="caïlcédrats"/>
+  </node>
+  <node id="34" version="1" lat="2.0326770" lon="-3.9738980">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt des Nérés (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+    <tag k="short_name" v="nérés"/>
+  </node>
+  <node id="35" version="1" lat="2.0300000" lon="-3.9750000">
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="bus_stop"/>
+    <tag k="name" v="Arrêt du Nouveau Marché (fictif)"/>
+    <tag k="public_transport" v="platform"/>
+  </node>
+  <node id="36" version="1" lat="2.0363190" lon="-4.0147110">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="37" version="1" lat="2.0450000" lon="-4.0200000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="38" version="1" lat="2.0272820" lon="-4.0099270">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="39" version="1" lat="2.0185170" lon="-4.0048070">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="40" version="1" lat="2.0100000" lon="-4.0000000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="41" version="1" lat="2.0021230" lon="-3.9900990">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="42" version="1" lat="1.9950000" lon="-3.9800000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="43" version="1" lat="2.0287480" lon="-3.9687470">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="44" version="1" lat="2.0400000" lon="-3.9650000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="45" version="1" lat="2.0172700" lon="-3.9723490">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="46" version="1" lat="2.0060410" lon="-3.9762730">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="47" version="1" lat="1.9963820" lon="-4.0416410">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="48" version="1" lat="2.0050000" lon="-4.0400000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="49" version="1" lat="1.9867690" lon="-4.0434000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="50" version="1" lat="1.9780000" lon="-4.0450000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="51" version="1" lat="1.9720050" lon="-4.0363450">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="52" version="1" lat="1.9661100" lon="-4.0275060">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="53" version="1" lat="1.9726507" lon="-4.0319255">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="54" version="1" lat="1.9603790" lon="-4.0189740">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="55" version="1" lat="1.9550000" lon="-4.0100000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="56" version="1" lat="2.0348750" lon="-4.0249940">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="57" version="1" lat="2.0249500" lon="-4.0296570">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="58" version="1" lat="2.0150270" lon="-4.0348010">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="59" version="1" lat="2.0441760" lon="-4.0088060">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="60" version="1" lat="2.0428970" lon="-3.9979100">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="61" version="1" lat="2.0423100" lon="-3.9867280">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="62" version="1" lat="2.0407920" lon="-3.9756060">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="63" version="1" lat="1.9860000" lon="-3.9900000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="64" version="1" lat="2.0089020" lon="-4.0100950">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="65" version="1" lat="2.0074090" lon="-4.0199100">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="66" version="1" lat="2.0063440" lon="-4.0298950">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="67" version="1" lat="2.0326770" lon="-3.9738980">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="68" version="1" lat="2.0247890" lon="-3.9823530">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="69" version="1" lat="2.0176870" lon="-3.9910270">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="70" version="1" lat="1.9660000" lon="-3.9900000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="71" version="1" lat="1.9958000" lon="-3.9790000">
+    <tag k="alt_name" v="grand marche"/>
+    <tag k="amenity" v="marketplace"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Grand Marché (fictif)"/>
+    <tag k="short_name" v="Gd Marché"/>
+  </node>
+  <node id="72" version="1" lat="2.0090000" lon="-4.0015000">
+    <tag k="alt_name" v="pharmacie lagune"/>
+    <tag k="amenity" v="pharmacy"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Pharmacie de la Lagune (fictif)"/>
+    <tag k="short_name" v="Pharma Lagune"/>
+  </node>
+  <node id="73" version="1" lat="2.0460000" lon="-4.0180000">
+    <tag k="alt_name" v="eglise quartier nord"/>
+    <tag k="amenity" v="place_of_worship"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Église du Quartier Nord (fictif)"/>
+    <tag k="religion" v="christian"/>
+  </node>
+  <node id="74" version="1" lat="2.0115000" lon="-3.9988000">
+    <tag k="alt_name" v="mosquee centre"/>
+    <tag k="amenity" v="place_of_worship"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Mosquée du Centre (fictif)"/>
+    <tag k="religion" v="muslim"/>
+  </node>
+  <node id="75" version="1" lat="2.0412000" lon="-3.9660000">
+    <tag k="alt_name" v="ecole palmiers"/>
+    <tag k="amenity" v="school"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="École primaire des Palmiers (fictif)"/>
+    <tag k="short_name" v="EPP Palmiers"/>
+  </node>
+  <node id="76" version="1" lat="2.0041000" lon="-4.0389000">
+    <tag k="amenity" v="restaurant"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Maquis des Trois Fromagers (fictif)"/>
+    <tag k="short_name" v="maquis 3 fromagers"/>
+  </node>
+  <node id="77" version="1" lat="1.9786000" lon="-4.0442000">
+    <tag k="alt_name" v="carrefour pont"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="traffic_signals"/>
+    <tag k="name" v="Carrefour du Pont (fictif)"/>
+  </node>
+  <node id="78" version="1" lat="1.9554000" lon="-4.0088000">
+    <tag k="alt_name" v="dispensaire lagune sud"/>
+    <tag k="amenity" v="townhall"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Dispensaire de la Lagune-Sud (fictif)"/>
+  </node>
+  <node id="79" version="1" lat="1.9400000" lon="-4.0600000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="80" version="1" lat="1.9400000" lon="-3.9400000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="81" version="1" lat="2.0600000" lon="-3.9400000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <node id="82" version="1" lat="2.0600000" lon="-4.0600000">
+    <tag k="fictional" v="yes"/>
+  </node>
+  <way id="1" version="1">
+    <nd ref="36"/>
+    <nd ref="37"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="2" version="1">
+    <nd ref="38"/>
+    <nd ref="36"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="3" version="1">
+    <nd ref="39"/>
+    <nd ref="38"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="4" version="1">
+    <nd ref="39"/>
+    <nd ref="40"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="5" version="1">
+    <nd ref="41"/>
+    <nd ref="40"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="6" version="1">
+    <nd ref="41"/>
+    <nd ref="42"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="7" version="1">
+    <nd ref="43"/>
+    <nd ref="44"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="8" version="1">
+    <nd ref="45"/>
+    <nd ref="43"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="9" version="1">
+    <nd ref="46"/>
+    <nd ref="45"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="10" version="1">
+    <nd ref="46"/>
+    <nd ref="42"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="11" version="1">
+    <nd ref="47"/>
+    <nd ref="48"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="12" version="1">
+    <nd ref="47"/>
+    <nd ref="49"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="13" version="1">
+    <nd ref="49"/>
+    <nd ref="50"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="14" version="1">
+    <nd ref="51"/>
+    <nd ref="50"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="15" version="1">
+    <nd ref="52"/>
+    <nd ref="53"/>
+    <nd ref="51"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="16" version="1">
+    <nd ref="54"/>
+    <nd ref="52"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="17" version="1">
+    <nd ref="54"/>
+    <nd ref="55"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="18" version="1">
+    <nd ref="56"/>
+    <nd ref="37"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="19" version="1">
+    <nd ref="57"/>
+    <nd ref="56"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="20" version="1">
+    <nd ref="58"/>
+    <nd ref="57"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="21" version="1">
+    <nd ref="58"/>
+    <nd ref="48"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="22" version="1">
+    <nd ref="52"/>
+    <nd ref="51"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="secondary"/>
+  </way>
+  <way id="23" version="1">
+    <nd ref="59"/>
+    <nd ref="37"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="24" version="1">
+    <nd ref="59"/>
+    <nd ref="60"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="25" version="1">
+    <nd ref="60"/>
+    <nd ref="61"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="26" version="1">
+    <nd ref="61"/>
+    <nd ref="62"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="27" version="1">
+    <nd ref="62"/>
+    <nd ref="44"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="28" version="1">
+    <nd ref="63"/>
+    <nd ref="42"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="29" version="1">
+    <nd ref="64"/>
+    <nd ref="40"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="30" version="1">
+    <nd ref="64"/>
+    <nd ref="65"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="31" version="1">
+    <nd ref="65"/>
+    <nd ref="66"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="32" version="1">
+    <nd ref="66"/>
+    <nd ref="48"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="33" version="1">
+    <nd ref="67"/>
+    <nd ref="44"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="34" version="1">
+    <nd ref="68"/>
+    <nd ref="67"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="35" version="1">
+    <nd ref="69"/>
+    <nd ref="68"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="36" version="1">
+    <nd ref="69"/>
+    <nd ref="40"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="37" version="1">
+    <nd ref="42"/>
+    <nd ref="44"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="primary"/>
+  </way>
+  <way id="38" version="1">
+    <nd ref="63"/>
+    <nd ref="70"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="route" v="ferry"/>
+  </way>
+  <way id="39" version="1">
+    <nd ref="63"/>
+    <nd ref="44"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+  </way>
+  <way id="40" version="1">
+    <nd ref="71"/>
+    <nd ref="42"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="41" version="1">
+    <nd ref="72"/>
+    <nd ref="40"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="42" version="1">
+    <nd ref="73"/>
+    <nd ref="37"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="43" version="1">
+    <nd ref="74"/>
+    <nd ref="40"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="44" version="1">
+    <nd ref="75"/>
+    <nd ref="44"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="45" version="1">
+    <nd ref="76"/>
+    <nd ref="48"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="46" version="1">
+    <nd ref="77"/>
+    <nd ref="50"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="47" version="1">
+    <nd ref="78"/>
+    <nd ref="55"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="highway" v="footway"/>
+  </way>
+  <way id="48" version="1">
+    <nd ref="79"/>
+    <nd ref="80"/>
+    <nd ref="81"/>
+    <nd ref="82"/>
+    <nd ref="79"/>
+    <tag k="fictional" v="yes"/>
+  </way>
+  <relation id="1" version="1">
+    <member type="node" ref="1" role="platform"/>
+    <member type="node" ref="12" role="platform"/>
+    <member type="node" ref="11" role="platform"/>
+    <member type="node" ref="10" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="13" role="platform"/>
+    <member type="node" ref="5" role="platform"/>
+    <member type="way" ref="1" role=""/>
+    <member type="way" ref="2" role=""/>
+    <member type="way" ref="3" role=""/>
+    <member type="way" ref="4" role=""/>
+    <member type="way" ref="5" role=""/>
+    <member type="way" ref="6" role=""/>
+    <tag k="colour" v="#1F4E79"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Flamboyants (fictif)"/>
+    <tag k="name" v="G1 : Gare des Flamboyants (fictif) → Gare du Grand Marché (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G1"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare du Grand Marché (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="2" version="1">
+    <member type="node" ref="5" role="platform"/>
+    <member type="node" ref="13" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="10" role="platform"/>
+    <member type="node" ref="11" role="platform"/>
+    <member type="node" ref="12" role="platform"/>
+    <member type="node" ref="1" role="platform"/>
+    <member type="way" ref="6" role=""/>
+    <member type="way" ref="5" role=""/>
+    <member type="way" ref="4" role=""/>
+    <member type="way" ref="3" role=""/>
+    <member type="way" ref="2" role=""/>
+    <member type="way" ref="1" role=""/>
+    <tag k="colour" v="#1F4E79"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare du Grand Marché (fictif)"/>
+    <tag k="name" v="G1 : Gare du Grand Marché (fictif) → Gare des Flamboyants (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G1"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare des Flamboyants (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="3" version="1">
+    <member type="node" ref="2" role="platform"/>
+    <member type="node" ref="16" role="platform"/>
+    <member type="node" ref="15" role="platform"/>
+    <member type="node" ref="14" role="platform"/>
+    <member type="node" ref="5" role="platform"/>
+    <member type="way" ref="7" role=""/>
+    <member type="way" ref="8" role=""/>
+    <member type="way" ref="9" role=""/>
+    <member type="way" ref="10" role=""/>
+    <tag k="colour" v="#2E75B6"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Palmiers (fictif)"/>
+    <tag k="name" v="G2 : Gare des Palmiers (fictif) → Gare du Grand Marché (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G2"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare du Grand Marché (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="4" version="1">
+    <member type="node" ref="5" role="platform"/>
+    <member type="node" ref="14" role="platform"/>
+    <member type="node" ref="15" role="platform"/>
+    <member type="node" ref="16" role="platform"/>
+    <member type="node" ref="2" role="platform"/>
+    <member type="way" ref="10" role=""/>
+    <member type="way" ref="9" role=""/>
+    <member type="way" ref="8" role=""/>
+    <member type="way" ref="7" role=""/>
+    <tag k="colour" v="#2E75B6"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare du Grand Marché (fictif)"/>
+    <tag k="name" v="G2 : Gare du Grand Marché (fictif) → Gare des Palmiers (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G2"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare des Palmiers (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="5" version="1">
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="6" role="platform"/>
+    <member type="way" ref="11" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="15" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="17" role=""/>
+    <tag k="colour" v="#203864"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Cocotiers (fictif)"/>
+    <tag k="name" v="G3 : Gare des Cocotiers (fictif) → Gare de la Lagune-Sud (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G3"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="6" version="1">
+    <member type="node" ref="6" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="way" ref="17" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="15" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="11" role=""/>
+    <tag k="colour" v="#203864"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="name" v="G3 : Gare de la Lagune-Sud (fictif) → Gare des Cocotiers (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G3"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare des Cocotiers (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="7" version="1">
+    <member type="node" ref="1" role="platform"/>
+    <member type="node" ref="23" role="platform"/>
+    <member type="node" ref="22" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="6" role="platform"/>
+    <member type="way" ref="18" role=""/>
+    <member type="way" ref="19" role=""/>
+    <member type="way" ref="20" role=""/>
+    <member type="way" ref="21" role=""/>
+    <member type="way" ref="11" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="22" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="17" role=""/>
+    <tag k="colour" v="#0B3D91"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Flamboyants (fictif)"/>
+    <tag k="name" v="G4 : Gare des Flamboyants (fictif) → Gare de la Lagune-Sud (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G4"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="8" version="1">
+    <member type="node" ref="6" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="22" role="platform"/>
+    <member type="node" ref="23" role="platform"/>
+    <member type="node" ref="1" role="platform"/>
+    <member type="way" ref="17" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="22" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="11" role=""/>
+    <member type="way" ref="21" role=""/>
+    <member type="way" ref="20" role=""/>
+    <member type="way" ref="19" role=""/>
+    <member type="way" ref="18" role=""/>
+    <tag k="colour" v="#0B3D91"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="name" v="G4 : Gare de la Lagune-Sud (fictif) → Gare des Flamboyants (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="G4"/>
+    <tag k="route" v="minibus"/>
+    <tag k="to" v="Gare des Flamboyants (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="9" version="1">
+    <member type="node" ref="1" role="platform"/>
+    <member type="node" ref="24" role="platform"/>
+    <member type="node" ref="25" role="platform"/>
+    <member type="node" ref="26" role="platform"/>
+    <member type="node" ref="27" role="platform"/>
+    <member type="node" ref="2" role="platform"/>
+    <member type="way" ref="23" role=""/>
+    <member type="way" ref="24" role=""/>
+    <member type="way" ref="25" role=""/>
+    <member type="way" ref="26" role=""/>
+    <member type="way" ref="27" role=""/>
+    <tag k="colour" v="#FFD966"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Flamboyants (fictif)"/>
+    <tag k="name" v="W1 : Gare des Flamboyants (fictif) → Gare des Palmiers (fictif)"/>
+    <tag k="network" v="woro-communal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="W1"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Gare des Palmiers (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="10" version="1">
+    <member type="node" ref="2" role="platform"/>
+    <member type="node" ref="27" role="platform"/>
+    <member type="node" ref="26" role="platform"/>
+    <member type="node" ref="25" role="platform"/>
+    <member type="node" ref="24" role="platform"/>
+    <member type="node" ref="1" role="platform"/>
+    <member type="way" ref="27" role=""/>
+    <member type="way" ref="26" role=""/>
+    <member type="way" ref="25" role=""/>
+    <member type="way" ref="24" role=""/>
+    <member type="way" ref="23" role=""/>
+    <tag k="colour" v="#FFD966"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Palmiers (fictif)"/>
+    <tag k="name" v="W1 : Gare des Palmiers (fictif) → Gare des Flamboyants (fictif)"/>
+    <tag k="network" v="woro-communal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="W1"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Gare des Flamboyants (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="11" version="1">
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="13" role="platform"/>
+    <member type="node" ref="5" role="platform"/>
+    <member type="node" ref="7" role="platform"/>
+    <member type="way" ref="5" role=""/>
+    <member type="way" ref="6" role=""/>
+    <member type="way" ref="28" role=""/>
+    <tag k="colour" v="#A9D18E"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare du Baobab (fictif)"/>
+    <tag k="name" v="W2 : Gare du Baobab (fictif) → Embarcadère Nord (fictif)"/>
+    <tag k="network" v="woro-communal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="W2"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Embarcadère Nord (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="12" version="1">
+    <member type="node" ref="7" role="platform"/>
+    <member type="node" ref="5" role="platform"/>
+    <member type="node" ref="13" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="way" ref="28" role=""/>
+    <member type="way" ref="6" role=""/>
+    <member type="way" ref="5" role=""/>
+    <tag k="colour" v="#A9D18E"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Embarcadère Nord (fictif)"/>
+    <tag k="name" v="W2 : Embarcadère Nord (fictif) → Gare du Baobab (fictif)"/>
+    <tag k="network" v="woro-communal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="W2"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Gare du Baobab (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="13" version="1">
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="29" role="platform"/>
+    <member type="node" ref="30" role="platform"/>
+    <member type="node" ref="31" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="6" role="platform"/>
+    <member type="way" ref="29" role=""/>
+    <member type="way" ref="30" role=""/>
+    <member type="way" ref="31" role=""/>
+    <member type="way" ref="32" role=""/>
+    <member type="way" ref="11" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="22" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="17" role=""/>
+    <tag k="colour" v="#C9B18B"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare du Baobab (fictif)"/>
+    <tag k="name" v="I1 : Gare du Baobab (fictif) → Gare de la Lagune-Sud (fictif)"/>
+    <tag k="network" v="woro-intercommunal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="I1"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="14" version="1">
+    <member type="node" ref="6" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="31" role="platform"/>
+    <member type="node" ref="30" role="platform"/>
+    <member type="node" ref="29" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="way" ref="17" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="22" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="11" role=""/>
+    <member type="way" ref="32" role=""/>
+    <member type="way" ref="31" role=""/>
+    <member type="way" ref="30" role=""/>
+    <member type="way" ref="29" role=""/>
+    <tag k="colour" v="#C9B18B"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="name" v="I1 : Gare de la Lagune-Sud (fictif) → Gare du Baobab (fictif)"/>
+    <tag k="network" v="woro-intercommunal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="I1"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Gare du Baobab (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="15" version="1">
+    <member type="node" ref="2" role="platform"/>
+    <member type="node" ref="34" role="platform"/>
+    <member type="node" ref="33" role="platform"/>
+    <member type="node" ref="32" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="29" role="platform"/>
+    <member type="node" ref="30" role="platform"/>
+    <member type="node" ref="31" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="way" ref="33" role=""/>
+    <member type="way" ref="34" role=""/>
+    <member type="way" ref="35" role=""/>
+    <member type="way" ref="36" role=""/>
+    <member type="way" ref="29" role=""/>
+    <member type="way" ref="30" role=""/>
+    <member type="way" ref="31" role=""/>
+    <member type="way" ref="32" role=""/>
+    <tag k="colour" v="#D6C29E"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Palmiers (fictif)"/>
+    <tag k="name" v="I2 : Gare des Palmiers (fictif) → Gare des Cocotiers (fictif)"/>
+    <tag k="network" v="woro-intercommunal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="I2"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Gare des Cocotiers (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="16" version="1">
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="31" role="platform"/>
+    <member type="node" ref="30" role="platform"/>
+    <member type="node" ref="29" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="32" role="platform"/>
+    <member type="node" ref="33" role="platform"/>
+    <member type="node" ref="34" role="platform"/>
+    <member type="node" ref="2" role="platform"/>
+    <member type="way" ref="32" role=""/>
+    <member type="way" ref="31" role=""/>
+    <member type="way" ref="30" role=""/>
+    <member type="way" ref="29" role=""/>
+    <member type="way" ref="36" role=""/>
+    <member type="way" ref="35" role=""/>
+    <member type="way" ref="34" role=""/>
+    <member type="way" ref="33" role=""/>
+    <tag k="colour" v="#D6C29E"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Cocotiers (fictif)"/>
+    <tag k="name" v="I2 : Gare des Cocotiers (fictif) → Gare des Palmiers (fictif)"/>
+    <tag k="network" v="woro-intercommunal"/>
+    <tag k="operator" v="Transport artisanal de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="I2"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="to" v="Gare des Palmiers (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="17" version="1">
+    <member type="node" ref="1" role="platform"/>
+    <member type="node" ref="12" role="platform"/>
+    <member type="node" ref="11" role="platform"/>
+    <member type="node" ref="10" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="29" role="platform"/>
+    <member type="node" ref="30" role="platform"/>
+    <member type="node" ref="31" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="6" role="platform"/>
+    <member type="way" ref="1" role=""/>
+    <member type="way" ref="2" role=""/>
+    <member type="way" ref="3" role=""/>
+    <member type="way" ref="4" role=""/>
+    <member type="way" ref="29" role=""/>
+    <member type="way" ref="30" role=""/>
+    <member type="way" ref="31" role=""/>
+    <member type="way" ref="32" role=""/>
+    <member type="way" ref="11" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="22" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="17" role=""/>
+    <tag k="colour" v="#E46C0A"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Flamboyants (fictif)"/>
+    <tag k="name" v="B1 : Gare des Flamboyants (fictif) → Gare de la Lagune-Sud (fictif)"/>
+    <tag k="network" v="regie-bus"/>
+    <tag k="operator" v="Régie des transports de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="B1"/>
+    <tag k="route" v="bus"/>
+    <tag k="to" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="18" version="1">
+    <member type="node" ref="6" role="platform"/>
+    <member type="node" ref="19" role="platform"/>
+    <member type="node" ref="20" role="platform"/>
+    <member type="node" ref="21" role="platform"/>
+    <member type="node" ref="9" role="platform"/>
+    <member type="node" ref="18" role="platform"/>
+    <member type="node" ref="17" role="platform"/>
+    <member type="node" ref="3" role="platform"/>
+    <member type="node" ref="31" role="platform"/>
+    <member type="node" ref="30" role="platform"/>
+    <member type="node" ref="29" role="platform"/>
+    <member type="node" ref="4" role="platform"/>
+    <member type="node" ref="10" role="platform"/>
+    <member type="node" ref="11" role="platform"/>
+    <member type="node" ref="12" role="platform"/>
+    <member type="node" ref="1" role="platform"/>
+    <member type="way" ref="17" role=""/>
+    <member type="way" ref="16" role=""/>
+    <member type="way" ref="22" role=""/>
+    <member type="way" ref="14" role=""/>
+    <member type="way" ref="13" role=""/>
+    <member type="way" ref="12" role=""/>
+    <member type="way" ref="11" role=""/>
+    <member type="way" ref="32" role=""/>
+    <member type="way" ref="31" role=""/>
+    <member type="way" ref="30" role=""/>
+    <member type="way" ref="29" role=""/>
+    <member type="way" ref="4" role=""/>
+    <member type="way" ref="3" role=""/>
+    <member type="way" ref="2" role=""/>
+    <member type="way" ref="1" role=""/>
+    <tag k="colour" v="#E46C0A"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare de la Lagune-Sud (fictif)"/>
+    <tag k="name" v="B1 : Gare de la Lagune-Sud (fictif) → Gare des Flamboyants (fictif)"/>
+    <tag k="network" v="regie-bus"/>
+    <tag k="operator" v="Régie des transports de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="B1"/>
+    <tag k="route" v="bus"/>
+    <tag k="to" v="Gare des Flamboyants (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="19" version="1">
+    <member type="node" ref="2" role="platform"/>
+    <member type="node" ref="5" role="platform"/>
+    <member type="way" ref="37" role=""/>
+    <tag k="colour" v="#C00000"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare des Palmiers (fictif)"/>
+    <tag k="name" v="E1 : Gare des Palmiers (fictif) → Gare du Grand Marché (fictif)"/>
+    <tag k="network" v="regie-express"/>
+    <tag k="operator" v="Régie des transports de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="E1"/>
+    <tag k="route" v="bus"/>
+    <tag k="to" v="Gare du Grand Marché (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="20" version="1">
+    <member type="node" ref="5" role="platform"/>
+    <member type="node" ref="2" role="platform"/>
+    <member type="way" ref="37" role=""/>
+    <tag k="colour" v="#C00000"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Gare du Grand Marché (fictif)"/>
+    <tag k="name" v="E1 : Gare du Grand Marché (fictif) → Gare des Palmiers (fictif)"/>
+    <tag k="network" v="regie-express"/>
+    <tag k="operator" v="Régie des transports de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="E1"/>
+    <tag k="route" v="bus"/>
+    <tag k="to" v="Gare des Palmiers (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="21" version="1">
+    <member type="node" ref="7" role="platform"/>
+    <member type="node" ref="8" role="platform"/>
+    <member type="way" ref="38" role=""/>
+    <tag k="colour" v="#00B0F0"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Embarcadère Nord (fictif)"/>
+    <tag k="name" v="L1 : Embarcadère Nord (fictif) → Embarcadère Sud (fictif)"/>
+    <tag k="network" v="regie-bateau"/>
+    <tag k="operator" v="Régie des transports de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="L1"/>
+    <tag k="route" v="ferry"/>
+    <tag k="to" v="Embarcadère Sud (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="22" version="1">
+    <member type="node" ref="8" role="platform"/>
+    <member type="node" ref="7" role="platform"/>
+    <member type="way" ref="38" role=""/>
+    <tag k="colour" v="#00B0F0"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="from" v="Embarcadère Sud (fictif)"/>
+    <tag k="name" v="L1 : Embarcadère Sud (fictif) → Embarcadère Nord (fictif)"/>
+    <tag k="network" v="regie-bateau"/>
+    <tag k="operator" v="Régie des transports de Lagune-Fictive (fictif)"/>
+    <tag k="ref" v="L1"/>
+    <tag k="route" v="ferry"/>
+    <tag k="to" v="Embarcadère Nord (fictif)"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="23" version="1">
+    <member type="relation" ref="1" role=""/>
+    <member type="relation" ref="2" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Flamboyants–Grand Marché (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="ref" v="G1"/>
+    <tag k="route_master" v="minibus"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="24" version="1">
+    <member type="relation" ref="3" role=""/>
+    <member type="relation" ref="4" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Palmiers–Grand Marché (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="ref" v="G2"/>
+    <tag k="route_master" v="minibus"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="25" version="1">
+    <member type="relation" ref="5" role=""/>
+    <member type="relation" ref="6" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Cocotiers–Lagune-Sud (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="ref" v="G3"/>
+    <tag k="route_master" v="minibus"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="26" version="1">
+    <member type="relation" ref="7" role=""/>
+    <member type="relation" ref="8" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Flamboyants–Lagune-Sud (fictif)"/>
+    <tag k="network" v="gbaka"/>
+    <tag k="ref" v="G4"/>
+    <tag k="route_master" v="minibus"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="27" version="1">
+    <member type="relation" ref="9" role=""/>
+    <member type="relation" ref="10" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Flamboyants–Palmiers (fictif)"/>
+    <tag k="network" v="woro-communal"/>
+    <tag k="ref" v="W1"/>
+    <tag k="route_master" v="share_taxi"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="28" version="1">
+    <member type="relation" ref="11" role=""/>
+    <member type="relation" ref="12" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Baobab–Embarcadère Nord (fictif)"/>
+    <tag k="network" v="woro-communal"/>
+    <tag k="ref" v="W2"/>
+    <tag k="route_master" v="share_taxi"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="29" version="1">
+    <member type="relation" ref="13" role=""/>
+    <member type="relation" ref="14" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Baobab–Lagune-Sud (fictif)"/>
+    <tag k="network" v="woro-intercommunal"/>
+    <tag k="ref" v="I1"/>
+    <tag k="route_master" v="share_taxi"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="30" version="1">
+    <member type="relation" ref="15" role=""/>
+    <member type="relation" ref="16" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Palmiers–Cocotiers (fictif)"/>
+    <tag k="network" v="woro-intercommunal"/>
+    <tag k="ref" v="I2"/>
+    <tag k="route_master" v="share_taxi"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="31" version="1">
+    <member type="relation" ref="17" role=""/>
+    <member type="relation" ref="18" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Flamboyants–Lagune-Sud par le pont (fictif)"/>
+    <tag k="network" v="regie-bus"/>
+    <tag k="ref" v="B1"/>
+    <tag k="route_master" v="bus"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="32" version="1">
+    <member type="relation" ref="19" role=""/>
+    <member type="relation" ref="20" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Palmiers–Grand Marché direct (fictif)"/>
+    <tag k="network" v="regie-express"/>
+    <tag k="ref" v="E1"/>
+    <tag k="route_master" v="bus"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="33" version="1">
+    <member type="relation" ref="21" role=""/>
+    <member type="relation" ref="22" role=""/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Embarcadère Nord–Embarcadère Sud (fictif)"/>
+    <tag k="network" v="regie-bateau"/>
+    <tag k="ref" v="L1"/>
+    <tag k="route_master" v="ferry"/>
+    <tag k="type" v="route_master"/>
+  </relation>
+  <relation id="34" version="1">
+    <member type="node" ref="2" role="platform"/>
+    <member type="way" ref="39" role=""/>
+    <member type="node" ref="7" role="platform"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="W9 : Palmiers–Embarcadère Nord (fictif)"/>
+    <tag k="network" v="woro-communal"/>
+    <tag k="ref" v="W9"/>
+    <tag k="route" v="share_taxi"/>
+    <tag k="type" v="route"/>
+  </relation>
+  <relation id="35" version="1">
+    <member type="way" ref="48" role="outer"/>
+    <tag k="admin_level" v="8"/>
+    <tag k="boundary" v="administrative"/>
+    <tag k="fictional" v="yes"/>
+    <tag k="name" v="Lagune-Fictive (fictif)"/>
+    <tag k="type" v="boundary"/>
+  </relation>
+</osm>

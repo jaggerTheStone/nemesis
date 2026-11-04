@@ -18,7 +18,9 @@ Schéma de la base PostgreSQL 16, avec PostGIS et pg_trgm (partie 7.2, ADR-005, 
 | `network` | Villes, zones, lieux et alias, arrêts, opérateurs, lignes, variantes, profils de service, zones tarifaires, incidents, flux partenaires, versions du réseau | `nemesis_api` (lecture et écriture), `nemesis_analyst` (lecture) |
 | `mobility` | Observations, segments de trajets, sessions et positions de véhicules (tables partitionnées par jour), états des files, profils d'attente, prix observés et estimés, vitesses | `nemesis_api` ; `nemesis_analyst` sur les seuls agrégats |
 | `identity` | Comptes, appareils, consentements, contributions récompensées, points | `nemesis_identity` uniquement |
-| `ops` | Comptes du back-office, journal d'audit, règles de partitionnement | `nemesis_api` (audit en ajout), `nemesis_maintenance` (fonctions de maintenance) |
+| `ops` | Comptes du back-office, journal d'audit, règles de partitionnement, exécutions d'import (`import_run`) | `nemesis_api` (audit en ajout, lecture des imports), `nemesis_maintenance` (fonctions de maintenance) |
+| `staging_gtfs` | GTFS importés tels que publiés (une ligne par ligne de fichier, en jsonb) et vues typées (I0.7) | `nemesis_analyst` (lecture) ; jamais l'API |
+| `staging_osm` | Tables d'osm2pgsql, recréées à chaque import (style `data/pipelines/src/nemesis_pipelines/osm/nemesis.lua`) | `nemesis_analyst` (lecture) ; jamais l'API |
 
 ## Règles inscrites dans le schéma
 
@@ -33,6 +35,8 @@ Schéma de la base PostgreSQL 16, avec PostGIS et pg_trgm (partie 7.2, ADR-005, 
 - **Conservation** (docs/PRIVACY.md) :
   - `ops.maintain_partitions()` crée les partitions quotidiennes et supprime celles qui ont dépassé leur durée de conservation : observations 12 mois, segments et positions 30 jours ;
   - `ops.purge_expired()` purge les sessions de véhicules, les prix observés et les comptes supprimés depuis plus de 30 jours.
+- **Licences des sources** (I0.7, H-030) : une source `usage = 'evaluation'` (licence non commerciale) n'entre dans aucune table du réseau : lieux, arrêts, lignes, zones, incidents (erreur `NM004`). Une source déjà utilisée par le réseau ne peut pas passer en évaluation.
+- **Provenance des imports** : `ops.import_run` garde, pour chaque exécution, l'URL, l'empreinte SHA-256, le mode de vérification, la date de récupération, la date des données et les volumes. Les lieux importés portent leur référence dans la source (`external_ref`, par exemple `node/123`) et leur import d'origine.
 - **Audit** : `ops.audit_log` est en ajout seul (ni modification, ni suppression, ni vidage), chaîné par SHA-256. `ops.verify_audit_chain()` renvoie le premier maillon invalide.
 
 ## Ajouter une migration

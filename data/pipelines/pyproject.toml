@@ -3,11 +3,15 @@ name = "nemesis-pipelines"
 version = "0.0.0"
 description = "Pipelines d'import OSM et GTFS, génération des tuiles et des packs hors ligne."
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["nemesis-schema", "pg8000"]
 
 [project.scripts]
 nemesis-terrain = "nemesis_pipelines.terrain.cli:main"
 nemesis-fixtures = "nemesis_pipelines.fixtures.cli:main"
+nemesis-data = "nemesis_pipelines.data_cli:main"
+
+[tool.uv.sources]
+nemesis-schema = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

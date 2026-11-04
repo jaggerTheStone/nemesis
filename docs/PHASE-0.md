@@ -129,6 +129,22 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Exécution par `make data-import` et par une tâche de CI planifiée chaque semaine (volume trop lourd pour chaque pull request).
 - **Dépend de Q-08** : hôtes aujourd'hui bloqués dans mon environnement.
 - **Terminé quand** : les rapports de validation et d'écarts sont produits ; les volumes importés sont consignés dans `docs/DATA.md` ; les erreurs du validateur sont listées, jamais corrigées en silence.
+- **Réalisé** (2026-11-04) : chaîne `nemesis-data`, `make data-import` et `make data-import-fictif` ([data/pipelines/README.md](../data/pipelines/README.md)).
+  - Sources déclarées dans un manifeste. Un téléchargement est refusé sans empreinte, et la provenance de chaque import est inscrite dans `ops.import_run`.
+  - **GTFS « Abidjan 2023 »** : pris à son dépôt GitLab d'origine, joignable depuis l'environnement cloud. Il est importé localement en staging (4 834 arrêts, 490 lignes, 974 tracés) et ses volumes sont consignés dans DATA.md.
+    - **Sa licence est CC BY-NC 4.0** : pas d'usage commercial. Il sert donc à l'évaluation seulement, et la base refuse de le faire entrer dans le réseau (H-030, à trancher par le porteur).
+  - Validateur MobilityData sur le GTFS : tous les avis listés, erreurs d'abord, rien corrigé.
+  - OSM : import par osm2pgsql 1.11 (style flex) ; points d'intérêt promus en lieux avec leurs alias.
+  - Rapport d'écarts GTFS ↔ OSM en Markdown et GeoJSON. Sur les données fictives, il retrouve exactement les écarts volontaires de l'OSM fictif.
+  - Tuiles : schéma Planetiler maison (ADR-009), archive du pays et extrait d'Abidjan, mesurés face aux 45 Mo de F-12 (H-031).
+  - Tests : 33 sans base, plus 6 contre une base PostGIS avec osm2pgsql (`make pipelines-test`) et 2 du schéma.
+  - CI : la chaîne fictive tourne à chaque modification des pipelines, la chaîne réelle chaque semaine.
+    - Geofabrik et GHCR (validateur, Planetiler) sont bloqués dans l'environnement cloud. L'import OSM réel, le rapport du validateur sur le GTFS réel, les écarts réels et les tuiles ne sont donc produits qu'en CI ; leurs volumes sont reportés dans ETAT.md après la première exécution.
+
+  Écarts au plan :
+  - extrait OSM fictif et GTFS d'identifiants OSM pour tester les rapports sans données réelles ;
+  - garde de licence dans la base ;
+  - simplification signalée : le fond léger v0 ne dessine pas l'océan (ADR-009).
 
 ### I0.8 — Spike du moteur d'itinéraires (deux jours) et ADR-003
 

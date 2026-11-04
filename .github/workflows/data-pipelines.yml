@@ -1,0 +1,91 @@
+name: Pipelines de données (chaîne fictive)
+
+# Toute la chaîne d'I0.7 sur les données fictives du dépôt : tests contre une base
+# migrée, validateur GTFS, import OSM, rapport d'écarts et tuiles. Rapide : à chaque
+# modification des pipelines. La chaîne réelle tourne chaque semaine (data-import.yml).
+
+on:
+  push:
+    paths:
+      - "data/pipelines/**"
+      - "data/schema/**"
+      - "data/fixtures_fictives/**"
+      - "docker-compose.yml"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/data-pipelines.yml"
+  pull_request:
+    paths:
+      - "data/pipelines/**"
+      - "data/schema/**"
+      - "data/fixtures_fictives/**"
+      - "docker-compose.yml"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/data-pipelines.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fictif:
+    name: Chaîne fictive
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      # Base de make dev (docker compose) ; l'administrateur crée aussi les bases de test.
+      DATABASE_URL: postgres://nemesis_admin:nemesis_dev@127.0.0.1:5432/nemesis
+      NEMESIS_TEST_DATABASE_URL: postgres://nemesis_admin:nemesis_dev@127.0.0.1:5432/postgres
+      NEMESIS_REQUIRE_DB: "1"
+      NEMESIS_REQUIRE_OSM2PGSQL: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer osm2pgsql et osmium (paquets Ubuntu 24.04 épinglés)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends \
+            osm2pgsql=1.11.0+ds-1 osmium-tool=1.16.0-1build1
+          osm2pgsql --version
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances
+        run: uv sync --locked --all-packages
+      - name: Base de développement (comme make dev)
+        run: |
+          docker compose up -d --wait db
+          docker compose run --rm migrate
+      - name: Tests des pipelines contre la base, avec osm2pgsql
+        run: uv run pytest data/pipelines -rs
+      - name: Exemples du schéma de tuiles (planetiler verify)
+        run: make data-tiles-verify
+      - name: Chaîne fictive complète (validateur, OSM, écarts, tuiles)
+        run: make data-import-fictif
+      - name: Le GTFS fictif passe le validateur sans erreur
+        run: uv run nemesis-fixtures verifier-rapport data/work/rapports/fictif/validation-gtfs/report.json
+      - name: Résumé
+        if: always()
+        run: |
+          for f in data/work/rapports/fictif/ecarts.md data/work/rapports/fictif/tuiles.md; do
+            if [ -f "$f" ]; then cat "$f" >> "$GITHUB_STEP_SUMMARY"; echo >> "$GITHUB_STEP_SUMMARY"; fi
+          done
+      - name: Conserver les rapports et les tuiles fictives
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chaine-fictive
+          path: |
+            data/work/rapports/fictif
+            data/work/tiles/lagune-fictive.pmtiles
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Journaux en cas d'échec
+        if: failure()
+        run: docker compose logs db
+      - name: Arrêter
+        if: always()
+        run: docker compose down -v

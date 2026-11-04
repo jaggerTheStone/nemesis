@@ -1,6 +1,6 @@
 # Données
 
-Version 0 du 2026-11-04 (incrément I0.3). « La donnée est le produit » (partie 7). Ce document fixe d'où viennent les données, comment on en garde la trace, quand elles cessent d'être fraîches, et comment on les montre honnêtement.
+Version 0 du 2026-11-04 (incrément I0.3), complétée en I0.7 (imports). « La donnée est le produit » (partie 7). Ce document fixe d'où viennent les données, comment on en garde la trace, quand elles cessent d'être fraîches, et comment on les montre honnêtement.
 
 ## Règle d'or
 
@@ -10,13 +10,13 @@ Aucune donnée réelle n'est inventée : ni ligne, ni gare, ni prix, ni fréquen
 
 | Source | Contenu | Usage | Licence et attribution | Statut |
 |--------|---------|-------|------------------------|--------|
-| OpenStreetMap, extrait Côte d'Ivoire de Geofabrik | Voirie, chemins piétons, points d'intérêt, relations de lignes (réseaux de gbakas et de wôrô-wôrôs cartographiés par Jungle Bus) | Graphe piéton, repères, tracés, fond de carte | ODbL 1.0. Attribution obligatoire dans l'appli : « © les contributeurs d'OpenStreetMap », avec un lien vers openstreetmap.org/copyright. Partage à l'identique des bases dérivées utilisées publiquement : portée à valider par un juriste (H-019) | Import en I0.7 |
-| GTFS « Abidjan 2023 », DigitalTransport4Africa (TUMI Data Hub, Transitland) | Réseaux SOTRA, gbakas, wôrô-wôrôs par commune | A priori et banc d'essai (H-017) | **À vérifier** sur la fiche du jeu avant tout usage public | Import en I0.7. Dernière mise à jour connue : janvier 2024, avant l'interdiction d'Adjamé aux gbakas (mars 2025) et la réorganisation par l'AMUGA (octobre 2026) |
+| OpenStreetMap, extrait Côte d'Ivoire de Geofabrik | Voirie, chemins piétons, points d'intérêt, relations de lignes (réseaux de gbakas et de wôrô-wôrôs cartographiés par Jungle Bus) | Graphe piéton, repères, tracés, fond de carte | ODbL 1.0. Attribution obligatoire dans l'appli : « © les contributeurs d'OpenStreetMap », avec un lien vers openstreetmap.org/copyright. Partage à l'identique des bases dérivées utilisées publiquement : portée à valider par un juriste (H-019) | Import en place (I0.7) : extrait du jour, MD5 publiée par Geofabrik vérifiée ; chaîne hebdomadaire en CI |
+| GTFS « Abidjan 2023 », Ewarren Financial Services et DigitalTransport4Africa (dépôt GitLab d'origine ; copies sur TUMI Data Hub et Transitland) | Réseau artisanal seulement : 490 lignes de gbakas et de wôrô-wôrôs, 25 agences, une par mode et par commune, aucune ligne SOTRA. Relevé du 21 novembre au 31 mai 2023 selon le dépôt d'origine, généré à partir d'OSM (identifiants d'arrêts `node/…`) | Évaluation interne seulement (H-017, H-030) : validation, rapport d'écarts, banc d'essai du moteur | **CC BY-NC 4.0 : pas d'usage commercial**. Attribution et mention des modifications exigées. Autorisation à demander à DigitalTransport4Africa (H-030) | Import en place (I0.7) dans `staging_gtfs`, jamais dans le réseau (la base le refuse). Fichier du 2023-07-26, figé au commit `da5d9faf`, SHA-256 épinglée (identique à celle publiée par GitLab). Calendrier du 2023-01-01 au 2023-12-31 : expiré, avant l'interdiction d'Adjamé aux gbakas (mars 2025) et la réorganisation par l'AMUGA (octobre 2026) |
 | Flux partenaires : AMUGA, SOTRA, opérateurs lagunaires | Cartographie, arrêts-minute, pôles AIM, GTFS, positions | Réseau officiel, temps réel des bus | Selon chaque convention (7.3) | Conventions à préparer ; connecteurs GTFS et GTFS-Realtime génériques |
 | Données de terrain (I0.2) | Requêtes, trajets de référence, relevés des Éclaireurs, recensement des gares | Évaluation, calibration, réseau artisanal | Données du projet, anonymes | Kits prêts ([docs/TERRAIN](TERRAIN/README.md)) ; collecte selon Q-03 |
 | Contributions des usagers (F-07) | Files, prix payés, incidents, arrêts déplacés | Temps réel, prix observés, corrections du réseau | Les conditions d'utilisation doivent accorder la licence nécessaire à la publication d'agrégats sous une licence compatible avec l'ODbL ; à rédiger et valider | Phase 1 |
 | Météo : SODEXAM en partenariat, ou à défaut une API ouverte | Pluie actuelle et prévue | Modèle d'attente, alertes pluie | Conditions d'usage commercial à vérifier avant intégration (9.1) | Phase 1 ou V2 |
-| Tuiles vectorielles produites avec Planetiler à partir d'OSM | Fond de carte léger | Carte en ligne et hors ligne | ODbL pour les données. Le schéma de tuiles (OpenMapTiles ou Shortbread) peut ajouter sa propre attribution : à confirmer en I0.7 | I0.7 |
+| Tuiles vectorielles produites avec Planetiler à partir d'OSM | Fond de carte léger | Carte en ligne et hors ligne | ODbL pour les données. Schéma maison (ADR-009) : aucune attribution de schéma due, seulement celle d'OSM, inscrite dans les archives | En place (I0.7) : archive du pays et extrait d'Abidjan, mesurés face à F-12 |
 
 **Sources interdites** :
 - toute donnée inventée ;
@@ -29,6 +29,46 @@ Aucune donnée réelle n'est inventée : ni ligne, ni gare, ni prix, ni fréquen
 - **Fichiers bruts téléchargés** : conservés avec leur empreinte SHA-256, vérifiée avant import (`nemesis_pipelines.checksum`).
 - **Versions du réseau** : il évolue par `change_request`, puis revue et publication d'une `network_version` datée, avec une date d'effet. On peut comparer deux versions et revenir en arrière (6.3).
 - **Reproductibilité** : chaque pack hors ligne et chaque réponse du moteur indiquent la version du réseau utilisée.
+
+## Imports (I0.7)
+
+La chaîne est décrite dans [data/pipelines/README.md](../data/pipelines/README.md). Elle se lance avec `make data-import` (sources réelles) ou `make data-import-fictif`, et chaque semaine en CI (workflow « Imports de données réelles »).
+
+| Étape | Ce qui est fait | Où |
+|-------|-----------------|----|
+| Téléchargement | Empreinte vérifiée avant tout import, `provenance.json` à côté du fichier | `data/work/sources/<source>/` |
+| Validation du GTFS | Validateur MobilityData épinglé ; **tous** les avis listés, erreurs d'abord ; rien n'est corrigé | `rapports/<profil>/validation-gtfs/` |
+| GTFS | Chaque ligne de chaque fichier, valeurs intactes, numéro de ligne ; vues typées où une valeur illisible reste nulle | `staging_gtfs` |
+| OSM | osm2pgsql 1.11, style flex : voirie, piétons, points d'intérêt, arrêts, lignes, limites | `staging_osm` |
+| Lieux | Points d'intérêt nommés de l'emprise (H-029) → `network.place` et ses alias, avec leur référence OSM ; mis à jour, jamais dupliqués ni supprimés en silence | `network.place` |
+| Écarts GTFS ↔ OSM | Arrêts et tracés appariés par identifiant OSM, puis par distance, référence et géométrie | `rapports/<profil>/ecarts.md` et `.geojson` |
+| Tuiles | Fond léger (ADR-009), archive du pays et extrait de la ville, taille comparée aux 45 Mo de F-12 (H-031) | `data/work/tiles/`, `rapports/<profil>/tuiles.md` |
+
+Chaque exécution est inscrite dans `ops.import_run` : source, URL, empreinte, mode de vérification, date de récupération, date des données, volumes, état.
+
+### Volumes importés
+
+**GTFS « Abidjan 2023 »** (import local du 2026-11-04, fichier du 2023-07-26) :
+
+| Fichier | Lignes |
+|---------|--------|
+| `agency.txt` | 25 |
+| `routes.txt` | 490 |
+| `trips.txt` | 980 |
+| `stops.txt` | 4 834 |
+| `stop_times.txt` | 15 683 |
+| `frequencies.txt` | 1 076 |
+| `shapes.txt` | 74 504 points, 974 tracés |
+| `calendar.txt` | 1 service, tous les jours du 2023-01-01 au 2023-12-31 |
+| `feed_info.txt` | version 0.1, éditeur « Data Transport » |
+| `calendar_dates`, `transfers`, `pathways`, `levels`, `fare_attributes`, `fare_rules` | vides |
+
+Particularités :
+- tous les identifiants d'arrêts sont des nœuds OSM (`node/…`) : le rapport d'écarts apparie d'abord par identifiant ;
+- les lignes et les tracés portent des numéros de relations OSM ;
+- aucune ligne n'a de nom court : seul le nom long (« gbaka : Adjamé Liberté ↔ Treichville Gare de Bassam ») les identifie.
+
+**Extrait OSM de la Côte d'Ivoire, avis du validateur, écarts et tuiles** : produits par la première exécution du workflow hebdomadaire ; voir l'état du projet ([ETAT.md](ETAT.md)). Ils ne sont pas reportés ici avant d'avoir été mesurés.
 
 ## Organisation de la base
 

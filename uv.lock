@@ -174,6 +174,16 @@ requires-dist = [
 name = "nemesis-pipelines"
 version = "0.0.0"
 source = { editable = "data/pipelines" }
+dependencies = [
+    { name = "nemesis-schema" },
+    { name = "pg8000" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "nemesis-schema", editable = "data/schema" },
+    { name = "pg8000" },
+]
 
 [[package]]
 name = "nemesis-schema"
