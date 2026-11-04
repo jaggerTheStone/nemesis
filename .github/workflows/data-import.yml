@@ -65,6 +65,14 @@ jobs:
               echo >> "$GITHUB_STEP_SUMMARY"
             fi
           done
+      # Aussi dans le journal : il se lit sans télécharger l'artefact.
+      - name: Rapports dans le journal
+        if: always()
+        run: |
+          for f in volumes.json validation-gtfs/resume.md ecarts.md tuiles.md; do
+            path="data/work/rapports/reel/$f"
+            if [ -f "$path" ]; then echo "===== $f"; cat "$path"; fi
+          done
       - name: Conserver les rapports
         if: always()
         uses: actions/upload-artifact@v4
