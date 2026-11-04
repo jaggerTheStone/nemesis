@@ -1,0 +1,69 @@
+name: TypeScript et Protobuf
+
+on:
+  push:
+    paths:
+      - "apps/admin/**"
+      - "apps/web-lite/**"
+      - "services/api/**"
+      - "services/channels/**"
+      - "packages/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "tsconfig.base.json"
+      - "eslint.config.mjs"
+      - ".prettierrc.json"
+      - ".prettierignore"
+      - ".nvmrc"
+      - ".github/workflows/ci-typescript.yml"
+  pull_request:
+    paths:
+      - "apps/admin/**"
+      - "apps/web-lite/**"
+      - "services/api/**"
+      - "services/channels/**"
+      - "packages/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "tsconfig.base.json"
+      - "eslint.config.mjs"
+      - ".prettierrc.json"
+      - ".prettierignore"
+      - ".nvmrc"
+      - ".github/workflows/ci-typescript.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Installer pnpm
+        run: npm install --global pnpm@10.28.0
+      - name: Installer les dépendances
+        run: pnpm install --frozen-lockfile
+      - name: Lint et format
+        run: pnpm run lint
+      - name: Typage
+        run: pnpm run typecheck
+      - name: Tests
+        run: pnpm run test
+      - name: Build
+        run: pnpm run build
+      - name: Protobuf (buf lint et format)
+        run: pnpm run proto:lint
+      - name: Audit des dépendances
+        run: pnpm audit --audit-level high

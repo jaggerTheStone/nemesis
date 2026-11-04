@@ -1,0 +1,11 @@
+# Le Markdown est rédigé à la main (tableaux, citations du cahier des charges).
+*.md
+pnpm-lock.yaml
+uv.lock
+**/dist/
+**/build/
+**/coverage/
+**/target/
+**/.venv/
+apps/mobile/
+services/routing/

@@ -1,6 +1,6 @@
 # Phase 0 — Fondations : plan détaillé
 
-Statut : **proposé, en attente de validation** (2026-11-04).
+Statut : **validé le 2026-11-04, en cours**. Avancement : voir `docs/ETAT.md`.
 Référence : partie 15.1 du cahier des charges (`docs/CAHIER_DES_CHARGES.md`).
 
 ## Objectif et critère de fin

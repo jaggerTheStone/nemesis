@@ -1,0 +1,18 @@
+packages:
+  - apps/admin
+  - apps/web-lite
+  - services/api
+  - services/channels
+
+# Chaîne d'approvisionnement : refuser les versions publiées depuis moins de
+# 14 jours (en minutes). Voir SECURITY.md.
+minimumReleaseAge: 20160
+
+# pnpm 10 bloque les scripts d'installation ; seuls ceux-ci sont autorisés.
+onlyBuiltDependencies:
+  - "@swc/core"
+  - esbuild
+
+# Le binaire buf fonctionne sans son script d'installation.
+ignoredBuiltDependencies:
+  - "@bufbuild/buf"

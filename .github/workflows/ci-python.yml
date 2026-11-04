@@ -1,0 +1,50 @@
+name: Python (apprentissage, pipelines, simulateur)
+
+on:
+  push:
+    paths:
+      - "services/ml/**"
+      - "data/pipelines/**"
+      - "tools/simulator/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".python-version"
+      - ".github/workflows/ci-python.yml"
+  pull_request:
+    paths:
+      - "services/ml/**"
+      - "data/pipelines/**"
+      - "tools/simulator/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".python-version"
+      - ".github/workflows/ci-python.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances (verrou vérifié)
+        run: uv sync --locked --all-packages
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format
+        run: uv run ruff format --check .
+      - name: Tests
+        run: uv run pytest
+      - name: Audit des dépendances
+        run: >
+          uv export --frozen --all-packages --no-emit-workspace --format requirements-txt --quiet
+          | uvx pip-audit@2.10.1 -r /dev/stdin --require-hashes --disable-pip --progress-spinner off

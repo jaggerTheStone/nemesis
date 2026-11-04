@@ -1,0 +1,18 @@
+[package]
+name = "routing-cli"
+description = "Command-line interface of the routing engine (phase 0 deliverable 6)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "routing"
+path = "src/main.rs"
+
+[dependencies]
+routing-core = { path = "../routing-core" }
+
+[lints]
+workspace = true

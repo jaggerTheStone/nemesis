@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "appName": "nemesis",
+  "@appName": {
+    "description": "Nom provisoire de l'application (nom de code, hypothèse H-003)."
+  },
+  "homePlaceholder": "Ton trajet commence ici.",
+  "@homePlaceholder": {
+    "description": "Texte provisoire de l'écran d'accueil, remplacé par le prototype (I0.11)."
+  }
+}

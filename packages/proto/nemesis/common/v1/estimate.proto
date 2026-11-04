@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package nemesis.common.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Metadata carried by every estimate shown to users (cahier des charges,
+// règle 1.3.2): an estimate without freshness, confidence and source is
+// invalid. Draft v1: refined with the OpenAPI contract in increment I0.6.
+message EstimateMeta {
+  // Time of the most recent observation used by the estimate.
+  google.protobuf.Timestamp observed_at = 1;
+  // Confidence level displayed as a badge (partie 10.3).
+  ConfidenceLevel confidence = 2;
+  // Main origin of the data behind the estimate.
+  DataSource source = 3;
+}
+
+// Confidence badge levels: full, medium, low (partie 10.3).
+enum ConfidenceLevel {
+  CONFIDENCE_LEVEL_UNSPECIFIED = 0;
+  CONFIDENCE_LEVEL_LOW = 1;
+  CONFIDENCE_LEVEL_MEDIUM = 2;
+  CONFIDENCE_LEVEL_HIGH = 3;
+}
+
+// Source badges (partie 10.3), plus partner feeds (partie 7.3).
+enum DataSource {
+  DATA_SOURCE_UNSPECIFIED = 0;
+  DATA_SOURCE_USERS = 1;
+  DATA_SOURCE_STATION_MANAGER = 2;
+  DATA_SOURCE_GPS = 3;
+  DATA_SOURCE_HISTORICAL = 4;
+  DATA_SOURCE_PARTNER = 5;
+}

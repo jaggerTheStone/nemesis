@@ -1,0 +1,59 @@
+name: Rust (moteur d'itinéraires)
+
+on:
+  push:
+    paths:
+      - "services/routing/**"
+      - ".github/workflows/ci-rust.yml"
+  pull_request:
+    paths:
+      - "services/routing/**"
+      - ".github/workflows/ci-rust.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_DENY_VERSION: 0.20.2
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: services/routing
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer la chaîne Rust de rust-toolchain.toml
+        run: rustup toolchain install
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            services/routing/target
+          key: cargo-${{ runner.os }}-${{ hashFiles('services/routing/Cargo.lock', 'services/routing/rust-toolchain.toml') }}
+      - name: Format
+        run: cargo fmt --check
+      - name: Clippy
+        run: cargo clippy --all-targets --locked -- -D warnings
+      - name: Tests
+        run: cargo test --locked
+      - uses: actions/cache@v4
+        id: cargo-deny-cache
+        with:
+          path: ~/.cargo/bin/cargo-deny
+          key: cargo-deny-${{ env.CARGO_DENY_VERSION }}-${{ runner.os }}
+      - name: Installer cargo-deny
+        if: steps.cargo-deny-cache.outputs.cache-hit != 'true'
+        working-directory: ${{ runner.temp }}
+        run: cargo install cargo-deny --version "$CARGO_DENY_VERSION" --locked
+      - name: Audit (vulnérabilités, licences, sources)
+        run: cargo deny check

@@ -1,0 +1,59 @@
+name: Mobile (Flutter)
+
+on:
+  push:
+    paths:
+      - "apps/mobile/**"
+      - ".github/workflows/ci-mobile.yml"
+  pull_request:
+    paths:
+      - "apps/mobile/**"
+      - ".github/workflows/ci-mobile.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: 3.47.7
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: flutter-cache
+        with:
+          path: |
+            ~/flutter
+            ~/.pub-cache
+          key: flutter-${{ env.FLUTTER_VERSION }}-${{ runner.os }}-${{ hashFiles('apps/mobile/pubspec.lock') }}
+      - name: Installer Flutter
+        if: steps.flutter-cache.outputs.cache-hit != 'true'
+        working-directory: ${{ runner.temp }}
+        run: git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git ~/flutter
+      - name: Ajouter Flutter au PATH
+        run: echo "$HOME/flutter/bin" >> "$GITHUB_PATH"
+      - name: Version
+        run: |
+          flutter config --no-analytics
+          flutter --version
+      - name: Dépendances
+        run: flutter pub get --enforce-lockfile
+      - name: Traductions
+        run: flutter gen-l10n
+      - name: Format
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Analyse statique
+        run: flutter analyze
+      - name: Tests
+        run: flutter test

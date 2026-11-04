@@ -1,0 +1,31 @@
+name: Sécurité (Trivy)
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # Chaque lundi : de nouvelles vulnérabilités sont publiées sans changement du code.
+    - cron: "23 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TRIVY_VERSION: 0.75.0
+
+jobs:
+  trivy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyse du dépôt (vulnérabilités, secrets, configurations)
+        run: >
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src "aquasec/trivy:$TRIVY_VERSION"
+          fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --ignore-unfixed
+          --exit-code 1 .

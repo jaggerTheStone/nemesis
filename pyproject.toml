@@ -1,0 +1,36 @@
+# Espace de travail Python (uv) : un seul verrou pour les trois projets.
+[project]
+name = "nemesis-workspace"
+version = "0.0.0"
+requires-python = ">=3.12"
+
+[tool.uv]
+package = false
+# Chaîne d'approvisionnement : ignorer les versions publiées après cette date
+# (environ 14 jours avant la dernière mise à jour du verrou). Voir SECURITY.md.
+exclude-newer = "2026-10-21T00:00:00Z"
+
+[tool.uv.workspace]
+members = ["services/ml", "data/pipelines", "tools/simulator"]
+
+[tool.uv.sources]
+nemesis-ml = { workspace = true }
+nemesis-pipelines = { workspace = true }
+nemesis-simulator = { workspace = true }
+
+[dependency-groups]
+dev = ["httpx2", "pytest", "ruff"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["nemesis_ml", "nemesis_pipelines", "nemesis_simulator"]
+
+[tool.pytest.ini_options]
+testpaths = ["services/ml/tests", "data/pipelines/tests", "tools/simulator/tests"]
+addopts = ["--import-mode=importlib", "--strict-markers"]

@@ -1,0 +1,36 @@
+# cargo-deny : vulnérabilités connues (RustSec), licences, sources des crates.
+[graph]
+all-features = true
+
+[advisories]
+version = 2
+yanked = "deny"
+
+[licenses]
+version = 2
+# Dépendances sous licences permissives uniquement (hypothèse validée, Q-06).
+allow = [
+  "Apache-2.0",
+  "Apache-2.0 WITH LLVM-exception",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "ISC",
+  "MIT",
+  "Unicode-3.0",
+  "Zlib",
+]
+confidence-threshold = 0.9
+
+[licenses.private]
+# Les crates internes (publish = false) sont propriétaires.
+ignore = true
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+# Les dépendances par chemin entre crates internes (publish = false) sont permises.
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
