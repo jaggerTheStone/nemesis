@@ -9,3 +9,5 @@ uv.lock
 **/.venv/
 apps/mobile/
 services/routing/
+# Types générés par openapi-typescript (vérifiés par types:check).
+packages/openapi/src/schema.ts

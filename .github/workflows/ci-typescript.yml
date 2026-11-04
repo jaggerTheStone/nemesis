@@ -8,6 +8,9 @@ on:
       - "services/api/**"
       - "services/channels/**"
       - "packages/**"
+      - "data/schema/migrations/**"
+      - "data/fixtures_fictives/db/**"
+      - "Makefile"
       - "package.json"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
@@ -24,6 +27,9 @@ on:
       - "services/api/**"
       - "services/channels/**"
       - "packages/**"
+      - "data/schema/migrations/**"
+      - "data/fixtures_fictives/db/**"
+      - "Makefile"
       - "package.json"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
@@ -63,7 +69,45 @@ jobs:
         run: pnpm run test
       - name: Build
         run: pnpm run build
+      - name: Contrat OpenAPI (Redocly, types générés à jour)
+        run: pnpm run openapi:lint
       - name: Protobuf (buf lint et format)
         run: pnpm run proto:lint
+      - name: Protobuf (compatibilité avec main)
+        run: |
+          git fetch --depth=1 origin main || true
+          make proto-breaking
       - name: Audit des dépendances
         run: pnpm audit --audit-level high
+
+  api-db:
+    name: API contre la base (tests de contrat)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgis:
+        # Même image que docker-compose.yml.
+        image: postgis/postgis:16-3.5@sha256:94146ac37bc61e2322f88016056c5920729cb8c64c8542ed590af8fc2abdac07
+        env:
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Installer pnpm
+        run: npm install --global pnpm@10.28.0
+      - name: Installer les dépendances
+        run: pnpm install --frozen-lockfile
+      - name: Construire le contrat
+        run: pnpm --filter @nemesis/openapi run build
+      - name: Tests de contrat de l'API (migrations dbmate et jeu fictif)
+        env:
+          NEMESIS_TEST_DATABASE_URL: postgres://postgres:test@localhost:5432/postgres
+          NEMESIS_REQUIRE_DB: "1"
+        run: pnpm --filter @nemesis/api test

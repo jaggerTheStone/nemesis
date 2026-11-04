@@ -15,8 +15,9 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
     - ARCHITECTURE, DATA, PRIVACY, COUTS, ALGORITHMES ;
     - ADR-001 à ADR-007 au statut « proposé ».
   - I0.4, base de données et environnement local (`data/schema/README.md`) ;
-  - I0.5, jeu fictif « Lagune-Fictive » en GTFS et en SQL (`data/fixtures_fictives/README.md`).
-- **Prochain incrément** : I0.6, OpenAPI v0, Protocol Buffers et squelette de l'API sur les fixtures.
+  - I0.5, jeu fictif « Lagune-Fictive » en GTFS et en SQL (`data/fixtures_fictives/README.md`) ;
+  - I0.6, contrat OpenAPI et Protobuf, squelette d'API sur la base (`packages/openapi/README.md`, `services/api/README.md`).
+- **Prochain incrément** : I0.7, pipelines d'import OSM et GTFS « Abidjan 2023 », rapports de validation et d'écarts, tuiles. Les hôtes de téléchargement sont bloqués dans l'environnement cloud : le travail se vérifiera en CI.
 - **En attente côté porteur** :
   - une équipe sur place pour lancer les collectes (Q-03) ;
   - les contreparties des participants et des validateurs ;
@@ -30,15 +31,16 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
   - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
-## Ce que contient le dépôt après I0.5
+## Ce que contient le dépôt après I0.6
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
-| `services/api` | NestJS 12 (ESM) sur Fastify, `GET /v1/health` | 2 |
+| `services/api` | NestJS 12 (ESM) sur Fastify, branché sur PostgreSQL : santé, villes, recherche de lieux, fiche d'arrêt ; problème RFC 9457, ETag, Brotli | 2 + 20 (base) |
+| `packages/openapi` | Contrat OpenAPI 3.1 (26 opérations), types générés, règles du contrat | 15 |
 | `services/channels` | Outils GSM 7 bits pour le SMS : détection, translittération, comptage des segments | 9 |
 | `apps/web-lite` | Rendu HTML échappé, budget de 100 Ko vérifié | 4 |
 | `apps/admin` | React et Vite, textes en clés de traduction | 1 |
-| `packages/proto` | `EstimateMeta` (fraîcheur, confiance, source), contrôlé par buf | lint |
+| `packages/proto` | `EstimateMeta` et `nemesis.live.v1` (deltas par tuile), contrôlés par buf (lint, format, compatibilité) | lint |
 | `services/routing` | Espace Cargo : `routing-core` et le binaire `routing` | 4 |
 | `services/ml` | FastAPI, `GET /health` | 1 |
 | `data/pipelines` | Vérification d'empreinte SHA-256 ; données de terrain (`nemesis-terrain`) ; générateur du jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, résumé du rapport du validateur) | 3 + 47 + 11 |
@@ -46,7 +48,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `tools/simulator` | Générateur aléatoire à graine fixe | 2 |
 | `apps/mobile` | Flutter 3.47.7, `minSdk 26`, traductions ARB | 1 |
 
-Commandes : `make dev` (environnement Docker Compose), `make db-test` (tests du schéma, Docker requis), `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
+Commandes : `make dev` (environnement Docker Compose), `make db-test` et `make api-test` (tests contre une base jetable, Docker requis), `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
 
 ## Versions figées
 
@@ -66,6 +68,9 @@ Garde-fous de la chaîne d'approvisionnement : pnpm refuse les versions publiée
 - **Validateur GTFS** : MobilityData 8.0.1, épinglé par empreinte depuis GHCR. Il ne tourne qu'en CI, parce que GHCR est bloqué dans l'environnement cloud. Sa date de publication n'a pas pu être vérifiée depuis l'environnement ; c'est une version corrective de la 8.0.0.
 - **Jeu fictif** : une base de développement créée avant I0.5 doit être recréée (`make dev-reset`, puis `make dev`).
 - **Démarrage de l'environnement** : `make dev` démarre d'abord les services permanents, puis lance la migration en avant-plan (`docker compose run --rm migrate`). En effet, `docker compose up --wait` échoue de façon aléatoire quand le conteneur de migration se termine pendant l'attente. `docker compose up` seul reste utilisable de façon interactive.
+- **Contrat d'API** : après toute modification d'`openapi.yaml`, lancer `pnpm --filter @nemesis/openapi run types`. Les scripts racine `typecheck` et `test` construisent d'abord `@nemesis/openapi`, dont l'API importe la version compilée.
+- **Compatibilité Protobuf** : `make proto-breaking` compare avec `main` quand `main` contient `packages/proto`. Jusqu'à la première fusion, le contrôle est ignoré, en le signalant.
+- **API dans Docker Compose** : pas encore de service `api` ; l'API se lance avec pnpm contre la base de `make dev`.
 - **Valkey** remplace Redis pour une raison de licence (ADR-005, mise à jour) : dans la documentation, « Redis » désigne ce stockage compatible.
 - **NestJS 12** est distribué en ESM uniquement : l'API est un paquet ESM, avec des imports relatifs en `.js`. Point à reprendre dans l'ADR-002, avec le choix de Fastify.
 - **Starlette** déprécie `httpx` pour son client de test : on utilise `httpx2`.

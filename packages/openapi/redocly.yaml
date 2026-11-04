@@ -1,0 +1,12 @@
+# Règles du linter OpenAPI (Redocly). Les règles propres au projet (estimations,
+# idempotence, limites de débit) sont vérifiées par test/contract-rules.test.ts.
+extends:
+  - recommended
+rules:
+  info-license-strict: off
+  no-server-example.com: error
+  operation-4xx-response: error
+  operation-operationId: error
+  operation-summary: error
+  tag-description: error
+  no-unused-components: error

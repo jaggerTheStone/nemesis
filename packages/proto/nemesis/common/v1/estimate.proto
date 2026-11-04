@@ -6,7 +6,7 @@ import "google/protobuf/timestamp.proto";
 
 // Metadata carried by every estimate shown to users (cahier des charges,
 // règle 1.3.2): an estimate without freshness, confidence and source is
-// invalid. Draft v1: refined with the OpenAPI contract in increment I0.6.
+// invalid. Mirrors EstimateMeta of the OpenAPI contract (packages/openapi).
 message EstimateMeta {
   // Time of the most recent observation used by the estimate.
   google.protobuf.Timestamp observed_at = 1;
@@ -14,6 +14,8 @@ message EstimateMeta {
   ConfidenceLevel confidence = 2;
   // Main origin of the data behind the estimate.
   DataSource source = 3;
+  // Number of distinct people who confirmed, when known.
+  optional uint32 contributors = 4;
 }
 
 // Confidence badge levels: full, medium, low (partie 10.3).

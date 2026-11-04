@@ -10,15 +10,17 @@
   "scripts": {
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "typecheck": "pnpm -r run typecheck",
-    "test": "pnpm -r --workspace-concurrency=1 run test",
+    "typecheck": "pnpm --filter @nemesis/openapi run build && pnpm -r run typecheck",
+    "test": "pnpm --filter @nemesis/openapi run build && pnpm -r --workspace-concurrency=1 run test",
     "build": "pnpm -r run build",
-    "proto:lint": "buf lint packages/proto && buf format packages/proto --diff --exit-code"
+    "proto:lint": "buf lint packages/proto && buf format packages/proto --diff --exit-code",
+    "openapi:lint": "pnpm --filter @nemesis/openapi run lint:openapi && pnpm --filter @nemesis/openapi run types:check"
   },
   "devDependencies": {
     "@bufbuild/buf": "^1.74.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.6.5",
+    "dbmate": "2.36.0",
     "eslint": "^10.13.0",
     "globals": "^17.13.0",
     "prettier": "^3.9.10",

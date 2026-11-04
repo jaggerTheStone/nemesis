@@ -52,6 +52,16 @@ publication.
     publiés seulement à partir de 20 contributeurs).
   - Jeu SQL de la base de développement.
   - Validateur MobilityData en CI, avec rapport conservé ; `make gtfs-validate`.
+- I0.6 : contrat de l'API et squelette.
+  - OpenAPI 3.1 (`packages/openapi`) :
+    - 26 opérations ;
+    - estimations accompagnées de leur fraîcheur, confiance et source ;
+    - idempotence des écritures, ETag, pagination par curseur, limites de débit, erreurs RFC 9457 ;
+    - types générés et règles vérifiées par des tests.
+  - Protobuf `nemesis.live.v1` (deltas par tuile), avec contrôle de compatibilité.
+  - API NestJS branchée sur PostgreSQL : villes, recherche de lieux tolérante
+    aux fautes, fiche d'arrêt avec repli historique ; Brotli, ETag ; tests de
+    contrat générés depuis le contrat, contre une base migrée ; `make api-test`.
 
 ### Corrigé
 

@@ -6,16 +6,18 @@
 # Chaque écosystème a aussi sa cible : check-ts, check-rust, check-py, check-terrain, check-fixtures, check-docs, check-mobile.
 #   make dev     environnement local (docker compose) : base migrée et jeu fictif
 #   make db-test tests du schéma contre une base PostGIS jetable
+#   make api-test tests de contrat de l'API contre une base PostGIS jetable
 
 ROUTING := services/routing
 MOBILE := apps/mobile
 # Image PostGIS lue dans docker-compose.yml : une seule source de vérité.
 POSTGIS_IMAGE := $(shell awk '/image: postgis\//{print $$2; exit}' docker-compose.yml)
 DB_TEST_PORT ?= 55432
+API_TEST_PORT ?= 55433
 
 .PHONY: check check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile \
         audit audit-ts audit-rust audit-py fmt install fiches-pdf \
-        dev dev-down dev-reset db-migrate db-test gtfs-validate
+        dev dev-down dev-reset db-migrate db-test gtfs-validate api-test proto-breaking
 
 check: check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile
 	@echo "Tous les contrôles sont au vert."
@@ -28,12 +30,21 @@ install:
 check-ts:
 	pnpm install --frozen-lockfile
 	pnpm run lint
+	pnpm run openapi:lint
 	pnpm run typecheck
 	pnpm run test
 	pnpm run build
 
 check-proto:
 	pnpm run proto:lint
+
+# Compatibilité du contrat Protobuf avec main (ignorée tant que main n'en a pas).
+proto-breaking:
+	@if git cat-file -e origin/main:packages/proto/buf.yaml 2>/dev/null; then \
+		pnpm exec buf breaking packages/proto --against '.git#ref=origin/main,subdir=packages/proto'; \
+	else \
+		echo "Pas de contrat Protobuf sur main : contrôle de compatibilité ignoré."; \
+	fi
 
 check-rust:
 	cd $(ROUTING) && cargo fmt --check
@@ -125,3 +136,14 @@ db-test:
 	NEMESIS_TEST_DATABASE_URL=postgres://postgres:test@127.0.0.1:$(DB_TEST_PORT)/postgres \
 		NEMESIS_REQUIRE_DB=1 uv run pytest data/schema -rs; \
 		status=$$?; docker rm -f nemesis-db-test >/dev/null; exit $$status
+
+# Tests de contrat de l'API contre une base PostGIS jetable (Docker requis).
+api-test:
+	@docker rm -f nemesis-api-test >/dev/null 2>&1 || true
+	docker run -d --name nemesis-api-test -e POSTGRES_PASSWORD=test \
+		-p 127.0.0.1:$(API_TEST_PORT):5432 $(POSTGIS_IMAGE) >/dev/null
+	@until docker exec nemesis-api-test pg_isready -h 127.0.0.1 -U postgres -q; do sleep 1; done
+	pnpm --filter @nemesis/openapi run build
+	NEMESIS_TEST_DATABASE_URL=postgres://postgres:test@127.0.0.1:$(API_TEST_PORT)/postgres \
+		NEMESIS_REQUIRE_DB=1 pnpm --filter @nemesis/api test; \
+		status=$$?; docker rm -f nemesis-api-test >/dev/null; exit $$status

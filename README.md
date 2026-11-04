@@ -19,6 +19,7 @@ Environnement local, avec Docker :
 ```bash
 make dev       # PostgreSQL et PostGIS, Valkey, NATS, tuiles ; base migrée et jeu fictif
 make db-test   # tests du schéma contre une base jetable
+make api-test  # tests de contrat de l'API contre une base jetable
 make dev-down  # arrêt (make dev-reset efface aussi les données)
 ```
 
@@ -35,6 +36,7 @@ make dev-down  # arrêt (make dev-reset efface aussi les données)
 | `services/routing` | Moteur d'itinéraires (Rust) |
 | `services/ml` | Modèles d'attente, de prix, de détection (Python) |
 | `services/channels` | WhatsApp, SMS, USSD, serveur vocal |
+| `packages/openapi` | Contrat OpenAPI 3.1 de l'API, types générés, règles du contrat |
 | `packages/proto` | Schémas Protocol Buffers partagés |
 | `data/pipelines` | Imports OSM et GTFS, tuiles, packs hors ligne |
 | `data/schema` | Schéma de la base : migrations dbmate et tests |

@@ -10,7 +10,7 @@ describe("GET /v1/health", () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
-    app = configureApp(
+    app = await configureApp(
       moduleRef.createNestApplication<NestFastifyApplication>(new FastifyAdapter()),
     );
     await app.init();

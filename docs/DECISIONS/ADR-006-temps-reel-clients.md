@@ -56,6 +56,7 @@ On obtient moins de 30 Ko par minute, bien sous le budget de 150 Ko.
 - **Implémentation** :
   - l'agrégation écrit, pour chaque tuile, un numéro de version et un journal de deltas récents dans Redis ;
   - l'API sert ces blobs sans calcul ;
-  - le contrat est dans `packages/proto` (I0.6).
+  - le contrat est dans `packages/proto` (`nemesis.live.v1.TileDelta`, défini en I0.6).
+- **Repli du trajet suivi** : la même route sert du JSON (`Accept: application/json`, paramètre `after`) quand le flux SSE est coupé.
 - **Budget data** : il est mesuré en phase 1, sur le téléphone de référence en 3G simulée.
 - **Réversibilité** : bonne. Le format des deltas est le même, quel que soit le transport ; passer à WebSocket ne change que la façon de les acheminer.

@@ -1,0 +1,1557 @@
+openapi: 3.1.0
+info:
+  title: API nemesis (nom de code)
+  version: 0.1.0
+  summary: Information voyageur pour le transport en commun en Côte d'Ivoire.
+  description: |
+    Contrat v0 de l'API principale (I0.6). Règles communes, vérifiées par les tests
+    du paquet `@nemesis/openapi` :
+
+    - **Honnêteté (règle 1.3.2)** : tout objet d'estimation (attente, durée, prix,
+      état de file) porte un objet `meta` obligatoire avec `observed_at`,
+      `confidence` et `source`. Ces schémas sont marqués `x-estimate: true`.
+    - **Idempotence** : toute écriture exige l'en-tête `Idempotency-Key` (UUID). Un
+      renvoi avec la même clé et le même contenu renvoie la même réponse ; avec un
+      contenu différent, 409.
+    - **Cache** : les lectures cacheables renvoient un `ETag` et acceptent
+      `If-None-Match` (304).
+    - **Limites de débit** : déclarées par opération (`x-rate-limit`), annoncées par
+      les en-têtes `RateLimit-*` ; dépassement : 429 avec `Retry-After`.
+    - **Erreurs** : `application/problem+json` (RFC 9457).
+    - **Données fictives** : chaque réponse de données indique `is_fictional`. Les
+      applications affichent alors le bandeau « DONNÉES FICTIVES » (règle 1.3.1).
+    - **Statut d'implémentation** : `x-implemented: true` pour les opérations servies
+      par le squelette ; les autres sont contractuelles et arrivent en phase 1.
+
+    Les codes des valeurs (confiance, sources, modes…) reprennent ceux de la base
+    (`data/schema`) et de `docs/DATA.md`.
+  license:
+    name: Propriétaire, tous droits réservés
+    identifier: LicenseRef-Proprietary
+security: []
+servers:
+  - url: http://127.0.0.1:3000
+    description: Développement local
+tags:
+  - name: villes
+    description: Villes couvertes.
+  - name: lieux
+    description: Recherche de lieux et de repères (F-01).
+  - name: itineraires
+    description: Calcul d'itinéraires (F-02, F-03).
+  - name: arrets
+    description: Fiches de gares et d'arrêts (F-06).
+  - name: direct
+    description: Carte en direct et suivi de trajet (F-04, F-05, ADR-006).
+  - name: contributions
+    description: Signalements des usagers (F-07).
+  - name: incidents
+    description: Incidents en cours.
+  - name: hors-ligne
+    description: Packs ville (F-12, partie 9.5).
+  - name: compte
+    description: Compte facultatif, consentements, droits (F-13, partie 12).
+  - name: recompenses
+    description: Récompenses (F-14, V2).
+  - name: back-office
+    description: Curation, modération, versions du réseau (partie 6.3, ADR-008).
+  - name: partenaires
+    description: Flux ouverts et agrégats (partie 6.4).
+  - name: exploitation
+    description: Sondes.
+
+paths:
+  /v1/health:
+    get:
+      operationId: getHealth
+      tags: [exploitation]
+      summary: Sonde de vie.
+      x-implemented: true
+      x-rate-limit: aucune
+      responses:
+        "200":
+          description: Service en état de marche.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Health" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/cities:
+    get:
+      operationId: listCities
+      tags: [villes]
+      summary: Villes couvertes.
+      x-implemented: true
+      x-rate-limit: 60 par minute et par appareil
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Liste des villes.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CityList" }
+        "304": { $ref: "#/components/responses/NotModified" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/places:
+    get:
+      operationId: searchPlaces
+      tags: [lieux]
+      summary: Rechercher un lieu, un repère ou un arrêt.
+      description: |
+        Recherche tolérante aux fautes, aux abréviations et à l'absence d'accents
+        (partie 8.4) : similarité par trigrammes sur les noms et leurs alias.
+      x-implemented: true
+      x-rate-limit: 120 par minute et par appareil
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Texte saisi ou dicté, tel quel.
+          schema: { type: string, minLength: 2, maxLength: 120 }
+          example: flamboyant
+        - $ref: "#/components/parameters/City"
+        - name: near
+          in: query
+          required: false
+          description: Position « latitude,longitude » pour départager les résultats proches.
+          schema: { type: string, pattern: "^-?\\d{1,2}(\\.\\d+)?,-?\\d{1,3}(\\.\\d+)?$" }
+          example: "2.0300,-4.0100"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Résultats triés par pertinence.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlaceSearchResponse" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/stops/{stopId}:
+    get:
+      operationId: getStop
+      tags: [arrets]
+      summary: Fiche d'une gare ou d'un arrêt.
+      description: |
+        Lignes et destinations desservies, prix observés, état actuel de la file
+        ou, à défaut de signalement récent, estimation historique présentée comme
+        telle (F-06), et profil d'attente du jour pour choisir l'heure de départ.
+      x-implemented: true
+      x-rate-limit: 120 par minute et par appareil
+      parameters:
+        - $ref: "#/components/parameters/StopId"
+        - name: at
+          in: query
+          required: false
+          description: Instant de référence (ISO 8601), par défaut maintenant.
+          schema: { type: string, format: date-time }
+          example: "2026-11-09T06:40:00Z"
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Fiche de l'arrêt.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StopDetail" }
+        "304": { $ref: "#/components/responses/NotModified" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/itineraries/search:
+    post:
+      operationId: searchItineraries
+      tags: [itineraires]
+      summary: Calculer des itinéraires.
+      description: |
+        Lecture sans effet de bord, en POST à cause de la taille de la requête : pas
+        de clé d'idempotence (`x-safe: true`). Au moins trois options étiquetées
+        quand elles existent : la moins chère, la plus rapide, la plus simple (F-02).
+      x-safe: true
+      x-rate-limit: 30 par minute et par appareil
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ItinerarySearchRequest" }
+      responses:
+        "200":
+          description: Options d'itinéraire.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ItinerarySearchResponse" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/live/tiles/{z}/{x}/{y}:
+    get:
+      operationId: getLiveTile
+      tags: [direct]
+      summary: État en direct d'une tuile de carte (ADR-006).
+      description: |
+        Delta Protocol Buffers `nemesis.live.v1.TileDelta` depuis la version connue
+        du client, ou instantané complet si elle est trop ancienne. Réponse mise en
+        cache quelques secondes par le CDN.
+      x-rate-limit: 60 par minute et par appareil
+      parameters:
+        - { name: z, in: path, required: true, schema: { type: integer, minimum: 10, maximum: 16 } }
+        - { name: x, in: path, required: true, schema: { type: integer, minimum: 0 } }
+        - { name: y, in: path, required: true, schema: { type: integer, minimum: 0 } }
+        - name: since
+          in: query
+          required: false
+          description: Dernière version de la tuile connue du client.
+          schema: { type: integer, minimum: 0 }
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Delta ou instantané.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+          content:
+            application/x-protobuf:
+              schema:
+                type: string
+                contentMediaType: application/x-protobuf
+                description: Message nemesis.live.v1.TileDelta (packages/proto).
+        "304": { $ref: "#/components/responses/NotModified" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/trips/{tripId}/events:
+    get:
+      operationId: streamTripEvents
+      tags: [direct]
+      summary: Événements d'un trajet suivi (Server-Sent Events, ADR-006).
+      description: |
+        Avec `Accept: text/event-stream`, flux d'événements `TripEvent` : incident sur
+        le trajet, nouvel itinéraire proposé, approche de la descente ; reprise par
+        `Last-Event-ID`. Avec `Accept: application/json`, liste des événements
+        depuis `after` : c'est le repli par interrogation quand le flux est coupé.
+      security:
+        - deviceToken: []
+      x-rate-limit: 10 connexions par heure et par appareil
+      parameters:
+        - { name: tripId, in: path, required: true, schema: { type: string, format: uuid } }
+        - name: Last-Event-ID
+          in: header
+          required: false
+          schema: { type: string }
+        - name: after
+          in: query
+          required: false
+          description: Identifiant du dernier événement reçu (repli par interrogation).
+          schema: { type: string }
+      responses:
+        "200":
+          description: Flux d'événements, ou liste en repli.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: "Lignes « id: … », « event: … » et « data: <TripEvent JSON> »."
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: { $ref: "#/components/schemas/TripEvent" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/contributions:
+    post:
+      operationId: createContribution
+      tags: [contributions]
+      summary: Envoyer un signalement (F-07).
+      description: |
+        L'identifiant est généré par le téléphone et sert aussi de clé d'idempotence
+        en base : un renvoi après coupure n'est jamais compté deux fois. L'heure
+        d'observation ne peut pas dépasser l'heure de réception de plus de 5 min.
+      security:
+        - deviceToken: []
+      x-rate-limit: 30 par heure et par appareil
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ContributionRequest" }
+      responses:
+        "202":
+          description: Signalement reçu ; il sera pondéré puis agrégé.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ContributionReceipt" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/incidents:
+    get:
+      operationId: listIncidents
+      tags: [incidents]
+      summary: Incidents en cours dans une zone.
+      x-rate-limit: 60 par minute et par appareil
+      parameters:
+        - $ref: "#/components/parameters/City"
+        - name: bbox
+          in: query
+          required: false
+          description: Emprise « ouest,sud,est,nord » en degrés.
+          schema: { type: string }
+          example: "-4.06,1.94,-3.94,2.06"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+      responses:
+        "200":
+          description: Incidents actifs.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/IncidentPage" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/packs/{city}:
+    get:
+      operationId: getPackManifest
+      tags: [hors-ligne]
+      summary: Manifeste du pack ville courant (F-12).
+      x-rate-limit: 30 par heure et par appareil
+      parameters:
+        - $ref: "#/components/parameters/CityPath"
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Fichiers du pack, avec tailles et empreintes.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PackManifest" }
+        "304": { $ref: "#/components/responses/NotModified" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/packs/{city}/diffs:
+    get:
+      operationId: getPackDiff
+      tags: [hors-ligne]
+      summary: Différentiel depuis une version du pack (moins de 300 Ko par jour).
+      x-rate-limit: 30 par heure et par appareil
+      parameters:
+        - $ref: "#/components/parameters/CityPath"
+        - name: from
+          in: query
+          required: true
+          description: Version du pack détenue par le téléphone.
+          schema: { type: string }
+      responses:
+        "200":
+          description: Différentiel, ou indication de retélécharger le pack complet.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PackDiff" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/accounts/otp:
+    post:
+      operationId: requestOtp
+      tags: [compte]
+      summary: Demander un code de connexion par SMS (compte facultatif, F-13).
+      x-rate-limit: 3 par heure et par numéro
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtpRequest" }
+      responses:
+        "202":
+          description: Code envoyé s'il y a lieu (réponse identique sinon, pour ne pas révéler les comptes).
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/accounts/session:
+    post:
+      operationId: createSession
+      tags: [compte]
+      summary: Échanger le code reçu contre une session.
+      x-rate-limit: 5 par heure et par numéro
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SessionRequest" }
+      responses:
+        "201":
+          description: Session ouverte.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Session" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/me:
+    get:
+      operationId: getMe
+      tags: [compte]
+      summary: Mon compte.
+      security:
+        - account: []
+      x-rate-limit: 60 par minute et par compte
+      responses:
+        "200":
+          description: Compte.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Me" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+    delete:
+      operationId: deleteMe
+      tags: [compte]
+      summary: Supprimer mon compte et mes données (effacement définitif sous 30 jours).
+      security:
+        - account: []
+      x-rate-limit: 5 par jour et par compte
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      responses:
+        "202": { description: Suppression programmée. }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/me/export:
+    get:
+      operationId: exportMe
+      tags: [compte]
+      summary: Exporter mes données dans un fichier lisible (partie 12.1).
+      security:
+        - account: []
+      x-rate-limit: 5 par jour et par compte
+      responses:
+        "200":
+          description: Export complet.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/me/consents/{purpose}:
+    put:
+      operationId: setConsent
+      tags: [compte]
+      summary: Donner ou retirer un consentement, finalité par finalité.
+      security:
+        - deviceToken: []
+      x-rate-limit: 30 par heure et par appareil
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - name: purpose
+          in: path
+          required: true
+          schema: { $ref: "#/components/schemas/ConsentPurpose" }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ConsentUpdate" }
+      responses:
+        "200":
+          description: État du consentement.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Consent" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/me/rewards:
+    get:
+      operationId: getRewards
+      tags: [recompenses]
+      summary: Mes points (V2) ; bouchon en v0.
+      security:
+        - account: []
+      x-rate-limit: 60 par minute et par compte
+      responses:
+        "200":
+          description: Solde et dernières opérations.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RewardsSummary" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "501": { $ref: "#/components/responses/NotImplemented" }
+
+  /v1/admin/change-requests:
+    get:
+      operationId: listChangeRequests
+      tags: [back-office]
+      summary: Demandes de modification du réseau.
+      security:
+        - staff: []
+      x-rate-limit: 120 par minute et par compte
+      parameters:
+        - $ref: "#/components/parameters/City"
+        - name: status
+          in: query
+          required: false
+          schema: { $ref: "#/components/schemas/ChangeRequestStatus" }
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+      responses:
+        "200":
+          description: Page de demandes.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ChangeRequestPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+    post:
+      operationId: createChangeRequest
+      tags: [back-office]
+      summary: Proposer une modification du réseau.
+      security:
+        - staff: []
+      x-rate-limit: 60 par minute et par compte
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ChangeRequestCreate" }
+      responses:
+        "201":
+          description: Demande créée.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ChangeRequest" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/admin/change-requests/{changeRequestId}/review:
+    post:
+      operationId: reviewChangeRequest
+      tags: [back-office]
+      summary: Approuver ou rejeter une demande (par une autre personne ; raison obligatoire en cas de rejet).
+      security:
+        - staff: []
+      x-rate-limit: 60 par minute et par compte
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - name: changeRequestId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Review" }
+      responses:
+        "200":
+          description: Demande revue.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ChangeRequest" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/admin/network-versions/{versionId}/publish:
+    post:
+      operationId: publishNetworkVersion
+      tags: [back-office]
+      summary: Publier une version du réseau revue (refusé en production pour une ville fictive).
+      security:
+        - staff: []
+      x-rate-limit: 10 par heure et par compte
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - name: versionId
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: Version publiée.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/NetworkVersion" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/admin/moderation/contributions:
+    get:
+      operationId: listModerationQueue
+      tags: [back-office]
+      summary: File de modération des contributions.
+      security:
+        - staff: []
+      x-rate-limit: 120 par minute et par compte
+      parameters:
+        - $ref: "#/components/parameters/City"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Cursor"
+      responses:
+        "200":
+          description: Contributions à modérer.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ModerationPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/admin/moderation/contributions/{contributionId}/decision:
+    post:
+      operationId: decideContribution
+      tags: [back-office]
+      summary: Accepter ou rejeter une contribution (raison obligatoire en cas de rejet).
+      security:
+        - staff: []
+      x-rate-limit: 600 par heure et par compte
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - name: contributionId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ModerationDecision" }
+      responses:
+        "204": { description: Décision enregistrée. }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/partners/gtfs/{city}:
+    get:
+      operationId: getOpenGtfs
+      tags: [partenaires]
+      summary: Flux GTFS ouvert du réseau publié (licence compatible ODbL, partie 6.4).
+      x-rate-limit: 10 par heure et par adresse
+      parameters:
+        - $ref: "#/components/parameters/CityPath"
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Archive GTFS, extension comprise (agrégats avec k ≥ 20).
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+          content:
+            application/zip:
+              schema: { type: string, contentMediaType: application/zip }
+        "304": { $ref: "#/components/responses/NotModified" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/partners/gtfs-rt/{city}/alerts:
+    get:
+      operationId: getServiceAlerts
+      tags: [partenaires]
+      summary: Alertes de service au format GTFS-Realtime.
+      x-rate-limit: 120 par heure et par adresse
+      parameters:
+        - $ref: "#/components/parameters/CityPath"
+      responses:
+        "200":
+          description: Message transit_realtime.FeedMessage.
+          content:
+            application/x-protobuf:
+              schema: { type: string, contentMediaType: application/x-protobuf }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+components:
+  securitySchemes:
+    deviceToken:
+      type: apiKey
+      in: header
+      name: Device-Token
+      description: Jeton pseudonyme de l'appareil, lié à une attestation d'intégrité (Play Integrity, partie 7.5).
+    account:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Session d'un compte facultatif ouverte par code SMS.
+    staff:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Session du back-office, ouverte avec double authentification (partie 12.3).
+
+  parameters:
+    City:
+      name: city
+      in: query
+      required: true
+      description: Code de la ville.
+      schema: { $ref: "#/components/schemas/CityCode" }
+      example: lagune-fictive
+    CityPath:
+      name: city
+      in: path
+      required: true
+      schema: { $ref: "#/components/schemas/CityCode" }
+      example: lagune-fictive
+    StopId:
+      name: stopId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+      example: 92598ca3-f053-5d34-ab35-7f7b05f464f7
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema: { type: integer, minimum: 1, maximum: 50, default: 10 }
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      description: Curseur opaque renvoyé par la page précédente.
+      schema: { type: string }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: UUID choisi par le client, réutilisé tel quel en cas de renvoi.
+      schema: { type: string, format: uuid }
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      required: false
+      schema: { type: string }
+
+  headers:
+    ETag:
+      description: Empreinte de la représentation.
+      schema: { type: string }
+    RetryAfter:
+      description: Secondes à attendre avant de réessayer.
+      schema: { type: integer, minimum: 0 }
+    RateLimitLimit:
+      description: Quota de la fenêtre courante.
+      schema: { type: integer }
+    RateLimitRemaining:
+      description: Requêtes restantes dans la fenêtre.
+      schema: { type: integer }
+    RateLimitReset:
+      description: Secondes avant la remise à zéro du quota.
+      schema: { type: integer }
+
+  responses:
+    BadRequest:
+      description: Requête invalide.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    Unauthorized:
+      description: Authentification absente ou invalide.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    Forbidden:
+      description: Rôle insuffisant.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    NotFound:
+      description: Ressource introuvable.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    Conflict:
+      description: Clé d'idempotence déjà utilisée avec un contenu différent, ou transition d'état refusée.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    NotModified:
+      description: Représentation inchangée depuis l'ETag fourni.
+      headers:
+        ETag: { $ref: "#/components/headers/ETag" }
+    TooManyRequests:
+      description: Limite de débit dépassée.
+      headers:
+        Retry-After: { $ref: "#/components/headers/RetryAfter" }
+        RateLimit-Limit: { $ref: "#/components/headers/RateLimitLimit" }
+        RateLimit-Remaining: { $ref: "#/components/headers/RateLimitRemaining" }
+        RateLimit-Reset: { $ref: "#/components/headers/RateLimitReset" }
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    NotImplemented:
+      description: Fonctionnalité prévue mais pas encore disponible.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+
+  schemas:
+    Problem:
+      type: object
+      description: Erreur au format RFC 9457 ; `detail` est lisible par un humain (français).
+      required: [type, title, status]
+      properties:
+        type: { type: string, format: uri-reference, example: "about:blank" }
+        title: { type: string }
+        status: { type: integer, minimum: 100, maximum: 599 }
+        detail: { type: string }
+        instance: { type: string }
+        errors:
+          type: array
+          items:
+            type: object
+            required: [field, message]
+            properties:
+              field: { type: string }
+              message: { type: string }
+
+    Health:
+      type: object
+      required: [status, service, version]
+      properties:
+        status: { type: string, const: ok }
+        service: { type: string, const: api }
+        version: { type: string }
+
+    CityCode:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      maxLength: 60
+
+    Confidence:
+      type: string
+      description: Niveau de confiance affiché par un badge (docs/DATA.md).
+      enum: [faible, moyenne, elevee]
+
+    DataSource:
+      type: string
+      description: Origine principale de l'estimation, affichée par un badge.
+      enum: [usagers, chef_de_gare, gps, historique, partenaire]
+
+    EstimateMeta:
+      type: object
+      description: |
+        Fraîcheur, confiance et source d'une estimation (règle 1.3.2). Une estimation
+        sans cet objet est invalide au regard du contrat.
+      required: [observed_at, confidence, source]
+      properties:
+        observed_at:
+          type: string
+          format: date-time
+          description: Instant de la donnée la plus récente utilisée.
+        confidence: { $ref: "#/components/schemas/Confidence" }
+        source: { $ref: "#/components/schemas/DataSource" }
+        contributors:
+          type: integer
+          minimum: 0
+          description: Nombre de personnes distinctes qui ont confirmé, quand il est connu.
+
+    Location:
+      type: object
+      required: [lat, lon]
+      properties:
+        lat: { type: number, minimum: -90, maximum: 90 }
+        lon: { type: number, minimum: -180, maximum: 180 }
+
+    WaitEstimate:
+      type: object
+      x-estimate: true
+      description: Attente estimée, en fourchette (50e et 80e centiles).
+      required: [p50_s, p80_s, meta]
+      properties:
+        p50_s: { type: integer, minimum: 0 }
+        p80_s: { type: integer, minimum: 0 }
+        regime:
+          { type: string, enum: [A, B, C], description: Régime d'estimation (docs/ALGORITHMES.md). }
+        meta: { $ref: "#/components/schemas/EstimateMeta" }
+
+    DurationEstimate:
+      type: object
+      x-estimate: true
+      description: Durée en fourchette (50e et 80e centiles), attente comprise.
+      required: [p50_s, p80_s, meta]
+      properties:
+        p50_s: { type: integer, minimum: 0 }
+        p80_s: { type: integer, minimum: 0 }
+        meta: { $ref: "#/components/schemas/EstimateMeta" }
+
+    FareEstimate:
+      type: object
+      x-estimate: true
+      description: Prix observé, en fourchette arrondie à 50 F (10e, 50e et 90e centiles).
+      required: [p10, p50, p90, currency, meta]
+      properties:
+        p10: { type: integer, minimum: 0 }
+        p50: { type: integer, minimum: 0 }
+        p90: { type: integer, minimum: 0 }
+        currency: { type: string, const: XOF }
+        condition: { type: string, enum: [normale, pointe, pluie, nuit, fete] }
+        meta: { $ref: "#/components/schemas/EstimateMeta" }
+
+    QueueEstimate:
+      type: object
+      x-estimate: true
+      description: État d'une file en gare ; au-delà de 30 min sans signalement, estimation historique (source « historique »).
+      required: [level, meta]
+      properties:
+        level: { type: string, enum: [peu, moyen, beaucoup, tres_long, inconnu] }
+        people: { $ref: "#/components/schemas/IntRange" }
+        vehicles: { $ref: "#/components/schemas/IntRange" }
+        wait: { $ref: "#/components/schemas/WaitEstimate" }
+        meta: { $ref: "#/components/schemas/EstimateMeta" }
+
+    WaitSeries:
+      type: object
+      x-estimate: true
+      description: Attente habituelle par tranche de 15 min pour un type de jour (« meilleure heure pour partir »).
+      required: [route_id, direction_id, day_type, slots, meta]
+      properties:
+        route_id: { type: string, format: uuid }
+        direction_id: { type: integer, enum: [0, 1] }
+        day_type: { $ref: "#/components/schemas/DayType" }
+        slots:
+          type: array
+          items:
+            type: object
+            required: [slot_start, p50_s, p80_s]
+            properties:
+              slot_start: { type: string, pattern: "^\\d{2}:\\d{2}$" }
+              p50_s: { type: integer, minimum: 0 }
+              p80_s: { type: integer, minimum: 0 }
+        meta: { $ref: "#/components/schemas/EstimateMeta" }
+
+    IntRange:
+      type: object
+      required: [low]
+      properties:
+        low: { type: integer, minimum: 0 }
+        high: { type: [integer, "null"], minimum: 0 }
+
+    DayType:
+      type: string
+      enum: [ouvrable, samedi, dimanche, ferie]
+
+    Mode:
+      type: string
+      enum:
+        - bus_sotra
+        - bus_express
+        - bateau_bus
+        - pinasse
+        - gbaka
+        - woro_communal
+        - woro_intercommunal
+        - taxi_compteur
+        - moto_taxi
+        - tricycle
+        - metro
+        - brt
+        - car_interurbain
+
+    City:
+      type: object
+      required: [code, name, timezone, currency, is_fictional]
+      properties:
+        code: { $ref: "#/components/schemas/CityCode" }
+        name: { type: string }
+        timezone: { type: string, example: Africa/Abidjan }
+        currency: { type: string, example: XOF }
+        bbox:
+          type: [array, "null"]
+          description: Emprise [ouest, sud, est, nord].
+          items: { type: number }
+          minItems: 4
+          maxItems: 4
+        is_fictional: { type: boolean }
+
+    CityList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/City" }
+
+    PlaceResult:
+      type: object
+      required: [id, kind, name, category, location, score, matched_alias]
+      properties:
+        id: { type: string, format: uuid }
+        kind: { type: string, enum: [lieu, arret] }
+        name: { type: string }
+        category: { type: string, description: "Catégorie du lieu ou type d'arrêt." }
+        location: { $ref: "#/components/schemas/Location" }
+        score: { type: number, minimum: 0, maximum: 1 }
+        matched_alias: { type: string, description: Alias qui a donné la correspondance. }
+
+    PlaceSearchResponse:
+      type: object
+      required: [query, normalized_query, city, is_fictional, items]
+      properties:
+        query: { type: string }
+        normalized_query: { type: string }
+        city: { $ref: "#/components/schemas/CityCode" }
+        is_fictional: { type: boolean }
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlaceResult" }
+
+    StopLine:
+      type: object
+      required: [route_id, code, name, mode, directions]
+      properties:
+        route_id: { type: string, format: uuid }
+        code: { type: string }
+        name: { type: string, description: Nom de la ligne tel qu'on le dit. }
+        mode: { $ref: "#/components/schemas/Mode" }
+        body_color: { type: [string, "null"] }
+        color_pattern: { type: [string, "null"] }
+        announced_as: { type: [string, "null"], description: Ce que crie l'apprenti. }
+        directions:
+          type: array
+          items:
+            type: object
+            required: [direction_id, headsign]
+            properties:
+              direction_id: { type: integer, enum: [0, 1] }
+              headsign: { type: string }
+
+    StopFare:
+      type: object
+      required: [route_id, to_area, fare]
+      properties:
+        route_id: { type: string, format: uuid }
+        to_area: { type: string, description: Zone de destination. }
+        fare: { $ref: "#/components/schemas/FareEstimate" }
+
+    StopDetail:
+      type: object
+      required:
+        [
+          id,
+          code,
+          name,
+          kind,
+          city,
+          location,
+          lighting,
+          shelter,
+          accessibility,
+          aliases,
+          lines,
+          fares,
+          queue,
+          wait_series,
+          day_type,
+          at,
+          network_version,
+          is_fictional,
+        ]
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: string }
+        name: { type: string }
+        kind:
+          type: string
+          enum:
+            [
+              sotra_stop,
+              gare_artisanale,
+              arret_informel,
+              arret_minute,
+              embarcadere,
+              station_metro,
+              station_brt,
+              gare_interurbaine,
+            ]
+        city: { $ref: "#/components/schemas/CityCode" }
+        location: { $ref: "#/components/schemas/Location" }
+        boarding_radius_m: { type: [integer, "null"] }
+        lighting: { $ref: "#/components/schemas/Tristate" }
+        shelter: { $ref: "#/components/schemas/Tristate" }
+        accessibility: { $ref: "#/components/schemas/Tristate" }
+        active_hours:
+          type: [object, "null"]
+          required: [start, end]
+          properties:
+            start: { type: string }
+            end: { type: string }
+        aliases:
+          type: array
+          items: { type: string }
+        lines:
+          type: array
+          items: { $ref: "#/components/schemas/StopLine" }
+        fares:
+          type: array
+          description: Prix observés en condition normale, par ligne et zone de destination.
+          items: { $ref: "#/components/schemas/StopFare" }
+        queue:
+          description: État de la file, ou null si aucune donnée (affiché en gris, jamais inventé).
+          oneOf:
+            - $ref: "#/components/schemas/QueueEstimate"
+            - type: "null"
+        wait_series:
+          type: array
+          items: { $ref: "#/components/schemas/WaitSeries" }
+        day_type: { $ref: "#/components/schemas/DayType" }
+        at: { type: string, format: date-time }
+        network_version:
+          type: [integer, "null"]
+          description: Version publiée du réseau, null si aucune.
+        is_fictional: { type: boolean }
+
+    Tristate:
+      type: string
+      enum: [oui, non, inconnu]
+
+    ItinerarySearchRequest:
+      type: object
+      required: [city, from, to]
+      properties:
+        city: { $ref: "#/components/schemas/CityCode" }
+        from: { $ref: "#/components/schemas/Endpoint" }
+        to: { $ref: "#/components/schemas/Endpoint" }
+        depart_at: { type: string, format: date-time }
+        arrive_by: { type: string, format: date-time }
+        preferences:
+          type: object
+          properties:
+            max_walk_min: { type: integer, minimum: 0, maximum: 60 }
+            max_budget_xof: { type: integer, minimum: 0 }
+            avoid_modes:
+              type: array
+              items: { $ref: "#/components/schemas/Mode" }
+            fewer_transfers: { type: boolean }
+            reduced_mobility: { type: boolean }
+      not:
+        required: [depart_at, arrive_by]
+        properties:
+          depart_at: true
+          arrive_by: true
+
+    Endpoint:
+      type: object
+      description: Un lieu connu ou une position.
+      oneOf:
+        - required: [place_id]
+          properties:
+            place_id: { type: string, format: uuid }
+        - required: [stop_id]
+          properties:
+            stop_id: { type: string, format: uuid }
+        - required: [location]
+          properties:
+            location: { $ref: "#/components/schemas/Location" }
+
+    ItinerarySearchResponse:
+      type: object
+      required: [coverage, options, network_version, computed_at, is_fictional]
+      properties:
+        coverage:
+          type: string
+          enum: [couvert, non_couvert]
+          description: « non_couvert » quand la zone n'est pas encore couverte ; aucune option n'est alors inventée.
+        options:
+          type: array
+          items: { $ref: "#/components/schemas/Itinerary" }
+        network_version: { type: integer }
+        computed_at: { type: string, format: date-time }
+        is_fictional: { type: boolean }
+
+    Itinerary:
+      type: object
+      required: [labels, legs, duration, cost, transfers, walk_min]
+      properties:
+        labels:
+          type: array
+          items: { type: string, enum: [moins_cher, plus_rapide, plus_simple, plus_sur] }
+        legs:
+          type: array
+          minItems: 1
+          items: { $ref: "#/components/schemas/Leg" }
+        duration: { $ref: "#/components/schemas/DurationEstimate" }
+        cost:
+          description: Coût total ; null si au moins un prix est inconnu (« prix inconnu », H-018).
+          oneOf:
+            - $ref: "#/components/schemas/FareEstimate"
+            - type: "null"
+        transfers: { type: integer, minimum: 0 }
+        walk_min: { type: integer, minimum: 0 }
+        vtc_savings_xof:
+          type: [integer, "null"]
+          description: Économie indicative par rapport à un VTC.
+
+    Leg:
+      oneOf:
+        - $ref: "#/components/schemas/WalkLeg"
+        - $ref: "#/components/schemas/RideLeg"
+      discriminator:
+        propertyName: kind
+        mapping:
+          marche: "#/components/schemas/WalkLeg"
+          vehicule: "#/components/schemas/RideLeg"
+
+    WalkLeg:
+      type: object
+      required: [kind, from, to, duration_s, distance_m]
+      properties:
+        kind: { type: string, const: marche }
+        from: { $ref: "#/components/schemas/Location" }
+        to: { $ref: "#/components/schemas/Location" }
+        duration_s: { type: integer, minimum: 0 }
+        distance_m: { type: integer, minimum: 0 }
+
+    RideLeg:
+      type: object
+      required: [kind, route_id, mode, board_stop_id, alight_stop_id, wait, ride, fare]
+      properties:
+        kind: { type: string, const: vehicule }
+        route_id: { type: string, format: uuid }
+        mode: { $ref: "#/components/schemas/Mode" }
+        board_stop_id: { type: string, format: uuid }
+        alight_stop_id: { type: string, format: uuid }
+        wait: { $ref: "#/components/schemas/WaitEstimate" }
+        ride: { $ref: "#/components/schemas/DurationEstimate" }
+        fare:
+          oneOf:
+            - $ref: "#/components/schemas/FareEstimate"
+            - type: "null"
+
+    TripEvent:
+      type: object
+      required: [kind, at]
+      properties:
+        kind:
+          {
+            type: string,
+            enum: [incident_sur_le_trajet, nouvel_itineraire, approche_descente, arrivee],
+          }
+        at: { type: string, format: date-time }
+        message_key: { type: string, description: Clé de traduction du message à afficher. }
+        itinerary: { $ref: "#/components/schemas/Itinerary" }
+
+    ContributionRequest:
+      type: object
+      required: [id, kind, observed_at, city]
+      properties:
+        id: { type: string, format: uuid, description: Généré par le téléphone. }
+        kind:
+          type: string
+          enum:
+            [
+              dans_la_file,
+              file,
+              vehicules_presents,
+              montee,
+              depart,
+              vehicule_plein,
+              prix_paye,
+              incident,
+              arret_deplace,
+              deviation,
+              photo,
+              attente_reelle,
+              nouveau_lieu,
+            ]
+        observed_at: { type: string, format: date-time }
+        city: { $ref: "#/components/schemas/CityCode" }
+        stop_id: { type: string, format: uuid }
+        route_id: { type: string, format: uuid }
+        direction_id: { type: integer, enum: [0, 1] }
+        location: { $ref: "#/components/schemas/Location" }
+        accuracy_m: { type: number, minimum: 0 }
+        payload:
+          type: object
+          description: "Champs propres au type : niveau de file, montant payé (XOF), attente réelle (s)…"
+          additionalProperties: true
+
+    ContributionReceipt:
+      type: object
+      required: [id, status, received_at]
+      properties:
+        id: { type: string, format: uuid }
+        status: { type: string, enum: [recue, acceptee, rejetee, quarantaine] }
+        received_at: { type: string, format: date-time }
+
+    Incident:
+      type: object
+      required: [id, kind, severity, starts_at, status, geometry, is_fictional]
+      properties:
+        id: { type: string, format: uuid }
+        kind:
+          {
+            type: string,
+            enum: [accident, inondation, route_barree, travaux, manifestation, autre],
+          }
+        severity: { type: string, enum: [faible, moyenne, forte] }
+        starts_at: { type: string, format: date-time }
+        ends_at: { type: [string, "null"], format: date-time }
+        status: { type: string, enum: [signale, confirme, resolu, rejete] }
+        geometry:
+          type: object
+          description: Géométrie GeoJSON (WGS 84).
+          required: [type, coordinates]
+          properties:
+            type: { type: string }
+            coordinates: { type: array }
+        is_fictional: { type: boolean }
+
+    IncidentPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/Incident" }
+        next_cursor: { type: [string, "null"] }
+
+    PackManifest:
+      type: object
+      required: [city, version, network_version, generated_at, files, is_fictional]
+      properties:
+        city: { $ref: "#/components/schemas/CityCode" }
+        version: { type: string }
+        network_version: { type: integer }
+        generated_at: { type: string, format: date-time }
+        files:
+          type: array
+          items:
+            type: object
+            required: [kind, url, bytes, sha256]
+            properties:
+              kind: { type: string, enum: [reseau, fond_de_carte] }
+              url: { type: string, format: uri }
+              bytes: { type: integer, minimum: 0 }
+              sha256: { type: string, pattern: "^[0-9a-f]{64}$" }
+        is_fictional: { type: boolean }
+
+    PackDiff:
+      type: object
+      required: [city, from, to, full_download_required]
+      properties:
+        city: { $ref: "#/components/schemas/CityCode" }
+        from: { type: string }
+        to: { type: string }
+        full_download_required: { type: boolean }
+        url: { type: [string, "null"], format: uri }
+        bytes: { type: [integer, "null"], minimum: 0 }
+        sha256: { type: [string, "null"] }
+
+    OtpRequest:
+      type: object
+      required: [phone]
+      properties:
+        phone:
+          {
+            type: string,
+            pattern: "^\\+225\\d{10}$",
+            description: Numéro ivoirien au format international.,
+          }
+
+    SessionRequest:
+      type: object
+      required: [phone, code]
+      properties:
+        phone: { type: string, pattern: "^\\+225\\d{10}$" }
+        code: { type: string, pattern: "^\\d{6}$" }
+
+    Session:
+      type: object
+      required: [token, expires_at]
+      properties:
+        token: { type: string }
+        expires_at: { type: string, format: date-time }
+
+    Me:
+      type: object
+      required: [account_id, locale, created_at]
+      properties:
+        account_id: { type: string, format: uuid }
+        locale: { type: string, example: fr-CI }
+        preferences: { type: object, additionalProperties: true }
+        created_at: { type: string, format: date-time }
+
+    ConsentPurpose:
+      type: string
+      enum: [contributions, suivi_passif, notifications, partage_trajet, mode_pro, abonnement_canal]
+
+    ConsentUpdate:
+      type: object
+      required: [granted, text_version]
+      properties:
+        granted: { type: boolean }
+        text_version: { type: string, description: Version du texte de consentement affiché. }
+
+    Consent:
+      type: object
+      required: [purpose, granted, text_version, updated_at]
+      properties:
+        purpose: { $ref: "#/components/schemas/ConsentPurpose" }
+        granted: { type: boolean }
+        text_version: { type: string }
+        updated_at: { type: string, format: date-time }
+
+    RewardsSummary:
+      type: object
+      required: [balance, recent]
+      properties:
+        balance: { type: integer }
+        recent:
+          type: array
+          items:
+            type: object
+            required: [delta_points, reason, created_at]
+            properties:
+              delta_points: { type: integer }
+              reason:
+                { type: string, enum: [contribution_validee, echange, correction, expiration] }
+              created_at: { type: string, format: date-time }
+
+    ChangeRequestStatus:
+      type: string
+      enum: [proposee, approuvee, rejetee, appliquee]
+
+    ChangeRequestCreate:
+      type: object
+      required: [city, title, operations]
+      properties:
+        city: { $ref: "#/components/schemas/CityCode" }
+        title: { type: string, minLength: 3 }
+        operations:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [op, table]
+            properties:
+              op: { type: string, enum: [insert, update, delete] }
+              table: { type: string }
+              id: { type: string, format: uuid }
+              set: { type: object, additionalProperties: true }
+
+    ChangeRequest:
+      allOf:
+        - $ref: "#/components/schemas/ChangeRequestCreate"
+        - type: object
+          required: [id, status, proposed_by, created_at]
+          properties:
+            id: { type: string, format: uuid }
+            status: { $ref: "#/components/schemas/ChangeRequestStatus" }
+            proposed_by: { type: string, format: uuid }
+            reviewed_by: { type: [string, "null"], format: uuid }
+            review_reason: { type: [string, "null"] }
+            created_at: { type: string, format: date-time }
+
+    ChangeRequestPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/ChangeRequest" }
+        next_cursor: { type: [string, "null"] }
+
+    Review:
+      type: object
+      required: [decision]
+      properties:
+        decision: { type: string, enum: [approuver, rejeter] }
+        reason: { type: string, description: Obligatoire pour un rejet. }
+      if:
+        properties:
+          decision: { const: rejeter }
+      then:
+        required: [reason]
+        properties:
+          reason: { type: string, minLength: 1 }
+
+    NetworkVersion:
+      type: object
+      required: [id, city, number, status]
+      properties:
+        id: { type: integer }
+        city: { $ref: "#/components/schemas/CityCode" }
+        number: { type: integer }
+        status: { type: string, enum: [brouillon, en_revue, publiee, abandonnee] }
+        effective_from: { type: [string, "null"], format: date-time }
+        published_at: { type: [string, "null"], format: date-time }
+
+    ModerationItem:
+      type: object
+      required: [id, kind, observed_at, status, reasons]
+      properties:
+        id: { type: string, format: uuid }
+        kind: { type: string }
+        observed_at: { type: string, format: date-time }
+        status: { type: string, enum: [recue, quarantaine] }
+        reasons:
+          type: array
+          description: Raisons de la mise en modération (doublon, incohérence, signalement suspect…).
+          items: { type: string }
+
+    ModerationPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/ModerationItem" }
+        next_cursor: { type: [string, "null"] }
+
+    ModerationDecision:
+      type: object
+      required: [decision]
+      properties:
+        decision: { type: string, enum: [accepter, rejeter] }
+        reason: { type: string }
+      if:
+        properties:
+          decision: { const: rejeter }
+      then:
+        required: [reason]
+        properties:
+          reason: { type: string, minLength: 1 }

@@ -3,6 +3,7 @@ packages:
   - apps/web-lite
   - services/api
   - services/channels
+  - packages/openapi
 
 # Chaîne d'approvisionnement : refuser les versions publiées depuis moins de
 # 14 jours (en minutes). Voir SECURITY.md.

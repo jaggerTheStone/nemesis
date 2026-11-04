@@ -13,6 +13,7 @@ export default tseslint.config(
       "apps/mobile/**",
       "services/routing/**",
       "**/.venv/**",
+      "packages/openapi/src/schema.ts",
     ],
   },
   js.configs.recommended,

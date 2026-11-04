@@ -109,6 +109,16 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Protocol Buffers des deltas temps réel dans `packages/proto`, contrôlés par `buf lint` et `buf breaking`.
 - Squelette NestJS qui sert la recherche de lieux et le détail de gare sur les fixtures ; tests de contrat générés à partir du schéma.
 - **Terminé quand** : le linter OpenAPI passe ; les tests de contrat passent contre le squelette.
+- **Réalisé** (2026-11-04) :
+  - contrat OpenAPI 3.1 : 26 opérations, Redocly sans erreur, 15 tests des règles du projet, types TypeScript générés ;
+  - contrat `nemesis.live.v1` (deltas par tuile), avec `buf lint` et `buf breaking` ;
+  - squelette d'API branché sur PostgreSQL : villes, recherche de lieux, fiche d'arrêt ; problème RFC 9457, ETag, Brotli, rôle `nemesis_api` ;
+  - 20 tests de contrat générés et de comportement, contre une base migrée (`make api-test`, job de CI).
+
+  Ajouts au plan :
+  - repli JSON du flux SSE des trajets suivis (ADR-006) ;
+  - compression Brotli (partie 9.6) ;
+  - un seul résultat par gare dans la recherche.
 
 ### I0.7 — Pipelines d'import et rapports
 

@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package nemesis.live.v1;
+
+import "google/protobuf/timestamp.proto";
+import "nemesis/common/v1/estimate.proto";
+
+// Live state of one map tile, sent as a delta since the client's version
+// (GET /v1/live/tiles/{z}/{x}/{y}?since=…, ADR-006). Upserts replace the
+// whole object with the same id; removals list ids that left the tile.
+message TileDelta {
+  uint32 z = 1;
+  uint32 x = 2;
+  uint32 y = 3;
+  // Version the delta starts from (the client's) and the version it reaches.
+  uint64 from_version = 4;
+  uint64 to_version = 5;
+  // True when the client's version was too old: replace the tile state.
+  bool full_snapshot = 6;
+  google.protobuf.Timestamp generated_at = 7;
+  repeated StationState stations = 8;
+  repeated string removed_station_ids = 9;
+  repeated Incident incidents = 10;
+  repeated string removed_incident_ids = 11;
+  // Vehicles on the map arrive with V2 (F-05).
+  repeated VehiclePosition vehicles = 12;
+  repeated string removed_vehicle_ids = 13;
+}
+
+// Published state of a station or stop (mobility.queue_state).
+message StationState {
+  string stop_id = 1;
+  QueueLevel level = 2;
+  IntRange people = 3;
+  IntRange vehicles = 4;
+  WaitEstimate wait = 5;
+  nemesis.common.v1.EstimateMeta meta = 6;
+}
+
+// Queue levels reported by users (codes peu, moyen, beaucoup, tres_long).
+enum QueueLevel {
+  QUEUE_LEVEL_UNSPECIFIED = 0;
+  QUEUE_LEVEL_FEW = 1;
+  QUEUE_LEVEL_MEDIUM = 2;
+  QUEUE_LEVEL_MANY = 3;
+  QUEUE_LEVEL_VERY_LONG = 4;
+  QUEUE_LEVEL_UNKNOWN = 5;
+}
+
+message IntRange {
+  uint32 low = 1;
+  optional uint32 high = 2;
+}
+
+// Wait estimate (docs/ALGORITHMES.md, section 1); always carries its meta.
+message WaitEstimate {
+  uint32 p50_s = 1;
+  uint32 p80_s = 2;
+  WaitRegime regime = 3;
+  nemesis.common.v1.EstimateMeta meta = 4;
+}
+
+enum WaitRegime {
+  WAIT_REGIME_UNSPECIFIED = 0;
+  WAIT_REGIME_A = 1;
+  WAIT_REGIME_B = 2;
+  WAIT_REGIME_C = 3;
+}
+
+// Coordinates in microdegrees (WGS 84): compact on the wire, metre precision.
+message Point {
+  sint32 lat_e6 = 1;
+  sint32 lon_e6 = 2;
+}
+
+message Incident {
+  string id = 1;
+  IncidentKind kind = 2;
+  Severity severity = 3;
+  google.protobuf.Timestamp starts_at = 4;
+  google.protobuf.Timestamp ends_at = 5;
+  // Outer ring of the affected area; a single point for a local incident.
+  repeated Point area = 6;
+}
+
+enum IncidentKind {
+  INCIDENT_KIND_UNSPECIFIED = 0;
+  INCIDENT_KIND_ACCIDENT = 1;
+  INCIDENT_KIND_FLOOD = 2;
+  INCIDENT_KIND_ROAD_CLOSED = 3;
+  INCIDENT_KIND_ROADWORKS = 4;
+  INCIDENT_KIND_DEMONSTRATION = 5;
+  INCIDENT_KIND_OTHER = 6;
+}
+
+enum Severity {
+  SEVERITY_UNSPECIFIED = 0;
+  SEVERITY_LOW = 1;
+  SEVERITY_MEDIUM = 2;
+  SEVERITY_HIGH = 3;
+}
+
+// Anonymous vehicle (never a plate or a name, partie 12.4).
+message VehiclePosition {
+  string vehicle_id = 1;
+  string route_id = 2;
+  uint32 direction_id = 3;
+  Point position = 4;
+  uint32 heading_deg = 5;
+  float speed_mps = 6;
+  PositionCertainty certainty = 7;
+  google.protobuf.Timestamp observed_at = 8;
+}
+
+// Full icon for a recent GPS position, faded icon for an estimate (F-05).
+enum PositionCertainty {
+  POSITION_CERTAINTY_UNSPECIFIED = 0;
+  POSITION_CERTAINTY_GPS_RECENT = 1;
+  POSITION_CERTAINTY_ESTIMATED = 2;
+}
