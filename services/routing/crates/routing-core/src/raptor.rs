@@ -81,6 +81,7 @@ pub struct Journey {
 enum Label {
     None,
     Access(Walk),
+    /// Arrival `end` by a vehicle boarded at `board_pos` in round `round`.
     Ride {
         round: u32,
         pattern: u32,
@@ -88,11 +89,14 @@ enum Label {
         alight_pos: u32,
         at_stop: u32,
         wait: u32,
+        end: u32,
     },
+    /// Arrival `end` on foot from `from`, itself reached by a vehicle in round `round`.
     Walk {
         round: u32,
         from: u32,
         walk: Walk,
+        end: u32,
     },
 }
 
@@ -122,6 +126,10 @@ pub fn plan(network: &Network, waits: &dyn WaitModel, query: &Query) -> Vec<Jour
     let rounds = query.max_rides + 1;
     let mut tau = vec![vec![UNREACHED; stop_count]; rounds];
     let mut labels = vec![vec![Label::None; stop_count]; rounds];
+    // Arrivals by a vehicle in each round, kept apart from walking ones: transfers on
+    // foot leave only from these, so a journey never chains two walks, and every time
+    // announced is the time of the steps reconstructed.
+    let mut ride_labels = vec![vec![Label::None; stop_count]; rounds];
     let mut best = vec![UNREACHED; stop_count];
     let mut journeys = Vec::new();
 
@@ -197,14 +205,17 @@ pub fn plan(network: &Network, waits: &dyn WaitModel, query: &Query) -> Vec<Jour
                     if arrival < best[stop].min(target_best) && arrival < current[stop] {
                         current[stop] = arrival;
                         best[stop] = arrival;
-                        label_cur[stop] = Label::Ride {
+                        let label = Label::Ride {
                             round,
                             pattern: p,
                             board_pos: u32::try_from(board_pos).unwrap_or(u32::MAX),
                             alight_pos: u32::try_from(pos).unwrap_or(u32::MAX),
                             at_stop,
                             wait,
+                            end: arrival,
                         };
+                        label_cur[stop] = label;
+                        ride_labels[k][stop] = label;
                         if !in_marked[stop] {
                             in_marked[stop] = true;
                             improved.push(u32::try_from(stop).unwrap_or(u32::MAX));
@@ -230,7 +241,9 @@ pub fn plan(network: &Network, waits: &dyn WaitModel, query: &Query) -> Vec<Jour
         // Walking transfers from the stops a vehicle reached in this round.
         let mut walked: Vec<u32> = Vec::new();
         for &stop in &improved {
-            let arrival = current[stop as usize];
+            let Label::Ride { end: arrival, .. } = ride_labels[k][stop as usize] else {
+                continue;
+            };
             for &(next, walk) in &network.footpaths[stop as usize] {
                 let next = next as usize;
                 let at = arrival + walk.seconds;
@@ -241,6 +254,7 @@ pub fn plan(network: &Network, waits: &dyn WaitModel, query: &Query) -> Vec<Jour
                         round,
                         from: stop,
                         walk,
+                        end: at,
                     };
                     if !in_marked[next] {
                         in_marked[next] = true;
@@ -258,17 +272,24 @@ pub fn plan(network: &Network, waits: &dyn WaitModel, query: &Query) -> Vec<Jour
         // Destination: one journey per round that improves the arrival.
         let arrival = egress
             .iter()
-            .filter(|(stop, _)| {
-                current[*stop] != UNREACHED && matches!(label_cur[*stop], Label::Ride { .. })
+            .filter_map(|&(stop, walk)| match ride_labels[k][stop] {
+                Label::Ride { end, .. } => Some((end + walk.seconds, stop, walk)),
+                _ => None,
             })
-            .map(|&(stop, walk)| (current[stop] + walk.seconds, stop, walk))
             .min_by_key(|item| item.0);
         if let Some((at, stop, walk)) = arrival
             && at < target_best
         {
             target_best = at;
             journeys.push(reconstruct(
-                network, &labels, &tau, k, stop, walk, query, at,
+                network,
+                &labels,
+                &ride_labels,
+                k,
+                stop,
+                walk,
+                query,
+                at,
             ));
         }
         if marked.is_empty() {
@@ -282,7 +303,7 @@ pub fn plan(network: &Network, waits: &dyn WaitModel, query: &Query) -> Vec<Jour
 fn reconstruct(
     network: &Network,
     labels: &[Vec<Label>],
-    tau: &[Vec<u32>],
+    ride_labels: &[Vec<Label>],
     round: usize,
     last_stop: usize,
     egress: Walk,
@@ -298,9 +319,10 @@ fn reconstruct(
         end: arrive,
         metres: egress.metres,
     });
-    let (mut k, mut stop) = (round, last_stop);
+    let mut label = ride_labels[round][last_stop];
+    let mut stop = last_stop;
     loop {
-        match labels[k][stop] {
+        match label {
             Label::Access(walk) => {
                 legs.push(Leg::Walk {
                     from: endpoint(query.origin, "Départ"),
@@ -311,8 +333,12 @@ fn reconstruct(
                 });
                 break;
             }
-            Label::Walk { round, from, walk } => {
-                let end = tau[round as usize][stop];
+            Label::Walk {
+                round,
+                from,
+                walk,
+                end,
+            } => {
                 legs.push(Leg::Walk {
                     from: place(network, from),
                     to: place(network, u32::try_from(stop).unwrap_or(u32::MAX)),
@@ -320,7 +346,7 @@ fn reconstruct(
                     end,
                     metres: walk.metres,
                 });
-                k = round as usize;
+                label = ride_labels[round as usize][from as usize];
                 stop = from as usize;
             }
             Label::Ride {
@@ -330,6 +356,7 @@ fn reconstruct(
                 alight_pos,
                 at_stop,
                 wait,
+                end,
             } => {
                 let p = &network.patterns[pattern as usize];
                 let board_stop = p.stops[board_pos as usize];
@@ -342,9 +369,9 @@ fn reconstruct(
                     at_stop,
                     wait,
                     start: at_stop + wait,
-                    end: tau[round as usize][stop],
+                    end,
                 });
-                k = round as usize - 1;
+                label = labels[round as usize - 1][board_stop as usize];
                 stop = board_stop as usize;
             }
             Label::None => unreachable!("a reached stop always has a label"),
@@ -543,6 +570,58 @@ mod tests {
             board.stop_id
         );
         assert!(journeys[0].walk_metres < 1000);
+    }
+
+    /// Every step starts when the previous one ends, at the latest, and the announced
+    /// arrival is the end of the last step (regression of the spike: a walk chained to a
+    /// stop improved on foot in the same round broke this).
+    fn assert_consistent(journey: &Journey) {
+        let mut clock = journey.depart;
+        for leg in &journey.legs {
+            let (start, end) = match leg {
+                Leg::Walk { start, end, .. } => (*start, *end),
+                Leg::Ride { at_stop, wait, start, end, .. } => {
+                    assert_eq!(*start, at_stop + wait);
+                    assert!(*at_stop >= clock, "{journey:?}");
+                    (*at_stop, *end)
+                }
+            };
+            assert!(start >= clock && end >= start, "{journey:?}");
+            clock = end;
+        }
+        assert_eq!(journey.arrive, clock);
+        let walks = journey.legs.windows(2).filter(|w| matches!(w, [Leg::Walk { .. }, Leg::Walk { .. }]));
+        assert_eq!(walks.count(), 0, "two walks in a row: {journey:?}");
+    }
+
+    #[test]
+    fn journeys_are_consistent_on_a_dense_grid_of_lines() {
+        // Twelve crossing lines on a 3 km square, stops every 300 m: many transfers on foot.
+        let mut stops = Vec::new();
+        let mut trips = Vec::new();
+        for line in 0..6 {
+            let offset = f64::from(line) * 500.0 + 120.0;
+            for (axis, prefix) in [(true, "est"), (false, "nord")] {
+                let first = stops.len();
+                for i in 0..10 {
+                    let along = f64::from(i) * 300.0;
+                    let (x, y) = if axis { (along, offset) } else { (offset, along) };
+                    stops.push(stop(&format!("{prefix}{line}-{i}"), x, y));
+                }
+                let sequence: Vec<(usize, u32)> = (0..10).map(|i| (first + i, u32::try_from(i).unwrap() * 90)).collect();
+                trips.push(trip(&format!("{prefix}{line}"), &sequence, 300 + 120 * u32::try_from(line).unwrap()));
+            }
+        }
+        let feed = Feed { stops, trips, ..Feed::default() };
+        let network = Network::build(&feed, NetworkOptions::default());
+        let mut checked = 0;
+        for (from, to) in [(0, 119), (5, 64), (33, 90), (12, 107), (70, 9)] {
+            for journey in plan(&network, &MedianRegimeB, &query(feed.stops[from].point, feed.stops[to].point)) {
+                assert_consistent(&journey);
+                checked += 1;
+            }
+        }
+        assert!(checked >= 5);
     }
 
     #[test]
