@@ -88,6 +88,18 @@ publication.
     (245 avertissements, 974 informations) ; 4 815 arrêts sur 4 834 et les
     974 tracés retrouvés dans OSM ; 33 284 lieux promus ; extrait de tuiles
     d'Abidjan de 4,5 Mo pour un budget de 45 Mo.
+- I0.8 : spike du moteur d'itinéraires et ADR-003 accepté (option B).
+  - `routing-core` : GTFS avec calendriers, réseau à fréquences, points de
+    montée virtuels, attente du régime B comme coût de montée, attentes en
+    direct simulées, RAPTOR ; `routing spike` ; compilation Android arm64.
+  - `tools/routing-spike` : 25 couples tirés des arrêts réels,
+    OpenTripPlanner 2.10 épinglé, comparaison avec une fonction de coût
+    commune ; workflow dédié et `make routing-spike`.
+  - Mesures : B répond en 0,6 ms (12 Mio), OTP en 689 ms (1 Gio) ; avec des
+    attentes en direct simulées, B gagne plus de 5 min dans 44 requêtes
+    sur 74.
+  - Constat sur le GTFS 2023 : 28 % des courses ont une durée forfaitaire de
+    120 min.
 
 ### Corrigé
 

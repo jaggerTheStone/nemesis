@@ -195,7 +195,7 @@ Un curateur propose une modification dans le back-office (`change_request`). Un 
 | Sujet | Où il sera tranché |
 |-------|--------------------|
 | Flutter ou Kotlin | ADR-001, après mesure sur le prototype (I0.11) |
-| Moteur A ou B | ADR-003, après le spike (I0.8) |
+| Moteur A ou B | Tranché : option B (ADR-003, spike I0.8) |
 | Versionnement du réseau | ADR-008 (proposé) |
 | Hébergement et transfert des données | ADR-004 : décision du porteur du projet |
 | Mode Pro dans la même appli ou dans une appli séparée | ADR à rédiger avant la V2 (partie 6.1) |

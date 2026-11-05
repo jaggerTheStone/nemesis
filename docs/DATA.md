@@ -64,6 +64,7 @@ Chaque exécution est inscrite dans `ops.import_run` : source, URL, empreinte, m
 | `calendar_dates`, `transfers`, `pathways`, `levels`, `fare_attributes`, `fare_rules` | vides |
 
 Particularités :
+- **temps de parcours en partie forfaitaires** : 271 des 980 courses (28 %) durent exactement 120 min, soit 2 à 6 km/h, ce qui ressemble à une valeur par défaut. Les 709 autres roulent à 11–18 km/h (écart interquartile). Ces temps ne sont pas corrigés ; le moteur les utilise tels quels (ADR-003, spike I0.8) ;
 - tous les identifiants d'arrêts sont des nœuds OSM (`node/…`) : le rapport d'écarts apparie d'abord par identifiant ;
 - les lignes et les tracés portent des numéros de relations OSM ;
 - aucune ligne n'a de nom court : seul le nom long (« gbaka : Adjamé Liberté ↔ Treichville Gare de Bassam ») les identifie.

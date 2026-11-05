@@ -1,6 +1,6 @@
 # services/routing
 
-Moteur d'itinéraires en Rust (cible : McRAPTOR, option B de la partie 8.1, à confirmer par l'ADR-003 après le spike I0.8).
+Moteur d'itinéraires en Rust (option B de la partie 8.1, retenue par l'[ADR-003](../../docs/DECISIONS/ADR-003-moteur-itineraires.md) après le spike I0.8 ; McRAPTOR en I0.9).
 
 - `routing-core` : bibliothèque partagée entre le serveur et le téléphone.
 - `routing-core` (I0.8) :

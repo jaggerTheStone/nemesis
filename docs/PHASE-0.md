@@ -159,6 +159,25 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - **Option B** : RAPTOR multicritère minimal en Rust sur un réseau à fréquences, où le coût de montée est l'attente estimée ; points de montée virtuels tous les 150 à 300 m pour la montée continue.
 - Mêmes 20 couples origine-destination pour les deux options ; mesures comparées ; ADR-003 figé.
 - **Terminé quand** : l'ADR-003 est rédigé avec les mesures.
+- **Réalisé** (2026-11-05) : [ADR-003](DECISIONS/ADR-003-moteur-itineraires.md) accepté. **Option B retenue**, mesures du workflow « Spike du moteur d'itinéraires » à l'appui.
+  - **Option B** (`services/routing`) :
+    - GTFS avec calendriers, réseau à fréquences, attente du régime B comme coût de montée, points de montée virtuels, RAPTOR ;
+    - 0,6 ms par requête en médiane, 12 Mio de mémoire ; 1,9 ms et 43 Mio avec les points virtuels ;
+    - le cœur compile pour Android arm64 ;
+    - 14 tests, dont un de non-régression sur la cohérence des trajets.
+  - **Option A** : OpenTripPlanner 2.10 :
+    - 689 ms en médiane, 5,1 s pour la pire requête, environ 1 Gio de mémoire ;
+    - fréquences traitées comme un intervalle complet d'attente ;
+    - pas de montée entre deux arrêts.
+  - **Comparaison avec la même fonction de coût** :
+    - équivalence en attentes médianes ;
+    - avec des attentes en direct simulées, B gagne plus de 5 min dans 44 requêtes sur 74 (médiane 9,2 min).
+
+  Écarts au protocole :
+  - 25 couples tirés des arrêts réels, faute de corridor pilote (5 « bord de route » en plus des 20 prévus) ;
+  - réalisme non noté, faute de suite de référence (Q-03) ;
+  - mesure sur téléphone reportée en I0.11, seule la compilation Android est vérifiée ;
+  - marche de B estimée en ligne droite × 1,3, avec la même règle pour les deux moteurs dans la comparaison.
 
 ### I0.9 — Moteur d'itinéraires en ligne de commande
 

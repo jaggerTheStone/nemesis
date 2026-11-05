@@ -17,11 +17,18 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - I0.4, base de données et environnement local (`data/schema/README.md`) ;
   - I0.5, jeu fictif « Lagune-Fictive » en GTFS et en SQL (`data/fixtures_fictives/README.md`) ;
   - I0.6, contrat OpenAPI et Protobuf, squelette d'API sur la base (`packages/openapi/README.md`, `services/api/README.md`) ;
-  - I0.7, pipelines d'import, rapports de validation et d'écarts, tuiles (`data/pipelines/README.md`). La chaîne fictive et l'import du GTFS 2023 sont vérifiés localement ; la chaîne réelle complète tourne en CI (voir « Imports réels » ci-dessous).
-- **Prochain incrément** : I0.8, spike du moteur d'itinéraires (OpenTripPlanner 2 ou RAPTOR en Rust) et ADR-003. Le GTFS 2023 peut y servir de banc d'essai interne, pas de donnée du produit (H-030).
+  - I0.7, pipelines d'import, rapports de validation et d'écarts, tuiles (`data/pipelines/README.md`). La chaîne fictive et l'import du GTFS 2023 sont vérifiés localement ; la chaîne réelle complète tourne en CI (voir « Imports réels » ci-dessous) ;
+  - I0.8, spike du moteur d'itinéraires : **ADR-003 accepté, option B** (RAPTOR à fréquences en Rust), mesures à l'appui (`tools/routing-spike/README.md`).
+- **Prochain incrément** : I0.9, moteur d'itinéraires en ligne de commande :
+  - interface `RoutingEngine` et McRAPTOR ;
+  - marche sur le graphe piéton d'OSM ;
+  - Monte-Carlo ;
+  - options étiquetées ;
+  - tests par propriétés.
 - **En attente côté porteur** :
   - **la licence du GTFS « Abidjan 2023 » (H-030)** : CC BY-NC 4.0, pas d'usage commercial. Demander l'autorisation à DigitalTransport4Africa (partenariat, 15.6) et faire valider la démarche par un juriste ;
   - la validation des hypothèses H-029 (emprise d'Abidjan) et H-031 (budget du fond de carte), et la relecture de l'ADR-009 (schéma des tuiles) ;
+  - la relecture de l'ADR-003 (option B retenue) ; le choix du corridor pilote, dont les couples remplaceront ceux du spike ;
   - une équipe sur place pour lancer les collectes (Q-03) ;
   - les contreparties des participants et des validateurs ;
   - la relecture juridique des consentements ;
@@ -34,7 +41,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
   - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
-## Ce que contient le dépôt après I0.7
+## Ce que contient le dépôt après I0.8
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
@@ -44,7 +51,8 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `apps/web-lite` | Rendu HTML échappé, budget de 100 Ko vérifié | 4 |
 | `apps/admin` | React et Vite, textes en clés de traduction | 1 |
 | `packages/proto` | `EstimateMeta` et `nemesis.live.v1` (deltas par tuile), contrôlés par buf (lint, format, compatibilité) | lint |
-| `services/routing` | Espace Cargo : `routing-core` et le binaire `routing` | 4 |
+| `services/routing` | Espace Cargo : `routing-core` (GTFS, réseau à fréquences, points de montée virtuels, modèles d'attente, RAPTOR) et le binaire `routing` (`spike`) ; le cœur compile pour Android arm64 | 19 |
+| `tools/routing-spike` | Spike I0.8 : couples origine-destination, OpenTripPlanner 2.10, comparaison avec une fonction de coût commune ; `make routing-spike` et workflow dédié | vérification croisée |
 | `services/ml` | FastAPI, `GET /health` | 1 |
 | `data/pipelines` | Données de terrain (`nemesis-terrain`) ; jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, OSM fictif) ; imports (`nemesis-data` : manifeste des sources, téléchargements vérifiés, GTFS et OSM en staging, validateur, lieux, rapport d'écarts, tuiles) | 3 + 47 + 11 + 37, et 6 contre une base |
 | `data/schema` | Huit migrations dbmate (partitions, rôles, audit chaîné, versions du réseau, imports et garde de licence), jeu de départ fictif ; `make db-test` | 25 |
@@ -85,6 +93,8 @@ Les rapports complets (`rapports-reels`) et les tuiles d'Abidjan (`tuiles-abidja
 - **osm2pgsql en local** : `apt-get install osm2pgsql` donne la version 1.11.0 d'Ubuntu 24.04, la même qu'en CI. Les workflows épinglent les paquets (`osm2pgsql=1.11.0+ds-1`, `osmium-tool=1.16.0-1build1`) : une mise à jour de sécurité d'Ubuntu fera échouer l'installation, et il faudra alors mettre la version à jour.
 - **Chaîne fictive en local, sans GHCR** : `make data-import-fictif DATA_OPTIONS="--sans-validation --sans-tuiles"`.
 - **Licence du GTFS 2023** : `usage = "evaluation"` dans `sources.toml`. C'est ce réglage qui fait refuser par la base toute entrée de ce GTFS dans le réseau : ne jamais le passer en `produit` sans l'autorisation écrite demandée en H-030.
+- **Spike du moteur** : le workflow « Spike du moteur d'itinéraires (ADR-003) » tourne à chaque modification du moteur. Il prend environ 8 min, dont 7 pour les 375 requêtes d'OpenTripPlanner. `compare.py` échoue si un trajet de B ne suit pas la fonction de coût commune : c'est ainsi qu'un défaut de reconstruction a été trouvé.
+- **Python des runners** : 3.12 ; l'environnement cloud a 3.11, 3.12 et 3.13 (`/usr/bin/python3.12` pour reproduire).
 - **Fond léger sans océan** (ADR-009) : à reprendre avec le style de carte. La plus grosse tuile d'Abidjan pèse 104 Ko compressée (zoom 12, voirie) : à surveiller pour la data consommée par la carte en 3G.
 - **Version du validateur** : l'image `gtfs-validator:8.0.1` se déclare « 8.0.1-SNAPSHOT » dans ses rapports. À vérifier lors de sa prochaine mise à jour.
 - **Lieux promus** : la chaîne réelle crée la ville réelle « abidjan » et ses lieux dans la base où elle tourne (celle de `make dev` par défaut). La recherche de l'API les sert alors, avec la source `osm_cote_divoire`.
