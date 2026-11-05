@@ -10,6 +10,7 @@
 #   make data-import         imports réels : OSM, GTFS 2023, rapports et tuiles (réseau requis)
 #   make data-import-fictif  la même chaîne sur les données fictives du dépôt
 #   make pipelines-test      tests des pipelines contre une base PostGIS jetable (osm2pgsql requis)
+#   make routing-spike       spike du moteur d'itinéraires, options A et B (réseau et Docker requis)
 
 ROUTING := services/routing
 MOBILE := apps/mobile
@@ -22,7 +23,7 @@ PIPELINES_TEST_PORT ?= 55434
 .PHONY: check check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile \
         audit audit-ts audit-rust audit-py fmt install fiches-pdf \
         dev dev-down dev-reset db-migrate db-test gtfs-validate api-test proto-breaking \
-        data-import data-import-fictif data-tiles-verify pipelines-test
+        data-import data-import-fictif data-tiles-verify pipelines-test routing-spike
 
 check: check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile
 	@echo "Tous les contrôles sont au vert."
@@ -177,3 +178,11 @@ pipelines-test:
 	NEMESIS_TEST_DATABASE_URL=postgres://postgres:test@127.0.0.1:$(PIPELINES_TEST_PORT)/postgres \
 		NEMESIS_REQUIRE_DB=1 NEMESIS_REQUIRE_OSM2PGSQL=1 uv run pytest data/pipelines -rs; \
 		status=$$?; docker rm -f nemesis-pipelines-test >/dev/null; exit $$status
+
+# Spike du moteur d'itinéraires (I0.8, ADR-003) : OpenTripPlanner et RAPTOR à fréquences sur
+# les mêmes couples. Il faut osmium-tool, Docker et l'accès à Geofabrik (sinon : CI).
+SPIKE_OSM ?= data/work/sources/osm_cote_divoire/ivory-coast-latest.osm.pbf
+SPIKE_GTFS ?= data/work/sources/gtfs_abidjan_2023/Abidjan_Paratransit_GTFS_20230726.zip
+routing-spike:
+	uv run nemesis-data telecharger osm_cote_divoire gtfs_abidjan_2023
+	tools/routing-spike/run.sh $(SPIKE_OSM) $(SPIKE_GTFS) data/work/spike

@@ -9,3 +9,7 @@ publish.workspace = true
 
 [lints]
 workspace = true
+
+[dependencies]
+csv = "1.4.0"
+serde = { version = "1.0.229", features = ["derive"] }

@@ -1,0 +1,26 @@
+pair_id,band,origin_stop_id,origin_name,origin_lat,origin_lon,destination_stop_id,destination_name,destination_lat,destination_lon,distance_m
+OD01,court,node/7055147061,Adjamé Texaco,5.354132,-4.017826,node/10577379655,Riviera 2,5.353767,-3.978474,4357
+OD02,court,node/7055147061,Adjamé Texaco,5.354132,-4.017826,node/10570465253,Gare 2 Plateaux Mobil,5.367714,-3.999604,2520
+OD03,court,node/7060486566,Gare Palmeraie,5.362217,-3.959413,node/10577379655,Riviera 2,5.353767,-3.978474,2310
+OD04,court,node/7060486566,Gare Palmeraie,5.362217,-3.959413,node/10570465253,Gare 2 Plateaux Mobil,5.367714,-3.999604,4491
+OD05,court,node/9229653487,Gare Siporex,5.356542,-4.073425,node/7083218788,Adjamé Agban Village,5.358773,-4.030951,4709
+OD06,moyen,node/7056277272,Treichvile Gare de Bassam,5.298150,-4.003120,node/10574052977,Gare 9 Kilo,5.358122,-3.965133,7884
+OD07,moyen,node/7056277272,Treichvile Gare de Bassam,5.298150,-4.003120,node/7083218788,Adjamé Agban Village,5.358773,-4.030951,7412
+OD08,moyen,node/9229653487,Gare Siporex,5.356542,-4.073425,node/10570253261,2eme Arrêt,5.417430,-4.016768,9229
+OD09,moyen,node/9323576037,Gare nouveau marché,5.353182,-3.878512,node/10574052977,Gare 9 Kilo,5.358122,-3.965133,9605
+OD10,moyen,node/10570253261,2eme Arrêt,5.417430,-4.016768,node/10571458395,Mairie Adjamé,5.341769,-4.026187,8477
+OD11,moyen,node/10296548824,Angré Petro Ivoire,5.404169,-3.990675,node/10571458395,Mairie Adjamé,5.341769,-4.026187,7975
+OD12,moyen,node/10296548824,Angré Petro Ivoire,5.404169,-3.990675,node/10570421407,Terminus Mosquée du Plateau,5.319823,-4.015608,9777
+OD13,moyen,node/7844054485,Carrefour Koweit,5.322144,-4.054089,node/7052366501,Adjamé Liberté,5.353534,-4.014577,5596
+OD14,long,node/9323576037,Gare nouveau marché,5.353182,-3.878512,node/7844054485,Carrefour Koweit,5.322144,-4.054089,19743
+OD15,long,node/7884632289,Abobo Marché,5.423937,-4.015248,node/7054787080,Yopougon Palais,5.327040,-4.076912,12755
+OD16,long,node/7884632289,Abobo Marché,5.423937,-4.015248,node/10570414432,Gare Lavage Yopougon,5.343492,-4.072308,10951
+OD17,long,node/7054787080,Yopougon Palais,5.327040,-4.076912,node/7888269186,Gendarmerie Bandji,5.425907,-4.020598,12638
+OD18,long,node/7888269186,Gendarmerie Bandji,5.425907,-4.020598,node/10570414432,Gare Lavage Yopougon,5.343492,-4.072308,10805
+OD19,long,node/7058185549,Azur Mobil,5.400003,-4.006177,node/10570691611,Gare communale Bacongo,5.296551,-3.955037,12821
+OD20,long,node/7076942292,Gare Kobenan Agban,5.361816,-4.017512,node/10570691611,Gare communale Bacongo,5.296551,-3.955037,10025
+OD21,bord_de_route,,Bord de route entre Gare Port Bouet et Sicomex,5.317797,-4.011296,node/9323576037,Gare nouveau marché,5.353182,-3.878512,15218
+OD22,bord_de_route,,Bord de route entre Gare 504 et Mini car de Grand-bassam et Anani - Rond-point,5.217792,-3.803913,node/9323576037,Gare nouveau marché,5.353182,-3.878512,17172
+OD23,bord_de_route,,Bord de route entre Gare communale Bacongo et Sicomex,5.316371,-4.019051,node/9323576037,Gare nouveau marché,5.353182,-3.878512,16089
+OD24,bord_de_route,,Bord de route entre Gare Lavage Yopougon et Akwaba - Station Total,5.296272,-3.981850,node/7888269186,Gendarmerie Bandji,5.425907,-4.020598,15040
+OD25,bord_de_route,,Bord de route entre Gare Port Bouet et Garage en Haut,5.310042,-3.979520,node/7888269186,Gendarmerie Bandji,5.425907,-4.020598,13663

@@ -1,14 +1,18 @@
-//! `routing` command-line tool. The `plan` subcommand arrives in increment I0.9.
+//! `routing` command-line tool. `spike` measures option B of ADR-003 (I0.8); the
+//! `plan` subcommand arrives in increment I0.9.
 
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: routing --version";
+mod spike;
+
+const USAGE: &str = "usage: routing --version\n       routing spike --gtfs <dossier> --pairs <couples.csv> --out <résultats.json> [--times 06:30,11:00,18:30] [--virtual-spacing <m>] [--simulated-waits <graine>] [--repeat <n>]";
 
 /// Outcome of parsing the command-line arguments.
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 enum Command {
     Version,
     Help,
+    Spike(spike::SpikeArgs),
 }
 
 fn parse<I: IntoIterator<Item = String>>(args: I) -> Result<Command, String> {
@@ -17,6 +21,9 @@ fn parse<I: IntoIterator<Item = String>>(args: I) -> Result<Command, String> {
         [flag] if flag == "--version" || flag == "-V" => Ok(Command::Version),
         [] => Ok(Command::Help),
         [flag] if flag == "--help" || flag == "-h" => Ok(Command::Help),
+        [command, rest @ ..] if command == "spike" => {
+            spike::SpikeArgs::parse(rest).map(Command::Spike)
+        }
         _ => Err(format!("unrecognised arguments: {}", args.join(" "))),
     }
 }
@@ -31,6 +38,13 @@ fn main() -> ExitCode {
             println!("{USAGE}");
             ExitCode::SUCCESS
         }
+        Ok(Command::Spike(args)) => match spike::run(&args) {
+            Ok(()) => ExitCode::SUCCESS,
+            Err(error) => {
+                eprintln!("routing spike : {error}");
+                ExitCode::FAILURE
+            }
+        },
         Err(message) => {
             eprintln!("{message}\n{USAGE}");
             ExitCode::from(2)

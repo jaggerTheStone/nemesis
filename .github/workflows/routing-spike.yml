@@ -1,0 +1,78 @@
+name: Spike du moteur d'itinéraires (ADR-003)
+
+# Options A (OpenTripPlanner) et B (RAPTOR à fréquences en Rust) sur les mêmes couples
+# origine-destination, avec le GTFS « Abidjan 2023 » (évaluation interne, H-030) et
+# l'extrait OSM d'Abidjan. Mesures et comparaison dans le journal et en artefact.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/routing-spike/**"
+      - "services/routing/crates/**"
+      - "services/routing/Cargo.lock"
+      - ".github/workflows/routing-spike.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  spike:
+    name: Options A et B sur les données d'Abidjan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer osmium (paquet Ubuntu 24.04 épinglé)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends osmium-tool=1.16.0-1build1
+      - name: Installer la chaîne Rust de rust-toolchain.toml
+        working-directory: services/routing
+        run: rustup toolchain install
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            services/routing/target
+          key: spike-${{ runner.os }}-${{ hashFiles('services/routing/Cargo.lock', 'services/routing/rust-toolchain.toml') }}
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances
+        run: uv sync --locked --all-packages
+      - name: Sources vérifiées (MD5 de Geofabrik, SHA-256 épinglée du GTFS)
+        run: uv run nemesis-data telecharger osm_cote_divoire gtfs_abidjan_2023
+      - name: Spike (options A et B, comparaison)
+        run: |
+          tools/routing-spike/run.sh \
+            data/work/sources/osm_cote_divoire/ivory-coast-latest.osm.pbf \
+            data/work/sources/gtfs_abidjan_2023/Abidjan_Paratransit_GTFS_20230726.zip \
+            data/work/spike 2023-06-13
+      - name: Le cœur du moteur compile pour les téléphones Android (arm64)
+        working-directory: services/routing
+        run: |
+          rustup target add aarch64-linux-android
+          cargo check -p routing-core --release --locked --target aarch64-linux-android
+      - name: Comparaison dans le journal
+        if: always()
+        run: |
+          if [ -f data/work/spike/comparaison.md ]; then cat data/work/spike/comparaison.md; fi
+          if [ -f data/work/spike/comparaison.md ]; then cat data/work/spike/comparaison.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Conserver les mesures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spike-moteur-itineraires
+          path: |
+            data/work/spike/*.json
+            data/work/spike/comparaison.md
+            data/work/spike/otp/build.log
+          if-no-files-found: warn
+          retention-days: 30
