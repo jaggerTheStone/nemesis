@@ -57,10 +57,10 @@ class MemorySampler(threading.Thread):
 
     def __init__(self, container: str) -> None:
         super().__init__(daemon=True)
-        self.container, self.peak, self._stop = container, 0.0, threading.Event()
+        self.container, self.peak, self._halt = container, 0.0, threading.Event()
 
     def run(self) -> None:
-        while not self._stop.is_set():
+        while not self._halt.is_set():
             result = subprocess.run(
                 ["docker", "stats", "--no-stream", "--format", "{{.MemUsage}}", self.container],
                 capture_output=True,
@@ -69,10 +69,10 @@ class MemorySampler(threading.Thread):
             )
             if result.returncode == 0 and result.stdout.strip():
                 self.peak = max(self.peak, parse_memory(result.stdout))
-            self._stop.wait(1.0)
+            self._halt.wait(1.0)
 
     def stop(self) -> float:
-        self._stop.set()
+        self._halt.set()
         self.join(timeout=5)
         return self.peak
 
