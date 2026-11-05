@@ -580,7 +580,13 @@ mod tests {
         for leg in &journey.legs {
             let (start, end) = match leg {
                 Leg::Walk { start, end, .. } => (*start, *end),
-                Leg::Ride { at_stop, wait, start, end, .. } => {
+                Leg::Ride {
+                    at_stop,
+                    wait,
+                    start,
+                    end,
+                    ..
+                } => {
                     assert_eq!(*start, at_stop + wait);
                     assert!(*at_stop >= clock, "{journey:?}");
                     (*at_stop, *end)
@@ -590,7 +596,10 @@ mod tests {
             clock = end;
         }
         assert_eq!(journey.arrive, clock);
-        let walks = journey.legs.windows(2).filter(|w| matches!(w, [Leg::Walk { .. }, Leg::Walk { .. }]));
+        let walks = journey
+            .legs
+            .windows(2)
+            .filter(|w| matches!(w, [Leg::Walk { .. }, Leg::Walk { .. }]));
         assert_eq!(walks.count(), 0, "two walks in a row: {journey:?}");
     }
 
@@ -605,18 +614,36 @@ mod tests {
                 let first = stops.len();
                 for i in 0..10 {
                     let along = f64::from(i) * 300.0;
-                    let (x, y) = if axis { (along, offset) } else { (offset, along) };
+                    let (x, y) = if axis {
+                        (along, offset)
+                    } else {
+                        (offset, along)
+                    };
                     stops.push(stop(&format!("{prefix}{line}-{i}"), x, y));
                 }
-                let sequence: Vec<(usize, u32)> = (0..10).map(|i| (first + i, u32::try_from(i).unwrap() * 90)).collect();
-                trips.push(trip(&format!("{prefix}{line}"), &sequence, 300 + 120 * u32::try_from(line).unwrap()));
+                let sequence: Vec<(usize, u32)> = (0..10)
+                    .map(|i| (first + i, u32::try_from(i).unwrap() * 90))
+                    .collect();
+                trips.push(trip(
+                    &format!("{prefix}{line}"),
+                    &sequence,
+                    300 + 120 * u32::try_from(line).unwrap(),
+                ));
             }
         }
-        let feed = Feed { stops, trips, ..Feed::default() };
+        let feed = Feed {
+            stops,
+            trips,
+            ..Feed::default()
+        };
         let network = Network::build(&feed, NetworkOptions::default());
         let mut checked = 0;
         for (from, to) in [(0, 119), (5, 64), (33, 90), (12, 107), (70, 9)] {
-            for journey in plan(&network, &MedianRegimeB, &query(feed.stops[from].point, feed.stops[to].point)) {
+            for journey in plan(
+                &network,
+                &MedianRegimeB,
+                &query(feed.stops[from].point, feed.stops[to].point),
+            ) {
                 assert_consistent(&journey);
                 checked += 1;
             }
