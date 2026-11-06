@@ -91,7 +91,8 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          # maplibre_gl 0.27 compile en Java 21 ; l'appli elle-même vise Java 17.
+          java-version: "21"
       - uses: actions/cache@v4
         id: flutter-cache
         with:
@@ -177,7 +178,8 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          # maplibre_gl 0.27 compile en Java 21 ; l'appli elle-même vise Java 17.
+          java-version: "21"
       - uses: actions/cache@v4
         id: flutter-cache
         with:
