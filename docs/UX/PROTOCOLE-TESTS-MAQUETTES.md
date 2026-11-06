@@ -84,11 +84,21 @@ Les lieux entre crochets sont à choisir parmi ceux du prototype. Ce sont des li
 5. Faire coder 20 % des fiches par un second codeur. Les désaccords se règlent à deux. En cas de doute, choisir `partiel`.
 6. Calculer les taux : `uv run nemesis-terrain icones data/terrain/collecte/ux`. Seules les réponses `oui` comptent pour le seuil de 85 %. Le rapport indique aussi le taux chez les personnes qui lisent difficilement.
 
-Le guide de codage par icône est à compléter avec les icônes elles-mêmes (I0.11). Il prendra cette forme :
+Guide de codage des icônes du prototype I0.11 (`apps/mobile/lib/design/modes.dart`). Ce sont des icônes Material provisoires : chacune garde son code, sa forme et sa couleur, jamais la couleur seule. On les remplacera par des pictogrammes dessinés si elles n'atteignent pas 85 %.
 
-| Icône | Réponses codées `oui` | Réponses codées `partiel` |
-|-------|------------------------|----------------------------|
-| `mode_gbaka` | à compléter | à compléter |
+| Icône | Dessin provisoire | Réponses codées `oui` | Réponses codées `partiel` |
+|-------|-------------------|------------------------|----------------------------|
+| `mode_gbaka` | minibus, bleu foncé | gbaka, minicar, « 22 places » | car, bus |
+| `mode_woro_communal` | taxi, ocre | wôrô-wôrô, woro, taxi communal | taxi (compteur) |
+| `mode_woro_intercommunal` | main levée qui hèle, brun | wôrô-wôrô intercommunal, taxi d'une commune à l'autre | taxi, arrêter une voiture |
+| `mode_bus_sotra` | bus, orange | bus, SOTRA | car, gbaka |
+| `mode_bus_express` | bus plein, rouge brique | bus express | bus |
+| `mode_bateau_bus` | bateau, bleu | bateau-bus, bateau, lagunaire | pinasse, pirogue |
+| `action_signaler` | porte-voix | signaler, prévenir, dire ce qu'on voit | parler, annoncer |
+| `action_micro` | micro | dicter, parler, vocal | enregistrer, chanter |
+| `action_je_pars` | flèche de navigation | partir, démarrer, guider | aller, envoyer |
+
+Les réponses `oui` et `partiel` ci-dessus sont des propositions, à ajuster après le premier tour de test.
 
 ## Après la séance
 

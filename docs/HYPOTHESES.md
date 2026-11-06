@@ -117,3 +117,14 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
   - **champs des signalements** (`payload` de `ContributionRequest`) : `file` → `level` ; `vehicules_presents` → `vehicles` (`aucun`, `1_2`, `3_plus`) ; `attente_reelle` → `wait_s` ; `prix_paye` → `amount_xof` ; `vehicule_plein` → rien. À reprendre dans le contrat de l'API quand le traitement des contributions sera écrit ;
   - **gare de tête** : 3 véhicules en attente au plus ; au-delà, un véhicule qui arrive repart. *T*max compte depuis le premier passager monté ;
   - **montée au bord de la route** : en bousculade par défaut, l'option « file ordonnée » existe. L'ordre réel est à observer sur le terrain (protocole des Éclaireurs), car il change la formule du régime B (ALGORITHMES.md 1.3).
+
+## Prototype mobile (I0.11)
+
+- **H-034** (proposée) — Choix du prototype, à revoir avant le MVP :
+  - **moteur** : appelé par `dart:ffi` à travers une petite interface C qui échange du JSON (`routing-ffi`), plutôt que par flutter_rust_bridge. Ça fait moins d'outillage pour quatre fonctions. À reconsidérer si l'interface grossit ;
+  - **stockage** : le paquet `sqlite3` directement, sans drift. drift ajoute une génération de code ; sa couche Dart pèse peu, la mesure de l'APK reste donc représentative ;
+  - **carte** : style MapLibre avec des sources GeoJSON embarquées, sans tuiles ni texte (le texte exige des glyphes servis en ligne). La vraie ville utilisera les PMTiles de l'ADR-009 et des glyphes embarqués ;
+  - **icônes** : icônes Material provisoires, avec les codes du test de reconnaissance ;
+  - **position** : une position de démonstration fixe, près de la Gare des Flamboyants, sans GPS ;
+  - **bandeau « DONNÉES FICTIVES »** : affiché dès que la ville embarquée est fictive, et dans tous les builds de développement ;
+  - **signalements** : ils restent dans la file locale, faute de serveur.

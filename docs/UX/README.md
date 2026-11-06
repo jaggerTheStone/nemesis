@@ -2,3 +2,4 @@
 
 - [Protocole des tests de maquettes et d'icônes](PROTOCOLE-TESTS-MAQUETTES.md)
 - [Modèle de compte rendu](MODELE-tests-AAAA-MM-JJ.md) : un fichier par session, `tests-AAAA-MM-JJ.md`.
+- [Protocole du prototype WhatsApp « magicien d'Oz »](PROTOCOLE-WHATSAPP-MAGICIEN-OZ.md) : prêt, exécution bloquée par Q-07.
