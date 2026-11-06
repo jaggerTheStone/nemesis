@@ -98,6 +98,19 @@ publication.
   - Mesures : B répond en 0,6 ms (12 Mio), OTP en 689 ms (1 Gio) ; avec des
     attentes en direct simulées, B gagne plus de 5 min dans 44 requêtes
     sur 74.
+- I0.9 : moteur d'itinéraires en ligne de commande.
+  - Pack ville (format 1) : GTFS et graphe piéton tiré d'OSM ;
+    `nemesis-data pack reel`, pack fictif dans `data/fixtures_fictives/pack`.
+  - `routing-core` : interface `RoutingEngine`, McRAPTOR à quatre critères,
+    marche sur le graphe OSM, attentes en régime A (profils) ou B
+    (intervalles du GTFS), prix estimés, Monte-Carlo à 500 tirages, options
+    étiquetées « le moins cher », « le plus rapide », « le plus simple »,
+    source de chaque étape.
+  - `routing plan` et `routing bench` ; tests par propriétés.
+  - Workflow « Itinéraire réel de bout en bout (I0.9) » : critère de fin de
+    la phase 0 atteint ; 75 requêtes sur le GTFS 2023 et le graphe piéton
+    d'Abidjan en 43 ms en médiane, 123 ms au 95e centile.
+  - H-032 : paramètres du moteur v0, à calibrer.
   - Constat sur le GTFS 2023 : 28 % des courses ont une durée forfaitaire de
     120 min.
 

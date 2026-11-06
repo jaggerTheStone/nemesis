@@ -1,5 +1,6 @@
-//! `routing` command-line tool. `spike` measures option B of ADR-003 (I0.8); the
-//! `plan` subcommand arrives in increment I0.9.
+//! `routing` command-line tool: `plan` computes the options of a journey and `bench`
+//! measures latency over origin-destination pairs (I0.9); `spike` measures option B
+//! of ADR-003 (I0.8).
 
 use std::process::ExitCode;
 

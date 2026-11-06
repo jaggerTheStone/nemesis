@@ -99,3 +99,13 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
 
   Le dépôt invite à écrire à DigitalTransport4Africa pour d'autres permissions : c'est une démarche de partenariat (15.6), à faire valider par un juriste avec H-019. Le même GTFS a été produit à partir d'OSM : ce qui en reste à jour dans OSM est utilisable sous ODbL.
 - **H-031** (proposée) — Budget du fond de carte : F-12 donne au pack d'Abidjan 15 Mo sans fond et 60 Mo avec. Le fond léger a donc au plus 45 Mo, en mégaoctets de 10⁶ octets (lecture la plus stricte). La mesure est faite à chaque exécution de la chaîne réelle (ADR-009).
+
+## Moteur d'itinéraires (I0.9)
+
+- **H-032** (proposée) — Paramètres du moteur v0, choisis sans données de terrain et à recalibrer sur la suite de trajets de référence (Q-03) :
+  - la marche est comparée par tranches de 250 m (environ 3 min) dans la recherche et dans le Pareto des options : une différence plus petite ne justifie pas une option de plus ;
+  - « Le plus simple » compte la marche par tranches de 375 m (5 min) après le nombre de véhicules ;
+  - une option sans étiquette n'est montrée que si son p80 reste sous 1,5 × le meilleur p80 + 15 min, et au plus 5 options sont affichées ;
+  - marche bornée à 1,5 km pour l'accès et la sortie, 500 m pour une correspondance, 2 km pour un trajet tout à pied ; points rattachés au graphe piéton à moins de 200 m ;
+  - régime A modélisé par une loi log-normale ajustée sur le p50 et le p80 des profils, en attendant la loi Gamma d'ALGORITHMES.md (section 1.2) ;
+  - prix estimés en condition « normale » seulement.

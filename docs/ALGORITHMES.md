@@ -173,6 +173,15 @@ Dans les faits, le moteur d'itinéraires fait cette comparaison de lui-même : �
   - **Exclusion stricte** des zones signalées comme inondées (12.4).
 - **Temps à bord** : vitesses par tronçon et par tranche de 15 min (section 6), plus un temps d'arrêt par type de véhicule.
 
+**Mise en œuvre v0 (I0.9, `services/routing`).**
+- Quatre critères dans la recherche : arrivée calculée avec les attentes médianes, prix p50, mètres de marche, nombre de véhicules. Les p50 et p80 du temps total viennent ensuite du Monte-Carlo (section 2.2).
+- La marche est comparée par tranches de 250 m, soit environ 3 min (**à calibrer**, H-032). Sans ces tranches, le front gardait des trajets à quatre correspondances pour économiser 50 m de marche, et la requête médiane passait de 49 à 404 ms sur le GTFS 2023.
+- Un prix inconnu sur une étape rend le prix du trajet inconnu ; il n'est alors comparé à aucun autre, pour ne jamais masquer un prix connu.
+- Chaque arrêt tient deux ensembles de Pareto : les arrivées en véhicule, qui peuvent rejoindre la destination ou continuer à pied, et toutes les étiquettes qui peuvent monter à cet arrêt. Une arrivée à pied ne peut donc pas éliminer une arrivée en véhicule (défaut trouvé par le test de symétrie).
+- Une correspondance à pied ne part que d'une arrivée en véhicule : jamais deux marches à la suite.
+- Bornes de marche : 1,5 km pour l'accès et la sortie, 500 m pour une correspondance, 2 km pour un trajet tout à pied ; Dijkstra sur le graphe du pack, rattachement des points à moins de 200 m, sinon ligne droite × 1,3 (l'étape l'indique).
+- Attente : régime A quand un profil existe pour l'arrêt, la ligne, le sens, le type de jour et le créneau de 15 min ; sinon régime B depuis l'intervalle du GTFS. En v0, le régime A est une loi log-normale ajustée sur le p50 et le p80 du profil, en attendant la loi Gamma de la section 1.2.
+
 ### 2.2 Incertitude par Monte-Carlo
 
 **Principe.** Pour chaque option candidate, 500 tirages de la somme marche + attentes + temps à bord donnent le p50 et le p80.
@@ -193,6 +202,8 @@ Dans les faits, le moteur d'itinéraires fait cette comparaison de lui-même : �
    - « Le plus simple » : changements minimaux, puis marche ;
    - « Le plus sûr » le soir (V2).
 4. Une même option peut porter plusieurs étiquettes. On affiche au moins trois options distinctes quand elles existent.
+
+**Mise en œuvre v0.** Le Pareto des options simulées porte sur p80, p50, prix, véhicules et marche par tranches de 250 m. « Le plus simple » compte la marche par tranches de 375 m (5 min) après le nombre de véhicules, puis le p80. Une option sans étiquette n'est montrée que si son p80 reste sous 1,5 × le meilleur p80 + 15 min, et au plus cinq options sont affichées (**à calibrer**, H-032). La graine est un hachage FNV-1a de la requête et de la version du réseau (pas encore d'état en direct).
 
 ### 2.4 Tests par propriétés (14.1)
 
@@ -273,6 +284,11 @@ Par gare et par arrêt : le nombre de personnes en attente, en catégories arron
 | Tirages de Monte-Carlo | 500 | Partie 8.1 |
 | Vitesse de marche | 4,5 km/h ; 3 km/h en mobilité réduite | À calibrer |
 | Tolérance des quasi-doublons | 2 min, 50 F | À calibrer |
+| Tranche de comparaison de la marche (recherche et Pareto) | 250 m | À calibrer (H-032) |
+| Options sans étiquette | p80 ≤ 1,5 × meilleur p80 + 15 min ; 5 options au plus | À calibrer (H-032) |
+| Marche : accès et sortie, correspondance, tout à pied | 1,5 km, 500 m, 2 km | À calibrer (H-032) |
+| Rattachement au graphe piéton | 200 m | À calibrer (H-032) |
+| Facteur de détour hors graphe | 1,3 | À calibrer |
 | CUSUM des prix | *k* = 0,5 σ, *h* = 5 σ | À calibrer |
 | Rayon des expressions relatives | 150 m | À calibrer |
 | Signalements minimaux pour la carte de la demande | 3 | À calibrer |

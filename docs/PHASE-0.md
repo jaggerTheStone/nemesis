@@ -187,6 +187,24 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Marche sur le graphe piéton OSM (Dijkstra borné à environ 1,5 km).
 - Tests par propriétés : aucune option dominée ; ajouter une ligne ne dégrade jamais la meilleure option ; symétrie raisonnable entre aller et retour.
 - **Terminé quand** : un itinéraire réel est calculé de bout en bout sur les données importées, ce qui est le critère de fin de la phase ; latence mesurée ; tests au vert en CI sur les fixtures.
+- **Réalisé** (2026-11-06) : `routing plan` et `routing bench` ([services/routing/README.md](../services/routing/README.md)), pack ville produit par `nemesis-data pack reel`. **Critère de fin de phase atteint** : le workflow « Itinéraire réel de bout en bout (I0.9) » calcule des itinéraires sur le GTFS 2023 et le graphe piéton de l'extrait OSM d'Abidjan.
+  - **Pack réel** : 18 608 arrêts, dont 13 774 points de montée virtuels ; 980 parcours ; graphe piéton de 111 494 nœuds et 141 940 arêtes ; 485 arrêts hors graphe, rejoints en ligne droite ; chargement en 666 ms.
+  - **Latence** sur les 25 couples du spike à 3 heures, soit 75 requêtes : 42,8 ms en médiane, 122,5 ms au 95e centile, 131,5 ms au pire, pour un budget de 2 s au 95e centile côté serveur (F-02). Aucune requête sans option.
+  - **Exemple** : Adjamé Liberté → Gare de Bassam, un mardi à 7 h 30, une option directe en woro-woro étiquetée « Le plus rapide » et « Le plus simple » : 31 min en médiane, 44 min au 80e centile, 404 m de marche sur le graphe OSM, attente du régime B. Prix inconnu : le GTFS 2023 n'en donne pas.
+  - **Fixtures** : 6 tests sur le pack fictif. Flamboyants → Embarcadère Sud y donne quatre options, dont trois étiquetées, avec leurs prix et les régimes A et B dans un même trajet. Le pack fictif sert aussi au déterminisme, à la recherche de lieux, au dimanche, à la nuit et aux dates invalides.
+  - **Propriétés** : 3 tests sur des villes en grille tirées de graines fixes : aucune option dominée ; une ligne de plus n'aggrave aucun critère ; aller et retour comparables.
+    - Le test de symétrie a révélé un défaut. Une arrivée à pied pouvait éliminer une arrivée en véhicule au même arrêt, et faire perdre des trajets. Chaque arrêt a désormais deux ensembles de Pareto.
+
+  Ajouts au plan, signalés :
+  - la marche est comparée par tranches de 250 m. Sans elles, sur le GTFS 2023, le front gardait des trajets à quatre correspondances pour 50 m de marche en moins, et la médiane était à 404 ms ;
+  - les options sans étiquette passent un filtre de pertinence, et 5 options au plus sont affichées ;
+  - paramètres consignés dans H-032.
+
+  Limites :
+  - les prix ne sont connus que sur les fixtures ;
+  - la loi log-normale remplace la loi Gamma pour le régime A ;
+  - les temps à bord sont ceux du GTFS ;
+  - une option à une correspondance pour gagner 240 m de marche reste affichée sans étiquette (Adjamé → Bassam, 48 min contre 31), à calibrer avec la suite de référence.
 
 ### I0.10 — Simulateur par agents v0
 
@@ -229,7 +247,9 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 |----------|------------------------|--------|--------------|
 | Pénalités de marche : traversées dangereuses, zones inondées (8.1) | Graphe piéton sans pénalités | Pas encore de données d'incidents ni de traversées | Phase 1, tranche 1 |
 | Attente en direct, régimes A et C (8.2) | Régime B historique ; régime A sur fixtures seulement | Aucune observation réelle avant la phase 1 | Phase 1, modèles v1 |
-| Estimation des prix (8.3) | Prix du GTFS s'ils existent, sinon « prix inconnu » | Règle 1 : pas d'invention | Phase 1 |
+| Estimation des prix (8.3) | Prix estimés de l'extension nemesis en condition « normale » (fixtures seulement), sinon « prix inconnu » | Règle 1 : pas d'invention | Phase 1 |
+| Loi d'attente du régime A (ALGORITHMES.md 1.2) | Log-normale ajustée sur le p50 et le p80 des profils | Loi Gamma sans paramètres réels à ajuster | Phase 1, modèles v1 |
+| Temps à bord par tronçon et par tranche de 15 min (8.1) | Horaires du GTFS, sans tirage aléatoire | Pas de vitesses observées | Phase 1 |
 | Analyse statique mobile MobSF, tests d'intrusion (9.2) | Trivy et audits de dépendances seulement | Peu de code mobile à analyser en phase 0 | Phase 1, durcissement |
 | Infrastructure en code Terraform et Ansible (9.2) | Docker Compose seulement | Pas d'infrastructure cible tant que l'ADR-004 n'est pas tranché | Phase 1 |
 | Observabilité complète : OpenTelemetry, Prometheus, Grafana, Loki (9.2) | Instrumentation OpenTelemetry dans les squelettes, sans pile de collecte | Rien à superviser en phase 0 | Phase 1 |

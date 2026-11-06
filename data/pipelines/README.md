@@ -81,6 +81,11 @@ Elles sont déclarées dans [`sources.toml`](sources.toml) : URL, mode de vérif
    - `planetiler verify` joue les exemples du schéma.
    - Planetiler produit l'archive du pays, puis l'extrait borné par l'emprise de la ville.
    - L'en-tête PMTiles est lu en Python. La taille de l'extrait est comparée aux 45 Mo du fond (F-12, H-031).
+8. **Pack ville du moteur d'itinéraires** (`pack/`, `nemesis-data pack reel [--sortie <dossier>]`, défaut `<travail>/packs/reel`). Le pack n'est pas produit par `make data-import` : il se construit à la demande, sans base.
+   - Le GTFS est copié tel quel dans `gtfs/`.
+   - Graphe piéton : osmium découpe l'extrait à l'emprise de la ville et garde les voies `highway`. Sont exclues celles qui ne se marchent pas : autoroutes et bretelles, chantiers, projets, circuits, voies de bus guidés, quais, ascenseurs, surfaces (`area=yes`), et les voies marquées `foot=no` ou `access=no` ou `private`. Un tag `foot=yes` ou `designated` l'emporte sur ces règles. Les nœuds sont placés aux intersections, aux extrémités et au plus tous les 100 m ; les arêtes parallèles gardent la plus courte.
+   - `pack.json` reprend la provenance des deux sources. L'usage passe à `evaluation` dès qu'une source l'est : c'est le cas du GTFS 2023 (H-030).
+   - Le pack fictif est régénéré par `nemesis-fixtures generer` dans `data/fixtures_fictives/pack`, à partir de l'OSM fictif.
 
 ## Tests
 
