@@ -73,6 +73,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "routing-ffi"
+version = "0.0.0"
+dependencies = [
+ "routing-core",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "ryu"
 version = "1.0.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"

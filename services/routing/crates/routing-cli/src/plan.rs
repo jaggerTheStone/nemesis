@@ -9,8 +9,7 @@ use routing_core::geo::Point;
 use routing_core::gtfs::parse_time;
 use serde::{Deserialize, Serialize};
 
-/// Spacing of the virtual boarding points by default (ADR-003).
-pub const DEFAULT_VIRTUAL_SPACING_M: f64 = 250.0;
+pub use routing_core::engine::DEFAULT_VIRTUAL_SPACING_M;
 
 fn options(args: &[String], known: &[&str]) -> Result<BTreeMap<String, String>, String> {
     let mut values = BTreeMap::new();

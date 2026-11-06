@@ -1,0 +1,77 @@
+stop_id,alias,alias_kind,language,is_fictional
+flamboyants,Gare des Flamboyants,nom,fr,1
+flamboyants,gare flamboyant,orthographe,fr,1
+flamboyants,Flambo,abreviation,fr,1
+palmiers,Gare des Palmiers,nom,fr,1
+palmiers,gare palmier,orthographe,fr,1
+palmiers,G. Palmiers,abreviation,fr,1
+cocotiers,Gare des Cocotiers,nom,fr,1
+cocotiers,gare cocotier,orthographe,fr,1
+cocotiers,Coco,abreviation,fr,1
+baobab,Gare du Baobab,nom,fr,1
+baobab,gare baobab,orthographe,fr,1
+baobab,Ancienne gare du Baobab,ancien_nom,fr,1
+grand-marche,Gare du Grand Marché,nom,fr,1
+grand-marche,gare grand marche,orthographe,fr,1
+grand-marche,Gd Marché,abreviation,fr,1
+lagune-sud,Gare de la Lagune-Sud,nom,fr,1
+lagune-sud,gare lagune sud,orthographe,fr,1
+lagune-sud,Lag-Sud,abreviation,fr,1
+embarcadere-nord,Embarcadère Nord,nom,fr,1
+embarcadere-nord,embarcadere nord,orthographe,fr,1
+embarcadere-sud,Embarcadère Sud,nom,fr,1
+embarcadere-sud,embarcadere sud,orthographe,fr,1
+pont,Arrêt du Pont,nom,fr,1
+pont,arret pont,orthographe,fr,1
+arret-01,Carrefour des Manguiers,nom,fr,1
+arret-01,manguiers,abreviation,fr,1
+arret-02,Arrêt des Fromagers,nom,fr,1
+arret-02,fromagers,abreviation,fr,1
+arret-03,Rond-point des Acacias,nom,fr,1
+arret-03,acacias,abreviation,fr,1
+arret-04,Carrefour des Hibiscus,nom,fr,1
+arret-04,hibiscus,abreviation,fr,1
+arret-05,Arrêt des Bougainvilliers,nom,fr,1
+arret-05,bougainvilliers,abreviation,fr,1
+arret-06,Rond-point des Tecks,nom,fr,1
+arret-06,tecks,abreviation,fr,1
+arret-07,Carrefour des Karités,nom,fr,1
+arret-07,karités,abreviation,fr,1
+arret-08,Arrêt des Avocatiers,nom,fr,1
+arret-08,avocatiers,abreviation,fr,1
+arret-09,Rond-point des Goyaviers,nom,fr,1
+arret-09,goyaviers,abreviation,fr,1
+arret-10,Carrefour des Citronniers,nom,fr,1
+arret-10,citronniers,abreviation,fr,1
+arret-11,Arrêt des Orangers,nom,fr,1
+arret-11,orangers,abreviation,fr,1
+arret-12,Rond-point des Papayers,nom,fr,1
+arret-12,papayers,abreviation,fr,1
+arret-13,Carrefour des Bambous,nom,fr,1
+arret-13,bambous,abreviation,fr,1
+arret-14,Arrêt des Lauriers,nom,fr,1
+arret-14,lauriers,abreviation,fr,1
+arret-15,Rond-point des Frangipaniers,nom,fr,1
+arret-15,frangipaniers,abreviation,fr,1
+arret-16,Carrefour des Jacarandas,nom,fr,1
+arret-16,jacarandas,abreviation,fr,1
+arret-17,Arrêt des Eucalyptus,nom,fr,1
+arret-17,eucalyptus,abreviation,fr,1
+arret-18,Rond-point des Filaos,nom,fr,1
+arret-18,filaos,abreviation,fr,1
+arret-19,Carrefour des Kapokiers,nom,fr,1
+arret-19,kapokiers,abreviation,fr,1
+arret-20,Arrêt des Irokos,nom,fr,1
+arret-20,irokos,abreviation,fr,1
+arret-21,Rond-point des Ébéniers,nom,fr,1
+arret-21,ébéniers,abreviation,fr,1
+arret-22,Carrefour des Acajous,nom,fr,1
+arret-22,acajous,abreviation,fr,1
+arret-23,Arrêt des Rôniers,nom,fr,1
+arret-23,rôniers,abreviation,fr,1
+arret-24,Rond-point des Raphias,nom,fr,1
+arret-24,raphias,abreviation,fr,1
+arret-25,Carrefour des Caïlcédrats,nom,fr,1
+arret-25,caïlcédrats,abreviation,fr,1
+arret-26,Arrêt des Nérés,nom,fr,1
+arret-26,nérés,abreviation,fr,1

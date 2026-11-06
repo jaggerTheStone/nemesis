@@ -15,6 +15,10 @@ use crate::network::{Network, NetworkOptions, Walk, same_trip};
 use crate::options::{Fare, Simulated, select, simulate, wait_minutes};
 use crate::walk::{Snap, WalkGraph};
 
+/// Spacing of the virtual boarding points by default, metres (ADR-003): the same on the
+/// server, on the command line and on the phone.
+pub const DEFAULT_VIRTUAL_SPACING_M: f64 = 250.0;
+
 /// Longest walk from the origin or to the destination, on the graph (2.1).
 pub const ACCESS_M: f64 = 1_500.0;
 /// Longest walking transfer between two stops, on the graph.

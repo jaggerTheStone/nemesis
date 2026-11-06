@@ -32,3 +32,6 @@ data/work/
 .vscode/
 *.swp
 .DS_Store
+
+# Bibliothèque native du moteur pour l'appli, construite par cargo-ndk (CI, I0.11)
+apps/mobile/android/app/src/main/jniLibs/

@@ -1,6 +1,7 @@
 """Command line: `nemesis-fixtures generer [--verifier]` and `verifier-rapport`.
 
-`generer` writes the fictional GTFS, the SQL seed and the fictional OSM extract.
+`generer` writes the fictional GTFS, the SQL seed, the fictional OSM extract, the city
+pack of the routing engine and the data embedded in the mobile prototype.
 """
 
 from __future__ import annotations
@@ -12,6 +13,7 @@ from pathlib import Path
 
 from nemesis_pipelines.fixtures.city import build_city
 from nemesis_pipelines.fixtures.gtfs import FEED_VERSION, gtfs_files
+from nemesis_pipelines.fixtures.mobile import ASSETS, mobile_files
 from nemesis_pipelines.fixtures.osm import osm_xml
 from nemesis_pipelines.fixtures.sql import seed_sql
 from nemesis_pipelines.pack.build import pack_json
@@ -25,7 +27,8 @@ PACK_DIR = Path("data/fixtures_fictives/pack")
 
 def generated_files() -> dict[Path, str]:
     city = build_city()
-    files = {GTFS_DIR / name: content for name, content in gtfs_files(city).items()}
+    gtfs = gtfs_files(city)
+    files = {GTFS_DIR / name: content for name, content in gtfs.items()}
     files[SEED_PATH] = seed_sql(city)
     files[OSM_PATH] = osm_xml(city)
     # City pack of the routing engine (I0.9): the GTFS above and the walking graph.
@@ -40,6 +43,20 @@ def generated_files() -> dict[Path, str]:
         "../gtfs",
         [{"source_id": "fixtures_fictives", "license": "Données de test, sans valeur réelle"}],
     )
+    # Data of the mobile prototype (I0.11): the same pack, with its GTFS beside it.
+    pack = {
+        "walk_nodes.csv": files[PACK_DIR / "walk_nodes.csv"],
+        "walk_edges.csv": files[PACK_DIR / "walk_edges.csv"],
+        "pack.json": pack_json(
+            "lagune-fictive",
+            FEED_VERSION,
+            True,
+            "produit",
+            "gtfs",
+            [{"source_id": "fixtures_fictives", "license": "Données de test, sans valeur réelle"}],
+        ),
+    }
+    files.update(mobile_files(city, gtfs, files[OSM_PATH], pack, FEED_VERSION))
     return files
 
 
@@ -55,7 +72,10 @@ def _generate(root: Path, check: bool) -> int:
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(content, encoding="utf-8", newline="")
     stale = sorted(
-        p for p in (root / GTFS_DIR).glob("*.txt") if p.relative_to(root) not in expected
+        p
+        for folder in (GTFS_DIR, ASSETS / "pack" / "gtfs")
+        for p in (root / folder).glob("*.txt")
+        if p.relative_to(root) not in expected
     )
     if check and (outdated or stale):
         print("Jeu fictif à régénérer avec « uv run nemesis-fixtures generer » :", file=sys.stderr)

@@ -1,0 +1,16 @@
+{
+  "format": 1,
+  "city": "lagune-fictive",
+  "network_version": "fixtures-fictives-1",
+  "is_fictional": true,
+  "usage": "produit",
+  "gtfs": "gtfs",
+  "walk_nodes": "walk_nodes.csv",
+  "walk_edges": "walk_edges.csv",
+  "sources": [
+    {
+      "source_id": "fixtures_fictives",
+      "license": "Données de test, sans valeur réelle"
+    }
+  ]
+}

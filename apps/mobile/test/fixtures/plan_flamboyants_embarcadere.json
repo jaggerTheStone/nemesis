@@ -1,0 +1,575 @@
+{
+  "engine": {
+    "engine": "nemesis-mcraptor",
+    "engine_version": "0.0.0",
+    "format": 1,
+    "city": "lagune-fictive",
+    "network_version": "fixtures-fictives-1",
+    "is_fictional": true,
+    "usage": "produit",
+    "gtfs": "gtfs",
+    "walk_nodes": "walk_nodes.csv",
+    "walk_edges": "walk_edges.csv",
+    "stops": 1829,
+    "virtual_stops": 1794,
+    "patterns": 72,
+    "footpaths": 66252,
+    "walk_nodes": 303,
+    "walk_edges": 308,
+    "stops_off_graph": 92,
+    "wait_profiles": 2405,
+    "fares_known": true,
+    "load_ms": 38
+  },
+  "from": "Gare des Flamboyants (fictif)",
+  "to": "Embarcadère Sud (fictif)",
+  "computed_ms": 5.036945,
+  "city": "lagune-fictive",
+  "network_version": "fixtures-fictives-1",
+  "is_fictional": true,
+  "usage": "produit",
+  "date": 20261110,
+  "time": "07:30",
+  "day_type": "ouvrable",
+  "options": [
+    {
+      "labels": [
+        "fastest"
+      ],
+      "p50_min": 59,
+      "p80_min": 64,
+      "depart": "07:30",
+      "arrive_p50": "08:28",
+      "arrive_p80": "08:34",
+      "transfers": 2,
+      "walk_m": 0,
+      "fare": {
+        "p10": 700,
+        "p50": 900,
+        "p90": 1250,
+        "currency": "XOF"
+      },
+      "legs": [
+        {
+          "type": "walk",
+          "from": {
+            "name": "Départ",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "to": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "osm_walking_graph"
+        },
+        {
+          "type": "ride",
+          "route_id": "g4",
+          "route_name": "G4",
+          "trip_id": "g4-0-ouvrable",
+          "board": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "alight": {
+            "name": "Gare des Cocotiers (fictif)",
+            "stop_id": "cocotiers",
+            "lat": 2.005,
+            "lon": -4.04
+          },
+          "wait": {
+            "p50_min": 3,
+            "p80_min": 8,
+            "regime": "B",
+            "source": "gtfs_headway"
+          },
+          "ride_minutes": 19,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 250,
+            "p50": 300,
+            "p90": 400,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "ride",
+          "route_id": "i1",
+          "route_name": "I1",
+          "trip_id": "i1-0-ouvrable",
+          "board": {
+            "name": "Gare des Cocotiers (fictif)",
+            "stop_id": "cocotiers",
+            "lat": 2.005,
+            "lon": -4.04
+          },
+          "alight": {
+            "name": "Gare de la Lagune-Sud (fictif)",
+            "stop_id": "lagune-sud",
+            "lat": 1.955,
+            "lon": -4.01
+          },
+          "wait": {
+            "p50_min": 3,
+            "p80_min": 6,
+            "regime": "B",
+            "source": "gtfs_headway"
+          },
+          "ride_minutes": 23,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 300,
+            "p50": 400,
+            "p90": 550,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "ride",
+          "route_id": "w3",
+          "route_name": "W3",
+          "trip_id": "w3-0-ouvrable",
+          "board": {
+            "name": "Gare de la Lagune-Sud (fictif)",
+            "stop_id": "lagune-sud",
+            "lat": 1.955,
+            "lon": -4.01
+          },
+          "alight": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "wait": {
+            "p50_min": 2,
+            "p80_min": 2,
+            "regime": "A",
+            "source": "profile"
+          },
+          "ride_minutes": 8,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 150,
+            "p50": 200,
+            "p90": 300,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "walk",
+          "from": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "to": {
+            "name": "Arrivée",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "straight_line"
+        }
+      ]
+    },
+    {
+      "labels": [
+        "simplest"
+      ],
+      "p50_min": 61,
+      "p80_min": 65,
+      "depart": "07:30",
+      "arrive_p50": "08:30",
+      "arrive_p80": "08:35",
+      "transfers": 1,
+      "walk_m": 0,
+      "fare": {
+        "p10": 450,
+        "p50": 600,
+        "p90": 850,
+        "currency": "XOF"
+      },
+      "legs": [
+        {
+          "type": "walk",
+          "from": {
+            "name": "Départ",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "to": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "osm_walking_graph"
+        },
+        {
+          "type": "ride",
+          "route_id": "g4",
+          "route_name": "G4",
+          "trip_id": "g4-0-ouvrable",
+          "board": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "alight": {
+            "name": "Gare de la Lagune-Sud (fictif)",
+            "stop_id": "lagune-sud",
+            "lat": 1.955,
+            "lon": -4.01
+          },
+          "wait": {
+            "p50_min": 3,
+            "p80_min": 8,
+            "regime": "B",
+            "source": "gtfs_headway"
+          },
+          "ride_minutes": 48,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 300,
+            "p50": 400,
+            "p90": 550,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "ride",
+          "route_id": "w3",
+          "route_name": "W3",
+          "trip_id": "w3-0-ouvrable",
+          "board": {
+            "name": "Gare de la Lagune-Sud (fictif)",
+            "stop_id": "lagune-sud",
+            "lat": 1.955,
+            "lon": -4.01
+          },
+          "alight": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "wait": {
+            "p50_min": 2,
+            "p80_min": 2,
+            "regime": "A",
+            "source": "profile"
+          },
+          "ride_minutes": 8,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 150,
+            "p50": 200,
+            "p90": 300,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "walk",
+          "from": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "to": {
+            "name": "Arrivée",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "straight_line"
+        }
+      ]
+    },
+    {
+      "labels": [],
+      "p50_min": 58,
+      "p80_min": 72,
+      "depart": "07:30",
+      "arrive_p50": "08:27",
+      "arrive_p80": "08:41",
+      "transfers": 2,
+      "walk_m": 0,
+      "fare": {
+        "p10": 650,
+        "p50": 750,
+        "p90": 950,
+        "currency": "XOF"
+      },
+      "legs": [
+        {
+          "type": "walk",
+          "from": {
+            "name": "Départ",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "to": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "osm_walking_graph"
+        },
+        {
+          "type": "ride",
+          "route_id": "g1",
+          "route_name": "G1",
+          "trip_id": "g1-0-ouvrable",
+          "board": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "alight": {
+            "name": "Gare du Baobab (fictif)",
+            "stop_id": "baobab",
+            "lat": 2.01,
+            "lon": -4.0
+          },
+          "wait": {
+            "p50_min": 3,
+            "p80_min": 4,
+            "regime": "A",
+            "source": "profile"
+          },
+          "ride_minutes": 17,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 250,
+            "p50": 300,
+            "p90": 400,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "ride",
+          "route_id": "w2",
+          "route_name": "W2",
+          "trip_id": "w2-0-ouvrable",
+          "board": {
+            "name": "Gare du Baobab (fictif)",
+            "stop_id": "baobab",
+            "lat": 2.01,
+            "lon": -4.0
+          },
+          "alight": {
+            "name": "Embarcadère Nord (fictif)",
+            "stop_id": "embarcadere-nord",
+            "lat": 1.986,
+            "lon": -3.99
+          },
+          "wait": {
+            "p50_min": 1,
+            "p80_min": 2,
+            "regime": "A",
+            "source": "profile"
+          },
+          "ride_minutes": 14,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 150,
+            "p50": 200,
+            "p90": 300,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "ride",
+          "route_id": "l1",
+          "route_name": "L1",
+          "trip_id": "l1-0-ouvrable",
+          "board": {
+            "name": "Embarcadère Nord (fictif)",
+            "stop_id": "embarcadere-nord",
+            "lat": 1.986,
+            "lon": -3.99
+          },
+          "alight": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "wait": {
+            "p50_min": 13,
+            "p80_min": 30,
+            "regime": "B",
+            "source": "profile"
+          },
+          "ride_minutes": 9,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 250,
+            "p50": 250,
+            "p90": 250,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "walk",
+          "from": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "to": {
+            "name": "Arrivée",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "straight_line"
+        }
+      ]
+    },
+    {
+      "labels": [
+        "cheapest"
+      ],
+      "p50_min": 92,
+      "p80_min": 102,
+      "depart": "07:30",
+      "arrive_p50": "09:02",
+      "arrive_p80": "09:11",
+      "transfers": 1,
+      "walk_m": 0,
+      "fare": {
+        "p10": 300,
+        "p50": 350,
+        "p90": 450,
+        "currency": "XOF"
+      },
+      "legs": [
+        {
+          "type": "walk",
+          "from": {
+            "name": "Départ",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "to": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "osm_walking_graph"
+        },
+        {
+          "type": "ride",
+          "route_id": "b1",
+          "route_name": "B1",
+          "trip_id": "b1-0-ouvrable",
+          "board": {
+            "name": "Gare des Flamboyants (fictif)",
+            "stop_id": "flamboyants",
+            "lat": 2.045,
+            "lon": -4.02
+          },
+          "alight": {
+            "name": "Gare de la Lagune-Sud (fictif)",
+            "stop_id": "lagune-sud",
+            "lat": 1.955,
+            "lon": -4.01
+          },
+          "wait": {
+            "p50_min": 8,
+            "p80_min": 18,
+            "regime": "B",
+            "source": "profile"
+          },
+          "ride_minutes": 74,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 150,
+            "p50": 150,
+            "p90": 150,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "ride",
+          "route_id": "w3",
+          "route_name": "W3",
+          "trip_id": "w3-0-ouvrable",
+          "board": {
+            "name": "Gare de la Lagune-Sud (fictif)",
+            "stop_id": "lagune-sud",
+            "lat": 1.955,
+            "lon": -4.01
+          },
+          "alight": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "wait": {
+            "p50_min": 2,
+            "p80_min": 2,
+            "regime": "A",
+            "source": "profile"
+          },
+          "ride_minutes": 8,
+          "source": "gtfs_timetable",
+          "fare": {
+            "p10": 150,
+            "p50": 200,
+            "p90": 300,
+            "currency": "XOF"
+          }
+        },
+        {
+          "type": "walk",
+          "from": {
+            "name": "Embarcadère Sud (fictif)",
+            "stop_id": "embarcadere-sud",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "to": {
+            "name": "Arrivée",
+            "lat": 1.966,
+            "lon": -3.99
+          },
+          "minutes": 0,
+          "metres": 0,
+          "source": "straight_line"
+        }
+      ]
+    }
+  ],
+  "draws": 500,
+  "seed": "64117206dda56147",
+  "notes": [
+    "fictional_data"
+  ]
+}

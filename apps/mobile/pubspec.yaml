@@ -12,12 +12,36 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  # Versions épinglées, publiées depuis au moins 14 jours (même règle que pnpm, SECURITY.md).
+  ffi: 2.2.0
+  maplibre_gl: 0.27.1
+  path_provider: 2.1.6
+  sqlite3: 3.7.1
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
   generate: true
+  # Données fictives embarquées (I0.11), générées par « nemesis-fixtures generer ».
+  assets:
+    - assets/fictif/
+    - assets/fictif/pack/
+    - assets/fictif/pack/gtfs/
+
+# SQLite (package sqlite3, hook de build) : sur Android, la version précompilée publiée
+# avec le paquet, vérifiée par SHA-256, est embarquée dans l'APK ; pour les tests sur la
+# machine de développement ou en CI (Linux), celle du système.
+hooks:
+  user_defines:
+    sqlite3:
+      source:
+        linux: system
+        default: sqlite3
+      name:
+        linux: /lib/x86_64-linux-gnu/libsqlite3.so.0
