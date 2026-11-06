@@ -11,13 +11,16 @@ import sys
 from pathlib import Path
 
 from nemesis_pipelines.fixtures.city import build_city
-from nemesis_pipelines.fixtures.gtfs import gtfs_files
+from nemesis_pipelines.fixtures.gtfs import FEED_VERSION, gtfs_files
 from nemesis_pipelines.fixtures.osm import osm_xml
 from nemesis_pipelines.fixtures.sql import seed_sql
+from nemesis_pipelines.pack.build import pack_json
+from nemesis_pipelines.pack.walkgraph import build_graph, ways_from_osm_xml
 
 GTFS_DIR = Path("data/fixtures_fictives/gtfs")
 SEED_PATH = Path("data/fixtures_fictives/db/seed.sql")
 OSM_PATH = Path("data/fixtures_fictives/osm/lagune-fictive.osm")
+PACK_DIR = Path("data/fixtures_fictives/pack")
 
 
 def generated_files() -> dict[Path, str]:
@@ -25,6 +28,18 @@ def generated_files() -> dict[Path, str]:
     files = {GTFS_DIR / name: content for name, content in gtfs_files(city).items()}
     files[SEED_PATH] = seed_sql(city)
     files[OSM_PATH] = osm_xml(city)
+    # City pack of the routing engine (I0.9): the GTFS above and the walking graph.
+    graph = build_graph(ways_from_osm_xml(files[OSM_PATH]))
+    files[PACK_DIR / "walk_nodes.csv"] = graph.nodes_csv()
+    files[PACK_DIR / "walk_edges.csv"] = graph.edges_csv()
+    files[PACK_DIR / "pack.json"] = pack_json(
+        "lagune-fictive",
+        FEED_VERSION,
+        True,
+        "produit",
+        "../gtfs",
+        [{"source_id": "fixtures_fictives", "license": "Données de test, sans valeur réelle"}],
+    )
     return files
 
 

@@ -51,6 +51,8 @@ pub struct Pattern {
     pub trip_id: String,
     pub route_id: String,
     pub route_name: String,
+    pub service_id: String,
+    pub direction_id: Option<u8>,
     pub stops: Vec<u32>,
     /// Seconds from the first departure.
     pub arrivals: Vec<u32>,
@@ -76,6 +78,8 @@ impl Pattern {
 pub struct Walk {
     pub seconds: u32,
     pub metres: u32,
+    /// Estimated in a straight line × the detour factor, not on the walking graph.
+    pub straight: bool,
 }
 
 /// The network the engine runs on.
@@ -133,6 +137,8 @@ impl Network {
                 trip_id: trip.id.clone(),
                 route_id: trip.route_id.clone(),
                 route_name: trip.route_name.clone(),
+                service_id: trip.service_id.clone(),
+                direction_id: trip.direction_id,
                 stops: Vec::new(),
                 arrivals: Vec::new(),
                 departures: Vec::new(),
@@ -233,7 +239,13 @@ impl Network {
         Walk {
             seconds: (metres / self.options.walk_speed_mps).ceil() as u32,
             metres: metres.round() as u32,
+            straight: true,
         }
+    }
+
+    /// Replaces the walking transfers (by those found on the walking graph).
+    pub fn set_footpaths(&mut self, footpaths: Vec<Vec<(u32, Walk)>>) {
+        self.footpaths = footpaths;
     }
 
     /// Served stops within `radius_m` of `point`.
@@ -264,7 +276,7 @@ fn index_u32(index: usize) -> u32 {
 
 /// Two virtual points of the same trip (« virtuel:<trip>:<stop>:<serial> », the trip id
 /// may itself contain colons).
-fn same_trip(a: &str, b: &str) -> bool {
+pub(crate) fn same_trip(a: &str, b: &str) -> bool {
     let trip = |id: &str| id.rsplitn(3, ':').nth(2).map(str::to_owned);
     trip(a) == trip(b)
 }

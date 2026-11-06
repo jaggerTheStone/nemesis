@@ -55,6 +55,75 @@ struct TripRow {
     trip_id: String,
     #[serde(default)]
     shape_id: String,
+    direction_id: Option<u8>,
+}
+
+#[derive(Debug, Deserialize)]
+struct WaitProfileRow {
+    stop_id: String,
+    route_id: String,
+    direction_id: u8,
+    day_type: String,
+    slot_start: String,
+    regime: String,
+    wait_p50_s: u32,
+    wait_p80_s: u32,
+    #[serde(default)]
+    confidence: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct FareRow {
+    route_id: String,
+    from_area_id: String,
+    to_area_id: String,
+    condition: String,
+    fare_p10: u32,
+    fare_p50: u32,
+    fare_p90: u32,
+    #[serde(default)]
+    confidence: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct StopAreaRow {
+    area_id: String,
+    stop_id: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct StopAliasRow {
+    stop_id: String,
+    alias: String,
+}
+
+/// Historical wait at a stop for a line, a direction, a day type and a 15-minute slot
+/// (`ext_wait_profiles.txt`, ADR-007).
+#[derive(Debug, Clone, PartialEq)]
+pub struct WaitProfile {
+    pub stop_id: String,
+    pub route_id: String,
+    pub direction_id: u8,
+    pub day_type: String,
+    pub slot_start: u32,
+    /// « A », « B » or « C » (ALGORITHMES.md, section 1).
+    pub regime: String,
+    pub p50_s: u32,
+    pub p80_s: u32,
+    pub confidence: String,
+}
+
+/// Fare range observed on a line between two areas (`ext_fare_estimates.txt`), in XOF.
+#[derive(Debug, Clone, PartialEq)]
+pub struct FareEstimate {
+    pub route_id: String,
+    pub from_area: String,
+    pub to_area: String,
+    pub condition: String,
+    pub p10: u32,
+    pub p50: u32,
+    pub p90: u32,
+    pub confidence: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -166,6 +235,7 @@ pub struct Trip {
     pub route_id: String,
     pub route_name: String,
     pub service_id: String,
+    pub direction_id: Option<u8>,
     pub shape_id: Option<String>,
     /// (stop index, arrival offset, departure offset) in seconds from the first departure.
     pub stops: Vec<(usize, u32, u32)>,
@@ -191,6 +261,13 @@ pub struct Feed {
     pub trips: Vec<Trip>,
     pub services: HashMap<String, Service>,
     pub shapes: HashMap<String, Vec<Point>>,
+    /// Extension of the project (ADR-007), empty when the feed has none.
+    pub wait_profiles: Vec<WaitProfile>,
+    pub fare_estimates: Vec<FareEstimate>,
+    /// (area id, stop id) of `stop_areas.txt` (GTFS-Fares v2).
+    pub stop_areas: Vec<(String, String)>,
+    /// (stop id, alias) of `ext_stop_aliases.txt`.
+    pub stop_aliases: Vec<(String, String)>,
     pub report: ReadReport,
 }
 
@@ -341,6 +418,7 @@ pub fn read_feed(dir: &Path) -> Result<Feed, GtfsError> {
             route_id: row.route_id,
             route_name,
             service_id: row.service_id,
+            direction_id: row.direction_id,
             shape_id: (!row.shape_id.is_empty()).then_some(row.shape_id),
             stops,
             bands: trip_bands,
@@ -384,6 +462,42 @@ pub fn read_feed(dir: &Path) -> Result<Feed, GtfsError> {
             points.sort_by_key(|p| p.0);
             (id, points.into_iter().map(|p| p.1).collect())
         })
+        .collect();
+    for row in rows::<WaitProfileRow>(dir, "ext_wait_profiles.txt", false)? {
+        let Some(slot_start) = parse_time(&row.slot_start) else {
+            continue;
+        };
+        feed.wait_profiles.push(WaitProfile {
+            stop_id: row.stop_id,
+            route_id: row.route_id,
+            direction_id: row.direction_id,
+            day_type: row.day_type,
+            slot_start,
+            regime: row.regime,
+            p50_s: row.wait_p50_s,
+            p80_s: row.wait_p80_s.max(row.wait_p50_s),
+            confidence: row.confidence,
+        });
+    }
+    for row in rows::<FareRow>(dir, "ext_fare_estimates.txt", false)? {
+        feed.fare_estimates.push(FareEstimate {
+            route_id: row.route_id,
+            from_area: row.from_area_id,
+            to_area: row.to_area_id,
+            condition: row.condition,
+            p10: row.fare_p10,
+            p50: row.fare_p50,
+            p90: row.fare_p90,
+            confidence: row.confidence,
+        });
+    }
+    feed.stop_areas = rows::<StopAreaRow>(dir, "stop_areas.txt", false)?
+        .into_iter()
+        .map(|r| (r.area_id, r.stop_id))
+        .collect();
+    feed.stop_aliases = rows::<StopAliasRow>(dir, "ext_stop_aliases.txt", false)?
+        .into_iter()
+        .map(|r| (r.stop_id, r.alias))
         .collect();
     Ok(feed)
 }

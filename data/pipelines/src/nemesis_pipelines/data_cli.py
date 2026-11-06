@@ -23,6 +23,7 @@ from nemesis_pipelines.gtfs import validator
 from nemesis_pipelines.gtfs.staging import load_gtfs
 from nemesis_pipelines.osm.importer import import_osm
 from nemesis_pipelines.osm.places import promote_places
+from nemesis_pipelines.pack.build import build_real_pack
 from nemesis_pipelines.reports import gaps
 from nemesis_pipelines.runs import current_osm_run, latest_run
 from nemesis_pipelines.sources import MANIFEST_PATH, Manifest, Source, load_manifest
@@ -204,6 +205,12 @@ def main(argv: list[str] | None = None) -> int:
 
     commands.add_parser("verifier-schema-tuiles", help="exemples du schéma Planetiler")
 
+    pack = commands.add_parser("pack", help="pack ville du moteur d'itinéraires (profil reel)")
+    pack.add_argument("profil")
+    pack.add_argument(
+        "--sortie", type=Path, help="dossier du pack (défaut : <travail>/packs/<profil>)"
+    )
+
     args = parser.parse_args(argv)
     ctx = Context(args)
     manifest = ctx.manifest
@@ -213,6 +220,20 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "telecharger":
         for source_id in args.sources:
             ctx.fetch(manifest.source(source_id))
+        return 0
+    if args.command == "pack":
+        profile = manifest.profile(args.profil)
+        gtfs, osm = manifest.source(profile.gtfs), manifest.source(profile.osm)
+        if gtfs.is_fictional:
+            raise SystemExit("Le pack fictif est versionné : data/fixtures_fictives/pack.")
+        gtfs_file, osm_file = ctx.fetch(gtfs), ctx.fetch(osm)
+        out = args.sortie or ctx.work / "packs" / args.profil
+        city = manifest.city(profile.city)
+        provenances = [json.loads(f.provenance.to_json()) for f in (gtfs_file, osm_file)]
+        summary = build_real_pack(
+            out, city.code, city.bbox, gtfs_file.path, osm_file.path, provenances
+        )
+        print(f"Pack écrit dans {out} : {summary}")
         return 0
     if args.command == "verifier-schema-tuiles":
         planetiler.verify_schema(manifest.tool("planetiler"))

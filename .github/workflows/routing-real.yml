@@ -1,0 +1,127 @@
+name: Itinéraire réel de bout en bout (I0.9)
+
+# Critère de fin de la phase 0 : un itinéraire réel calculé de bout en bout sur les données
+# importées. Construit le pack ville d'Abidjan (GTFS « Abidjan 2023 », évaluation interne
+# seulement, H-030 ; graphe piéton de l'extrait OSM), calcule des itinéraires avec
+# « routing plan » et mesure la latence sur les couples du spike avec « routing bench ».
+# Résultats dans le journal, le résumé de l'exécution et en artefact.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "services/routing/crates/**"
+      - "services/routing/Cargo.lock"
+      - "data/pipelines/src/nemesis_pipelines/pack/**"
+      - "data/pipelines/sources.toml"
+      - "tools/routing-spike/couples.csv"
+      - ".github/workflows/routing-real.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  # Mardi couvert par le calendrier du GTFS 2023 (le même jour que le spike).
+  DATE: "2023-06-13"
+  PACK: data/work/packs/reel
+  OUT: data/work/itineraires
+
+jobs:
+  real:
+    name: Pack réel, itinéraires et latence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer osmium (paquet Ubuntu 24.04 épinglé)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends osmium-tool=1.16.0-1build1
+      - name: Installer la chaîne Rust de rust-toolchain.toml
+        working-directory: services/routing
+        run: rustup toolchain install
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            services/routing/target
+          key: real-${{ runner.os }}-${{ hashFiles('services/routing/Cargo.lock', 'services/routing/rust-toolchain.toml') }}
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances
+        run: uv sync --locked --all-packages
+      - name: Pack ville réel (sources vérifiées, graphe piéton OSM)
+        run: uv run nemesis-data pack reel
+      - name: Compiler le moteur
+        working-directory: services/routing
+        run: cargo build --release --locked -p routing-cli
+      - name: Itinéraires réels (routing plan)
+        run: |
+          mkdir -p "$OUT"
+          routing=services/routing/target/release/routing
+          # Par les noms d'arrêts du GTFS, puis par coordonnées (OD01 et OD12 du spike).
+          "$routing" plan --data "$PACK" --at "${DATE}T07:30" \
+            --from "Adjamé Liberté" --to "Gare de Bassam" > "$OUT/adjame-bassam.json"
+          "$routing" plan --data "$PACK" --at "${DATE}T07:30" \
+            --from 5.354132,-4.017826 --to 5.353767,-3.978474 > "$OUT/od01.json"
+          "$routing" plan --data "$PACK" --at "${DATE}T18:30" \
+            --from 5.353767,-3.978474 --to 5.354132,-4.017826 > "$OUT/od01-retour.json"
+      - name: Latence sur les couples du spike (routing bench)
+        run: |
+          services/routing/target/release/routing bench --data "$PACK" \
+            --pairs tools/routing-spike/couples.csv --date "$DATE" --out "$OUT/bench.json"
+      - name: Résumé dans le journal
+        if: always()
+        run: |
+          python3 -I - "$OUT" <<'EOF' | tee -a "$GITHUB_STEP_SUMMARY"
+          import json, pathlib, sys
+          out = pathlib.Path(sys.argv[1])
+          print("## Itinéraires réels (GTFS Abidjan 2023, évaluation interne)\n")
+          for path in sorted(out.glob("*.json")):
+              if path.name == "bench.json":
+                  continue
+              plan = json.loads(path.read_text())
+              print(f"### {path.stem} : {plan['computed_ms']:.1f} ms, notes {plan['notes']}\n")
+              print("| Libellés | p50 | p80 | Correspondances | Marche | Prix p50 | Étapes |")
+              print("|---|---|---|---|---|---|---|")
+              for o in plan["options"]:
+                  legs = " → ".join(
+                      f"{leg['route_name']} (attente {leg['wait']['p50_min']} min,"
+                      f" régime {leg['wait']['regime']})" if leg["type"] == "ride"
+                      else f"marche {leg['metres']} m ({leg['source']})"
+                      for leg in o["legs"]
+                  )
+                  fare = o["fare"]["p50"] if o.get("fare") else "inconnu"
+                  print(f"| {', '.join(o['labels']) or '—'} | {o['p50_min']} min | {o['p80_min']} min"
+                        f" | {o['transfers']} | {o['walk_m']} m | {fare} | {legs} |")
+              print()
+          bench = out / "bench.json"
+          if bench.exists():
+              b = json.loads(bench.read_text())
+              e = b["engine"]
+              print("## Latence (routing bench)\n")
+              print(f"- pack : {e['stops']} arrêts dont {e['virtual_stops']} virtuels,"
+                    f" {e['patterns']} parcours, graphe piéton {e['walk_nodes']} nœuds et"
+                    f" {e['walk_edges']} arêtes, {e['stops_off_graph']} arrêts hors graphe ;"
+                    f" chargement {e['load_ms']} ms")
+              print(f"- {b['queries']} requêtes : p50 {b['latency_p50_ms']:.1f} ms,"
+                    f" p95 {b['latency_p95_ms']:.1f} ms, max {b['latency_max_ms']:.1f} ms ;"
+                    f" {b['without_ride']} sans service")
+              empty = [f"{r['pair_id']} {r['time']}" for r in b["results"] if r["options"] == 0]
+              print(f"- requêtes sans option : {len(empty)} {empty}")
+          EOF
+      - name: Conserver les résultats
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: itineraires-reels
+          path: |
+            data/work/itineraires/*.json
+            data/work/packs/reel/pack.json
+          if-no-files-found: warn
+          retention-days: 30

@@ -436,6 +436,7 @@ mod tests {
             route_id: id.to_owned(),
             route_name: id.to_owned(),
             service_id: "s".to_owned(),
+            direction_id: None,
             shape_id: None,
             stops: stops.iter().map(|&(s, t)| (s, t, t)).collect(),
             bands: vec![(5 * 3600, 22 * 3600, headway)],

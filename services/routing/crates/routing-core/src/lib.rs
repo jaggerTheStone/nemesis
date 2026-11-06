@@ -6,11 +6,18 @@
 //! by the server and, through a native binding, the phone, so that online and
 //! offline results stay identical.
 
+pub mod engine;
 pub mod geo;
 pub mod gtfs;
+pub mod mcraptor;
+pub mod model;
 pub mod network;
+pub mod options;
+#[cfg(test)]
+mod properties;
 pub mod raptor;
 pub mod wait;
+pub mod walk;
 
 /// Version of the engine, reported by the CLI and the service.
 pub const ENGINE_VERSION: &str = env!("CARGO_PKG_VERSION");
