@@ -244,6 +244,33 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Mesure du poids de l'APK arm64 en release, avec carte, base SQLite et bibliothèque native du moteur ; l'ADR-001 est figé avec ces chiffres.
 - Protocole du prototype WhatsApp « magicien d'Oz » : scripts, modèles de réponse, délai de réponse, journal sans identité ; exécution soumise à Q-07.
 - **Terminé quand** : l'APK est construit en CI ; les tests de widgets et de référence visuels sont au vert ; un test de fumée tourne sur émulateur Android 8 (API 26) en CI.
+- **Réalisé** (2026-11-06) : prototype `apps/mobile` ([README](../apps/mobile/README.md)). **Critère atteint** : APK construit en CI, 35 tests de widgets, de références visuelles et d'accessibilité au vert, test de fumée vert sur émulateur Android 8.0 (API 26).
+  - **Hors ligne, sans serveur**, sur la ville fictive embarquée (environ 360 Ko de données générées par `nemesis-fixtures`). Les itinéraires viennent du **moteur du serveur**, compilé pour le téléphone (`routing-ffi`, appelé par `dart:ffi`) : mêmes résultats en ligne et hors ligne.
+  - **Écrans** :
+    - les trois onglets, le bouton Signaler et « Tu vas où ? » ;
+    - trois cartes d'option étiquetées, le pas à pas et la fiche gare ;
+    - le signalement en deux pressions, gardé dans une file SQLite au format `ContributionRequest`, et « Pourquoi cette estimation ? » ;
+    - une carte MapLibre hors ligne, et le bandeau « DONNÉES FICTIVES » partout.
+  - **Accessibilité** : zones de 48 dp, libellés, contraste, texte de 16 sp. Les références visuelles de 7 écrans sont prises à 100 % et à 200 % de taille de texte : les débordements à 200 % ont été corrigés, et le test d'accessibilité a révélé des étiquettes de puces invisibles, corrigées aussi.
+  - **ADR-001 mesuré, pas figé.**
+    - APK arm64 de production : 52,5 Mo, soit environ 21,3 Mo à télécharger, pour un budget de 20 Mo.
+    - La carte MapLibre en pèse 10,8 Mo, plus que le surcoût de Flutter (environ 7,8 Mo).
+    - Sur l'émulateur, à titre indicatif : démarrage en 0,9 à 1,1 s, mémoire de 70 Mo.
+    - La recommandation est de mesurer une carte dessinée en Dart avant de trancher entre Flutter et Kotlin natif. **Décision du porteur.**
+  - **Protocole WhatsApp « magicien d'Oz »** : [docs/UX](UX/PROTOCOLE-WHATSAPP-MAGICIEN-OZ.md). Prêt, exécution bloquée par Q-07.
+  - **Guide de codage des icônes** : complété avec les icônes du prototype. Choix du prototype consignés dans H-034.
+
+  Ajouts au plan, signalés :
+  - le moteur natif dans l'appli, prévu pour la mesure de l'ADR-001, sert aussi aux écrans ;
+  - le profil release de Rust a été réglé pour le poids (LTO, symboles retirés) ;
+  - le démarrage et la mémoire sont mesurés sur l'émulateur, à titre indicatif.
+
+  Limites :
+  - pas de dictée, de lecture vocale, de suivi « Je pars » ni de lieux enregistrés ;
+  - une position de démonstration fixe ;
+  - des icônes Material provisoires ;
+  - les puces de départ (« Partir à 7 h 30 ») sont tronquées à 200 % de taille de texte : rien ne se casse, mais elles sont à retravailler ;
+  - la fluidité de la carte avec 200 marqueurs n'est pas mesurée, faute de téléphone de référence (Q-02).
 
 ### I0.12 — Kit complet de la campagne « Éclaireurs »
 
@@ -271,6 +298,7 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 | Pénalités de marche : traversées dangereuses, zones inondées (8.1) | Graphe piéton sans pénalités | Pas encore de données d'incidents ni de traversées | Phase 1, tranche 1 |
 | Attente en direct, régimes A et C (8.2) | Régime B historique ; régime A sur fixtures seulement | Aucune observation réelle avant la phase 1 | Phase 1, modèles v1 |
 | Simulateur par agents (14.1, partie 15) | Un corridor, un sens, offre de véhicules exogène, comportements inventés (H-033) | Suffit à confronter les formules d'attente ; pas de données pour davantage | Phase 1, avec les données du pilote |
+| Mesures de l'ADR-001 : démarrage, mémoire, carte à 30 images par seconde (9.3) | Poids mesuré en CI ; démarrage et mémoire sur émulateur, à titre indicatif ; fluidité de la carte non mesurée | Pas de téléphone de référence (Q-02) | Dès que le téléphone est disponible |
 | Estimation des prix (8.3) | Prix estimés de l'extension nemesis en condition « normale » (fixtures seulement), sinon « prix inconnu » | Règle 1 : pas d'invention | Phase 1 |
 | Loi d'attente du régime A (ALGORITHMES.md 1.2) | Log-normale ajustée sur le p50 et le p80 des profils | Loi Gamma sans paramètres réels à ajuster | Phase 1, modèles v1 |
 | Temps à bord par tronçon et par tranche de 15 min (8.1) | Horaires du GTFS, sans tirage aléatoire | Pas de vitesses observées | Phase 1 |

@@ -20,16 +20,19 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - I0.7, pipelines d'import, rapports de validation et d'écarts, tuiles (`data/pipelines/README.md`). La chaîne fictive et l'import du GTFS 2023 sont vérifiés localement ; la chaîne réelle complète tourne en CI (voir « Imports réels » ci-dessous) ;
   - I0.8, spike du moteur d'itinéraires : **ADR-003 accepté, option B** (RAPTOR à fréquences en Rust), mesures à l'appui (`tools/routing-spike/README.md`) ;
   - I0.9, moteur d'itinéraires en ligne de commande (`services/routing/README.md`) : `routing plan` et `routing bench`, pack ville. **Critère de fin de phase atteint** : itinéraires réels calculés de bout en bout en CI sur le GTFS 2023 et le graphe piéton OSM, en 43 ms en médiane et 123 ms au 95e centile ;
-  - I0.10, simulateur par agents v0 (`tools/simulator/README.md`) : une journée de pointe en 0,1 s, reproductible ; signalements au format de l'API et vérité terrain. Formules d'attente confrontées à la simulation, avec des corrections proposées dans ALGORITHMES.md 1.2 et 1.3.
-- **Prochain incrément** : I0.11, prototype cliquable Flutter et ADR-001 :
-  - trois onglets, écrans principaux, traductions ARB, jetons de design, bandeau « DONNÉES FICTIVES » ;
-  - hors ligne sur les données embarquées ;
-  - poids de l'APK mesuré, ADR-001 figé.
+  - I0.10, simulateur par agents v0 (`tools/simulator/README.md`) : une journée de pointe en 0,1 s, reproductible ; signalements au format de l'API et vérité terrain. Formules d'attente confrontées à la simulation, avec des corrections proposées dans ALGORITHMES.md 1.2 et 1.3 ;
+  - I0.11, prototype cliquable Flutter (`apps/mobile/README.md`) : hors ligne avec le moteur natif, tests verts, test de fumée sur Android 8. **ADR-001 mesuré : APK hors budget, à cause de la carte. Décision du porteur.** Protocole WhatsApp prêt, bloqué par Q-07.
+- **Prochain incrément** : I0.12, kit complet de la campagne « Éclaireurs » :
+  - spécification du mode « relevé » ;
+  - fiches de collecte ;
+  - protocole qualité, avec formats d'échange validés en CI.
 - **En attente côté porteur** :
   - **la licence du GTFS « Abidjan 2023 » (H-030)** : CC BY-NC 4.0, pas d'usage commercial. Demander l'autorisation à DigitalTransport4Africa (partenariat, 15.6) et faire valider la démarche par un juriste ;
   - la validation des hypothèses H-029 (emprise d'Abidjan) et H-031 (budget du fond de carte), et la relecture de l'ADR-009 (schéma des tuiles) ;
   - la relecture de l'ADR-003 (option B retenue) ; le choix du corridor pilote, dont les couples remplaceront ceux du spike ;
   - la validation de H-032 (paramètres du moteur v0 : tranches de marche, filtre des options, bornes de marche) ;
+  - **la décision de l'ADR-001** : APK de 52,5 Mo (environ 21,3 Mo à télécharger pour 20 Mo de budget), dont 10,8 Mo pour la carte MapLibre. Recommandation : mesurer une carte dessinée en Dart avant de trancher entre Flutter et Kotlin natif ;
+  - la validation de H-034 (choix du prototype mobile) ;
   - la décision sur les corrections des formules d'attente proposées après le simulateur (ALGORITHMES.md 1.2 et 1.3), et la validation de H-033 (conventions des signalements, paramètres du simulateur) ;
   - une équipe sur place pour lancer les collectes (Q-03) ;
   - les contreparties des participants et des validateurs ;
@@ -43,7 +46,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
   - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
-## Ce que contient le dépôt après I0.10
+## Ce que contient le dépôt après I0.11
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
@@ -53,13 +56,13 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `apps/web-lite` | Rendu HTML échappé, budget de 100 Ko vérifié | 4 |
 | `apps/admin` | React et Vite, textes en clés de traduction | 1 |
 | `packages/proto` | `EstimateMeta` et `nemesis.live.v1` (deltas par tuile), contrôlés par buf (lint, format, compatibilité) | lint |
-| `services/routing` | Espace Cargo : `routing-core` (GTFS et extension, réseau à fréquences, points de montée virtuels, graphe piéton, modèles d'attente A et B, prix, McRAPTOR, Monte-Carlo, options étiquetées, interface `RoutingEngine`) et le binaire `routing` (`plan`, `bench`, `spike`) ; le cœur compile pour Android arm64 | 38, dont 3 par propriétés |
+| `services/routing` | Espace Cargo : `routing-core` (GTFS et extension, réseau à fréquences, points de montée virtuels, graphe piéton, modèles d'attente A et B, prix, McRAPTOR, Monte-Carlo, options étiquetées, interface `RoutingEngine`) et le binaire `routing` (`plan`, `bench`, `spike`) ; `routing-ffi`, l'interface C du moteur pour le téléphone ; le cœur compile pour Android arm64 | 38, dont 3 par propriétés |
 | `tools/routing-spike` | Spike I0.8 : couples origine-destination, OpenTripPlanner 2.10, comparaison avec une fonction de coût commune ; `make routing-spike` et workflow dédié | vérification croisée |
 | `services/ml` | FastAPI, `GET /health` | 1 |
 | `data/pipelines` | Données de terrain (`nemesis-terrain`) ; jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, OSM fictif, pack ville) ; imports (`nemesis-data` : manifeste des sources, téléchargements vérifiés, GTFS et OSM en staging, validateur, lieux, rapport d'écarts, tuiles, pack ville) | 3 + 47 + 11 + 42, et 6 contre une base |
 | `data/schema` | Huit migrations dbmate (partitions, rôles, audit chaîné, versions du réseau, imports et garde de licence), jeu de départ fictif ; `make db-test` | 25 |
 | `tools/simulator` | Simulateur par agents du corridor fictif G1 (`nemesis-simulator simuler`, `evaluer`, `exemple`) : régimes A et B, pluie, signalements bruités et frauduleux, vérité terrain, formules d'attente confrontées | 19 |
-| `apps/mobile` | Flutter 3.47.7, `minSdk 26`, traductions ARB | 1 |
+| `apps/mobile` | Prototype Flutter 3.47.7, `minSdk 26` : Trajet, Carte, Moi, Signaler, pas à pas, fiche gare, « Pourquoi ? » ; hors ligne avec le moteur natif (`dart:ffi`), SQLite, carte MapLibre sans tuiles ; jetons de design, ARB fr et fr_CI | 35, dont 14 références visuelles ; fumée sur émulateur API 26 |
 
 Commandes : `make dev` (environnement Docker Compose), `make db-test`, `make api-test` et `make pipelines-test` (tests contre une base jetable, Docker requis), `make data-import` et `make data-import-fictif` (chaînes d'import), `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
 
@@ -96,6 +99,12 @@ Les rapports complets (`rapports-reels`) et les tuiles d'Abidjan (`tuiles-abidja
 - **Chaîne fictive en local, sans GHCR** : `make data-import-fictif DATA_OPTIONS="--sans-validation --sans-tuiles"`.
 - **Licence du GTFS 2023** : `usage = "evaluation"` dans `sources.toml`. C'est ce réglage qui fait refuser par la base toute entrée de ce GTFS dans le réseau : ne jamais le passer en `produit` sans l'autorisation écrite demandée en H-030.
 - **Itinéraire réel** : le workflow « Itinéraire réel de bout en bout (I0.9) » construit le pack d'Abidjan, calcule trois itinéraires et mesure 75 requêtes, en un peu plus d'une minute ; tout est écrit dans le journal et le résumé de l'exécution. En local, le pack réel ne se construit pas (Geofabrik bloqué). Un pack sans graphe piéton se fabrique en copiant le GTFS dans `gtfs/`, avec des `walk_nodes.csv` et `walk_edges.csv` vides. Le calendrier du GTFS 2023 ne couvre que 2023 : une date de 2026 renvoie `no_service`.
+- **Appli mobile** :
+  - Flutter s'installe dans l'environnement cloud (archive de storage.googleapis.com, vérifiée par SHA-256) ; Android ne se construit qu'en CI.
+  - Le test du moteur natif demande `NEMESIS_ROUTING_LIB` (voir `apps/mobile/README.md`).
+  - Après un changement d'écran voulu, regénérer les références visuelles avec `flutter test --update-goldens`.
+  - Les données de `assets/fictif` se regénèrent avec `nemesis-fixtures generer`.
+  - CI : `maplibre_gl` 0.27 exige le JDK 21. L'émulateur API 26 démarre en environ 2 minutes ; avdmanager et l'émulateur doivent partager `ANDROID_AVD_HOME`.
 - **Simulateur** : après toute modification qui change sa sortie, lancer `uv run nemesis-simulator exemple`. Sinon, le test Python et le test de contrat de `packages/openapi` échouent. Les seuils du test clé (`tests/test_simulator.py`) reposent sur 5 graines.
 - **Spike du moteur** : le workflow « Spike du moteur d'itinéraires (ADR-003) » tourne à chaque modification du moteur. Il prend environ 8 min, dont 7 pour les 375 requêtes d'OpenTripPlanner. `compare.py` échoue si un trajet de B ne suit pas la fonction de coût commune : c'est ainsi qu'un défaut de reconstruction a été trouvé.
 - **Python des runners** : 3.12 ; l'environnement cloud a 3.11, 3.12 et 3.13 (`/usr/bin/python3.12` pour reproduire).

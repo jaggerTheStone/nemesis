@@ -123,6 +123,22 @@ publication.
     pluie et le régime B trop optimiste quand d'autres attendent ; corrections
     proposées dans ALGORITHMES.md.
   - H-033 : conventions des signalements et paramètres du simulateur.
+- I0.11 : prototype cliquable Flutter et mesures de l'ADR-001.
+  - `routing-ffi` : interface C du moteur d'itinéraires pour le téléphone
+    (dart:ffi) ; profil release avec LTO et symboles retirés.
+  - Données fictives embarquées générées par `nemesis-fixtures` : pack du
+    moteur, `city.json`, `map.json`.
+  - Appli hors ligne : onglets Trajet, Carte, Moi, bouton Signaler, résultats
+    étiquetés, pas à pas, fiche gare, signalement en deux pressions (file
+    SQLite au format `ContributionRequest`), « Pourquoi cette estimation ? »,
+    carte MapLibre sans tuiles, bandeau « DONNÉES FICTIVES », jetons de design.
+  - Tests : widgets, références visuelles à 100 % et 200 % de taille de
+    texte, accessibilité, moteur natif ; CI : APK arm64 de production mesuré,
+    test de fumée sur émulateur Android 8 (API 26).
+  - ADR-001 mesuré : APK de 52,5 Mo, environ 21,3 Mo à télécharger pour un
+    budget de 20 Mo, dont 10,8 Mo pour la carte ; décision du porteur.
+  - Protocole WhatsApp « magicien d'Oz » (bloqué par Q-07), guide de codage
+    des icônes, H-034.
   - Constat sur le GTFS 2023 : 28 % des courses ont une durée forfaitaire de
     120 min.
 

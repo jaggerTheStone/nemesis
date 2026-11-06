@@ -67,7 +67,7 @@ Ce qu'on en tire :
 - **La carte en est la cause principale.** La bibliothèque MapLibre pèse à elle seule 10,8 Mo compressés : plus que tout le reste de l'appli, Flutter compris. Elle pèserait autant en Kotlin natif.
 - **Le surcoût propre à Flutter est d'environ 7,8 Mo compressés** : son moteur et le code Dart compilé.
 - **Le moteur d'itinéraires partagé ne coûte presque rien** : 0,8 Mo pour des itinéraires identiques en ligne et hors ligne.
-- **Démarrage et mémoire** : mesurés sur l'émulateur Android 8, à titre indicatif seulement. L'émulateur ne remplace pas le téléphone de référence (Q-02).
+- **Démarrage et mémoire**, sur l'émulateur Android 8.0 (API 26, x86_64), en build de production : premier affichage en 0,9 à 1,1 s (seuil : 2,5 s) ; mémoire de 70 Mo à l'écran d'accueil (seuil : 150 Mo). Ces chiffres ne sont qu'indicatifs. L'émulateur tourne sur un processeur de serveur : il ne remplace pas le téléphone de référence (Q-02).
 - **Fluidité de la carte avec 200 marqueurs** : non mesurée. Elle exige le téléphone de référence.
 
 ## Options après mesure
