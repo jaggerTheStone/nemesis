@@ -221,16 +221,30 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - name: Émulateur Android 8.0 (API 26)
         run: |
-          yes | sdkmanager --licenses > /dev/null
-          sdkmanager --install "$SYSTEM_IMAGE" "emulator" "platform-tools" > /dev/null
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager --install "$SYSTEM_IMAGE" "emulator" "platform-tools" | tail -n 3
+          ls "$ANDROID_HOME/system-images/android-26/google_apis/x86_64" | head
+          emulator -accel-check || true
           echo no | avdmanager create avd -n api26 -k "$SYSTEM_IMAGE" -d pixel --force
           nohup emulator -avd api26 -no-window -no-audio -no-boot-anim -no-snapshot \
-            -gpu swiftshader_indirect -memory 2048 > "$RUNNER_TEMP/emulator.log" 2>&1 &
-          adb wait-for-device
-          for i in $(seq 1 120); do
-            if [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then break; fi
-            sleep 5
-          done
+            -gpu swiftshader_indirect -memory 2048 -accel on \
+            > "$RUNNER_TEMP/emulator.log" 2>&1 &
+          # Never wait forever: a dead emulator must fail the step, with its log.
+          booted=""
+          if timeout 300 adb wait-for-device; then
+            for i in $(seq 1 120); do
+              if [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then
+                booted=yes
+                break
+              fi
+              sleep 5
+            done
+          fi
+          if [ -z "$booted" ]; then
+            echo "L'émulateur n'a pas démarré :"
+            tail -n 100 "$RUNNER_TEMP/emulator.log"
+            exit 1
+          fi
           adb shell getprop ro.build.version.sdk
           adb shell settings put global window_animation_scale 0
           adb shell settings put global transition_animation_scale 0
@@ -259,5 +273,5 @@ jobs:
             echo "- mémoire (PSS totale, ko) : $(adb shell dumpsys meminfo ci.nemesis.nemesis_mobile | grep -m1 'TOTAL' | awk '{print $2}')"
           } | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Journal de l'émulateur
-        if: failure()
+        if: always()
         run: tail -n 200 "$RUNNER_TEMP/emulator.log" || true
