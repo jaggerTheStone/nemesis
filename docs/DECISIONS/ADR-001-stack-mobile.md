@@ -1,7 +1,7 @@
 # ADR-001 — Stack de l'application mobile
 
-- **Statut** : proposé. Il sera figé en I0.11, après mesure sur le prototype.
-- **Date** : 2026-11-04
+- **Statut** : proposé, **mesuré en I0.11**. Le seuil de poids est dépassé : **décision du porteur** (15.6).
+- **Date** : 2026-11-04, mesures du 2026-11-06
 - **Casquettes consultées** : ingénieur mobile, architecte, chercheur UX, product manager
 
 ## Contexte
@@ -20,32 +20,78 @@ Budgets bloquants (partie 9.3) :
 |--------------------|---------|--------------|--------------|-----------------------|
 | Poids de l'appli | Moteur Flutter embarqué : surcoût fixe, à mesurer | Le plus léger | Moteur JavaScript embarqué : surcoût fixe | Rien à installer |
 | Performance sur entrée de gamme | Bonne, rendu propre au framework | La meilleure | Correcte ; le pont JavaScript coûte sur les petits processeurs | Dépend du navigateur ; carte lourde |
-| Hors ligne, moteur Rust embarqué | Oui, via flutter_rust_bridge | Oui, via JNI (uniffi) | Possible, via un module natif | Possible en WebAssembly, mais stockage et arrière-plan limités |
+| Hors ligne, moteur Rust embarqué | Oui, via `dart:ffi` (mesuré en I0.11) | Oui, via JNI (uniffi) | Possible, via un module natif | Possible en WebAssembly, mais stockage et arrière-plan limités |
 | Localisation en arrière-plan, géorepérage | Par des plugins | Natifs | Par des plugins | Insuffisant pour le suivi de trajet |
 | iOS | Même base de code | Seconde base de code (Swift) | Même base de code | Oui |
 | Recrutement en Côte d'Ivoire | À vérifier auprès de recruteurs locaux | À vérifier | À vérifier | Le plus large (web) |
-| Maturité de la carte | maplibre_gl, plugin autour des SDK natifs ; le coût des vues natives intégrées sur les vieux téléphones est à mesurer | SDK MapLibre Android, mature | Plugin MapLibre | MapLibre GL JS, mature |
+| Maturité de la carte | maplibre_gl, plugin autour des SDK natifs | SDK MapLibre Android, mature | Plugin MapLibre | MapLibre GL JS, mature |
 
 L'appli web progressive est écartée pour l'appli principale : le suivi de trajet en arrière-plan et les alertes de descente l'exigent. Elle reste la bonne solution pour les pages légères partagées (11.6).
 
-## Décision proposée
+## Règle fixée en I0.3
 
 **Flutter**, à condition que le prototype d'I0.11 tienne ces seuils, mesurés en build de production :
 
 | Mesure | Seuil pour garder Flutter |
 |--------|---------------------------|
-| APK arm64-v8a, avec carte, SQLite (drift) et `routing-core` | 15 Mo au plus |
+| APK arm64-v8a, avec carte, SQLite et `routing-core` | 15 Mo au plus |
 | Démarrage à froid jusqu'à l'écran de recherche, téléphone de référence | 2,5 s au plus |
 | Mémoire en usage normal (recherche, résultats, carte) | 150 Mo au plus |
 | Carte avec 200 marqueurs | 30 images par seconde |
 
-Si un seuil est dépassé de plus de 20 % sans correction crédible, on passe à **Kotlin natif** pour Android. iOS arrive alors plus tard, en Swift, et cette alternative est explicitement prévue par la partie 9.1.
+Si un seuil est dépassé de plus de 20 % sans correction crédible, on passe à **Kotlin natif** pour Android.
 
-**Désaccord entre casquettes.** L'ingénieur mobile préfère Kotlin pour le poids et la carte. Le product manager et l'architecte préfèrent Flutter : une seule base de code pour Android et iOS, et des itinéraires identiques en ligne et hors ligne grâce au moteur Rust partagé. On tranche par la mesure, pas par préférence. L'émulateur ne suffit pas pour le démarrage, la mémoire et la batterie : il faut un vrai téléphone de référence (question Q-02).
+## Mesures (I0.11)
+
+Prototype `apps/mobile`, construit en CI (workflow « Mobile (Flutter) ») :
+- Flutter 3.47.7 ;
+- carte `maplibre_gl` 0.27.1, avec le SDK MapLibre Android 13.5 ;
+- `sqlite3` 3.7.1 ;
+- moteur `routing-ffi` compilé en LTO, symboles retirés.
+
+**APK arm64-v8a de production : 52,5 Mo.** Les bibliothèques natives y sont rangées sans compression, alignées sur les pages mémoire, comme le veut Android depuis la version 6. Le magasin d'applications les compresse au téléchargement. La colonne « compressé » estime donc ce que l'usager télécharge.
+
+| Composant | Dans l'APK | Compressé |
+|-----------|-----------|-----------|
+| Carte MapLibre (bibliothèque native) | 30,0 Mo | **10,8 Mo** |
+| Moteur Flutter | 11,8 Mo | 5,5 Mo |
+| Code Dart compilé | 5,7 Mo | 2,2 Mo |
+| SQLite | 1,75 Mo | 0,9 Mo |
+| Moteur d'itinéraires (Rust) | 1,6 Mo | 0,8 Mo |
+| Code Java et Kotlin des plugins | 0,7 Mo | 0,7 Mo |
+| Ressources, données fictives, divers | 0,8 Mo | 0,5 Mo |
+| **Total** | **52,5 Mo** | **≈ 21,3 Mo** |
+
+Ce qu'on en tire :
+- **Le budget de téléchargement n'est pas tenu** : environ 21,3 Mo pour 20 Mo au plus et 15 Mo visés. L'APK lui-même dépasse de loin son seuil de 15 Mo.
+- **La carte en est la cause principale.** La bibliothèque MapLibre pèse à elle seule 10,8 Mo compressés : plus que tout le reste de l'appli, Flutter compris. Elle pèserait autant en Kotlin natif.
+- **Le surcoût propre à Flutter est d'environ 7,8 Mo compressés** : son moteur et le code Dart compilé.
+- **Le moteur d'itinéraires partagé ne coûte presque rien** : 0,8 Mo pour des itinéraires identiques en ligne et hors ligne.
+- **Démarrage et mémoire** : mesurés sur l'émulateur Android 8, à titre indicatif seulement. L'émulateur ne remplace pas le téléphone de référence (Q-02).
+- **Fluidité de la carte avec 200 marqueurs** : non mesurée. Elle exige le téléphone de référence.
+
+## Options après mesure
+
+| Option | Téléchargement estimé | Pour | Contre |
+|--------|-----------------------|------|--------|
+| **A. Flutter et MapLibre, tel quel** | ≈ 21 Mo | Mesuré, fonctionne | Hors budget |
+| **B. Flutter, carte dessinée en Dart (type flutter_map avec tuiles vectorielles), SQLite du système** | ≈ 11 à 12 Mo (estimation : A moins MapLibre et SQLite, plus environ 1 Mo de code Dart) | Une seule base de code ; dans l'objectif de 15 Mo | Fluidité de la carte à prouver (30 images par seconde avec 200 marqueurs sur un téléphone de 2 Go) ; écosystème moins mûr que MapLibre |
+| **C. Kotlin natif et MapLibre** | ≈ 12 à 13 Mo (estimation : MapLibre, moteur Rust, code Kotlin, SQLite du système) | Dans le budget ; carte mûre | Seconde base de code pour iOS ; interface à réécrire (quelques semaines) |
+| **D. Flutter et MapLibre, carte livrée à la demande** | ≈ 10,5 Mo à l'installation, puis environ 11 Mo à la première ouverture de la carte | Une seule base de code | Livraison dynamique d'une bibliothèque native d'un plugin Flutter : non éprouvée, complexe |
+
+## Recommandation
+
+**Mesurer B avant de trancher.** Un prototype de carte en Dart sur les données fictives ne demande que quelques jours. Il donnerait le poids réel et la fluidité sur le téléphone de référence dès qu'il existe (Q-02).
+- **Si B tient 30 images par seconde avec 200 marqueurs**, Flutter est gardé, avec cette carte.
+- **Sinon, C** : Kotlin natif pour Android, iOS plus tard en Swift, comme le prévoit déjà la partie 9.1.
+- **A est écartée** : il dépasse le budget de téléchargement.
+
+En attendant, le prototype I0.11 reste en Flutter et MapLibre : il sert aux tests de maquettes, où le poids ne compte pas.
+
+**Désaccord entre casquettes.** L'ingénieur mobile voit dans la mesure la confirmation de Kotlin. Le product manager et l'architecte notent que l'essentiel du poids vient de la carte, quel que soit le choix de stack, et qu'une seule base de code garde sa valeur pour iOS. La mesure de B tranchera.
 
 ## Conséquences
 
-- **Ce qui ne dépend pas de ce choix** : la logique métier lourde vit dans `routing-core` (Rust) et dans l'API. Un changement de stack ne réécrit donc que l'interface.
-- **Coût** : surcoût de poids et de mémoire de Flutter, accepté contre une seule base de code. La liaison Rust ajoute de la complexité au build : une bibliothèque par architecture de processeur.
-- **Réversibilité** : moyenne. La réécriture de l'interface en Kotlin représente quelques semaines pour le MVP. Les données (SQLite, pack ville) et les contrats d'API restent inchangés.
-- **À revoir si** un des seuils n'est pas tenu, ou si le plugin de carte ne suit pas les versions de MapLibre.
+- **Ce qui ne dépend pas de ce choix** : la logique lourde vit dans le moteur Rust et l'API. Elle est déjà partagée par une interface C (`routing-ffi`), utilisable aussi bien en Kotlin qu'en Flutter. De même pour les données (pack ville, SQLite) et les contrats d'API.
+- **Le budget de la carte devient un sujet en soi**, quel que soit le choix : bibliothèque, style, fond de carte (ADR-009).
+- **À revoir si** B ne tient pas la fluidité, si le budget de téléchargement est révisé, ou si MapLibre publie une bibliothèque nettement plus légère.
