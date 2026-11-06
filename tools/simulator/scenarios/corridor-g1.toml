@@ -1,0 +1,162 @@
+# Corridor fictif de la ligne G1 de Lagune-Fictive, sens 0 (Flamboyants → Grand Marché),
+# un jour ouvrable avec une averse en fin d'après-midi.
+#
+# Tout est fictif (règle 1) : arrêts, coordonnées, intervalles, tarifs et lignes viennent du
+# jeu « fixtures_fictives » (data/fixtures_fictives/gtfs) ; les débits de passagers, les
+# occupations et les comportements de signalement sont des paramètres de simulation choisis
+# pour produire une file en pointe, pas des mesures (H-033).
+#
+# Les profils sont constants par morceaux : [["HH:MM", valeur], ...], la valeur vaut
+# jusqu'au point suivant. Les débits sont par minute.
+
+[scenario]
+name = "corridor-g1"
+city = "lagune-fictive"
+date = "2026-11-10"
+start = "05:00"
+end = "22:00"
+is_fictional = true
+# Pointe : condition des prix et demi-vie des files (DATA.md).
+peak = [["06:00", "09:00"], ["16:30", "20:00"]]
+
+[[stops]]
+code = "flamboyants"
+name = "Gare des Flamboyants (fictif)"
+lat = 2.045
+lon = -4.020
+[[stops]]
+code = "arret-03"
+name = "Rond-point des Acacias (fictif)"
+lat = 2.036319
+lon = -4.014711
+[[stops]]
+code = "arret-02"
+name = "Arrêt des Fromagers (fictif)"
+lat = 2.027282
+lon = -4.009927
+[[stops]]
+code = "arret-01"
+name = "Carrefour des Manguiers (fictif)"
+lat = 2.018517
+lon = -4.004807
+[[stops]]
+code = "baobab"
+name = "Gare du Baobab (fictif)"
+lat = 2.010
+lon = -4.000
+[[stops]]
+code = "arret-04"
+name = "Carrefour des Hibiscus (fictif)"
+lat = 2.002123
+lon = -3.990099
+[[stops]]
+code = "grand-marche"
+name = "Gare du Grand Marché (fictif)"
+lat = 1.995
+lon = -3.980
+
+# Gare de tête en régime A : la ligne G1 part au remplissage (ext_service_profiles.txt).
+[head]
+stop = "flamboyants"
+line = "g1"
+seats = 18
+# Délai entre le remplissage et le départ (d0, ALGORITHMES.md 1.2), secondes.
+fill_to_departure_s = 60
+# Départ forcé après cette durée de chargement, même incomplet (Tmax), secondes.
+max_loading_s = 1200
+# Au-delà de ce nombre de véhicules en attente à la gare, un véhicule qui arrive repart
+# chercher des passagers ailleurs (sinon le stock accumulé en heure creuse absorberait
+# toute la pointe).
+max_waiting_vehicles = 3
+# Arrivées des véhicules vides : intervalle moyen des fréquences du GTFS fictif, secondes,
+# et coefficient de variation des intervalles (1 = Poisson ; 0,81 dans le GTFS fictif).
+vehicle_headway_s = [["05:00", 625], ["06:00", 312], ["09:00", 500], ["16:30", 312], ["20:00", 937]]
+vehicle_headway_cv = 0.81
+# Passagers qui arrivent à la gare, par minute.
+passengers_per_min = [
+    ["05:00", 1.2], ["06:00", 2.8], ["06:30", 4.2], ["08:00", 3.0], ["09:00", 1.6],
+    ["12:00", 2.0], ["14:00", 1.6], ["16:30", 3.0], ["17:15", 3.6], ["19:00", 2.4],
+    ["20:00", 0.9],
+]
+# Destination des passagers montés à la gare : poids par arrêt aval.
+destinations = { "arret-02" = 1, "arret-01" = 1, "baobab" = 3, "arret-04" = 1, "grand-marche" = 6 }
+
+# Ligne de passage en régime B : le bus B1 vient de Flamboyants, longe le corridor jusqu'au
+# Baobab puis le quitte. Il part à intervalles réguliers, pas au remplissage.
+[[passing]]
+line = "b1"
+seats = 60
+stops = ["arret-03", "arret-02", "arret-01", "baobab"]
+headway_s = [["05:00", 1129], ["06:00", 677], ["09:00", 1129], ["16:30", 677], ["20:00", 1693]]
+headway_cv = 0.6
+# Places libres à l'entrée du corridor : loi de Poisson de cette moyenne.
+free_seats_mean = [["05:00", 12], ["06:00", 1.0], ["09:00", 8], ["16:30", 1.2], ["20:00", 15]]
+# Probabilité qu'un voyageur à bord descende à chaque arrêt du corridor.
+alight_probability = 0.08
+
+# Arrêts de bord de route : passagers par minute et par arrêt, destinations aval.
+[roadside]
+stops = ["arret-03", "arret-02", "arret-01", "baobab", "arret-04"]
+passengers_per_min = [["05:00", 0.2], ["06:00", 0.6], ["09:00", 0.3], ["16:30", 0.6], ["20:00", 0.15]]
+# Poids des destinations, appliqués aux arrêts en aval de l'arrêt de montée.
+destinations = { "arret-02" = 1, "arret-01" = 1, "baobab" = 2, "arret-04" = 1, "grand-marche" = 3 }
+# Patience au bord de la route, tirée uniformément entre ces bornes (secondes) : passé ce
+# délai, le passager renonce (taxi, marche jusqu'à la gare). Son attente est censurée.
+patience_s = [1200, 3600]
+# Ordre de montée quand il y a plus de monde que de places : "aleatoire" (bousculade) ou
+# "fifo" (file ordonnée). À observer sur le terrain.
+boarding = "aleatoire"
+
+# Temps de parcours entre arrêts consécutifs (horaires du GTFS fictif, secondes), multiplié
+# par un facteur de trafic et par un bruit log-normal.
+[travel]
+segment_s = [256, 257, 256, 247, 311, 305]
+traffic_factor = [["05:00", 1.0], ["06:30", 1.35], ["09:00", 1.0], ["17:00", 1.4], ["19:30", 1.0]]
+noise_sigma = 0.15
+
+# Averse : moins de véhicules, plus de passagers, trafic plus lent, prix « pluie ».
+[[rain]]
+start = "16:45"
+end = "18:00"
+vehicle_rate_factor = 0.7
+passenger_rate_factor = 1.15
+travel_factor = 1.4
+
+# Tarifs du GTFS fictif (ext_fare_estimates.txt, g1 et b1 centre → centre), XOF.
+[fares.g1]
+normale = [150, 200, 300]
+pointe = [200, 250, 350]
+pluie = [250, 300, 400]
+[fares.b1]
+normale = [150, 150, 150]
+pointe = [150, 150, 150]
+pluie = [150, 150, 150]
+
+# Signalements (I0.10) : qui signale, avec quel bruit, quels retards et quelles fraudes.
+[reports]
+# Part des passagers qui ont l'appli et signalent.
+app_share = 0.12
+# Probabilités, pour un passager qui a l'appli, de chaque signalement.
+queue_on_arrival = 0.6
+vehicles_on_arrival = 0.4
+wait_on_boarding = 0.5
+fare_on_alighting = 0.3
+full_vehicle_seen = 0.3
+# Une catégorie de file sur cinq glisse vers une catégorie voisine.
+category_error = 0.2
+# Attente déclarée : arrondie à la minute, avec une erreur log-normale.
+wait_error_sigma = 0.2
+# Retard d'envoi : exponentiel de cette moyenne ; une part des envois attend le réseau.
+send_delay_mean_s = 20
+offline_share = 0.1
+offline_delay_max_s = 1800
+# Renvoi du même signalement (même identifiant) après une coupure.
+duplicate_share = 0.03
+# Précision de la position annoncée, mètres.
+accuracy_m = 25
+# Chef de gare vérifié à la tête de ligne : un relevé exact toutes les 10 min en moyenne.
+station_manager_every_s = 600
+# Fraudeurs : signalent une file « très longue » à distance, et des prix gonflés.
+fraudsters = 3
+fraud_reports_per_hour = 2
+fraud_distance_m = 2500

@@ -54,6 +54,24 @@ $$n = \left\lceil \frac{P + 1 - L}{C} \right\rceil \quad\text{véhicules supplé
 
 **Hypothèse à vérifier** : les véhicules arrivent selon un processus de Poisson. S'ils arrivent plus régulièrement, la loi Gamma surestime la dispersion. Le simulateur (I0.10) et les comptages des Éclaireurs trancheront.
 
+**Confrontation au simulateur (I0.10).** Le simulateur ([tools/simulator](../tools/simulator/README.md)) donne à la formule l'état réel de la gare et les débits réels, puis compare son p80 aux attentes simulées. Résultats sur 5 journées du corridor fictif G1, soit 11 338 passagers :
+
+| Formule | Tous | Pointe | Pluie | Creuse |
+|---------|------|--------|-------|--------|
+| Documentée, ci-dessus | 81,8 % | 79,2 % | **91,1 %** | 85,5 % |
+| Corrigée : remplissage, débits des tranches à venir | 83,3 % | 82,1 % | 80,6 % | 85,2 % |
+
+- **Quand les hypothèses tiennent, les deux formules sont calibrées** : débits constants, arrivées de Poisson. Couverture du p80 entre 80 et 83 %, dans les deux cas.
+- **Débits qui changent pendant l'attente.** Avec une longue file, l'attente couvre la fin d'une pointe ou d'une pluie. La formule documentée prend les débits de l'instant d'arrivée. Elle est donc juste en moyenne par compensation, mais trop prudente sous la pluie (91 %), car les véhicules reviennent avant le départ. **Correction proposée** : intégrer les débits des tranches à venir. *W* suit la même loi, où λ*x* est remplacé par l'intégrale du débit sur l'attente. Sous la pluie, la couverture revient à 80,6 %.
+- **Remplissage du véhicule (cas 2).** Quand la file est courte, le véhicule qui arrive doit encore se remplir. La formule documentée l'ignore : avec un seul véhicule manquant, son p50 n'est atteint que dans 40 % des cas. **Correction proposée** :
+
+  $$W = \min\big(\max(T_n, A_m) + d_0,\ T_n + T_{\max}\big),\quad T_n \sim \text{Gamma}(n, \lambda_v),\ A_m \sim \text{Gamma}(m, \lambda_p)$$
+
+  où *m* est le nombre de passagers encore attendus après le nouveau venu pour remplir son véhicule. Le cas 1 en est le cas particulier *n* = 0.
+- **Arrivées plus régulières que Poisson** (coefficient de variation 0,81 dans le GTFS fictif). Il reste une prudence en heure creuse et dans le cas 2 (85 à 87 %). C'est l'effet annoncé par l'hypothèse ci-dessus. Il se corrigera avec une loi Gamma des intervalles quand les comptages des Éclaireurs donneront le coefficient de variation.
+
+Ces corrections sont des propositions (règle 1.3.8), à valider par le porteur avant d'entrer dans le moteur.
+
 **Estimation des débits** (modèle conjugué Gamma-Poisson) :
 - *a priori* tiré de l'historique de la tranche : λ ~ Gamma(α₀, β₀), avec α₀ = λhist · β₀. β₀ est une « exposition équivalente » ; proposition : 30 min, **à calibrer** ;
 - après *k* événements observés pendant *t* minutes, la loi devient Gamma(α₀ + *k*, β₀ + *t*), de moyenne (α₀ + *k*) / (β₀ + *t*) ;
@@ -87,6 +105,13 @@ $$E[W] = \frac{H}{2}\,(1 + CV^2)$$
 Le cas exponentiel correspond à *CV* = 1, et donne E[W] = *H*. Tant que *CV* n'est pas mesuré, on garde le cas exponentiel, plus prudent. Ensuite, on ajuste une loi Gamma aux intervalles.
 
 **Estimation de *q*.** On la tire des signalements « véhicule plein » et des montées observées, rapportés aux passages. *q* baisse avec la distance à la tête de ligne et en pointe : on l'estime par tronçon et par tranche.
+
+**Confrontation au simulateur (I0.10).** 9 085 passagers de bord de route sur 5 journées. λpassage est le débit réel ; *q* est la part des passages avec une place, sur ±45 min.
+
+- **L'exponentielle est calibrée quand ses hypothèses tiennent.** Passages de Poisson et personne d'autre en attente : 83 % sur le scénario dédié, 80,8 % pour les passagers seuls sur le corridor.
+- **La concurrence pour les places la rend trop optimiste.** Dès que d'autres attendent les mêmes lignes, la couverture du p80 tombe à 61 %, et à 43 % sous la pluie. La formule suppose que la première place libre est pour le nouveau venu. Compter les personnes déjà en attente, comme dans une file ordonnée, rend au contraire la formule trop prudente (90 %) : certaines renoncent ou prennent une autre ligne, et la montée se fait souvent en bousculade. **Il faut donc des données de terrain** : ordre de montée, renoncements. D'ici là, pour le régime B, les quantiles observés des « attentes réelles » par arrêt et par tranche sont préférables à la formule.
+- **Passages réguliers.** Une ligne qui part au remplissage d'une gare en amont passe à intervalles réguliers. L'exponentielle surestime alors l'attente (87 % sans concurrence), comme le prévoit E[W] = (H/2)(1 + CV²).
+- ***q* augmente avec la distance quand la ligne part pleine de sa gare** : 1 % juste après la gare de G1, puis 74 % et 81 %, enfin presque 100 % après les grandes descentes. Sur ce type de ligne, la phrase « *q* baisse avec la distance à la tête de ligne » ne vaut pas. L'estimation par tronçon et par tranche reste la bonne approche.
 
 ### 1.4 Régime C : lignes suivies par GPS
 

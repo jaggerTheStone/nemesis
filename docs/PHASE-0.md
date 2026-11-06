@@ -212,6 +212,29 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Sorties : flux d'observations au format de l'API, plus la vérité terrain, pour évaluer l'agrégation et la calibration.
 - Test clé : les formules fermées des régimes A et B (partie 8.2) sont confrontées au simulateur ; la couverture du 80e centile doit tomber dans la plage attendue.
 - **Terminé quand** : une journée de pointe se simule en moins d'une minute, de façon reproductible avec une graine fixe.
+- **Réalisé** (2026-11-06) : `nemesis-simulator` ([tools/simulator/README.md](../tools/simulator/README.md)), `make simulation`. **Critère atteint** : une journée de 5 h à 22 h se simule en 0,1 s environ, signalements compris, et la même graine redonne les mêmes fichiers.
+  - **Corridor** : la ligne G1 du jeu fictif. Gare de tête en régime A, avec départs au remplissage, *T*max et 3 véhicules en attente au plus. Cinq arrêts de bord de route en régime B, servis par G1 et par le bus B1. Une averse en fin d'après-midi. Sur une journée : 4 326 passagers et une file de 92 personnes au plus.
+  - **Sorties** :
+    - signalements au format `ContributionRequest`, avec leur réception, leur source et un pseudonyme ;
+    - vérité terrain : passagers, passages, départs, file minute par minute, vérité de chaque signalement ;
+    - un exemple versionné, validé par ajv contre le contrat OpenAPI.
+  - **Signalements** : erreurs de catégorie, attentes déclarées bruitées, retards et envois différés, renvois sous le même identifiant, chef de gare exact, deux types de fraude.
+    - La règle des 150 m attrape toutes les files signalées à distance, sans rejeter un seul signalement honnête.
+    - Les prix gonflés passent tous : il faudra le contrôle des valeurs atypiques (section 3 d'ALGORITHMES.md).
+  - **Test clé**, sur la couverture du p80 et sur 5 journées, détail dans ALGORITHMES.md, sections 1.2 et 1.3 :
+    - les formules des régimes A et B sont calibrées quand leurs hypothèses tiennent : débits constants, arrivées de Poisson, personne d'autre en attente ;
+    - sur le corridor, le régime A documenté est juste en moyenne (81,8 %), mais par compensation : 91 % sous la pluie. Corrections proposées : intégrer les débits des tranches à venir, et attendre le remplissage du véhicule ;
+    - le régime B documenté est trop optimiste dès que d'autres attendent : 61 % ; il faudra des données de terrain sur l'ordre de montée.
+  - **Tests** : 19 tests Python et 4 tests de contrat. L'évaluation s'affiche dans le résumé du workflow Python.
+
+  Ajouts au plan, signalés :
+  - patience au bord de la route, avec attentes censurées ;
+  - plafond de véhicules en attente à la gare ;
+  - option d'ordre de montée ;
+  - formules corrigées du régime A, et borne « file ordonnée » du régime B ;
+  - paramètres consignés dans H-033.
+
+  Limites : un seul corridor dans un seul sens ; l'offre de véhicules à la gare n'est pas un retour de tournée ; pas de congestion ; comportements de signalement inventés.
 
 ### I0.11 — Prototype cliquable Flutter et ADR-001
 
@@ -247,6 +270,7 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 |----------|------------------------|--------|--------------|
 | Pénalités de marche : traversées dangereuses, zones inondées (8.1) | Graphe piéton sans pénalités | Pas encore de données d'incidents ni de traversées | Phase 1, tranche 1 |
 | Attente en direct, régimes A et C (8.2) | Régime B historique ; régime A sur fixtures seulement | Aucune observation réelle avant la phase 1 | Phase 1, modèles v1 |
+| Simulateur par agents (14.1, partie 15) | Un corridor, un sens, offre de véhicules exogène, comportements inventés (H-033) | Suffit à confronter les formules d'attente ; pas de données pour davantage | Phase 1, avec les données du pilote |
 | Estimation des prix (8.3) | Prix estimés de l'extension nemesis en condition « normale » (fixtures seulement), sinon « prix inconnu » | Règle 1 : pas d'invention | Phase 1 |
 | Loi d'attente du régime A (ALGORITHMES.md 1.2) | Log-normale ajustée sur le p50 et le p80 des profils | Loi Gamma sans paramètres réels à ajuster | Phase 1, modèles v1 |
 | Temps à bord par tronçon et par tranche de 15 min (8.1) | Horaires du GTFS, sans tirage aléatoire | Pas de vitesses observées | Phase 1 |

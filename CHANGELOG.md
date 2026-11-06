@@ -111,6 +111,18 @@ publication.
     la phase 0 atteint ; 75 requêtes sur le GTFS 2023 et le graphe piéton
     d'Abidjan en 43 ms en médiane, 123 ms au 95e centile.
   - H-032 : paramètres du moteur v0, à calibrer.
+- I0.10 : simulateur par agents v0 (`tools/simulator`).
+  - Corridor fictif G1 : gare de tête au remplissage (régime A), arrêts de bord
+    de route (régime B), bus de passage, pluie, patience au bord de la route.
+  - Signalements au format `ContributionRequest` (bruit, retards, renvois,
+    chef de gare, fraude) et vérité terrain ; exemple validé contre le contrat.
+  - `nemesis-simulator simuler | evaluer | exemple`, `make simulation` ;
+    évaluation dans le résumé du workflow Python.
+  - Formules d'attente confrontées à la simulation : calibrées quand leurs
+    hypothèses tiennent. Sur le corridor, le régime A est trop prudent sous la
+    pluie et le régime B trop optimiste quand d'autres attendent ; corrections
+    proposées dans ALGORITHMES.md.
+  - H-033 : conventions des signalements et paramètres du simulateur.
   - Constat sur le GTFS 2023 : 28 % des courses ont une durée forfaitaire de
     120 min.
 

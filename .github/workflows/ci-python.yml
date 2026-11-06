@@ -59,6 +59,8 @@ jobs:
           uv run nemesis-terrain generer --verifier
           uv run nemesis-terrain valider --fictif data/fixtures_fictives/terrain
           uv run nemesis-terrain valider data/terrain/collecte
+      - name: Simulateur, formules d'attente contre la simulation (résumé de l'exécution)
+        run: uv run nemesis-simulator evaluer --graines 0-4 | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Audit des dépendances
         run: >
           uv export --frozen --all-packages --no-emit-workspace --format requirements-txt --quiet

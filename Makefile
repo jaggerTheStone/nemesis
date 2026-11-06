@@ -11,6 +11,7 @@
 #   make data-import-fictif  la même chaîne sur les données fictives du dépôt
 #   make pipelines-test      tests des pipelines contre une base PostGIS jetable (osm2pgsql requis)
 #   make routing-spike       spike du moteur d'itinéraires, options A et B (réseau et Docker requis)
+#   make simulation          journée simulée du corridor fictif et formules d'attente confrontées (I0.10)
 
 ROUTING := services/routing
 MOBILE := apps/mobile
@@ -23,7 +24,7 @@ PIPELINES_TEST_PORT ?= 55434
 .PHONY: check check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile \
         audit audit-ts audit-rust audit-py fmt install fiches-pdf \
         dev dev-down dev-reset db-migrate db-test gtfs-validate api-test proto-breaking \
-        data-import data-import-fictif data-tiles-verify pipelines-test routing-spike
+        data-import data-import-fictif data-tiles-verify pipelines-test routing-spike simulation
 
 check: check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile
 	@echo "Tous les contrôles sont au vert."
@@ -186,3 +187,10 @@ SPIKE_GTFS ?= data/work/sources/gtfs_abidjan_2023/Abidjan_Paratransit_GTFS_20230
 routing-spike:
 	uv run nemesis-data telecharger osm_cote_divoire gtfs_abidjan_2023
 	tools/routing-spike/run.sh $(SPIKE_OSM) $(SPIKE_GTFS) data/work/spike
+
+# Simulateur par agents (I0.10) : une journée de pointe du corridor fictif G1, signalements
+# au format de l'API et vérité terrain, puis les formules d'attente contre la simulation.
+SIM_SEED ?= 42
+simulation:
+	uv run nemesis-simulator simuler --graine $(SIM_SEED) --sortie data/work/simulation
+	uv run nemesis-simulator evaluer --graines 0-4 --sortie data/work/simulation

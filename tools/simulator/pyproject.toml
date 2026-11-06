@@ -5,6 +5,9 @@ description = "Simulateur par agents d'un corridor (passagers, véhicules, gares
 requires-python = ">=3.12"
 dependencies = []
 
+[project.scripts]
+nemesis-simulator = "nemesis_simulator.cli:main"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

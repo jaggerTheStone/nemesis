@@ -109,3 +109,11 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
   - marche bornée à 1,5 km pour l'accès et la sortie, 500 m pour une correspondance, 2 km pour un trajet tout à pied ; points rattachés au graphe piéton à moins de 200 m ;
   - régime A modélisé par une loi log-normale ajustée sur le p50 et le p80 des profils, en attendant la loi Gamma d'ALGORITHMES.md (section 1.2) ;
   - prix estimés en condition « normale » seulement.
+
+## Simulateur par agents (I0.10)
+
+- **H-033** (proposée) — Le simulateur et ses conventions, en attendant les données du pilote :
+  - **paramètres fictifs** : le scénario `tools/simulator/scenarios/corridor-g1.toml` reprend les arrêts, les intervalles et les tarifs du jeu fictif. Les débits de passagers (jusqu'à 4,2 par minute à la gare en pointe), l'effet de la pluie (30 % de véhicules en moins, 15 % de passagers en plus), la patience au bord de la route (20 à 60 min), l'occupation du bus et les comportements de signalement (12 % d'usagers de l'appli, erreurs, retards, 3 fraudeurs) sont choisis pour produire une file en pointe. Ce ne sont pas des mesures ;
+  - **champs des signalements** (`payload` de `ContributionRequest`) : `file` → `level` ; `vehicules_presents` → `vehicles` (`aucun`, `1_2`, `3_plus`) ; `attente_reelle` → `wait_s` ; `prix_paye` → `amount_xof` ; `vehicule_plein` → rien. À reprendre dans le contrat de l'API quand le traitement des contributions sera écrit ;
+  - **gare de tête** : 3 véhicules en attente au plus ; au-delà, un véhicule qui arrive repart. *T*max compte depuis le premier passager monté ;
+  - **montée au bord de la route** : en bousculade par défaut, l'option « file ordonnée » existe. L'ordre réel est à observer sur le terrain (protocole des Éclaireurs), car il change la formule du régime B (ALGORITHMES.md 1.3).
