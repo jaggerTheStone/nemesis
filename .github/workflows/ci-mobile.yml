@@ -225,7 +225,12 @@ jobs:
           sdkmanager --install "$SYSTEM_IMAGE" "emulator" "platform-tools" | tail -n 3
           ls "$ANDROID_HOME/system-images/android-26/google_apis/x86_64" | head
           emulator -accel-check || true
+          # avdmanager and the emulator must look in the same folder.
+          export ANDROID_AVD_HOME="$HOME/.android/avd"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
           echo no | avdmanager create avd -n api26 -k "$SYSTEM_IMAGE" -d pixel --force
+          emulator -list-avds
           nohup emulator -avd api26 -no-window -no-audio -no-boot-anim -no-snapshot \
             -gpu swiftshader_indirect -memory 2048 -accel on \
             > "$RUNNER_TEMP/emulator.log" 2>&1 &
