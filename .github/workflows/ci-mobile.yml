@@ -1,13 +1,20 @@
 name: Mobile (Flutter)
 
+# I0.11 : contrôles et tests (dont le moteur natif appelé par dart:ffi), APK arm64 de
+# production mesuré pour l'ADR-001, test de fumée sur un émulateur Android 8 (API 26).
+
 on:
   push:
     paths:
       - "apps/mobile/**"
+      - "services/routing/crates/**"
+      - "services/routing/Cargo.*"
       - ".github/workflows/ci-mobile.yml"
   pull_request:
     paths:
       - "apps/mobile/**"
+      - "services/routing/crates/**"
+      - "services/routing/Cargo.*"
       - ".github/workflows/ci-mobile.yml"
   workflow_dispatch:
 
@@ -20,11 +27,14 @@ concurrency:
 
 env:
   FLUTTER_VERSION: 3.47.7
+  CARGO_NDK_VERSION: 4.1.2
+  CARGO_TERM_COLOR: always
 
 jobs:
   check:
+    name: Analyse et tests
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
     defaults:
       run:
         working-directory: apps/mobile
@@ -47,13 +57,198 @@ jobs:
         run: |
           flutter config --no-analytics
           flutter --version
+      - name: Moteur natif pour la machine de test (test dart:ffi)
+        working-directory: services/routing
+        run: |
+          rustup toolchain install
+          cargo build --release --locked -p routing-ffi
+          echo "NEMESIS_ROUTING_LIB=$PWD/target/release/libnemesis_routing.so" >> "$GITHUB_ENV"
       - name: Dépendances
         run: flutter pub get --enforce-lockfile
       - name: Traductions
         run: flutter gen-l10n
       - name: Format
-        run: dart format --output=none --set-exit-if-changed lib test
+        run: dart format --output=none --set-exit-if-changed lib test integration_test
       - name: Analyse statique
         run: flutter analyze
-      - name: Tests
+      - name: Tests (widgets, références visuelles, accessibilité, moteur natif)
         run: flutter test
+      - name: Images en cas d'échec des références visuelles
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: references-visuelles-echecs
+          path: apps/mobile/test/failures/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  apk:
+    name: APK arm64 de production (ADR-001)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/cache@v4
+        id: flutter-cache
+        with:
+          path: |
+            ~/flutter
+            ~/.pub-cache
+          key: flutter-${{ env.FLUTTER_VERSION }}-${{ runner.os }}-${{ hashFiles('apps/mobile/pubspec.lock') }}
+      - name: Installer Flutter
+        if: steps.flutter-cache.outputs.cache-hit != 'true'
+        run: git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git ~/flutter
+      - name: Ajouter Flutter au PATH
+        run: echo "$HOME/flutter/bin" >> "$GITHUB_PATH"
+      - name: Moteur natif pour Android (arm64-v8a, x86_64)
+        working-directory: services/routing
+        run: |
+          rustup toolchain install
+          rustup target add aarch64-linux-android x86_64-linux-android
+          cargo install cargo-ndk --locked --version "$CARGO_NDK_VERSION"
+          export ANDROID_NDK_HOME="${ANDROID_NDK_LATEST_HOME:-$ANDROID_NDK_HOME}"
+          cargo ndk -t arm64-v8a -t x86_64 --platform 26 \
+            -o ../../apps/mobile/android/app/src/main/jniLibs \
+            build --release --locked -p routing-ffi
+          ls -la ../../apps/mobile/android/app/src/main/jniLibs/*
+      - name: APK de production, arm64 seulement
+        working-directory: apps/mobile
+        run: |
+          flutter config --no-analytics
+          flutter pub get --enforce-lockfile
+          flutter build apk --release --target-platform android-arm64
+      - name: Poids de l'APK, par composant
+        working-directory: apps/mobile
+        run: |
+          python3 -I - build/app/outputs/flutter-apk/app-release.apk <<'EOF' | tee -a "$GITHUB_STEP_SUMMARY"
+          import sys, zipfile, collections
+          path = sys.argv[1]
+          size = __import__("os").path.getsize(path)
+          groups = collections.Counter()
+          raw = collections.Counter()
+          names = {
+              "libflutter.so": "Moteur Flutter", "libapp.so": "Code Dart (AOT)",
+              "libnemesis_routing.so": "Moteur d'itinéraires (Rust)",
+              "libsqlite3.so": "SQLite",
+          }
+          with zipfile.ZipFile(path) as apk:
+              for info in apk.infolist():
+                  name = info.filename
+                  base = name.rsplit("/", 1)[-1]
+                  if name.startswith("lib/"):
+                      key = names.get(base, "Carte MapLibre" if "maplibre" in base.lower() else f"Autre bibliothèque ({base})")
+                  elif name.startswith("assets/flutter_assets/assets/fictif"):
+                      key = "Données fictives embarquées"
+                  elif name.startswith("assets/"):
+                      key = "Autres ressources Flutter"
+                  elif name.endswith(".dex"):
+                      key = "Code Java/Kotlin (dex)"
+                  else:
+                      key = "Ressources Android et divers"
+                  groups[key] += info.compress_size
+                  raw[key] += info.file_size
+          mb = lambda b: f"{b / 1e6:.2f}"
+          print("## APK arm64-v8a de production\n")
+          print(f"**{mb(size)} Mo** ({size} octets) ; seuil de l'ADR-001 : 15 Mo.\n")
+          print("| Composant | Dans l'APK (Mo) | Décompressé (Mo) |")
+          print("|---|---|---|")
+          for key, value in groups.most_common():
+              print(f"| {key} | {mb(value)} | {mb(raw[key])} |")
+          EOF
+      - name: Conserver l'APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-arm64-release
+          path: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 14
+
+  emulator:
+    name: Test de fumée, émulateur Android 8 (API 26)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    env:
+      SYSTEM_IMAGE: "system-images;android-26;google_apis;x86_64"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/cache@v4
+        id: flutter-cache
+        with:
+          path: |
+            ~/flutter
+            ~/.pub-cache
+          key: flutter-${{ env.FLUTTER_VERSION }}-${{ runner.os }}-${{ hashFiles('apps/mobile/pubspec.lock') }}
+      - name: Installer Flutter
+        if: steps.flutter-cache.outputs.cache-hit != 'true'
+        run: git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git ~/flutter
+      - name: Ajouter Flutter et les outils Android au PATH
+        run: |
+          echo "$HOME/flutter/bin" >> "$GITHUB_PATH"
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "$ANDROID_HOME/emulator" >> "$GITHUB_PATH"
+          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
+      - name: Moteur natif pour l'émulateur (x86_64)
+        working-directory: services/routing
+        run: |
+          rustup toolchain install
+          rustup target add x86_64-linux-android
+          cargo install cargo-ndk --locked --version "$CARGO_NDK_VERSION"
+          export ANDROID_NDK_HOME="${ANDROID_NDK_LATEST_HOME:-$ANDROID_NDK_HOME}"
+          cargo ndk -t x86_64 --platform 26 \
+            -o ../../apps/mobile/android/app/src/main/jniLibs \
+            build --release --locked -p routing-ffi
+      - name: Accélération matérielle (KVM)
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Émulateur Android 8.0 (API 26)
+        run: |
+          yes | sdkmanager --licenses > /dev/null
+          sdkmanager --install "$SYSTEM_IMAGE" "emulator" "platform-tools" > /dev/null
+          echo no | avdmanager create avd -n api26 -k "$SYSTEM_IMAGE" -d pixel --force
+          nohup emulator -avd api26 -no-window -no-audio -no-boot-anim -no-snapshot \
+            -gpu swiftshader_indirect -memory 2048 > "$RUNNER_TEMP/emulator.log" 2>&1 &
+          adb wait-for-device
+          for i in $(seq 1 120); do
+            if [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then break; fi
+            sleep 5
+          done
+          adb shell getprop ro.build.version.sdk
+          adb shell settings put global window_animation_scale 0
+          adb shell settings put global transition_animation_scale 0
+          adb shell settings put global animator_duration_scale 0
+      - name: Test de fumée (appli réelle, hors ligne)
+        working-directory: apps/mobile
+        run: |
+          flutter config --no-analytics
+          flutter pub get --enforce-lockfile
+          flutter test integration_test/smoke_test.dart -d emulator-5554
+      - name: Démarrage à froid et mémoire, build de production x86_64 (indicatif)
+        working-directory: apps/mobile
+        continue-on-error: true
+        run: |
+          flutter build apk --release --target-platform android-x64
+          adb install -r build/app/outputs/flutter-apk/app-release.apk
+          {
+            echo "## Émulateur API 26, build de production x86_64 (indicatif, pas le téléphone de référence)"
+            echo
+            for i in 1 2 3; do
+              adb shell am force-stop ci.nemesis.nemesis_mobile
+              sleep 2
+              adb shell am start -W -n ci.nemesis.nemesis_mobile/.MainActivity | grep -E "TotalTime" | sed "s/^/- démarrage $i : /"
+            done
+            sleep 8
+            echo "- mémoire (PSS totale, ko) : $(adb shell dumpsys meminfo ci.nemesis.nemesis_mobile | grep -m1 'TOTAL' | awk '{print $2}')"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Journal de l'émulateur
+        if: failure()
+        run: tail -n 200 "$RUNNER_TEMP/emulator.log" || true
