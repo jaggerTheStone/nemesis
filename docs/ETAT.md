@@ -2,11 +2,11 @@
 
 Ce fichier permet à une nouvelle session de reprendre le travail sans perte (partie 1.4 du cahier des charges).
 
-**Dernière mise à jour** : 2026-11-06.
+**Dernière mise à jour** : 2026-11-09.
 
 ## Où en est-on
 
-- **Phase** : 0, Fondations (plan : `docs/PHASE-0.md`, validé le 2026-11-04).
+- **Phase** : 0, Fondations, **terminée le 2026-11-09** (plan : `docs/PHASE-0.md` ; bilan : [RAPPORT-PHASE-0.md](RAPPORT-PHASE-0.md)).
 - **Hypothèses** : toutes validées le 2026-11-04 (`docs/HYPOTHESES.md`).
 - **Incréments terminés** :
   - I0.1, socle du dépôt et intégration continue ;
@@ -23,10 +23,8 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - I0.10, simulateur par agents v0 (`tools/simulator/README.md`) : une journée de pointe en 0,1 s, reproductible ; signalements au format de l'API et vérité terrain. Formules d'attente confrontées à la simulation, avec des corrections proposées dans ALGORITHMES.md 1.2 et 1.3 ;
   - I0.11, prototype cliquable Flutter (`apps/mobile/README.md`) : hors ligne avec le moteur natif, tests verts, test de fumée sur Android 8. **ADR-001 mesuré : APK hors budget, à cause de la carte. Décision du porteur.** Protocole WhatsApp prêt, bloqué par Q-07.
   - I0.12, kit de la campagne « Éclaireurs » (`docs/TERRAIN/PROTOCOLE-ECLAIREURS.md`) : quatre fiches imprimables, sept formats d'échange validés en CI, protocole qualité avec `nemesis-terrain accord`, spécification du mode relevé (bloqué par Q-07).
-- **Prochain incrément** : I0.13, clôture de la phase :
-  - démo reproductible en moins de 5 minutes ;
-  - ETAT et CHANGELOG ;
-  - rapport de phase.
+  - I0.13, clôture de la phase : `make demo` (hors ligne, 6 s moteur compilé, rejouée sur machine neuve par le workflow « Démo de la phase 0 ») et [rapport de phase](RAPPORT-PHASE-0.md).
+- **Prochaine étape** : la phase 1, MVP sur le corridor pilote (partie 15.2). Son plan détaillé est à soumettre au porteur avant tout code. Proposition : commencer par la tranche 1 (données, modèle de réseau, moteur) dès que le corridor est choisi (Q-05).
 - **En attente côté porteur** :
   - **la licence du GTFS « Abidjan 2023 » (H-030)** : CC BY-NC 4.0, pas d'usage commercial. Demander l'autorisation à DigitalTransport4Africa (partenariat, 15.6) et faire valider la démarche par un juriste ;
   - la validation des hypothèses H-029 (emprise d'Abidjan) et H-031 (budget du fond de carte), et la relecture de l'ADR-009 (schéma des tuiles) ;
@@ -47,25 +45,27 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
   - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
-## Ce que contient le dépôt après I0.12
+## Ce que contient le dépôt à la fin de la phase 0
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
 | `services/api` | NestJS 12 (ESM) sur Fastify, branché sur PostgreSQL : santé, villes, recherche de lieux, fiche d'arrêt ; problème RFC 9457, ETag, Brotli | 2 + 20 (base) |
-| `packages/openapi` | Contrat OpenAPI 3.1 (26 opérations), types générés, règles du contrat | 15 |
+| `packages/openapi` | Contrat OpenAPI 3.1 (26 opérations), types générés, règles du contrat, signalements du simulateur | 19 |
 | `services/channels` | Outils GSM 7 bits pour le SMS : détection, translittération, comptage des segments | 9 |
 | `apps/web-lite` | Rendu HTML échappé, budget de 100 Ko vérifié | 4 |
 | `apps/admin` | React et Vite, textes en clés de traduction | 1 |
 | `packages/proto` | `EstimateMeta` et `nemesis.live.v1` (deltas par tuile), contrôlés par buf (lint, format, compatibilité) | lint |
-| `services/routing` | Espace Cargo : `routing-core` (GTFS et extension, réseau à fréquences, points de montée virtuels, graphe piéton, modèles d'attente A et B, prix, McRAPTOR, Monte-Carlo, options étiquetées, interface `RoutingEngine`) et le binaire `routing` (`plan`, `bench`, `spike`) ; `routing-ffi`, l'interface C du moteur pour le téléphone ; le cœur compile pour Android arm64 | 38, dont 3 par propriétés |
+| `services/routing` | Espace Cargo : `routing-core` (GTFS et extension, réseau à fréquences, points de montée virtuels, graphe piéton, modèles d'attente A et B, prix, McRAPTOR, Monte-Carlo, options étiquetées, interface `RoutingEngine`) et le binaire `routing` (`plan`, `bench`, `spike`) ; `routing-ffi`, l'interface C du moteur pour le téléphone ; le cœur compile pour Android arm64 | 40, dont 3 par propriétés |
 | `tools/routing-spike` | Spike I0.8 : couples origine-destination, OpenTripPlanner 2.10, comparaison avec une fonction de coût commune ; `make routing-spike` et workflow dédié | vérification croisée |
 | `services/ml` | FastAPI, `GET /health` | 1 |
-| `data/pipelines` | Données de terrain (`nemesis-terrain` : schémas, validation, modèles, dictionnaire, taux des icônes, accord des doubles relevés de la campagne « Éclaireurs ») ; jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, OSM fictif, pack ville, données de l'appli) ; imports (`nemesis-data` : manifeste des sources, téléchargements vérifiés, GTFS et OSM en staging, validateur, lieux, rapport d'écarts, tuiles, pack ville) | terrain 55, jeu fictif 18, imports 37, et 6 contre une base |
+| `data/pipelines` | Données de terrain (`nemesis-terrain` : schémas, validation, modèles, dictionnaire, taux des icônes, accord des doubles relevés de la campagne « Éclaireurs ») ; jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, OSM fictif, pack ville, données de l'appli) ; imports (`nemesis-data` : manifeste des sources, téléchargements vérifiés, GTFS et OSM en staging, validateur, lieux, rapport d'écarts, tuiles, pack ville) | 110, et 6 contre une base |
 | `data/schema` | Huit migrations dbmate (partitions, rôles, audit chaîné, versions du réseau, imports et garde de licence), jeu de départ fictif ; `make db-test` | 25 |
 | `tools/simulator` | Simulateur par agents du corridor fictif G1 (`nemesis-simulator simuler`, `evaluer`, `exemple`) : régimes A et B, pluie, signalements bruités et frauduleux, vérité terrain, formules d'attente confrontées | 19 |
 | `apps/mobile` | Prototype Flutter 3.47.7, `minSdk 26` : Trajet, Carte, Moi, Signaler, pas à pas, fiche gare, « Pourquoi ? » ; hors ligne avec le moteur natif (`dart:ffi`), SQLite, carte MapLibre sans tuiles ; jetons de design, ARB fr et fr_CI | 35, dont 14 références visuelles ; fumée sur émulateur API 26 |
 
-Commandes : `make dev` (environnement Docker Compose), `make db-test`, `make api-test` et `make pipelines-test` (tests contre une base jetable, Docker requis), `make data-import` et `make data-import-fictif` (chaînes d'import), `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
+| `tools/demo` | Démo de la phase 0 (`make demo`) : jeu fictif, itinéraire, simulation, terrain, itinéraire réel si son pack est présent | workflow « Démo de la phase 0 » |
+
+Commandes : `make demo` (démo de la phase 0, hors ligne, moins de 5 minutes), `make dev` (environnement Docker Compose), `make db-test`, `make api-test` et `make pipelines-test` (tests contre une base jetable, Docker requis), `make data-import` et `make data-import-fictif` (chaînes d'import), `make check` (tout, hors réseau, y compris `check-terrain` et `check-docs`), `make audit` (audits de dépendances), `make fmt`, `make fiches-pdf` (régénère les PDF des fiches, Playwright requis).
 
 ## Versions figées
 

@@ -155,6 +155,12 @@ publication.
     accepté par `accord --strict` en CI ; H-035.
   - Constat sur le GTFS 2023 : 28 % des courses ont une durée forfaitaire de
     120 min.
+- I0.13 : clôture de la phase 0.
+  - Démo reproductible `make demo` (`tools/demo/demo.py`), hors ligne, en
+    moins de 5 minutes, avec son compte rendu ; workflow « Démo de la
+    phase 0 » sur machine neuve.
+  - Rapport de phase (`docs/RAPPORT-PHASE-0.md`) : livrables, lancement,
+    tests, limites, décisions en attente du porteur, prochaine étape.
 
 ### Corrigé
 

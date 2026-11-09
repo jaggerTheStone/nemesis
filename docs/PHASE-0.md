@@ -1,6 +1,6 @@
 # Phase 0 — Fondations : plan détaillé
 
-Statut : **validé le 2026-11-04, en cours**. Avancement : voir `docs/ETAT.md`.
+Statut : validé le 2026-11-04, **terminé le 2026-11-09** : voir le [rapport de phase](RAPPORT-PHASE-0.md). Avancement : voir `docs/ETAT.md`.
 Référence : partie 15.1 du cahier des charges (`docs/CAHIER_DES_CHARGES.md`).
 
 ## Objectif et critère de fin
@@ -314,6 +314,14 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 ### I0.13 — Clôture de la phase
 
 - Démo reproductible en moins de 5 minutes ; mises à jour de `docs/ETAT.md` et de `CHANGELOG.md` ; rapport de phase : fait, lancement, tests, limites, prochaine étape.
+- **Réalisé** (2026-11-09) : **critère atteint**.
+  - **Démo** : `make demo` (`tools/demo/demo.py`), hors ligne et sans base. Elle enchaîne le jeu fictif, un itinéraire fictif, une journée simulée avec la couverture des formules d'attente, les données de terrain, puis l'itinéraire réel si son pack est présent. `DEMO_OPTIONS=--avec-mobile` ajoute les tests de l'appli.
+    - Durée : 6 s moteur compilé, 80 s avec la compilation et l'appli. Elle échoue au-delà de 5 minutes.
+    - Le workflow « Démo de la phase 0 » la rejoue sur une machine neuve et publie son compte rendu.
+  - **Rapport de phase** : [RAPPORT-PHASE-0.md](RAPPORT-PHASE-0.md), avec les décisions en attente du porteur, classées par impact sur la phase 1.
+  - ETAT et CHANGELOG mis à jour.
+
+  Limite : la démo ne montre pas l'itinéraire réel en local, faute d'accès à Geofabrik (H-021). Elle renvoie au workflow qui le calcule.
 
 ## Désaccords entre casquettes, tranchés
 
