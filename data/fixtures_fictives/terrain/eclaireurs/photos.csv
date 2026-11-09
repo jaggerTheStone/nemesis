@@ -1,0 +1,3 @@
+﻿id;fichier;date;heure;eclaireur;objet;sujet;latitude;longitude;controle;floutage;is_fictional
+PH-00001;PH-00001.jpg;2099-12-31;06:20;E01;GA-0001;gare;5.3561;-4.0083;oui;non;true
+PH-00002;PH-00002.jpg;2099-12-31;06:25;E01;GA-0001;vehicule;5.3562;-4.0084;oui;oui;true

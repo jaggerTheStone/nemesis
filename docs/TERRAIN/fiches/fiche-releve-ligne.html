@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche · relevé de ligne</title>
+    <link rel="stylesheet" href="fiches.css" />
+  </head>
+  <body data-jeux="releves_ligne arrets_releves">
+    <div class="entete">
+      <h1>Relevé de ligne</h1>
+      <span class="version"
+        >Fiche v1 · 2026-11-09 · un trajet complet, d'un terminus à l'autre</span
+      >
+    </div>
+    <p class="version">Protocole : docs/TERRAIN/PROTOCOLE-ECLAIREURS.md</p>
+    <p class="anonyme">
+      Ne jamais noter de nom, de numéro ni de plaque. Ne pas gêner l'apprenti : noter entre deux
+      arrêts. Si l'appli est en mode relevé, elle note seule les heures et les positions.
+    </p>
+    <div class="bloc">
+      <h2>Le trajet</h2>
+      <div class="champs">
+        <div class="champ" data-champ="id"><span class="libelle">Identifiant (RL-0001)</span></div>
+        <div class="champ" data-champ="date"><span class="libelle">Date (AAAA-MM-JJ)</span></div>
+        <div class="champ" data-champ="eclaireur">
+          <span class="libelle">Code Éclaireur (E01)</span>
+        </div>
+        <div class="champ" data-champ="mode"><span class="libelle">Véhicule (code)</span></div>
+        <div class="champ large" data-champ="ligne">
+          <span class="libelle">Ligne ou destination criée</span>
+        </div>
+        <div class="champ" data-champ="gare_depart">
+          <span class="libelle">Gare de départ (GA-0001)</span>
+        </div>
+        <div class="champ" data-champ="places"><span class="libelle">Places assises</span></div>
+        <div class="champ" data-champ="attente_minutes">
+          <span class="libelle">Attente avant départ (min)</span>
+        </div>
+        <div class="champ" data-champ="heure_depart">
+          <span class="libelle">Départ du véhicule (HH:MM)</span>
+        </div>
+        <div class="champ" data-champ="heure_arrivee">
+          <span class="libelle">Arrivée au terminus (HH:MM)</span>
+        </div>
+        <div class="champ" data-champ="prix_paye">
+          <span class="libelle">Prix payé, tout le trajet (F)</span>
+        </div>
+      </div>
+      <p class="cases" data-champ="type_jour">
+        <strong>Jour :</strong>
+        <span class="case">Jour ouvrable <span class="code">ouvrable</span></span>
+        <span class="case">Samedi <span class="code">samedi</span></span>
+        <span class="case">Dimanche <span class="code">dimanche</span></span>
+        <span class="case">Jour férié <span class="code">ferie</span></span>
+      </p>
+      <p class="cases" data-champ="conditions">
+        <strong>Conditions :</strong>
+        <span class="case">Pluie <span class="code">pluie</span></span>
+        <span class="case">Vacances scolaires <span class="code">vacances_scolaires</span></span>
+        <span class="case">Fin de mois <span class="code">fin_de_mois</span></span>
+        <span class="case"
+          >Fête ou grand événement <span class="code">fete_ou_evenement</span></span
+        >
+      </p>
+      <p class="cases" data-champ="trace_gps">
+        <strong>Trace GPS dans l'appli :</strong>
+        <span class="case">Oui <span class="code">oui</span></span>
+        <span class="case">Non <span class="code">non</span></span>
+      </p>
+      <div class="champs">
+        <div class="champ entier" data-champ="remarques">
+          <span class="libelle">Remarques</span>
+        </div>
+      </div>
+    </div>
+    <p class="cases">
+      <strong>Types d'arrêt :</strong>
+      <span class="code">gare</span> gare ou station ·
+      <span class="code">arret_formel</span> panneau ou abri ·
+      <span class="code">arret_informel</span> sans panneau, connu de tous ·
+      <span class="code">a_la_demande</span> montée ou descente à la demande
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th data-champ="rang">Rang</th>
+          <th data-champ="nom">Arrêt : nom crié ou repère</th>
+          <th data-champ="heure">Heure</th>
+          <th data-champ="type_arret">Type (code)</th>
+          <th data-champ="latitude">Latitude</th>
+          <th data-champ="longitude">Longitude</th>
+          <th data-champ="montees">Montés</th>
+          <th data-champ="descentes">Descendus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">7</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">8</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">9</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">10</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">11</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">12</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="saut">
+      <p class="libelle"><strong>Suite des arrêts</strong> · relevé RL-______</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Rang</th>
+            <th>Arrêt : nom crié ou repère</th>
+            <th>Heure</th>
+            <th>Type (code)</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Montés</th>
+            <th>Descendus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">13</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">14</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">15</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">16</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">17</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">18</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">19</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">20</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">21</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">22</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">23</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">24</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">25</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">26</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">27</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">28</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">29</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">30</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">31</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="num">32</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="libelle"><strong>Véhicules</strong> (écrire le code)</p>
+      <div class="legende">
+        <div><span class="code">bus_sotra</span> Bus SOTRA</div>
+        <div><span class="code">bus_express</span> Bus express</div>
+        <div><span class="code">bateau_bus</span> Bateau-bus</div>
+        <div><span class="code">pinasse</span> Pinasse</div>
+        <div><span class="code">gbaka</span> Gbaka</div>
+        <div><span class="code">woro_communal</span> Wôrô-wôrô communal</div>
+        <div><span class="code">woro_intercommunal</span> Wôrô-wôrô intercommunal</div>
+        <div><span class="code">car_interurbain</span> Car interurbain</div>
+      </div>
+      <footer>
+        Rang 1 : la gare de départ. Un arrêt par ligne, à chaque fois que le véhicule s'arrête pour
+        charger ou décharger. Montés et descendus : compter si possible, sinon laisser vide.
+      </footer>
+    </div>
+  </body>
+</html>

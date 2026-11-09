@@ -278,6 +278,38 @@ Le kit de terrain est avancé en deuxième position, alors que la partie 15.1 le
 - Fiches de collecte : recensement des gares, relevé de ligne, prix, comptages.
 - Protocole qualité : double relevé sur 10 % des lignes, mesure d'accord entre relevés, seuils d'acceptation.
 - **Terminé quand** : les fiches sont imprimables et les formats d'échange sont validés par un script en CI.
+- **Réalisé** (2026-11-09) : [protocole de la campagne](TERRAIN/PROTOCOLE-ECLAIREURS.md) et [spécification du mode relevé](TERRAIN/MODE-RELEVE.md). **Critère atteint** : quatre fiches imprimables, en HTML et en PDF ; sept formats d'échange validés par `nemesis-terrain` en CI.
+  - **Fiches papier** : recensement d'une gare (1 page), relevé de ligne (2 pages, 32 arrêts), prix payés (1 page), comptage en gare (1 page, 12 tranches de 15 min).
+  - **Formats d'échange**, décrits par des schémas dont sont tirés le validateur, les modèles CSV et le dictionnaire :
+    - `gares`, `releves_ligne`, `arrets_releves`, `prix`, `comptages`, issus des fiches ou de l'appli ;
+    - `photos` et `traces`, issus de l'appli seulement.
+  - **Règles vérifiées** :
+    - heures dans l'ordre, tranches à 00, 15, 30 ou 45, partis pleins au plus égaux aux départs ;
+    - arrêts et traces rattachés à leur relevé ;
+    - une photo non vérifiée « ni visage ni plaque » est refusée.
+  - **Protocole qualité** : double relevé d'au moins 10 % des lignes, et comptages à deux. `nemesis-terrain accord` mesure l'accord :
+    - arrêts communs (Jaccard), ordre, écart de prix ;
+    - véhicules et files comptés, catégories de file (kappa de Cohen).
+
+    Il compare aussi les catégories de file choisies à l'œil aux files comptées, pour calibrer les catégories de l'appli. Seuils dans H-035.
+  - **Mode relevé de l'appli** :
+    - trace GPS pendant un relevé seulement, arrêts en une pression, comptages par tranche avec changement automatique ;
+    - photos vérifiées et sans métadonnées EXIF ;
+    - hors ligne, avec un export dans les mêmes formats.
+
+    **Spécifié, pas développé** : la trace GPS est une donnée personnelle de l'Éclaireur, et le mode attend Q-07.
+  - **Jeu fictif de la campagne**, validé en CI et accepté par `accord --strict`. 11 tests ont été ajoutés.
+
+  Ajouts au plan, signalés :
+  - un jeu `photos` dont la règle bloque toute photo non vérifiée ;
+  - la calibration des catégories de file par les comptages ;
+  - un mode de saisie « appli » dans les schémas ;
+  - la règle d'ordre étendue aux heures.
+
+  Limites :
+  - aucune collecte réelle tant que l'équipe n'existe pas (Q-03) ;
+  - des seuils sans retour du terrain ;
+  - l'appariement des arrêts par nom exact ou par distance : deux noms différents sans position ne s'apparient pas.
 
 ### I0.13 — Clôture de la phase
 

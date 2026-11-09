@@ -139,6 +139,20 @@ publication.
     budget de 20 Mo, dont 10,8 Mo pour la carte ; décision du porteur.
   - Protocole WhatsApp « magicien d'Oz » (bloqué par Q-07), guide de codage
     des icônes, H-034.
+- I0.12 : kit de la campagne « Éclaireurs ».
+  - Protocole de campagne (`docs/TERRAIN/PROTOCOLE-ECLAIREURS.md`) et
+    spécification du mode relevé de l'appli (`docs/TERRAIN/MODE-RELEVE.md`,
+    bloqué par Q-07).
+  - Fiches imprimables, HTML et PDF : recensement d'une gare, relevé de
+    ligne, prix payés, comptage en gare par tranche de 15 minutes.
+  - Formats d'échange validés par `nemesis-terrain` : `gares`,
+    `releves_ligne`, `arrets_releves`, `prix`, `comptages`, `photos`
+    (refus de toute photo non vérifiée), `traces` ; modèles CSV et
+    dictionnaire régénérés.
+  - Protocole qualité : double relevé d'au moins 10 % des lignes,
+    `nemesis-terrain accord` (arrêts communs, ordre, prix, véhicules, files,
+    kappa des catégories de file, calibration des catégories) ; jeu fictif
+    accepté par `accord --strict` en CI ; H-035.
   - Constat sur le GTFS 2023 : 28 % des courses ont une durée forfaitaire de
     120 min.
 

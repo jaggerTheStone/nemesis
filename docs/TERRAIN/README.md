@@ -1,6 +1,6 @@
 # Kits de terrain
 
-Incrément I0.2 de la phase 0. Ces kits servent à lancer tôt les collectes qui demandent des semaines sur place. Le MVP pourra ainsi être mesuré dès son arrivée.
+Incréments I0.2 et I0.12 (campagne « Éclaireurs ») de la phase 0. Ces kits servent à lancer tôt les collectes qui demandent des semaines sur place. Le MVP pourra ainsi être mesuré dès son arrivée.
 
 | Activité | À quoi elle sert | Protocole | Fiche papier | Modèle de saisie |
 |----------|------------------|-----------|--------------|------------------|
@@ -8,6 +8,11 @@ Incrément I0.2 de la phase 0. Ces kits servent à lancer tôt les collectes qui
 | 200 trajets de référence | Mesurer le réalisme des itinéraires (85 %) et bloquer les régressions | [PROTOCOLE-TRAJETS-REFERENCE.md](PROTOCOLE-TRAJETS-REFERENCE.md) | [HTML](fiches/fiche-trajet-reference.html) · [PDF](pdf/fiche-trajet-reference.pdf) | [trajets.csv](../../data/terrain/modeles/trajets.csv), [reponses.csv](../../data/terrain/modeles/reponses.csv) |
 | Tests des maquettes | Vérifier que les parcours clés marchent pour Awa, Mamadou, Mariam… | [PROTOCOLE-TESTS-MAQUETTES.md](../UX/PROTOCOLE-TESTS-MAQUETTES.md) | [HTML](fiches/fiche-test-maquettes.html) · [PDF](pdf/fiche-test-maquettes.pdf) | [participants.csv](../../data/terrain/modeles/participants.csv), [observations.csv](../../data/terrain/modeles/observations.csv) |
 | Test des icônes | Chaque icône reconnue sans légende par 85 % de 20 personnes | même protocole | [HTML](fiches/fiche-test-icones.html) · [PDF](pdf/fiche-test-icones.pdf) | [icones.csv](../../data/terrain/modeles/icones.csv) |
+| Recensement des gares (Éclaireurs) | Gares, stations et points de montée du corridor pilote | [PROTOCOLE-ECLAIREURS.md](PROTOCOLE-ECLAIREURS.md) | [HTML](fiches/fiche-recensement-gare.html) · [PDF](pdf/fiche-recensement-gare.pdf) | [gares.csv](../../data/terrain/modeles/gares.csv) |
+| Relevés de ligne (Éclaireurs) | Arrêts, temps et prix d'un trajet complet à bord | même protocole | [HTML](fiches/fiche-releve-ligne.html) · [PDF](pdf/fiche-releve-ligne.pdf) | [releves_ligne.csv](../../data/terrain/modeles/releves_ligne.csv), [arrets_releves.csv](../../data/terrain/modeles/arrets_releves.csv) |
+| Prix payés (Éclaireurs) | Prix réels et leurs conditions (8.3) | même protocole | [HTML](fiches/fiche-prix.html) · [PDF](pdf/fiche-prix.pdf) | [prix.csv](../../data/terrain/modeles/prix.csv) |
+| Comptages en gare (Éclaireurs) | Départs, arrivées et file par tranche de 15 min | même protocole | [HTML](fiches/fiche-comptage.html) · [PDF](pdf/fiche-comptage.pdf) | [comptages.csv](../../data/terrain/modeles/comptages.csv) |
+| Mode relevé de l'appli | Les mêmes collectes, plus la trace GPS et les photos ; bloqué par Q-07 | [MODE-RELEVE.md](MODE-RELEVE.md) | aucune | [photos.csv](../../data/terrain/modeles/photos.csv), [traces.csv](../../data/terrain/modeles/traces.csv) |
 
 Le [dictionnaire des données](DICTIONNAIRE.md) décrit chaque colonne et chaque code. Il est généré à partir des schémas, comme les modèles de saisie.
 
@@ -20,6 +25,7 @@ Le [dictionnaire des données](DICTIONNAIRE.md) décrit chaque colonne et chaque
    - requêtes : `requetes/requetes-AAAA-MM-JJ-E01.csv` ;
    - trajets : `trajets/trajets.csv` et `trajets/reponses.csv` ;
    - tests : un dossier par session, `ux/S20261120-01/`, contenant `participants.csv` et `observations.csv` ou `icones.csv`.
+   - Éclaireurs : `eclaireurs/`, un fichier par jeu, par jour et par Éclaireur, `releves_ligne-2026-11-20-E03.csv`…
 5. **Valider** : `uv run nemesis-terrain valider data/terrain/collecte`. Chaque erreur indique le fichier, la ligne, la colonne et, souvent, la correction (« vouliez-vous « port_bouet » ? »). L'intégration continue refait cette validation à chaque envoi.
 
 ## Règles communes à toutes les activités

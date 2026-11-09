@@ -1,0 +1,3 @@
+﻿id;date;eclaireur;nom;autres_noms;commune;type_gare;latitude;longitude;repere;modes;destinations;heure_ouverture;heure_fermeture;eclairage;abri;acces;responsable_present;photos;remarques;is_fictional
+GA-0001;2099-12-31;E01;Gare des Flamboyants (fictif);"Flambo; gare flamboyant";autre;gare_routiere;5.3561;-4.0083;à côté du marché (fictif);gbaka+woro_communal;"Grand Marché; Palmiers";05:00;22:00;partiel;oui;marches;oui;2;Ville Lagune-Fictive;true
+GA-0002;2099-12-31;E02;Gare du Baobab (fictif);;autre;station_woro;5.3402;-3.9971;;woro_communal;;05:30;21:00;non;non;plain_pied;non;0;;true

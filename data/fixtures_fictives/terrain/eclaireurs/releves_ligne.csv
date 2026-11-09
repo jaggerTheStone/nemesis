@@ -1,0 +1,4 @@
+﻿id;date;eclaireur;mode;ligne;gare_depart;type_jour;conditions;heure_depart;heure_arrivee;attente_minutes;places;prix_paye;double_de;trace_gps;remarques;is_fictional
+RL-0001;2099-12-31;E01;gbaka;Flamboyants – Grand Marché (fictif);GA-0001;ouvrable;;06:40;07:12;9;18;250;;oui;;true
+RL-0002;2099-12-31;E02;gbaka;Flamboyants – Grand Marché (fictif);GA-0001;ouvrable;;07:05;07:41;14;18;250;RL-0001;non;Double relevé tiré au sort;true
+RL-0003;2099-12-31;E01;woro_communal;Baobab – Palmiers (fictif);GA-0002;ouvrable;pluie;17:20;17:44;;4;300;;non;;true

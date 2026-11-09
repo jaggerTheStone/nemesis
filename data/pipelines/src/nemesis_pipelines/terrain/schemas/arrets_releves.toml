@@ -1,0 +1,87 @@
+name = "arrets_releves"
+title = "Arrêts des relevés de ligne"
+purpose = "Chaque arrêt d'un relevé de ligne, dans l'ordre : là où le véhicule s'arrête pour charger ou décharger."
+protocol = "docs/TERRAIN/PROTOCOLE-ECLAIREURS.md"
+forms = ["docs/TERRAIN/fiches/fiche-releve-ligne.html"]
+key = ["releve_id", "rang"]
+
+[[fields]]
+name = "releve_id"
+label = "Identifiant du relevé"
+type = "code"
+pattern = "RL-[0-9]{4}"
+required = true
+entry = "office"
+help = "Recopié de l'en-tête de la fiche sur chaque arrêt, à la saisie."
+
+[[fields]]
+name = "rang"
+label = "Rang de l'arrêt"
+type = "integer"
+min = 1
+max = 200
+required = true
+help = "1 pour la gare de départ, puis dans l'ordre."
+
+[[fields]]
+name = "nom"
+label = "Nom de l'arrêt"
+type = "text"
+max_length = 120
+required = true
+help = "Tel que le crie l'apprenti, ou le repère le plus proche."
+
+[[fields]]
+name = "heure"
+label = "Heure de passage"
+type = "time"
+required = true
+
+[[fields]]
+name = "type_arret"
+label = "Type d'arrêt"
+type = "enum"
+vocabulary = "types_arret"
+required = true
+
+[[fields]]
+name = "latitude"
+label = "Latitude"
+type = "decimal"
+min = 4.3
+max = 10.8
+required = false
+help = "Lue sur le téléphone ; l'appli la note seule en mode relevé."
+
+[[fields]]
+name = "longitude"
+label = "Longitude"
+type = "decimal"
+min = -8.7
+max = -2.4
+required = false
+
+[[fields]]
+name = "montees"
+label = "Personnes montées"
+type = "integer"
+min = 0
+max = 120
+required = false
+
+[[fields]]
+name = "descentes"
+label = "Personnes descendues"
+type = "integer"
+min = 0
+max = 120
+required = false
+
+[[rules]]
+type = "all_or_none"
+fields = ["latitude", "longitude"]
+
+[[references]]
+fields = ["releve_id"]
+target = "releves_ligne"
+target_fields = ["id"]

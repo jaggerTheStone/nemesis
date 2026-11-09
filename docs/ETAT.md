@@ -22,17 +22,18 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - I0.9, moteur d'itinéraires en ligne de commande (`services/routing/README.md`) : `routing plan` et `routing bench`, pack ville. **Critère de fin de phase atteint** : itinéraires réels calculés de bout en bout en CI sur le GTFS 2023 et le graphe piéton OSM, en 43 ms en médiane et 123 ms au 95e centile ;
   - I0.10, simulateur par agents v0 (`tools/simulator/README.md`) : une journée de pointe en 0,1 s, reproductible ; signalements au format de l'API et vérité terrain. Formules d'attente confrontées à la simulation, avec des corrections proposées dans ALGORITHMES.md 1.2 et 1.3 ;
   - I0.11, prototype cliquable Flutter (`apps/mobile/README.md`) : hors ligne avec le moteur natif, tests verts, test de fumée sur Android 8. **ADR-001 mesuré : APK hors budget, à cause de la carte. Décision du porteur.** Protocole WhatsApp prêt, bloqué par Q-07.
-- **Prochain incrément** : I0.12, kit complet de la campagne « Éclaireurs » :
-  - spécification du mode « relevé » ;
-  - fiches de collecte ;
-  - protocole qualité, avec formats d'échange validés en CI.
+  - I0.12, kit de la campagne « Éclaireurs » (`docs/TERRAIN/PROTOCOLE-ECLAIREURS.md`) : quatre fiches imprimables, sept formats d'échange validés en CI, protocole qualité avec `nemesis-terrain accord`, spécification du mode relevé (bloqué par Q-07).
+- **Prochain incrément** : I0.13, clôture de la phase :
+  - démo reproductible en moins de 5 minutes ;
+  - ETAT et CHANGELOG ;
+  - rapport de phase.
 - **En attente côté porteur** :
   - **la licence du GTFS « Abidjan 2023 » (H-030)** : CC BY-NC 4.0, pas d'usage commercial. Demander l'autorisation à DigitalTransport4Africa (partenariat, 15.6) et faire valider la démarche par un juriste ;
   - la validation des hypothèses H-029 (emprise d'Abidjan) et H-031 (budget du fond de carte), et la relecture de l'ADR-009 (schéma des tuiles) ;
   - la relecture de l'ADR-003 (option B retenue) ; le choix du corridor pilote, dont les couples remplaceront ceux du spike ;
   - la validation de H-032 (paramètres du moteur v0 : tranches de marche, filtre des options, bornes de marche) ;
   - **la décision de l'ADR-001** : APK de 52,5 Mo (environ 21,3 Mo à télécharger pour 20 Mo de budget), dont 10,8 Mo pour la carte MapLibre. Recommandation : mesurer une carte dessinée en Dart avant de trancher entre Flutter et Kotlin natif ;
-  - la validation de H-034 (choix du prototype mobile) ;
+  - la validation de H-034 (choix du prototype mobile) et de H-035 (organisation et seuils de qualité de la campagne « Éclaireurs ») ;
   - la décision sur les corrections des formules d'attente proposées après le simulateur (ALGORITHMES.md 1.2 et 1.3), et la validation de H-033 (conventions des signalements, paramètres du simulateur) ;
   - une équipe sur place pour lancer les collectes (Q-03) ;
   - les contreparties des participants et des validateurs ;
@@ -46,7 +47,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - les prix unitaires de [COUTS.md](COUTS.md), surtout ceux des canaux ;
   - les questions au juriste de [PRIVACY.md](PRIVACY.md).
 
-## Ce que contient le dépôt après I0.11
+## Ce que contient le dépôt après I0.12
 
 | Composant | Contenu | Tests |
 |-----------|---------|-------|
@@ -59,7 +60,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
 | `services/routing` | Espace Cargo : `routing-core` (GTFS et extension, réseau à fréquences, points de montée virtuels, graphe piéton, modèles d'attente A et B, prix, McRAPTOR, Monte-Carlo, options étiquetées, interface `RoutingEngine`) et le binaire `routing` (`plan`, `bench`, `spike`) ; `routing-ffi`, l'interface C du moteur pour le téléphone ; le cœur compile pour Android arm64 | 38, dont 3 par propriétés |
 | `tools/routing-spike` | Spike I0.8 : couples origine-destination, OpenTripPlanner 2.10, comparaison avec une fonction de coût commune ; `make routing-spike` et workflow dédié | vérification croisée |
 | `services/ml` | FastAPI, `GET /health` | 1 |
-| `data/pipelines` | Données de terrain (`nemesis-terrain`) ; jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, OSM fictif, pack ville) ; imports (`nemesis-data` : manifeste des sources, téléchargements vérifiés, GTFS et OSM en staging, validateur, lieux, rapport d'écarts, tuiles, pack ville) | 3 + 47 + 11 + 42, et 6 contre une base |
+| `data/pipelines` | Données de terrain (`nemesis-terrain` : schémas, validation, modèles, dictionnaire, taux des icônes, accord des doubles relevés de la campagne « Éclaireurs ») ; jeu fictif (`nemesis-fixtures` : GTFS, extension, jeu SQL, OSM fictif, pack ville, données de l'appli) ; imports (`nemesis-data` : manifeste des sources, téléchargements vérifiés, GTFS et OSM en staging, validateur, lieux, rapport d'écarts, tuiles, pack ville) | terrain 55, jeu fictif 18, imports 37, et 6 contre une base |
 | `data/schema` | Huit migrations dbmate (partitions, rôles, audit chaîné, versions du réseau, imports et garde de licence), jeu de départ fictif ; `make db-test` | 25 |
 | `tools/simulator` | Simulateur par agents du corridor fictif G1 (`nemesis-simulator simuler`, `evaluer`, `exemple`) : régimes A et B, pluie, signalements bruités et frauduleux, vérité terrain, formules d'attente confrontées | 19 |
 | `apps/mobile` | Prototype Flutter 3.47.7, `minSdk 26` : Trajet, Carte, Moi, Signaler, pas à pas, fiche gare, « Pourquoi ? » ; hors ligne avec le moteur natif (`dart:ffi`), SQLite, carte MapLibre sans tuiles ; jetons de design, ARB fr et fr_CI | 35, dont 14 références visuelles ; fumée sur émulateur API 26 |

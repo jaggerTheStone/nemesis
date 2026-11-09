@@ -1,0 +1,54 @@
+name = "traces"
+title = "Traces GPS des relevés de ligne"
+purpose = "Positions enregistrées par l'appli pendant un relevé de ligne, et seulement pendant : le tracé réel de la ligne et les vitesses par tronçon."
+protocol = "docs/TERRAIN/MODE-RELEVE.md"
+forms = []
+key = ["releve_id", "heure"]
+
+[[fields]]
+name = "releve_id"
+label = "Identifiant du relevé"
+type = "code"
+pattern = "RL-[0-9]{4}"
+required = true
+entry = "app"
+
+[[fields]]
+name = "heure"
+label = "Heure (HH:MM:SS)"
+type = "code"
+pattern = "([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"
+required = true
+entry = "app"
+
+[[fields]]
+name = "latitude"
+label = "Latitude"
+type = "decimal"
+min = 4.3
+max = 10.8
+required = true
+entry = "app"
+
+[[fields]]
+name = "longitude"
+label = "Longitude"
+type = "decimal"
+min = -8.7
+max = -2.4
+required = true
+entry = "app"
+
+[[fields]]
+name = "precision_m"
+label = "Précision annoncée (m)"
+type = "decimal"
+min = 0
+max = 500
+required = true
+entry = "app"
+
+[[references]]
+fields = ["releve_id"]
+target = "releves_ligne"
+target_fields = ["id"]

@@ -128,3 +128,15 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
   - **position** : une position de démonstration fixe, près de la Gare des Flamboyants, sans GPS ;
   - **bandeau « DONNÉES FICTIVES »** : affiché dès que la ville embarquée est fictive, et dans tous les builds de développement ;
   - **signalements** : ils restent dans la file locale, faute de serveur.
+
+## Campagne « Éclaireurs » (I0.12)
+
+- **H-035** (proposée) — Organisation et seuils de qualité de la campagne, à revoir après la première semaine :
+  - **équipe** : un coordinateur et 4 à 6 Éclaireurs (budget de la partie 15.6, recrutement selon Q-03) ;
+  - **double relevé** : au moins 10 % des lignes, tirées au sort, relevées par un second Éclaireur ; une session de comptage sur dix faite à deux ;
+  - **seuils d'acceptation** :
+    - au moins 80 % d'arrêts communs (indice de Jaccard ; deux arrêts sont les mêmes à moins de 100 m ou sous le même nom), 95 % des paires dans le même ordre, 50 F d'écart de prix au plus ;
+    - départs et arrivées à un véhicule près dans 90 % des tranches, files à 20 % près (3 personnes au moins) dans 80 % des tranches ;
+    - kappa de Cohen d'au moins 0,60 sur les catégories de file, calculé sur 8 tranches au moins ;
+  - **identifiants** : GA-0001 (gares), RL-0001 (relevés), PX-00001 (prix), PH-00001 (photos), donnés par le coordinateur ou à la saisie, jamais réutilisés ;
+  - **mode relevé** : trace GPS seulement pendant un relevé en cours. Traces et photos supprimées du téléphone 7 jours après l'export. Usage soumis à Q-07 et à l'accord écrit de chaque Éclaireur.

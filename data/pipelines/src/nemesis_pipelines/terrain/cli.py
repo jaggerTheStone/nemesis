@@ -1,4 +1,4 @@
-"""Command line: `nemesis-terrain valider | generer | icones`."""
+"""Command line: `nemesis-terrain valider | generer | icones | accord`."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from nemesis_pipelines.terrain.generation import generated_files
+from nemesis_pipelines.terrain.quality import assess, markdown
 from nemesis_pipelines.terrain.reports import icon_results, icon_table
 from nemesis_pipelines.terrain.schema import load_schemas, load_vocabularies
 from nemesis_pipelines.terrain.validation import DirectoryReport, validate_tree
@@ -58,7 +59,7 @@ def _generate(root: Path, check: bool) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="nemesis-terrain", description="Données de terrain (I0.2)."
+        prog="nemesis-terrain", description="Données de terrain (I0.2, I0.12)."
     )
     commands = parser.add_subparsers(dest="command", required=True)
 
@@ -80,6 +81,15 @@ def main(argv: list[str] | None = None) -> int:
     icons.add_argument("dossiers", nargs="+", type=Path)
     icons.add_argument("--fictif", action="store_true", help="calculer sur un jeu fictif")
 
+    agreement = commands.add_parser(
+        "accord", help="accord entre doubles relevés et doubles comptages (Éclaireurs)"
+    )
+    agreement.add_argument("dossiers", nargs="+", type=Path)
+    agreement.add_argument("--fictif", action="store_true", help="calculer sur un jeu fictif")
+    agreement.add_argument(
+        "--strict", action="store_true", help="échouer si une mesure est sous son seuil"
+    )
+
     args = parser.parse_args(argv)
     if args.command == "valider":
         return _validate(args.dossiers, args.fictif)[1]
@@ -89,6 +99,10 @@ def main(argv: list[str] | None = None) -> int:
     if status:
         print("Corriger les erreurs avant de calculer les taux.", file=sys.stderr)
         return status
+    if args.command == "accord":
+        report = assess(reports)
+        print(markdown(report))
+        return 1 if args.strict and not report.accepted else 0
     print(icon_table(icon_results(reports)))
     return 0
 

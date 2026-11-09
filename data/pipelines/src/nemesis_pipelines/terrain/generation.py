@@ -122,7 +122,10 @@ def dictionary_markdown(schemas: dict[str, Schema], vocabularies: dict[str, dict
             "",
             f"- Protocole : [{Path(schema.protocol).name}](../../{schema.protocol})",
             "- Fiches papier : "
-            + ", ".join(f"[{Path(form).name}](../../{form})" for form in schema.forms),
+            + (
+                ", ".join(f"[{Path(form).name}](../../{form})" for form in schema.forms)
+                or "aucune, données produites par l'appli en mode relevé"
+            ),
             f"- Modèle : [{schema.name}.csv](../../{TEMPLATES_DIR / (schema.name + '.csv')})",
             f"- Identifiant unique : {' + '.join(f'`{name}`' for name in schema.key)}",
         ]
@@ -138,7 +141,7 @@ def dictionary_markdown(schemas: dict[str, Schema], vocabularies: dict[str, dict
         ]
         for spec in schema.fields:
             required = "oui" if spec.required else "non"
-            entry = "bureau" if spec.entry == "office" else "terrain"
+            entry = {"office": "bureau", "app": "appli"}.get(spec.entry, "terrain")
             lines.append(
                 f"| `{spec.name}` | {_cell(spec.label)} | {_TYPE_LABELS[spec.type]} | "
                 f"{required} | {entry} | "

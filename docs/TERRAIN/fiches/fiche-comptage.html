@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche · comptage en gare</title>
+    <link rel="stylesheet" href="fiches.css" />
+  </head>
+  <body class="paysage" data-jeux="comptages">
+    <div class="entete">
+      <h1>Comptage en gare, par tranche de 15 minutes</h1>
+      <span class="version"
+        >Fiche v1 · 2026-11-09 · une ligne de la gare par fiche, 3 heures (12 tranches)</span
+      >
+    </div>
+    <p class="version">Protocole : docs/TERRAIN/PROTOCOLE-ECLAIREURS.md</p>
+    <p class="anonyme">
+      On compte des véhicules et des personnes, jamais on ne les identifie : ni nom, ni plaque, ni
+      photo de la file. Se placer sans gêner le chargement.
+    </p>
+    <div class="champs">
+      <div class="champ" data-champ="gare_id"><span class="libelle">Gare (GA-0001)</span></div>
+      <div class="champ" data-champ="date"><span class="libelle">Date (AAAA-MM-JJ)</span></div>
+      <div class="champ" data-champ="eclaireur">
+        <span class="libelle">Code Éclaireur (E01)</span>
+      </div>
+      <div class="champ" data-champ="mode"><span class="libelle">Véhicule (code)</span></div>
+      <div class="champ large" data-champ="ligne">
+        <span class="libelle">Ligne ou destination criée</span>
+      </div>
+    </div>
+
+    <p class="cases">
+      <strong>File à l'œil :</strong>
+      <span class="code">peu</span> 0 à 5 · <span class="code">moyen</span> 6 à 20 ·
+      <span class="code">beaucoup</span> 21 à 50 · <span class="code">tres_long</span> plus de 50 —
+      <strong>Méthode :</strong>
+      <span class="code">comptee</span> comptée une à une ·
+      <span class="code">estimee</span> estimée (par paquets de 10)
+    </p>
+
+    <p class="cases">
+      Au début de chaque tranche : noter les véhicules en attente, choisir la catégorie de file à
+      l'œil, puis compter la file. Pendant la tranche : un bâton par véhicule arrivé, un par
+      véhicule parti. Une tranche commence à 00, 15, 30 ou 45.
+    </p>
+    <table class="serre">
+      <thead>
+        <tr>
+          <th data-champ="tranche">Tranche (06:00, 06:15…)</th>
+          <th data-champ="vehicules_debut">Véhicules en attente au début</th>
+          <th data-champ="file_niveau">File à l'œil (code), avant de compter</th>
+          <th data-champ="file_debut">Personnes dans la file au début</th>
+          <th data-champ="file_methode">Comptée ou estimée (code)</th>
+          <th data-champ="arrivees">Véhicules arrivés vides (bâtons)</th>
+          <th data-champ="departs">Véhicules partis (bâtons)</th>
+          <th data-champ="partis_pleins">Dont partis pleins</th>
+          <th data-champ="pluie">Pluie (oui, non)</th>
+          <th data-champ="remarques">Remarques</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">__:__</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

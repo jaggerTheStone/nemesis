@@ -1,0 +1,121 @@
+name = "comptages"
+title = "Comptages en gare"
+purpose = "Départs, arrivées de véhicules et file par tranche de 15 minutes, pour une ligne d'une gare : débits du régime A et calibration des catégories de file (ALGORITHMES.md 1.2)."
+protocol = "docs/TERRAIN/PROTOCOLE-ECLAIREURS.md"
+forms = ["docs/TERRAIN/fiches/fiche-comptage.html"]
+key = ["gare_id", "date", "tranche", "ligne", "eclaireur"]
+
+[[fields]]
+name = "gare_id"
+label = "Identifiant de la gare"
+type = "code"
+pattern = "GA-[0-9]{4}"
+required = true
+
+[[fields]]
+name = "date"
+label = "Date"
+type = "date"
+required = true
+
+[[fields]]
+name = "eclaireur"
+label = "Code de l'Éclaireur"
+type = "code"
+pattern = "E[0-9]{2}"
+required = true
+
+[[fields]]
+name = "ligne"
+label = "Ligne ou destination criée"
+type = "text"
+max_length = 120
+required = true
+
+[[fields]]
+name = "mode"
+label = "Véhicule"
+type = "enum"
+vocabulary = "modes"
+required = true
+
+[[fields]]
+name = "tranche"
+label = "Début de la tranche de 15 minutes"
+type = "code"
+pattern = "([01][0-9]|2[0-3]):(00|15|30|45)"
+required = true
+help = "06:00, 06:15, 06:30… : une ligne par tranche."
+
+[[fields]]
+name = "arrivees"
+label = "Véhicules arrivés vides"
+type = "integer"
+min = 0
+max = 200
+required = true
+
+[[fields]]
+name = "departs"
+label = "Véhicules partis"
+type = "integer"
+min = 0
+max = 200
+required = true
+
+[[fields]]
+name = "partis_pleins"
+label = "Dont partis pleins"
+type = "integer"
+min = 0
+max = 200
+required = false
+
+[[fields]]
+name = "vehicules_debut"
+label = "Véhicules en attente au début de la tranche"
+type = "integer"
+min = 0
+max = 100
+required = true
+
+[[fields]]
+name = "file_debut"
+label = "Personnes dans la file au début de la tranche"
+type = "integer"
+min = 0
+max = 2000
+required = true
+
+[[fields]]
+name = "file_methode"
+label = "File comptée ou estimée"
+type = "enum"
+vocabulary = "methodes_file"
+required = true
+
+[[fields]]
+name = "file_niveau"
+label = "Catégorie de file, comme dans l'appli"
+type = "enum"
+vocabulary = "niveaux_file"
+required = true
+help = "Choisie à l'œil, avant de compter : sert à calibrer les catégories."
+
+[[fields]]
+name = "pluie"
+label = "Pluie pendant la tranche"
+type = "enum"
+vocabulary = "oui_non"
+required = true
+
+[[fields]]
+name = "remarques"
+label = "Remarques"
+type = "text"
+max_length = 300
+required = false
+
+[[rules]]
+type = "ordered"
+fields = ["partis_pleins", "departs"]

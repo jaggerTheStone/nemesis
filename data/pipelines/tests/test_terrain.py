@@ -104,6 +104,13 @@ def test_every_schema_points_to_existing_documents() -> None:
         "participants",
         "observations",
         "icones",
+        "gares",
+        "releves_ligne",
+        "arrets_releves",
+        "prix",
+        "comptages",
+        "photos",
+        "traces",
     ]
     for schema in SCHEMAS.values():
         assert (REPO_ROOT / schema.protocol).is_file(), schema.protocol

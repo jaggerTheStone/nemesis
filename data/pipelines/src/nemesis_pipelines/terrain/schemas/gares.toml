@@ -1,0 +1,160 @@
+name = "gares"
+title = "Recensement des gares"
+purpose = "Inventaire des gares, stations et points de montée du corridor pilote : nom tel qu'on le dit, position, modes, horaires, éclairage, accès (F-06, partie 7.2)."
+protocol = "docs/TERRAIN/PROTOCOLE-ECLAIREURS.md"
+forms = ["docs/TERRAIN/fiches/fiche-recensement-gare.html"]
+key = ["id"]
+
+[[fields]]
+name = "id"
+label = "Identifiant de la gare"
+type = "code"
+pattern = "GA-[0-9]{4}"
+required = true
+help = "Donné par le coordinateur avant la sortie (GA-0001…). Le même identifiant sert à tous les relevés de cette gare."
+
+[[fields]]
+name = "date"
+label = "Date du relevé"
+type = "date"
+required = true
+
+[[fields]]
+name = "eclaireur"
+label = "Code de l'Éclaireur"
+type = "code"
+pattern = "E[0-9]{2}"
+required = true
+
+[[fields]]
+name = "nom"
+label = "Nom de la gare"
+type = "text"
+max_length = 120
+required = true
+help = "Tel qu'on le dit sur place (« gare de Bingerville », « Siporex »)."
+
+[[fields]]
+name = "autres_noms"
+label = "Autres noms entendus"
+type = "text"
+max_length = 200
+required = false
+help = "Abréviations et variantes, séparées par « ; »."
+
+[[fields]]
+name = "commune"
+label = "Commune"
+type = "enum"
+vocabulary = "communes"
+required = true
+
+[[fields]]
+name = "type_gare"
+label = "Type"
+type = "enum"
+vocabulary = "types_gare"
+required = true
+
+[[fields]]
+name = "latitude"
+label = "Latitude"
+type = "decimal"
+min = 4.3
+max = 10.8
+required = true
+help = "Lue sur le téléphone, au point de montée, en degrés décimaux (5.3561)."
+
+[[fields]]
+name = "longitude"
+label = "Longitude"
+type = "decimal"
+min = -8.7
+max = -2.4
+required = true
+
+[[fields]]
+name = "repere"
+label = "Repère public le plus proche"
+type = "text"
+max_length = 160
+required = false
+help = "« à côté de la pharmacie du marché », « sous le pont »."
+
+[[fields]]
+name = "modes"
+label = "Véhicules qui partent d'ici"
+type = "list"
+vocabulary = "modes"
+required = true
+help = "Plusieurs codes séparés par « + » : gbaka+woro_communal."
+
+[[fields]]
+name = "destinations"
+label = "Destinations criées"
+type = "text"
+max_length = 300
+required = false
+help = "Ce que crient les apprentis, séparé par « ; »."
+
+[[fields]]
+name = "heure_ouverture"
+label = "Premier départ observé ou annoncé"
+type = "time"
+required = false
+
+[[fields]]
+name = "heure_fermeture"
+label = "Dernier départ observé ou annoncé"
+type = "time"
+required = false
+
+[[fields]]
+name = "eclairage"
+label = "Éclairage le soir"
+type = "enum"
+vocabulary = "eclairages"
+required = false
+
+[[fields]]
+name = "abri"
+label = "Abri contre la pluie et le soleil"
+type = "enum"
+vocabulary = "oui_non"
+required = false
+
+[[fields]]
+name = "acces"
+label = "Accès à pied"
+type = "enum"
+vocabulary = "acces"
+required = false
+help = "Partie 10.6 et profil mobilité réduite (F-16)."
+
+[[fields]]
+name = "responsable_present"
+label = "Chef de gare ou syndicat présent"
+type = "enum"
+vocabulary = "oui_non"
+required = false
+help = "Présence seulement : ne jamais noter de nom ni de numéro."
+
+[[fields]]
+name = "photos"
+label = "Nombre de photos prises"
+type = "integer"
+min = 0
+max = 30
+required = false
+help = "Ni visage ni plaque lisible (voir le protocole)."
+
+[[fields]]
+name = "remarques"
+label = "Remarques"
+type = "text"
+max_length = 500
+required = false
+
+[[rules]]
+type = "ordered"
+fields = ["heure_ouverture", "heure_fermeture"]

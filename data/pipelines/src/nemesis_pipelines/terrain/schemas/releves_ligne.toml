@@ -1,0 +1,135 @@
+name = "releves_ligne"
+title = "Relevés de ligne"
+purpose = "Un trajet complet à bord d'une ligne, d'un terminus à l'autre : arrêts, temps, prix. Base du réseau artisanal (partie 7.2) et de ses tracés."
+protocol = "docs/TERRAIN/PROTOCOLE-ECLAIREURS.md"
+forms = ["docs/TERRAIN/fiches/fiche-releve-ligne.html"]
+key = ["id"]
+
+[[fields]]
+name = "id"
+label = "Identifiant du relevé"
+type = "code"
+pattern = "RL-[0-9]{4}"
+required = true
+help = "Donné par le coordinateur (RL-0001…)."
+
+[[fields]]
+name = "date"
+label = "Date"
+type = "date"
+required = true
+
+[[fields]]
+name = "eclaireur"
+label = "Code de l'Éclaireur"
+type = "code"
+pattern = "E[0-9]{2}"
+required = true
+
+[[fields]]
+name = "mode"
+label = "Véhicule"
+type = "enum"
+vocabulary = "modes"
+required = true
+
+[[fields]]
+name = "ligne"
+label = "Ligne ou destination criée"
+type = "text"
+max_length = 120
+required = true
+help = "Ce qui est écrit sur le véhicule ou crié par l'apprenti."
+
+[[fields]]
+name = "gare_depart"
+label = "Gare de départ (identifiant)"
+type = "code"
+pattern = "GA-[0-9]{4}"
+required = false
+help = "Si la gare est déjà recensée."
+
+[[fields]]
+name = "type_jour"
+label = "Type de jour"
+type = "enum"
+vocabulary = "types_jour"
+required = true
+
+[[fields]]
+name = "conditions"
+label = "Conditions"
+type = "list"
+vocabulary = "conditions"
+required = false
+
+[[fields]]
+name = "heure_depart"
+label = "Heure de départ du véhicule"
+type = "time"
+required = true
+
+[[fields]]
+name = "heure_arrivee"
+label = "Heure d'arrivée au terminus"
+type = "time"
+required = true
+
+[[fields]]
+name = "attente_minutes"
+label = "Attente avant le départ (minutes)"
+type = "integer"
+min = 0
+max = 240
+required = false
+help = "De l'arrivée de l'Éclaireur en gare au départ du véhicule."
+
+[[fields]]
+name = "places"
+label = "Places assises"
+type = "integer"
+min = 1
+max = 120
+required = false
+
+[[fields]]
+name = "prix_paye"
+label = "Prix payé pour tout le trajet (F)"
+type = "integer"
+min = 25
+max = 20000
+required = false
+
+[[fields]]
+name = "double_de"
+label = "Double relevé de"
+type = "code"
+pattern = "RL-[0-9]{4}"
+required = false
+entry = "office"
+help = "Rempli au bureau pour le second relevé d'une ligne tirée au sort (protocole qualité)."
+
+[[fields]]
+name = "trace_gps"
+label = "Trace GPS enregistrée dans l'appli"
+type = "enum"
+vocabulary = "oui_non"
+required = true
+
+[[fields]]
+name = "remarques"
+label = "Remarques"
+type = "text"
+max_length = 500
+required = false
+
+[[rules]]
+type = "ordered"
+fields = ["heure_depart", "heure_arrivee"]
+
+[[rules]]
+type = "at_least_one"
+message = "chaque relevé doit avoir ses arrêts dans arrets_releves.csv"
+within = "arrets_releves"
+fields = ["id"]
+target_fields = ["releve_id"]

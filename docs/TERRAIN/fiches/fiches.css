@@ -93,6 +93,10 @@ td {
 tr {
   break-inside: avoid;
 }
+/* Tableaux à remplir en série (comptages) : lignes un peu moins hautes. */
+table.serre td {
+  height: 9mm;
+}
 td.num {
   width: 6mm;
   text-align: center;

@@ -194,6 +194,202 @@ Chaque icône de mode et d'action doit être reconnue sans légende par au moins
 | `reconnue` | Codage | valeur de liste | oui | terrain | codes : [reconnaissances](#referentiel-reconnaissances) | Selon le guide de codage du protocole ; en cas de doute, « partiel » et second codeur. |
 | `codeur` | Code du codeur | code | oui | terrain | format `E[0-9]{2}` |  |
 
+## Recensement des gares (`gares.csv`)
+
+Inventaire des gares, stations et points de montée du corridor pilote : nom tel qu'on le dit, position, modes, horaires, éclairage, accès (F-06, partie 7.2).
+
+- Protocole : [PROTOCOLE-ECLAIREURS.md](../../docs/TERRAIN/PROTOCOLE-ECLAIREURS.md)
+- Fiches papier : [fiche-recensement-gare.html](../../docs/TERRAIN/fiches/fiche-recensement-gare.html)
+- Modèle : [gares.csv](../../data/terrain/modeles/gares.csv)
+- Identifiant unique : `id`
+
+| Colonne | Libellé | Type | Obligatoire | Saisie | Contraintes | Aide |
+|---------|---------|------|-------------|--------|-------------|------|
+| `id` | Identifiant de la gare | code | oui | terrain | format `GA-[0-9]{4}` | Donné par le coordinateur avant la sortie (GA-0001…). Le même identifiant sert à tous les relevés de cette gare. |
+| `date` | Date du relevé | date AAAA-MM-JJ | oui | terrain |  |  |
+| `eclaireur` | Code de l'Éclaireur | code | oui | terrain | format `E[0-9]{2}` |  |
+| `nom` | Nom de la gare | texte | oui | terrain | 120 caractères au plus | Tel qu'on le dit sur place (« gare de Bingerville », « Siporex »). |
+| `autres_noms` | Autres noms entendus | texte | non | terrain | 200 caractères au plus | Abréviations et variantes, séparées par « ; ». |
+| `commune` | Commune | valeur de liste | oui | terrain | codes : [communes](#referentiel-communes) |  |
+| `type_gare` | Type | valeur de liste | oui | terrain | codes : [types_gare](#referentiel-types_gare) |  |
+| `latitude` | Latitude | nombre décimal | oui | terrain | de 4.3 à 10.8 | Lue sur le téléphone, au point de montée, en degrés décimaux (5.3561). |
+| `longitude` | Longitude | nombre décimal | oui | terrain | de -8.7 à -2.4 |  |
+| `repere` | Repère public le plus proche | texte | non | terrain | 160 caractères au plus | « à côté de la pharmacie du marché », « sous le pont ». |
+| `modes` | Véhicules qui partent d'ici | liste séparée par « + » | oui | terrain | codes : [modes](#referentiel-modes) | Plusieurs codes séparés par « + » : gbaka+woro_communal. |
+| `destinations` | Destinations criées | texte | non | terrain | 300 caractères au plus | Ce que crient les apprentis, séparé par « ; ». |
+| `heure_ouverture` | Premier départ observé ou annoncé | heure HH:MM | non | terrain |  |  |
+| `heure_fermeture` | Dernier départ observé ou annoncé | heure HH:MM | non | terrain |  |  |
+| `eclairage` | Éclairage le soir | valeur de liste | non | terrain | codes : [eclairages](#referentiel-eclairages) |  |
+| `abri` | Abri contre la pluie et le soleil | valeur de liste | non | terrain | codes : [oui_non](#referentiel-oui_non) |  |
+| `acces` | Accès à pied | valeur de liste | non | terrain | codes : [acces](#referentiel-acces) | Partie 10.6 et profil mobilité réduite (F-16). |
+| `responsable_present` | Chef de gare ou syndicat présent | valeur de liste | non | terrain | codes : [oui_non](#referentiel-oui_non) | Présence seulement : ne jamais noter de nom ni de numéro. |
+| `photos` | Nombre de photos prises | nombre entier | non | terrain | de 0 à 30 | Ni visage ni plaque lisible (voir le protocole). |
+| `remarques` | Remarques | texte | non | terrain | 500 caractères au plus |  |
+
+Règles :
+
+- `heure_ouverture` ≤ `heure_fermeture`.
+
+## Relevés de ligne (`releves_ligne.csv`)
+
+Un trajet complet à bord d'une ligne, d'un terminus à l'autre : arrêts, temps, prix. Base du réseau artisanal (partie 7.2) et de ses tracés.
+
+- Protocole : [PROTOCOLE-ECLAIREURS.md](../../docs/TERRAIN/PROTOCOLE-ECLAIREURS.md)
+- Fiches papier : [fiche-releve-ligne.html](../../docs/TERRAIN/fiches/fiche-releve-ligne.html)
+- Modèle : [releves_ligne.csv](../../data/terrain/modeles/releves_ligne.csv)
+- Identifiant unique : `id`
+
+| Colonne | Libellé | Type | Obligatoire | Saisie | Contraintes | Aide |
+|---------|---------|------|-------------|--------|-------------|------|
+| `id` | Identifiant du relevé | code | oui | terrain | format `RL-[0-9]{4}` | Donné par le coordinateur (RL-0001…). |
+| `date` | Date | date AAAA-MM-JJ | oui | terrain |  |  |
+| `eclaireur` | Code de l'Éclaireur | code | oui | terrain | format `E[0-9]{2}` |  |
+| `mode` | Véhicule | valeur de liste | oui | terrain | codes : [modes](#referentiel-modes) |  |
+| `ligne` | Ligne ou destination criée | texte | oui | terrain | 120 caractères au plus | Ce qui est écrit sur le véhicule ou crié par l'apprenti. |
+| `gare_depart` | Gare de départ (identifiant) | code | non | terrain | format `GA-[0-9]{4}` | Si la gare est déjà recensée. |
+| `type_jour` | Type de jour | valeur de liste | oui | terrain | codes : [types_jour](#referentiel-types_jour) |  |
+| `conditions` | Conditions | liste séparée par « + » | non | terrain | codes : [conditions](#referentiel-conditions) |  |
+| `heure_depart` | Heure de départ du véhicule | heure HH:MM | oui | terrain |  |  |
+| `heure_arrivee` | Heure d'arrivée au terminus | heure HH:MM | oui | terrain |  |  |
+| `attente_minutes` | Attente avant le départ (minutes) | nombre entier | non | terrain | de 0 à 240 | De l'arrivée de l'Éclaireur en gare au départ du véhicule. |
+| `places` | Places assises | nombre entier | non | terrain | de 1 à 120 |  |
+| `prix_paye` | Prix payé pour tout le trajet (F) | nombre entier | non | terrain | de 25 à 20000 |  |
+| `double_de` | Double relevé de | code | non | bureau | format `RL-[0-9]{4}` | Rempli au bureau pour le second relevé d'une ligne tirée au sort (protocole qualité). |
+| `trace_gps` | Trace GPS enregistrée dans l'appli | valeur de liste | oui | terrain | codes : [oui_non](#referentiel-oui_non) |  |
+| `remarques` | Remarques | texte | non | terrain | 500 caractères au plus |  |
+
+Règles :
+
+- `heure_depart` ≤ `heure_arrivee`.
+- Chaque relevé doit avoir ses arrêts dans arrets_releves.csv.
+
+## Arrêts des relevés de ligne (`arrets_releves.csv`)
+
+Chaque arrêt d'un relevé de ligne, dans l'ordre : là où le véhicule s'arrête pour charger ou décharger.
+
+- Protocole : [PROTOCOLE-ECLAIREURS.md](../../docs/TERRAIN/PROTOCOLE-ECLAIREURS.md)
+- Fiches papier : [fiche-releve-ligne.html](../../docs/TERRAIN/fiches/fiche-releve-ligne.html)
+- Modèle : [arrets_releves.csv](../../data/terrain/modeles/arrets_releves.csv)
+- Identifiant unique : `releve_id` + `rang`
+- `releve_id` doit exister dans `releves_ligne.csv`, dans le même dossier
+
+| Colonne | Libellé | Type | Obligatoire | Saisie | Contraintes | Aide |
+|---------|---------|------|-------------|--------|-------------|------|
+| `releve_id` | Identifiant du relevé | code | oui | bureau | format `RL-[0-9]{4}` | Recopié de l'en-tête de la fiche sur chaque arrêt, à la saisie. |
+| `rang` | Rang de l'arrêt | nombre entier | oui | terrain | de 1 à 200 | 1 pour la gare de départ, puis dans l'ordre. |
+| `nom` | Nom de l'arrêt | texte | oui | terrain | 120 caractères au plus | Tel que le crie l'apprenti, ou le repère le plus proche. |
+| `heure` | Heure de passage | heure HH:MM | oui | terrain |  |  |
+| `type_arret` | Type d'arrêt | valeur de liste | oui | terrain | codes : [types_arret](#referentiel-types_arret) |  |
+| `latitude` | Latitude | nombre décimal | non | terrain | de 4.3 à 10.8 | Lue sur le téléphone ; l'appli la note seule en mode relevé. |
+| `longitude` | Longitude | nombre décimal | non | terrain | de -8.7 à -2.4 |  |
+| `montees` | Personnes montées | nombre entier | non | terrain | de 0 à 120 |  |
+| `descentes` | Personnes descendues | nombre entier | non | terrain | de 0 à 120 |  |
+
+Règles :
+
+- Renseigner ensemble ou laisser vides : `latitude`, `longitude`.
+
+## Prix payés (`prix.csv`)
+
+Prix réellement payés, avec leurs conditions (partie 8.3) : la base des fourchettes de prix, jamais inventées (règle 1).
+
+- Protocole : [PROTOCOLE-ECLAIREURS.md](../../docs/TERRAIN/PROTOCOLE-ECLAIREURS.md)
+- Fiches papier : [fiche-prix.html](../../docs/TERRAIN/fiches/fiche-prix.html)
+- Modèle : [prix.csv](../../data/terrain/modeles/prix.csv)
+- Identifiant unique : `id`
+
+| Colonne | Libellé | Type | Obligatoire | Saisie | Contraintes | Aide |
+|---------|---------|------|-------------|--------|-------------|------|
+| `id` | Identifiant | code | oui | bureau | format `PX-[0-9]{5}` | Numéroté à la saisie (PX-00001…). |
+| `date` | Date | date AAAA-MM-JJ | oui | terrain |  |  |
+| `heure` | Heure | heure HH:MM | oui | terrain |  |  |
+| `eclaireur` | Code de l'Éclaireur | code | oui | terrain | format `E[0-9]{2}` |  |
+| `mode` | Véhicule | valeur de liste | oui | terrain | codes : [modes](#referentiel-modes) |  |
+| `ligne` | Ligne ou destination criée | texte | oui | terrain | 120 caractères au plus |  |
+| `montee` | Où monter | texte | oui | terrain | 120 caractères au plus |  |
+| `descente` | Où descendre | texte | oui | terrain | 120 caractères au plus |  |
+| `montant` | Montant (F) | nombre entier | oui | terrain | de 25 à 20000 |  |
+| `source` | D'où vient le prix | valeur de liste | oui | terrain | codes : [sources_prix](#referentiel-sources_prix) |  |
+| `conditions` | Conditions | liste séparée par « + » | oui | terrain | codes : [conditions_prix](#referentiel-conditions_prix) | « normale » s'il n'y a rien de particulier ; sinon pointe+pluie… |
+| `monnaie_rendue` | Monnaie rendue sans difficulté | valeur de liste | non | terrain | codes : [oui_non](#referentiel-oui_non) |  |
+| `remarques` | Remarques | texte | non | terrain | 300 caractères au plus |  |
+
+## Comptages en gare (`comptages.csv`)
+
+Départs, arrivées de véhicules et file par tranche de 15 minutes, pour une ligne d'une gare : débits du régime A et calibration des catégories de file (ALGORITHMES.md 1.2).
+
+- Protocole : [PROTOCOLE-ECLAIREURS.md](../../docs/TERRAIN/PROTOCOLE-ECLAIREURS.md)
+- Fiches papier : [fiche-comptage.html](../../docs/TERRAIN/fiches/fiche-comptage.html)
+- Modèle : [comptages.csv](../../data/terrain/modeles/comptages.csv)
+- Identifiant unique : `gare_id` + `date` + `tranche` + `ligne` + `eclaireur`
+
+| Colonne | Libellé | Type | Obligatoire | Saisie | Contraintes | Aide |
+|---------|---------|------|-------------|--------|-------------|------|
+| `gare_id` | Identifiant de la gare | code | oui | terrain | format `GA-[0-9]{4}` |  |
+| `date` | Date | date AAAA-MM-JJ | oui | terrain |  |  |
+| `eclaireur` | Code de l'Éclaireur | code | oui | terrain | format `E[0-9]{2}` |  |
+| `ligne` | Ligne ou destination criée | texte | oui | terrain | 120 caractères au plus |  |
+| `mode` | Véhicule | valeur de liste | oui | terrain | codes : [modes](#referentiel-modes) |  |
+| `tranche` | Début de la tranche de 15 minutes | code | oui | terrain | format `([01][0-9]\|2[0-3]):(00\|15\|30\|45)` | 06:00, 06:15, 06:30… : une ligne par tranche. |
+| `arrivees` | Véhicules arrivés vides | nombre entier | oui | terrain | de 0 à 200 |  |
+| `departs` | Véhicules partis | nombre entier | oui | terrain | de 0 à 200 |  |
+| `partis_pleins` | Dont partis pleins | nombre entier | non | terrain | de 0 à 200 |  |
+| `vehicules_debut` | Véhicules en attente au début de la tranche | nombre entier | oui | terrain | de 0 à 100 |  |
+| `file_debut` | Personnes dans la file au début de la tranche | nombre entier | oui | terrain | de 0 à 2000 |  |
+| `file_methode` | File comptée ou estimée | valeur de liste | oui | terrain | codes : [methodes_file](#referentiel-methodes_file) |  |
+| `file_niveau` | Catégorie de file, comme dans l'appli | valeur de liste | oui | terrain | codes : [niveaux_file](#referentiel-niveaux_file) | Choisie à l'œil, avant de compter : sert à calibrer les catégories. |
+| `pluie` | Pluie pendant la tranche | valeur de liste | oui | terrain | codes : [oui_non](#referentiel-oui_non) |  |
+| `remarques` | Remarques | texte | non | terrain | 300 caractères au plus |  |
+
+Règles :
+
+- `partis_pleins` ≤ `departs`.
+
+## Photos de la campagne (`photos.csv`)
+
+Photos de gares, de points de montée, de véhicules et de panneaux, prises dans l'appli en mode relevé. Aucune ne montre de visage ni de plaque lisible.
+
+- Protocole : [MODE-RELEVE.md](../../docs/TERRAIN/MODE-RELEVE.md)
+- Fiches papier : aucune, données produites par l'appli en mode relevé
+- Modèle : [photos.csv](../../data/terrain/modeles/photos.csv)
+- Identifiant unique : `id`
+
+| Colonne | Libellé | Type | Obligatoire | Saisie | Contraintes | Aide |
+|---------|---------|------|-------------|--------|-------------|------|
+| `id` | Identifiant | code | oui | appli | format `PH-[0-9]{5}` |  |
+| `fichier` | Nom du fichier | code | oui | appli | format `PH-[0-9]{5}\.jpg` |  |
+| `date` | Date | date AAAA-MM-JJ | oui | appli |  |  |
+| `heure` | Heure | heure HH:MM | oui | appli |  |  |
+| `eclaireur` | Code de l'Éclaireur | code | oui | appli | format `E[0-9]{2}` |  |
+| `objet` | Gare ou relevé concerné | code | oui | appli | format `(GA-[0-9]{4}\|RL-[0-9]{4})` |  |
+| `sujet` | Sujet | valeur de liste | oui | appli | codes : [sujets_photo](#referentiel-sujets_photo) |  |
+| `latitude` | Latitude | nombre décimal | oui | appli | de 4.3 à 10.8 |  |
+| `longitude` | Longitude | nombre décimal | oui | appli | de -8.7 à -2.4 |  |
+| `controle` | Vérifiée : ni visage ni plaque lisible | valeur de liste | oui | appli | codes : [oui_non](#referentiel-oui_non) | Coché par l'Éclaireur dans l'appli, puis revu au bureau. |
+| `floutage` | Zones floutées | valeur de liste | oui | appli | codes : [oui_non](#referentiel-oui_non) |  |
+
+Règles :
+
+- `controle` doit valoir `oui` : une photo non vérifiée ne quitte pas le téléphone : la supprimer ou la flouter puis la vérifier.
+
+## Traces GPS des relevés de ligne (`traces.csv`)
+
+Positions enregistrées par l'appli pendant un relevé de ligne, et seulement pendant : le tracé réel de la ligne et les vitesses par tronçon.
+
+- Protocole : [MODE-RELEVE.md](../../docs/TERRAIN/MODE-RELEVE.md)
+- Fiches papier : aucune, données produites par l'appli en mode relevé
+- Modèle : [traces.csv](../../data/terrain/modeles/traces.csv)
+- Identifiant unique : `releve_id` + `heure`
+- `releve_id` doit exister dans `releves_ligne.csv`, dans le même dossier
+
+| Colonne | Libellé | Type | Obligatoire | Saisie | Contraintes | Aide |
+|---------|---------|------|-------------|--------|-------------|------|
+| `releve_id` | Identifiant du relevé | code | oui | appli | format `RL-[0-9]{4}` |  |
+| `heure` | Heure (HH:MM:SS) | code | oui | appli | format `([01][0-9]\|2[0-3]):[0-5][0-9]:[0-5][0-9]` |  |
+| `latitude` | Latitude | nombre décimal | oui | appli | de 4.3 à 10.8 |  |
+| `longitude` | Longitude | nombre décimal | oui | appli | de -8.7 à -2.4 |  |
+| `precision_m` | Précision annoncée (m) | nombre décimal | oui | appli | de 0 à 500 |  |
+
 ## Référentiels
 
 <a id="referentiel-communes"></a>
@@ -456,3 +652,102 @@ Chaque icône de mode et d'action doit être reconnue sans légende par au moins
 | `file_moyen` | État · moyen |
 | `file_beaucoup` | État · beaucoup de monde |
 | `file_tres_long` | État · file très longue |
+
+<a id="referentiel-types_gare"></a>
+
+### types_gare
+
+| Code | Libellé |
+|------|---------|
+| `gare_routiere` | Gare routière, gare de gbakas |
+| `station_woro` | Station de wôrô-wôrô |
+| `terminus_bus` | Terminus de bus |
+| `embarcadere` | Embarcadère |
+| `point_informel` | Point de montée informel |
+
+<a id="referentiel-types_arret"></a>
+
+### types_arret
+
+| Code | Libellé |
+|------|---------|
+| `gare` | Gare ou station |
+| `arret_formel` | Arrêt avec panneau ou abri |
+| `arret_informel` | Arrêt sans panneau, connu de tous |
+| `a_la_demande` | Montée ou descente à la demande |
+
+<a id="referentiel-eclairages"></a>
+
+### eclairages
+
+| Code | Libellé |
+|------|---------|
+| `oui` | Éclairée |
+| `partiel` | En partie éclairée |
+| `non` | Pas éclairée |
+
+<a id="referentiel-acces"></a>
+
+### acces
+
+| Code | Libellé |
+|------|---------|
+| `plain_pied` | De plain-pied |
+| `marches` | Marches |
+| `passerelle` | Passerelle ou escalier |
+| `terrain_difficile` | Terrain difficile (boue, trous, pente) |
+
+<a id="referentiel-conditions_prix"></a>
+
+### conditions_prix
+
+| Code | Libellé |
+|------|---------|
+| `normale` | Normale |
+| `pointe` | Heure de pointe |
+| `pluie` | Pluie |
+| `nuit` | Nuit |
+| `fete` | Fête ou grand événement |
+
+<a id="referentiel-sources_prix"></a>
+
+### sources_prix
+
+| Code | Libellé |
+|------|---------|
+| `paye` | Payé par l'Éclaireur |
+| `observe` | Vu payer par un passager |
+| `annonce` | Annoncé par l'apprenti ou le chauffeur |
+| `affiche` | Affiché |
+
+<a id="referentiel-niveaux_file"></a>
+
+### niveaux_file
+
+| Code | Libellé |
+|------|---------|
+| `peu` | Peu (0 à 5) |
+| `moyen` | Moyen (6 à 20) |
+| `beaucoup` | Beaucoup (21 à 50) |
+| `tres_long` | Très long (plus de 50) |
+
+<a id="referentiel-methodes_file"></a>
+
+### methodes_file
+
+| Code | Libellé |
+|------|---------|
+| `comptee` | Comptée une à une |
+| `estimee` | Estimée |
+
+<a id="referentiel-sujets_photo"></a>
+
+### sujets_photo
+
+| Code | Libellé |
+|------|---------|
+| `gare` | Vue de la gare |
+| `point_montee` | Point de montée |
+| `vehicule` | Véhicule, de loin |
+| `panneau` | Panneau, inscription |
+| `tarif` | Tarif affiché |

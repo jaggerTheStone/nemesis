@@ -68,6 +68,7 @@ check-py:
 check-terrain:
 	uv run nemesis-terrain generer --verifier
 	uv run nemesis-terrain valider --fictif data/fixtures_fictives/terrain
+	uv run nemesis-terrain accord --fictif --strict data/fixtures_fictives/terrain/eclaireurs > /dev/null
 	uv run nemesis-terrain valider data/terrain/collecte
 
 # Jeu fictif Lagune-Fictive (I0.5) : GTFS et jeu SQL à jour par rapport au générateur.

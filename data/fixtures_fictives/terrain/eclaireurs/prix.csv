@@ -1,0 +1,4 @@
+﻿id;date;heure;eclaireur;mode;ligne;montee;descente;montant;source;conditions;monnaie_rendue;remarques;is_fictional
+PX-00001;2099-12-31;06:40;E01;gbaka;Flamboyants – Grand Marché (fictif);Gare des Flamboyants (fictif);Gare du Grand Marché (fictif);250;paye;pointe;oui;;true
+PX-00002;2099-12-31;06:52;E01;gbaka;Flamboyants – Grand Marché (fictif);Arrêt des Fromagers (fictif);Gare du Baobab (fictif);200;observe;pointe;;;true
+PX-00003;2099-12-31;17:20;E01;woro_communal;Baobab – Palmiers (fictif);Gare du Baobab (fictif);Gare des Palmiers (fictif);300;paye;pointe+pluie;non;Prix de pluie annoncé avant le départ;true

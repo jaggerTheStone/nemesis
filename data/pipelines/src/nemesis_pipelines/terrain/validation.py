@@ -257,7 +257,10 @@ def _check_row(schema: Schema, row: Row, fictional: bool) -> list[Issue]:
         elif rule_type == "ordered":
             low_name, high_name = rule["fields"]
             low, high = values.get(low_name, ""), values.get(high_name, "")
-            if _DECIMAL.fullmatch(low) and _DECIMAL.fullmatch(high) and float(low) > float(high):
+            numbers = _DECIMAL.fullmatch(low) and _DECIMAL.fullmatch(high)
+            # Times HH:MM of the same day compare as text.
+            times = _TIME.fullmatch(low) and _TIME.fullmatch(high)
+            if (numbers and float(low) > float(high)) or (times and low > high):
                 issue(high_name, f"{high_name} doit être supérieur ou égal à {low_name}")
         elif rule_type == "required_if":
             when = rule["when"]

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche · recensement d'une gare</title>
+    <link rel="stylesheet" href="fiches.css" />
+  </head>
+  <body data-jeux="gares">
+    <div class="entete">
+      <h1>Recensement d'une gare</h1>
+      <span class="version">Fiche v1 · 2026-11-09 · une fiche par gare</span>
+    </div>
+    <p class="version">Protocole : docs/TERRAIN/PROTOCOLE-ECLAIREURS.md</p>
+    <p class="anonyme">
+      Ne jamais noter de nom ni de numéro, même du chef de gare. Photos : ni visage ni plaque
+      lisible. Se présenter au chef de gare avant de commencer.
+    </p>
+    <div class="bloc">
+      <h2>La gare</h2>
+      <div class="champs">
+        <div class="champ" data-champ="id">
+          <span class="libelle">Identifiant (GA-0001)</span>
+        </div>
+        <div class="champ" data-champ="date"><span class="libelle">Date (AAAA-MM-JJ)</span></div>
+        <div class="champ" data-champ="eclaireur">
+          <span class="libelle">Code Éclaireur (E01)</span>
+        </div>
+        <div class="champ" data-champ="commune"><span class="libelle">Commune (code)</span></div>
+        <div class="champ large" data-champ="nom">
+          <span class="libelle">Nom de la gare, tel qu'on le dit</span>
+        </div>
+        <div class="champ large" data-champ="autres_noms">
+          <span class="libelle">Autres noms entendus (séparés par « ; »)</span>
+        </div>
+        <div class="champ" data-champ="latitude">
+          <span class="libelle">Latitude (5.3561), au point de montée</span>
+        </div>
+        <div class="champ" data-champ="longitude">
+          <span class="libelle">Longitude (-4.0083)</span>
+        </div>
+        <div class="champ large" data-champ="repere">
+          <span class="libelle">Repère public le plus proche</span>
+        </div>
+      </div>
+      <p class="cases" data-champ="type_gare">
+        <strong>Type :</strong>
+        <span class="case"
+          >Gare routière, gare de gbakas <span class="code">gare_routiere</span></span
+        >
+        <span class="case">Station de wôrô-wôrô <span class="code">station_woro</span></span>
+        <span class="case">Terminus de bus <span class="code">terminus_bus</span></span>
+        <span class="case">Embarcadère <span class="code">embarcadere</span></span>
+        <span class="case">Point de montée informel <span class="code">point_informel</span></span>
+      </p>
+    </div>
+    <div class="bloc">
+      <h2>Ce qui en part</h2>
+      <div class="champs">
+        <div class="champ entier" data-champ="modes">
+          <span class="libelle"
+            >Véhicules qui partent d'ici (codes séparés par « + » : gbaka+woro_communal)</span
+          >
+        </div>
+        <div class="champ entier" data-champ="destinations">
+          <span class="libelle">Destinations criées par les apprentis (séparées par « ; »)</span>
+        </div>
+        <div class="champ" data-champ="heure_ouverture">
+          <span class="libelle">Premier départ (HH:MM)</span>
+        </div>
+        <div class="champ" data-champ="heure_fermeture">
+          <span class="libelle">Dernier départ (HH:MM)</span>
+        </div>
+      </div>
+    </div>
+    <div class="bloc">
+      <h2>Confort et sécurité</h2>
+      <p class="cases" data-champ="eclairage">
+        <strong>Éclairage le soir :</strong>
+        <span class="case">Éclairée <span class="code">oui</span></span>
+        <span class="case">En partie <span class="code">partiel</span></span>
+        <span class="case">Pas éclairée <span class="code">non</span></span>
+      </p>
+      <p class="cases" data-champ="abri">
+        <strong>Abri contre la pluie et le soleil :</strong>
+        <span class="case">Oui <span class="code">oui</span></span>
+        <span class="case">Non <span class="code">non</span></span>
+      </p>
+      <p class="cases" data-champ="acces">
+        <strong>Accès à pied :</strong>
+        <span class="case">De plain-pied <span class="code">plain_pied</span></span>
+        <span class="case">Marches <span class="code">marches</span></span>
+        <span class="case">Passerelle ou escalier <span class="code">passerelle</span></span>
+        <span class="case">Terrain difficile <span class="code">terrain_difficile</span></span>
+      </p>
+      <p class="cases" data-champ="responsable_present">
+        <strong>Chef de gare ou syndicat présent :</strong>
+        <span class="case">Oui <span class="code">oui</span></span>
+        <span class="case">Non <span class="code">non</span></span>
+      </p>
+      <div class="champs">
+        <div class="champ" data-champ="photos">
+          <span class="libelle">Photos prises dans l'appli (nombre)</span>
+        </div>
+        <div class="champ entier" data-champ="remarques">
+          <span class="libelle">Remarques</span>
+        </div>
+      </div>
+    </div>
+    <p class="libelle"><strong>Véhicules</strong> (écrire le code)</p>
+    <div class="legende">
+      <div><span class="code">bus_sotra</span> Bus SOTRA</div>
+      <div><span class="code">bus_express</span> Bus express</div>
+      <div><span class="code">bateau_bus</span> Bateau-bus</div>
+      <div><span class="code">pinasse</span> Pinasse</div>
+      <div><span class="code">gbaka</span> Gbaka</div>
+      <div><span class="code">woro_communal</span> Wôrô-wôrô communal</div>
+      <div><span class="code">woro_intercommunal</span> Wôrô-wôrô intercommunal</div>
+      <div><span class="code">taxi_compteur</span> Taxi-compteur</div>
+      <div><span class="code">moto_taxi</span> Moto-taxi</div>
+      <div><span class="code">tricycle</span> Tricycle</div>
+      <div><span class="code">car_interurbain</span> Car interurbain</div>
+    </div>
+    <p class="libelle"><strong>Communes</strong> (écrire le code)</p>
+    <div class="legende">
+      <div><span class="code">abobo</span> Abobo</div>
+      <div><span class="code">adjame</span> Adjamé</div>
+      <div><span class="code">anyama</span> Anyama</div>
+      <div><span class="code">attecoube</span> Attécoubé</div>
+      <div><span class="code">bingerville</span> Bingerville</div>
+      <div><span class="code">cocody</span> Cocody</div>
+      <div><span class="code">koumassi</span> Koumassi</div>
+      <div><span class="code">marcory</span> Marcory</div>
+      <div><span class="code">plateau</span> Plateau</div>
+      <div><span class="code">port_bouet</span> Port-Bouët</div>
+      <div><span class="code">songon</span> Songon</div>
+      <div><span class="code">treichville</span> Treichville</div>
+      <div><span class="code">yopougon</span> Yopougon</div>
+      <div><span class="code">autre</span> Autre (préciser en remarque)</div>
+    </div>
+    <footer>
+      Position : ouvrir l'appli de cartes du téléphone au point de montée, lire les degrés décimaux.
+      Une gare déjà recensée garde son identifiant.
+    </footer>
+  </body>
+</html>

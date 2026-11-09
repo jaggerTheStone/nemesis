@@ -1,0 +1,25 @@
+﻿gare_id;date;eclaireur;ligne;mode;tranche;arrivees;departs;partis_pleins;vehicules_debut;file_debut;file_methode;file_niveau;pluie;remarques;is_fictional
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;06:00;3;3;3;2;4;comptee;peu;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;06:00;3;3;3;2;5;comptee;peu;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;06:15;4;4;4;2;9;comptee;moyen;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;06:15;4;4;4;2;11;comptee;moyen;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;06:30;4;4;4;2;15;comptee;moyen;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;06:30;4;5;4;2;14;comptee;moyen;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;06:45;5;4;4;1;22;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;06:45;5;4;4;1;20;comptee;moyen;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;07:00;5;5;5;1;31;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;07:00;5;5;5;1;32;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;07:15;4;4;4;1;38;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;07:15;4;4;4;1;39;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;07:30;4;4;4;0;44;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;07:30;4;4;4;0;46;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;07:45;5;5;5;0;40;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;07:45;5;5;5;0;42;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;08:00;4;4;4;0;33;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;08:00;4;4;4;0;34;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;08:15;4;4;4;0;25;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;08:15;4;4;4;0;24;comptee;beaucoup;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;08:30;3;4;4;0;18;comptee;moyen;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;08:30;3;4;4;0;17;comptee;moyen;non;;true
+GA-0001;2099-12-31;E01;Flamboyants – Grand Marché (fictif);gbaka;08:45;3;3;3;0;12;comptee;moyen;non;;true
+GA-0001;2099-12-31;E03;Flamboyants – Grand Marché (fictif);gbaka;08:45;3;3;3;0;14;comptee;moyen;non;;true

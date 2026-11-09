@@ -1,0 +1,16 @@
+﻿releve_id;rang;nom;heure;type_arret;latitude;longitude;montees;descentes;is_fictional
+RL-0001;1;Gare des Flamboyants (fictif);06:40;gare;5.3561;-4.0083;18;0;true
+RL-0001;2;Rond-point des Acacias (fictif);06:46;arret_informel;5.3532;-4.0051;0;3;true
+RL-0001;3;Arrêt des Fromagers (fictif);06:52;arret_formel;5.3497;-4.002;2;4;true
+RL-0001;4;Carrefour des Manguiers (fictif);06:58;arret_informel;5.3466;-3.999;1;2;true
+RL-0001;5;Gare du Baobab (fictif);07:04;gare;5.3402;-3.9971;3;6;true
+RL-0001;6;Gare du Grand Marché (fictif);07:12;gare;5.3321;-3.989;0;12;true
+RL-0002;1;Gare des Flamboyants (fictif);07:05;gare;5.3561;-4.0083;18;0;true
+RL-0002;2;Acacias (fictif);07:12;arret_informel;5.3533;-4.005;1;2;true
+RL-0002;3;Arrêt des Fromagers (fictif);07:19;arret_formel;5.3496;-4.0021;0;5;true
+RL-0002;4;Carrefour des Manguiers (fictif);07:25;arret_informel;5.3467;-3.9991;2;1;true
+RL-0002;5;Gare du Baobab (fictif);07:32;gare;5.3401;-3.9972;4;7;true
+RL-0002;6;Gare du Grand Marché (fictif);07:41;gare;5.3322;-3.9891;0;10;true
+RL-0003;1;Gare du Baobab (fictif);17:20;gare;;;4;0;true
+RL-0003;2;Carrefour des Hibiscus (fictif);17:31;a_la_demande;;;0;1;true
+RL-0003;3;Gare des Palmiers (fictif);17:44;gare;;;0;3;true

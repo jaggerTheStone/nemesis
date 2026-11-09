@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche · prix payés</title>
+    <link rel="stylesheet" href="fiches.css" />
+  </head>
+  <body class="paysage" data-jeux="prix">
+    <div class="entete">
+      <h1>Prix payés</h1>
+      <span class="version">Fiche v1 · 2026-11-09 · un prix par ligne du tableau</span>
+    </div>
+    <p class="version">Protocole : docs/TERRAIN/PROTOCOLE-ECLAIREURS.md</p>
+    <p class="anonyme">
+      Noter le prix réellement payé ou vu payer, jamais un prix supposé. Ne jamais noter qui a payé.
+      Un prix annoncé ou affiché se note aussi, avec sa source.
+    </p>
+    <div class="champs">
+      <div class="champ" data-champ="date"><span class="libelle">Date (AAAA-MM-JJ)</span></div>
+      <div class="champ" data-champ="eclaireur">
+        <span class="libelle">Code Éclaireur (E01)</span>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th data-champ="heure">Heure</th>
+          <th data-champ="mode">Véhicule (code)</th>
+          <th data-champ="ligne">Ligne ou destination criée</th>
+          <th data-champ="montee">Où monter</th>
+          <th data-champ="descente">Où descendre</th>
+          <th data-champ="montant">Montant (F)</th>
+          <th data-champ="source">Source (code)</th>
+          <th data-champ="conditions">Conditions (codes, « + »)</th>
+          <th data-champ="monnaie_rendue">Monnaie rendue (oui, non)</th>
+          <th data-champ="remarques">Remarques</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">7</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">8</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">9</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">10</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="num">11</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="cases">
+      <strong>Source :</strong>
+      <span class="code">paye</span> payé par moi · <span class="code">observe</span> vu payer par
+      un passager · <span class="code">annonce</span> annoncé par l'apprenti ou le chauffeur ·
+      <span class="code">affiche</span> affiché
+    </p>
+    <p class="cases">
+      <strong>Conditions :</strong>
+      <span class="code">normale</span> rien de particulier · <span class="code">pointe</span> heure
+      de pointe · <span class="code">pluie</span> pluie · <span class="code">nuit</span> nuit ·
+      <span class="code">fete</span> fête ou grand événement
+    </p>
+    <p class="cases">
+      <strong>Véhicules :</strong>
+      <span class="code">gbaka</span> · <span class="code">woro_communal</span> ·
+      <span class="code">woro_intercommunal</span> · <span class="code">bus_sotra</span> ·
+      <span class="code">bus_express</span> · <span class="code">bateau_bus</span> ·
+      <span class="code">pinasse</span> · <span class="code">taxi_compteur</span> ·
+      <span class="code">moto_taxi</span> · <span class="code">car_interurbain</span>
+    </p>
+  </body>
+</html>

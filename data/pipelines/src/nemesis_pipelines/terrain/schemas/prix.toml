@@ -1,0 +1,99 @@
+name = "prix"
+title = "Prix payés"
+purpose = "Prix réellement payés, avec leurs conditions (partie 8.3) : la base des fourchettes de prix, jamais inventées (règle 1)."
+protocol = "docs/TERRAIN/PROTOCOLE-ECLAIREURS.md"
+forms = ["docs/TERRAIN/fiches/fiche-prix.html"]
+key = ["id"]
+
+[[fields]]
+name = "id"
+label = "Identifiant"
+type = "code"
+pattern = "PX-[0-9]{5}"
+required = true
+entry = "office"
+help = "Numéroté à la saisie (PX-00001…)."
+
+[[fields]]
+name = "date"
+label = "Date"
+type = "date"
+required = true
+
+[[fields]]
+name = "heure"
+label = "Heure"
+type = "time"
+required = true
+
+[[fields]]
+name = "eclaireur"
+label = "Code de l'Éclaireur"
+type = "code"
+pattern = "E[0-9]{2}"
+required = true
+
+[[fields]]
+name = "mode"
+label = "Véhicule"
+type = "enum"
+vocabulary = "modes"
+required = true
+
+[[fields]]
+name = "ligne"
+label = "Ligne ou destination criée"
+type = "text"
+max_length = 120
+required = true
+
+[[fields]]
+name = "montee"
+label = "Où monter"
+type = "text"
+max_length = 120
+required = true
+
+[[fields]]
+name = "descente"
+label = "Où descendre"
+type = "text"
+max_length = 120
+required = true
+
+[[fields]]
+name = "montant"
+label = "Montant (F)"
+type = "integer"
+min = 25
+max = 20000
+required = true
+
+[[fields]]
+name = "source"
+label = "D'où vient le prix"
+type = "enum"
+vocabulary = "sources_prix"
+required = true
+
+[[fields]]
+name = "conditions"
+label = "Conditions"
+type = "list"
+vocabulary = "conditions_prix"
+required = true
+help = "« normale » s'il n'y a rien de particulier ; sinon pointe+pluie…"
+
+[[fields]]
+name = "monnaie_rendue"
+label = "Monnaie rendue sans difficulté"
+type = "enum"
+vocabulary = "oui_non"
+required = false
+
+[[fields]]
+name = "remarques"
+label = "Remarques"
+type = "text"
+max_length = 300
+required = false

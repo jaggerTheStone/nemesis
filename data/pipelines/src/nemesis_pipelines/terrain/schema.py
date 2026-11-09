@@ -16,10 +16,25 @@ from typing import Any
 
 FIELD_TYPES = {"text", "integer", "decimal", "date", "time", "code", "enum", "list"}
 RULE_TYPES = {"all_or_none", "ordered", "required_if", "equals", "steps", "at_least_one"}
-ENTRY_MODES = {"field", "office"}
+ENTRY_MODES = {"field", "office", "app"}
 
-# Presentation order (dictionary, CLI): field collection first, then UX tests.
-DATASET_ORDER = ("requetes", "trajets", "reponses", "participants", "observations", "icones")
+# Presentation order (dictionary, CLI): field collection first, then UX tests, then the
+# « Éclaireurs » campaign (I0.12).
+DATASET_ORDER = (
+    "requetes",
+    "trajets",
+    "reponses",
+    "participants",
+    "observations",
+    "icones",
+    "gares",
+    "releves_ligne",
+    "arrets_releves",
+    "prix",
+    "comptages",
+    "photos",
+    "traces",
+)
 
 # Column accepted in every dataset (rule 1.3.1): fictional rows carry true.
 FICTIONAL_COLUMN = "is_fictional"

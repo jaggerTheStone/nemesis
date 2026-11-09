@@ -169,3 +169,61 @@ file_peu = "État · peu de monde"
 file_moyen = "État · moyen"
 file_beaucoup = "État · beaucoup de monde"
 file_tres_long = "État · file très longue"
+
+# --- Campagne « Éclaireurs » (I0.12) ---------------------------------------------------
+
+[types_gare]
+gare_routiere = "Gare routière, gare de gbakas"
+station_woro = "Station de wôrô-wôrô"
+terminus_bus = "Terminus de bus"
+embarcadere = "Embarcadère"
+point_informel = "Point de montée informel"
+
+[types_arret]
+gare = "Gare ou station"
+arret_formel = "Arrêt avec panneau ou abri"
+arret_informel = "Arrêt sans panneau, connu de tous"
+a_la_demande = "Montée ou descente à la demande"
+
+[eclairages]
+oui = "Éclairée"
+partiel = "En partie éclairée"
+non = "Pas éclairée"
+
+[acces]
+plain_pied = "De plain-pied"
+marches = "Marches"
+passerelle = "Passerelle ou escalier"
+terrain_difficile = "Terrain difficile (boue, trous, pente)"
+
+[conditions_prix]
+# Conditions des prix estimés (FareEstimate, API) et de l'extension GTFS.
+normale = "Normale"
+pointe = "Heure de pointe"
+pluie = "Pluie"
+nuit = "Nuit"
+fete = "Fête ou grand événement"
+
+[sources_prix]
+paye = "Payé par l'Éclaireur"
+observe = "Vu payer par un passager"
+annonce = "Annoncé par l'apprenti ou le chauffeur"
+affiche = "Affiché"
+
+[niveaux_file]
+# Catégories de file de l'appli (ALGORITHMES.md 1.2) : les comptages servent à les calibrer.
+peu = "Peu (0 à 5)"
+moyen = "Moyen (6 à 20)"
+beaucoup = "Beaucoup (21 à 50)"
+tres_long = "Très long (plus de 50)"
+
+[methodes_file]
+comptee = "Comptée une à une"
+estimee = "Estimée"
+
+[sujets_photo]
+gare = "Vue de la gare"
+point_montee = "Point de montée"
+vehicule = "Véhicule, de loin"
+panneau = "Panneau, inscription"
+tarif = "Tarif affiché"
