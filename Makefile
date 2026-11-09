@@ -12,6 +12,7 @@
 #   make pipelines-test      tests des pipelines contre une base PostGIS jetable (osm2pgsql requis)
 #   make routing-spike       spike du moteur d'itinéraires, options A et B (réseau et Docker requis)
 #   make simulation          journée simulée du corridor fictif et formules d'attente confrontées (I0.10)
+#   make demo                démo de la phase 0, hors ligne, en moins de 5 minutes (I0.13)
 
 ROUTING := services/routing
 MOBILE := apps/mobile
@@ -24,7 +25,7 @@ PIPELINES_TEST_PORT ?= 55434
 .PHONY: check check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile \
         audit audit-ts audit-rust audit-py fmt install fiches-pdf \
         dev dev-down dev-reset db-migrate db-test gtfs-validate api-test proto-breaking \
-        data-import data-import-fictif data-tiles-verify pipelines-test routing-spike simulation
+        data-import data-import-fictif data-tiles-verify pipelines-test routing-spike simulation demo
 
 check: check-ts check-proto check-rust check-py check-terrain check-fixtures check-docs check-mobile
 	@echo "Tous les contrôles sont au vert."
@@ -195,3 +196,9 @@ SIM_SEED ?= 42
 simulation:
 	uv run nemesis-simulator simuler --graine $(SIM_SEED) --sortie data/work/simulation
 	uv run nemesis-simulator evaluer --graines 0-4 --sortie data/work/simulation
+
+# Démo de la phase 0 (I0.13) : jeu fictif, moteur, simulateur, terrain ; hors ligne.
+# DEMO_OPTIONS=--avec-mobile pour lancer aussi les tests de l'appli (Flutter requis).
+DEMO_OPTIONS ?=
+demo:
+	python3 tools/demo/demo.py $(DEMO_OPTIONS)

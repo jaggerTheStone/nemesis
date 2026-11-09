@@ -1,0 +1,48 @@
+name: Démo de la phase 0
+
+# I0.13 : la démo de la phase 0 sur une machine neuve (`make demo`), hors ligne, avec son
+# compte rendu dans le résumé de l'exécution. Elle échoue au-delà de 5 minutes.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/demo/**"
+      - "tools/simulator/**"
+      - "services/routing/crates/**"
+      - "services/routing/Cargo.lock"
+      - "data/pipelines/src/**"
+      - "data/fixtures_fictives/**"
+      - "Makefile"
+      - ".github/workflows/demo.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  demo:
+    name: make demo, machine neuve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer la chaîne Rust de rust-toolchain.toml
+        working-directory: services/routing
+        run: rustup toolchain install
+      - name: Installer uv
+        run: pipx install uv==0.11.32
+      - name: Installer les dépendances Python
+        run: uv sync --locked --all-packages
+      - name: Démo (sans cache de compilation, comme sur une machine neuve)
+        run: make demo
+      - name: Compte rendu
+        if: always()
+        run: |
+          if [ -f data/work/demo/demo.md ]; then cat data/work/demo/demo.md >> "$GITHUB_STEP_SUMMARY"; fi
