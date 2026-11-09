@@ -23,7 +23,7 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - I0.10, simulateur par agents v0 (`tools/simulator/README.md`) : une journée de pointe en 0,1 s, reproductible ; signalements au format de l'API et vérité terrain. Formules d'attente confrontées à la simulation, avec des corrections proposées dans ALGORITHMES.md 1.2 et 1.3 ;
   - I0.11, prototype cliquable Flutter (`apps/mobile/README.md`) : hors ligne avec le moteur natif, tests verts, test de fumée sur Android 8. **ADR-001 mesuré : APK hors budget, à cause de la carte. Décision du porteur.** Protocole WhatsApp prêt, bloqué par Q-07.
   - I0.12, kit de la campagne « Éclaireurs » (`docs/TERRAIN/PROTOCOLE-ECLAIREURS.md`) : quatre fiches imprimables, sept formats d'échange validés en CI, protocole qualité avec `nemesis-terrain accord`, spécification du mode relevé (bloqué par Q-07).
-  - I0.13, clôture de la phase : `make demo` (hors ligne, 6 s moteur compilé, rejouée sur machine neuve par le workflow « Démo de la phase 0 ») et [rapport de phase](RAPPORT-PHASE-0.md).
+  - I0.13, clôture de la phase : `make demo` (hors ligne ; 21 s sur une machine neuve, compilation comprise, rejouée par le workflow « Démo de la phase 0 ») et [rapport de phase](RAPPORT-PHASE-0.md).
 - **Prochaine étape** : la phase 1, MVP sur le corridor pilote (partie 15.2). Son plan détaillé est à soumettre au porteur avant tout code. Proposition : commencer par la tranche 1 (données, modèle de réseau, moteur) dès que le corridor est choisi (Q-05).
 - **En attente côté porteur** :
   - **la licence du GTFS « Abidjan 2023 » (H-030)** : CC BY-NC 4.0, pas d'usage commercial. Demander l'autorisation à DigitalTransport4Africa (partenariat, 15.6) et faire valider la démarche par un juriste ;

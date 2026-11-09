@@ -46,7 +46,13 @@ La démo enchaîne cinq étapes, sans réseau ni base de données :
 
 `make demo DEMO_OPTIONS=--avec-mobile` ajoute les tests des parcours de l'appli. Le compte rendu est écrit dans `data/work/demo/demo.md`. La démo échoue si une étape échoue ou si elle dépasse 5 minutes.
 
-Durées mesurées : 6 s quand le moteur est déjà compilé, 80 s avec la compilation et les tests de l'appli. Le workflow « Démo de la phase 0 » la rejoue sur une machine neuve et publie le compte rendu dans le résumé de l'exécution.
+Durées mesurées :
+
+- **21 s sur une machine neuve de GitHub Actions**, dont 17 s de compilation du moteur ; 38 s pour le job entier, installation de Rust et des dépendances Python comprise ;
+- 6 s quand le moteur est déjà compilé ;
+- 80 s dans l'environnement cloud avec la compilation et les tests de l'appli.
+
+Le workflow « Démo de la phase 0 » la rejoue à chaque modification d'un composant montré, et publie le compte rendu dans le résumé de l'exécution.
 
 Autres points d'entrée :
 
