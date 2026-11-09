@@ -4,7 +4,6 @@ name: Mobile (Flutter)
 # production mesuré pour l'ADR-001, test de fumée sur un émulateur Android 8 (API 26).
 
 on:
-  workflow_dispatch:
   push:
     paths:
       - "apps/mobile/**"
