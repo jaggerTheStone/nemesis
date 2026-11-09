@@ -4,6 +4,7 @@ name: Mobile (Flutter)
 # production mesuré pour l'ADR-001, test de fumée sur un émulateur Android 8 (API 26).
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - "apps/mobile/**"
@@ -173,6 +174,20 @@ jobs:
           name: apk-arm64-release
           path: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 14
+      # L'aperçu : le même APK, avec en plus le moteur x86_64, pour qu'il s'installe aussi
+      # sur l'émulateur d'Android Studio d'un PC. Il n'est pas mesuré : c'est l'APK arm64
+      # ci-dessus qui compte pour le budget de poids.
+      - name: APK d'aperçu (téléphone et émulateur de PC)
+        working-directory: apps/mobile
+        run: |
+          flutter build apk --release --target-platform android-arm64,android-x64
+          cp build/app/outputs/flutter-apk/app-release.apk nemesis-apercu.apk
+      - name: Conserver l'APK d'aperçu
+        uses: actions/upload-artifact@v4
+        with:
+          name: apercu-nemesis
+          path: apps/mobile/nemesis-apercu.apk
+          retention-days: 30
 
   emulator:
     name: Test de fumée, émulateur Android 8 (API 26)
