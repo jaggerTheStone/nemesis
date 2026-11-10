@@ -7,6 +7,6 @@ afterEach(cleanup);
 describe("App", () => {
   it("renders the translated back-office title", () => {
     render(<App />);
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("nemesis · Back-office");
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("yafohi · Back-office");
   });
 });

@@ -1,6 +1,6 @@
 # Maquette : trois identités pour l'appli
 
-Statut : version 1 du 2026-11-10, **à choisir par le porteur**. Elle répond à son retour sur le prototype d'I0.11, jugé « plat » (voir [ETAT.md](../../ETAT.md)).
+Statut : version 1 du 2026-11-10. **Le porteur a choisi yafohi** le jour même : voir sa [charte](../identite-yafohi/README.md). La maquette répondait à son retour sur le prototype d'I0.11, jugé « plat » (voir [ETAT.md](../../ETAT.md)).
 
 La maquette est un canevas privé sur claude.ai : [Maquettes et identités de l'appli](https://claude.ai/artifact/1F5LKRjBzceL2WExCzV55L). Seul le porteur peut l'ouvrir, tant qu'il ne l'a pas partagée. Ce dossier en garde les sources et des aperçus.
 

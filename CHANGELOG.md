@@ -165,6 +165,10 @@ publication.
   - Trois propositions : gbê, yafohi, mon kôrô. Chacune a son nom en nouchi, son logo, ses couleurs, sa typographie, son ton et sa planche.
   - Prototype cliquable, en ligne d'abord : carte d'Abidjan réelle avec vue satellite, gares et incidents, véhicules animés, recherche, trois trajets comparés, trajet en cours, signalement en deux pressions, fiche gare, hors connexion.
   - Outils de carte (`tools/maquette/`) : extraction OpenStreetMap, trois styles de fond, trajets sur le vrai réseau. Workflow d'extraction, l'environnement cloud n'atteignant pas Geofabrik. H-036.
+- Identité retenue par le porteur : **yafohi** (`docs/UX/identite-yafohi/`).
+  - Charte : nom, logo, couleurs avec leurs contrastes, typographie, formes, ton, vérifications à faire avant de figer le nom.
+  - Logo vectorisé (le mot en trois versions, l'icône en trois versions, PNG 512 px pour les magasins) et jetons de design (`tokens.json`).
+  - Nom public « yafohi » dans les clés `app.name` et `appName` ; le nom de code technique reste `nemesis` (H-003, Q-01).
 
 ### Corrigé
 

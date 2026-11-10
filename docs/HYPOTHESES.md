@@ -12,7 +12,7 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
 
 | ID | Question | Hypothèse par défaut validée |
 |----|----------|-----------------------------------|
-| Q-01 | Nom de l'application : `{{NOM_APP}}` n'a pas été remplacé ; le dépôt s'appelle `nemesis`. | `nemesis` sert de nom de code technique ; le nom public passe par la clé de traduction `app.name` (H-003). |
+| Q-01 | Nom de l'application : `{{NOM_APP}}` n'a pas été remplacé ; le dépôt s'appelle `nemesis`. | `nemesis` sert de nom de code technique ; le nom public passe par la clé de traduction `app.name` (H-003). **Réponse du 2026-11-10 : le nom public est « yafohi »** ([charte](UX/identite-yafohi/README.md)), sous réserve des vérifications de sens, de marque et de disponibilité. |
 | Q-02 | Moyens : qui travaille sur le projet, avec quelles compétences, combien de temps, quel budget en phase 0, quel téléphone de référence physique ? | Je développe seul, tu valides ; budget proche de zéro (offre gratuite de la CI GitHub) ; pas de téléphone physique (H-001, H-004). |
 | Q-03 | Terrain : qui, à Abidjan, collecte les 300 requêtes réelles et les 200 trajets de référence, et mène les tests de maquettes en gare ? | Je livre protocoles et outillage ; la collecte attend qu'une personne soit disponible sur place. |
 | Q-04 | Porteur juridique du projet, relations existantes (AMUGA, SOTRA, syndicats, universités), accès à un juriste ivoirien ? | Responsable du traitement noté « à désigner » dans le brouillon ARTCI ; aucune convention supposée. |
@@ -143,8 +143,8 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
 
 ## Maquette d'identité (2026-11-10)
 
-- **H-036** (proposée) — Choix de la maquette des trois identités, à revoir avec le porteur et avec des usagers :
-  - **noms** : gbê, yafohi et mon kôrô viennent du nouchi. Leur sens et leur usage sont à confirmer avec des Abidjanais ; leur disponibilité (magasins d'applis, marque, nom de domaine) n'est pas vérifiée ;
+- **H-036** (validée le 2026-11-10 pour yafohi) — Choix de la maquette des trois identités. Le porteur a retenu **yafohi** ([charte](UX/identite-yafohi/README.md)) ; gbê et mon kôrô sont écartés. Reste à tester avec des usagers :
+  - **noms** : gbê, yafohi et mon kôrô viennent du nouchi. Le sens et l'usage de « yafohi » sont à confirmer avec des Abidjanais ; sa disponibilité (marque à l'OAPI, noms de domaine, magasins d'applis) n'est pas vérifiée ;
   - **données** : les rues, la côte, la lagune, les quartiers et les noms des gares viennent d'OpenStreetMap ; les trajets suivent les vraies rues. Les lignes, les véhicules, les attentes, l'affluence, les prix et les signalements sont simulés, et la maquette l'affiche (règle 1) ;
   - **imagerie satellite** : Sentinel-2 cloudless 2025 d'EOX, sous licence CC BY-NC-SA 4.0 (pas d'usage commercial). Elle convient à une maquette interne, pas au produit ;
   - **en ligne d'abord** : la maquette suit la décision du porteur du 2026-11-09. Hors connexion, elle garde les trajets enregistrés, les temps habituels et la recherche de lieux ; tout le reste demande le réseau ;

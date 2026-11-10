@@ -1,7 +1,7 @@
 {
   "@@locale": "fr",
-  "appName": "nemesis",
-  "@appName": {"description": "Nom provisoire de l'application (nom de code, hypothèse H-003)."},
+  "appName": "yafohi",
+  "@appName": {"description": "Nom public de l'application, choisi par le porteur le 2026-11-10 (Q-01, H-036). Le nom de code technique reste nemesis (H-003)."},
 
   "fictionalBanner": "DONNÉES FICTIVES",
   "@fictionalBanner": {"description": "Bandeau permanent : la ville, les lignes et les prix sont inventés (règle 1)."},
