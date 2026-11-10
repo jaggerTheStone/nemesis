@@ -1,0 +1,63 @@
+name: Données de carte pour la maquette
+
+# Extrait d'OpenStreetMap pour les fonds de carte de la maquette de l'appli : Abidjan
+# seulement, et seulement les thèmes dessinés (voies, eau, côte, végétation, lieux, gares).
+# L'environnement cloud n'atteint ni Geofabrik ni Overpass : ce workflow fait l'extraction et
+# dépose le fichier sur la branche, d'où il est traité puis retiré.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/maquette-carte.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  extrait:
+    name: Extrait OSM d'Abidjan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Installer osmium (paquet Ubuntu 24.04 épinglé)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends osmium-tool=1.16.0-1build1
+      - name: Télécharger l'extrait de Côte d'Ivoire et vérifier son empreinte
+        run: |
+          curl -fsSL -o ci.osm.pbf https://download.geofabrik.de/africa/ivory-coast-latest.osm.pbf
+          curl -fsSL -o ci.osm.pbf.md5 https://download.geofabrik.de/africa/ivory-coast-latest.osm.pbf.md5
+          echo "$(cut -d' ' -f1 ci.osm.pbf.md5)  ci.osm.pbf" | md5sum -c -
+          osmium fileinfo -e ci.osm.pbf | grep -E "Timestamp|osmosis_replication_timestamp" | head -3
+      - name: Découper Abidjan et filtrer les thèmes
+        run: |
+          osmium extract --strategy smart -b -4.11,5.23,-3.90,5.46 ci.osm.pbf -o abidjan.osm.pbf
+          mkdir -p tools/maquette/donnees
+          osmium tags-filter abidjan.osm.pbf \
+            w/highway=motorway,trunk,primary,secondary,tertiary,motorway_link,trunk_link,primary_link,secondary_link,tertiary_link,residential,unclassified,living_street,pedestrian \
+            nwr/natural=water,coastline,wood,wetland,beach,sand,scrub,grassland \
+            nwr/water nwr/waterway=riverbank,river,canal,stream \
+            nwr/landuse=forest,grass,industrial,commercial,cemetery,recreation_ground,meadow,port,military,railway \
+            nwr/leisure=park,golf_course,stadium,nature_reserve \
+            nwr/aeroway=aerodrome,runway,apron \
+            nwr/boundary=protected_area,national_park \
+            n/place nwr/amenity=bus_station,ferry_terminal,marketplace,university,hospital \
+            nwr/public_transport=station nwr/shop=mall w/railway=rail w/route=ferry \
+            --overwrite -o tools/maquette/donnees/abidjan-maquette.osm.pbf
+          osmium fileinfo -e tools/maquette/donnees/abidjan-maquette.osm.pbf | grep -E "Number of|Bounding" | head -8
+          ls -la tools/maquette/donnees/
+      - name: Déposer l'extrait sur la branche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/maquette/donnees/abidjan-maquette.osm.pbf
+          git commit -m "Maquette : extrait OSM d'Abidjan (© contributeurs OpenStreetMap, ODbL)"
+          git push origin "HEAD:${{ github.ref_name }}"
