@@ -58,6 +58,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/maquette/donnees/abidjan-maquette.osm.pbf
+          git add -f tools/maquette/donnees/abidjan-maquette.osm.pbf  # *.pbf est ignoré ailleurs
           git commit -m "Maquette : extrait OSM d'Abidjan (© contributeurs OpenStreetMap, ODbL)"
           git push origin "HEAD:${{ github.ref_name }}"
