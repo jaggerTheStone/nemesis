@@ -161,6 +161,10 @@ publication.
     phase 0 » sur machine neuve.
   - Rapport de phase (`docs/RAPPORT-PHASE-0.md`) : livrables, lancement,
     tests, limites, décisions en attente du porteur, prochaine étape.
+- Maquette des trois identités (`docs/UX/maquette-identites/`), après le retour du porteur sur le prototype d'I0.11.
+  - Trois propositions : gbê, yafohi, mon kôrô. Chacune a son nom en nouchi, son logo, ses couleurs, sa typographie, son ton et sa planche.
+  - Prototype cliquable, en ligne d'abord : carte d'Abidjan réelle avec vue satellite, gares et incidents, véhicules animés, recherche, trois trajets comparés, trajet en cours, signalement en deux pressions, fiche gare, hors connexion.
+  - Outils de carte (`tools/maquette/`) : extraction OpenStreetMap, trois styles de fond, trajets sur le vrai réseau. Workflow d'extraction, l'environnement cloud n'atteignant pas Geofabrik. H-036.
 
 ### Corrigé
 

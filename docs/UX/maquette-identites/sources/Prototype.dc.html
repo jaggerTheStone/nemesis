@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Prototype de l’appli</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Baloo+2:wght@600;700;800&amp;family=Nunito:wght@500;600;700;800&amp;family=Sora:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+@keyframes nm-pulse{0%{transform:scale(.5);opacity:.6}100%{transform:scale(2.6);opacity:0}}
+@keyframes nm-blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes nm-up{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}
+@keyframes nm-pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes nm-caret{0%,100%{opacity:1}50%{opacity:0}}
+.nm-btn{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease,filter .12s ease}
+.nm-btn:active{transform:scale(.97)}
+.nm-btn:hover{filter:brightness(.98)}
+.nm-btn:focus-visible{outline:3px solid #2B7FFF;outline-offset:2px}
+.nm-noscroll::-webkit-scrollbar{display:none}
+.nm-input::placeholder{color:inherit;opacity:.55}
+.nm-input:focus{outline:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; font-family: {{t.text}}; background: {{t.bg}}; color: {{t.ink}}; -webkit-font-smoothing: antialiased">
+
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+<defs>
+<symbol id="i-gbaka" viewBox="0 0 24 24"><path d="M3.5 16.5v-8A2.5 2.5 0 0 1 6 6h9.6a2 2 0 0 1 1.6.8l2.9 3.9a2 2 0 0 1 .4 1.2v4.6"></path><path d="M3.5 11.5h17"></path><path d="M9.5 6v5.5"></path><circle cx="7.3" cy="17.3" r="1.8"></circle><circle cx="16.7" cy="17.3" r="1.8"></circle><path d="M9.1 17.3h5.8"></path></symbol>
+<symbol id="i-woro" viewBox="0 0 24 24"><path d="M5.2 17H4.5A1.5 1.5 0 0 1 3 15.5V13l2.2-5.2A1.5 1.5 0 0 1 6.6 7h10.8a1.5 1.5 0 0 1 1.4.8L21 13v2.5a1.5 1.5 0 0 1-1.5 1.5h-.7"></path><path d="M3.4 12.5h17.2"></path><circle cx="7.5" cy="17" r="1.8"></circle><circle cx="16.5" cy="17" r="1.8"></circle><path d="M9.3 17h5.4"></path></symbol>
+<symbol id="i-bus" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="15" rx="2.6"></rect><path d="M5 11h14"></path><path d="M8 21v-3"></path><path d="M16 21v-3"></path><path d="M8.6 14.6h.01"></path><path d="M15.4 14.6h.01"></path><path d="M9 6.5h6"></path></symbol>
+<symbol id="i-bateau" viewBox="0 0 24 24"><path d="M3.5 14.5h17l-2.3 4H5.8z"></path><path d="M6.5 14.5V10h9l2.5 4.5"></path><path d="M10 10V6.5h3.5V10"></path><path d="M2.5 21.5c1.6 0 1.6-1 3.2-1s1.6 1 3.2 1 1.6-1 3.2-1 1.6 1 3.2 1 1.6-1 3.2-1 1.6 1 3.2 1"></path></symbol>
+<symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13.5" cy="4.2" r="1.7"></circle><path d="M10.3 21l2.2-6.2"></path><path d="M12.5 14.8l2.6 2.6V21"></path><path d="M12.5 14.8l-.6-5.6"></path><path d="M11.9 9.2l-3.4 1.6-1 3.2"></path><path d="M11.9 9.2l2.6-1 2 3.2 2.8.9"></path></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="M20.5 20.5l-4.9-4.9"></path></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11.5" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"></path><path d="M12 18v3"></path></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"></path></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></symbol>
+<symbol id="i-swap" viewBox="0 0 24 24"><path d="M8 20V5"></path><path d="M4.5 8.5L8 5l3.5 3.5"></path><path d="M16 4v15"></path><path d="M12.5 15.5L16 19l3.5-3.5"></path></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"></path><path d="M3 12.5l9 5 9-5"></path><path d="M3 17l9 5 9-5"></path></symbol>
+<symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2.6"></circle><path d="M12 2v3"></path><path d="M12 19v3"></path><path d="M2 12h3"></path><path d="M19 12h3"></path></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.8L12 4l8 6.8V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"></path></symbol>
+<symbol id="i-work" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.2"></rect><path d="M9 7V5.2A1.2 1.2 0 0 1 10.2 4h3.6A1.2 1.2 0 0 1 15 5.2V7"></path><path d="M3 12.5h18"></path></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s-7-6.3-7-11.7a7 7 0 0 1 14 0c0 5.4-7 11.7-7 11.7z"></path><circle cx="12" cy="9.8" r="2.6"></circle></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1V21l-6.5-4.3L5.5 21V4.5a1 1 0 0 1 1-1z"></path></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6.5"></path><path d="M16 6.5L12 2.5 8 6.5"></path><path d="M12 2.5V15"></path></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.6c0 4.7-3.2 8.2-7.5 9.4-4.3-1.2-7.5-4.7-7.5-9.4V6z"></path><path d="M9 12l2.2 2.2L15.5 10"></path></symbol>
+<symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3.5 10.2v3.6A1.2 1.2 0 0 0 4.7 15H7l8.5 4.5V4.5L7 9H4.7a1.2 1.2 0 0 0-1.2 1.2z"></path><path d="M18.5 9a4.2 4.2 0 0 1 0 6"></path><path d="M7.5 15l1.2 5"></path></symbol>
+<symbol id="i-traffic" viewBox="0 0 24 24"><path d="M5 17.5v2"></path><path d="M19 17.5v2"></path><path d="M3.5 17.5h17v-4.7l-2-5.3H5.5l-2 5.3z"></path><path d="M3.5 12.8h17"></path><path d="M7 15.2h.01"></path><path d="M17 15.2h.01"></path></symbol>
+<symbol id="i-crowd" viewBox="0 0 24 24"><circle cx="9" cy="7.5" r="2.8"></circle><circle cx="16.8" cy="8.8" r="2.2"></circle><path d="M3.5 19.5c.4-3.6 2.6-5.8 5.5-5.8s5.1 2.2 5.5 5.8"></path><path d="M15.2 14c2.6.1 4.5 1.9 5 5"></path></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 3h11"></path><path d="M6.5 21h11"></path><path d="M7.5 3c0 5 9 5 9 9s-9 4-9 9"></path><path d="M16.5 3c0 5-9 5-9 9s9 4 9 9"></path></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12.2V4.5A1.5 1.5 0 0 1 4.5 3h7.7l8.8 8.8a1.5 1.5 0 0 1 0 2.1l-7.1 7.1a1.5 1.5 0 0 1-2.1 0z"></path><circle cx="7.8" cy="7.8" r="1.4"></circle></symbol>
+<symbol id="i-flood" viewBox="0 0 24 24"><path d="M12 2.8s5 5.2 5 8.7a5 5 0 0 1-10 0c0-3.5 5-8.7 5-8.7z"></path><path d="M2 20c1.7 0 1.7-1 3.3-1s1.7 1 3.4 1 1.6-1 3.3-1 1.7 1 3.3 1 1.7-1 3.4-1 1.6 1 3.3 1"></path></symbol>
+<symbol id="i-danger" viewBox="0 0 24 24"><path d="M10.3 4.2L2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"></path><path d="M12 9.5v4.5"></path><path d="M12 17.3h.01"></path></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"></path></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.6 2H4.4z"></path><path d="M10 21a2.2 2.2 0 0 0 4 0"></path></symbol>
+<symbol id="i-wifioff" viewBox="0 0 24 24"><path d="M3 3l18 18"></path><path d="M8.6 15.6a5 5 0 0 1 6.8 0"></path><path d="M5.2 12.2a10 10 0 0 1 4-2.2"></path><path d="M14.8 10a10 10 0 0 1 4 2.2"></path><path d="M2 8.6a15 15 0 0 1 4.4-2.9"></path><path d="M10.3 5.1A15 15 0 0 1 22 8.6"></path><path d="M12 19.5h.01"></path></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2.5"></rect></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.3"></circle><path d="M5 20.5c.6-4 3.2-6.5 7-6.5s6.4 2.5 7 6.5"></path></symbol>
+</defs>
+</svg>
+
+<sc-if value="{{showMap}}" hint-placeholder-val="{{ true }}">
+<div onPointerDown="{{onDown}}" onPointerMove="{{onMove}}" onPointerUp="{{onUp}}" onPointerCancel="{{onUp}}" onWheel="{{onWheel}}" onDoubleClick="{{onDouble}}" style="position: absolute; inset: 0; overflow: hidden; background: {{mapSea}}; touch-action: none; cursor: grab">
+<div style="position: absolute; left: 0; top: 0; width: 2098px; height: 2341px; transform-origin: 0 0; transform: translate({{view.x}}px, {{view.y}}px) scale({{view.s}}); transition: {{view.transition}}; will-change: transform">
+<sc-if value="{{maps.gbe}}" hint-placeholder-val="{{ true }}"><img src="/_blob/9f7ad46fd2389bfb4929f85606a38e6f" alt="Carte d’Abidjan" draggable="false" style="position: absolute; left: 0; top: 0; width: 2098px; height: 2341px; user-select: none; pointer-events: none"></sc-if>
+<sc-if value="{{maps.yafohi}}" hint-placeholder-val="{{ false }}"><img src="/_blob/9dfb1fdd535bb7a1f48c41078af800c6" alt="Carte d’Abidjan" draggable="false" style="position: absolute; left: 0; top: 0; width: 2098px; height: 2341px; user-select: none; pointer-events: none"></sc-if>
+<sc-if value="{{maps.koro}}" hint-placeholder-val="{{ false }}"><img src="/_blob/d1f3ba9bda8654d1e13c712838fd3e83" alt="Carte d’Abidjan" draggable="false" style="position: absolute; left: 0; top: 0; width: 2098px; height: 2341px; user-select: none; pointer-events: none"></sc-if>
+<sc-if value="{{maps.sat}}" hint-placeholder-val="{{ false }}"><img src="/_blob/97f573d182c39d4a940b3931d1a2b5f7" alt="Vue satellite d’Abidjan" draggable="false" style="position: absolute; left: 0; top: 0; width: 2098px; height: 2341px; user-select: none; pointer-events: none"></sc-if>
+
+<sc-for list="{{labels}}" as="l" hint-placeholder-count="12">
+<span style="position: absolute; left: {{l.x}}px; top: {{l.y}}px; transform: translate(-50%, -50%) scale({{l.inv}}); font: {{l.font}}; color: {{l.color}}; text-shadow: {{l.halo}}; letter-spacing: {{l.ls}}; text-transform: {{l.tt}}; white-space: nowrap; pointer-events: none">{{l.name}}</span>
+</sc-for>
+
+<svg width="2098" height="2341" viewBox="0 0 2098 2341" style="position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none" aria-hidden="true">
+<sc-for list="{{legs}}" as="leg" hint-placeholder-count="3">
+<sc-if value="{{leg.walk}}" hint-placeholder-val="{{ false }}">
+<path d="{{leg.d}}" fill="none" stroke="{{leg.casing}}" stroke-width="{{leg.cw}}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="{{leg.dashc}}" opacity=".9"></path>
+<path d="{{leg.d}}" fill="none" stroke="{{leg.color}}" stroke-width="{{leg.w}}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="{{leg.dash}}"></path>
+</sc-if>
+<sc-if value="{{leg.ride}}" hint-placeholder-val="{{ true }}">
+<path d="{{leg.d}}" fill="none" stroke="{{leg.casing}}" stroke-width="{{leg.cw}}" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="{{leg.d}}" fill="none" stroke="{{leg.color}}" stroke-width="{{leg.w}}" stroke-linecap="round" stroke-linejoin="round"></path>
+</sc-if>
+</sc-for>
+<sc-for list="{{vehicles}}" as="v" hint-placeholder-count="6">
+<g>
+<circle r="{{v.halo}}" fill="{{v.color}}" opacity=".18"></circle>
+<circle r="{{v.r}}" fill="{{v.color}}" stroke="{{v.ring}}" stroke-width="{{v.rw}}"></circle>
+<g transform="{{v.iconT}}"><use href="#{{v.icon}}" width="24" height="24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></use></g>
+<animateMotion dur="{{v.dur}}" begin="{{v.begin}}" repeatCount="indefinite" calcMode="linear" keyPoints="{{v.kp}}" keyTimes="{{v.kt}}" path="{{v.d}}"></animateMotion>
+</g>
+</sc-for>
+</svg>
+
+<sc-for list="{{incidents}}" as="inc" hint-placeholder-count="3">
+<div style="position: absolute; left: {{inc.x}}px; top: {{inc.y}}px; transform: translate(-50%, -100%) scale({{inc.inv}}); transform-origin: 50% 100%; display: flex; flex-direction: column; align-items: center; pointer-events: none">
+<span style="width: 34px; height: 34px; border-radius: 12px 12px 12px 3px; transform: rotate(-45deg); background: {{inc.color}}; box-shadow: 0 3px 10px rgba(0,0,0,.28); display: grid; place-items: center; border: 2px solid #FFFFFF">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(45deg)" aria-hidden="true"><use href="#{{inc.icon}}"></use></svg>
+</span>
+<span style="margin-top: 7px; padding: 3px 8px; border-radius: 999px; background: {{t.card}}; color: {{t.ink}}; font: 700 11px/1.2 {{t.text}}; box-shadow: 0 2px 6px rgba(0,0,0,.18); white-space: nowrap">{{inc.label}}</span>
+</div>
+</sc-for>
+
+<sc-for list="{{gares}}" as="g" hint-placeholder-count="6">
+<button class="nm-btn" type="button" aria-label="{{g.aria}}" onClick="{{g.open}}" style="position: absolute; left: {{g.x}}px; top: {{g.y}}px; transform: translate(-50%, -100%) scale({{g.inv}}); transform-origin: 50% 100%; border: 0; padding: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 0; font: inherit">
+<span style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 9px 0 3px; border-radius: 999px; background: {{g.bg}}; box-shadow: 0 2px 8px rgba(0,0,0,.22); border: 2px solid {{g.ring}}">
+<span style="width: 24px; height: 24px; border-radius: 50%; background: {{g.modeColor}}; display: grid; place-items: center">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{g.icon}}"></use></svg>
+</span>
+<span style="font: 800 12px/1 {{t.text}}; color: {{g.ink}}; white-space: nowrap">{{g.wait}}</span>
+<span style="display: flex; align-items: flex-end; gap: 2px; height: 12px" aria-hidden="true">
+<span style="width: 3px; height: 5px; border-radius: 1px; background: {{g.b1}}"></span>
+<span style="width: 3px; height: 8px; border-radius: 1px; background: {{g.b2}}"></span>
+<span style="width: 3px; height: 12px; border-radius: 1px; background: {{g.b3}}"></span>
+</span>
+</span>
+<span style="width: 10px; height: 6px; background: {{g.ring}}; clip-path: polygon(0 0, 100% 0, 50% 100%)"></span>
+<sc-if value="{{g.showName}}" hint-placeholder-val="{{ false }}">
+<span style="margin-top: 3px; font: 700 11px/1.15 {{t.text}}; color: {{g.nameColor}}; text-shadow: {{g.nameHalo}}; white-space: nowrap">{{g.short}}</span>
+</sc-if>
+</button>
+</sc-for>
+
+<sc-if value="{{showDest}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: {{dest.x}}px; top: {{dest.y}}px; transform: translate(-50%, -100%) scale({{dest.inv}}); transform-origin: 50% 100%; pointer-events: none">
+<svg width="34" height="44" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 43s14-13.4 14-25.4A14 14 0 0 0 3 17.6C3 29.6 17 43 17 43z" fill="{{t.dest}}" stroke="#FFFFFF" stroke-width="2.5"></path><circle cx="17" cy="17.5" r="5.5" fill="#FFFFFF"></circle></svg>
+</div>
+</sc-if>
+
+<sc-if value="{{showUser}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: {{user.x}}px; top: {{user.y}}px; width: 0; height: 0; transform: scale({{user.inv}}); pointer-events: none">
+<span style="position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; background: {{t.user}}; animation: nm-pulse 2.2s ease-out infinite"></span>
+<span style="position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%; background: {{t.user}}; border: 3px solid #FFFFFF; box-sizing: border-box; box-shadow: 0 2px 8px rgba(0,0,0,.3)"></span>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showMapChrome}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 12px; bottom: {{chrome.badgeBottom}}px; display: flex; gap: 6px; align-items: center; pointer-events: none">
+<span style="padding: 4px 9px; border-radius: 999px; background: {{t.card}}; color: {{t.ink2}}; font: 700 10.5px/1.2 {{t.text}}; box-shadow: 0 1px 4px rgba(0,0,0,.16)">Démo · trajets, prix et affluence simulés</span>
+</div>
+<div style="position: absolute; right: 12px; bottom: {{chrome.badgeBottom}}px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,.75); color: #33424A; font: 500 9px/1.3 system-ui, sans-serif; pointer-events: none">{{attribution}}</div>
+</sc-if>
+
+<sc-if value="{{screens.carte}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 12px; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 6px; height: 56px; padding: 0 6px 0 8px; border-radius: {{t.rSearch}}px; background: {{t.card}}; box-shadow: {{t.shadow}}">
+<button class="nm-btn" type="button" onClick="{{goSearch}}" style="flex: 1; min-width: 0; height: 48px; display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0 4px; font: inherit; color: {{t.ink2}}; text-align: left">
+<sc-if value="{{logo.gbe}}" hint-placeholder-val="{{ true }}"><svg width="32" height="32" viewBox="0 0 48 48" role="img" aria-label="gbê"><rect width="48" height="48" rx="13" fill="#0B6E87"></rect><path d="M24 40s-11.5-9.9-11.5-18.6a11.5 11.5 0 0 1 23 0C35.5 30.1 24 40 24 40z" fill="#FFFFFF"></path><path d="M18.6 21.6l3.8 3.8 7.2-7.4" fill="none" stroke="#F2711C" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+<sc-if value="{{logo.yafohi}}" hint-placeholder-val="{{ false }}"><svg width="32" height="32" viewBox="0 0 48 48" role="img" aria-label="yafohi"><rect width="48" height="48" rx="16" fill="#FFC21A"></rect><path d="M13.5 12.5l9.8 12.6" fill="none" stroke="#16130F" stroke-width="5.6" stroke-linecap="round"></path><path d="M34.5 12.5L23 31c-2.4 3.9-5.4 5.4-9.4 5.2" fill="none" stroke="#16130F" stroke-width="5.6" stroke-linecap="round"></path><circle cx="35" cy="33.5" r="3.8" fill="#16130F"></circle></svg></sc-if>
+<sc-if value="{{logo.koro}}" hint-placeholder-val="{{ false }}"><svg width="32" height="32" viewBox="0 0 48 48" role="img" aria-label="mon kôrô"><rect width="48" height="48" rx="14" fill="#FFD23F"></rect><rect x="9" y="8.5" width="30" height="29.5" rx="9" fill="#0E1430"></rect><rect x="13" y="12.5" width="22" height="7.5" rx="3" fill="#FFD23F" opacity=".22"></rect><circle cx="17.6" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="30.4" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="18.3" cy="28.7" r="2" fill="#0E1430"></circle><circle cx="31.1" cy="28.7" r="2" fill="#0E1430"></circle><path d="M14.4 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M27.2 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.6 33.6c2.1 1.4 4.7 1.4 6.8 0" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round"></path><rect x="12" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect><rect x="30" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect></svg></sc-if>
+<span style="font: 600 16.5px/1.2 {{t.text}}; color: {{t.ink2}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{copy.search}}</span>
+</button>
+<button class="nm-btn" type="button" aria-label="Recherche vocale" onClick="{{goSearch}}" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: {{t.surface}}; color: {{t.primaryText}}; display: grid; place-items: center">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-mic"></use></svg>
+</button>
+<button class="nm-btn" type="button" aria-label="Mon compte" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: {{t.avatarBg}}; color: {{t.avatarInk}}; font: 800 15px/1 {{t.display}}">A</button>
+</div>
+<div class="nm-noscroll" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -12px; padding: 0 12px 4px">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="3">
+<button class="nm-btn" type="button" onClick="{{c.go}}" style="flex: none; height: 38px; display: flex; align-items: center; gap: 7px; padding: 0 14px 0 11px; border-radius: 999px; border: 1px solid {{t.chipLine}}; background: {{t.card}}; color: {{t.ink}}; font: 700 13.5px/1 {{t.text}}; box-shadow: 0 1px 4px rgba(0,0,0,.12); white-space: nowrap">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{c.color}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{c.icon}}"></use></svg>
+<span>{{c.label}}</span>
+<sc-if value="{{c.hasMeta}}" hint-placeholder-val="{{ false }}"><span style="color: {{t.ink2}}; font-weight: 600">{{c.meta}}</span></sc-if>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{offline}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: {{t.offlineBg}}; color: {{t.offlineInk}}; font: 600 13px/1.35 {{t.text}}; box-shadow: 0 2px 8px rgba(0,0,0,.15)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><use href="#i-wifioff"></use></svg>
+<span>Hors connexion. Tes trajets enregistrés et les temps habituels restent disponibles.</span>
+</div>
+</sc-if>
+</div>
+
+<div style="position: absolute; right: 12px; top: {{chrome.layersTop}}px; display: flex; flex-direction: column; gap: 10px">
+<button class="nm-btn" type="button" aria-label="{{satLabel}}" aria-pressed="{{sat}}" onClick="{{toggleSat}}" style="width: 46px; height: 46px; border-radius: 14px; border: 0; background: {{satBtn.bg}}; color: {{satBtn.ink}}; box-shadow: {{t.shadow}}; display: grid; place-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-layers"></use></svg>
+</button>
+</div>
+
+<div style="position: absolute; right: 12px; bottom: 318px; display: flex; flex-direction: column; gap: 12px; align-items: flex-end">
+<button class="nm-btn" type="button" aria-label="Me recentrer" onClick="{{recenter}}" style="width: 46px; height: 46px; border-radius: 50%; border: 0; background: {{t.card}}; color: {{t.primaryText}}; box-shadow: {{t.shadow}}; display: grid; place-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-locate"></use></svg>
+</button>
+<button class="nm-btn" type="button" onClick="{{goReport}}" style="height: 58px; display: flex; align-items: center; gap: 9px; padding: 0 20px 0 16px; border-radius: 999px; border: 0; background: {{t.report}}; color: {{t.onReport}}; font: 800 15.5px/1 {{t.display}}; box-shadow: 0 6px 18px rgba(0,0,0,.28)">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-megaphone"></use></svg>
+<span>{{copy.report}}</span>
+</button>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; border-radius: {{t.rSheet}}px {{t.rSheet}}px 0 0; background: {{t.card}}; box-shadow: 0 -6px 24px rgba(0,0,0,.14); padding: 10px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: {{t.line}}"></span>
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font: {{t.dw}} 21px/1.15 {{t.display}}; letter-spacing: {{t.dls}}; color: {{t.ink}}">{{copy.nearby}}</h2>
+<span style="display: flex; align-items: center; gap: 6px; font: 700 12px/1 {{t.text}}; color: {{freshColor}}">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: {{freshColor}}; animation: {{freshAnim}}"></span>{{freshText}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<sc-for list="{{nearby}}" as="n" hint-placeholder-count="3">
+<button class="nm-btn" type="button" onClick="{{n.open}}" style="display: flex; align-items: center; gap: 12px; width: 100%; padding: 9px 4px; border: 0; border-bottom: 1px solid {{t.line}}; background: none; font: inherit; color: {{t.ink}}; text-align: left">
+<span style="flex: none; width: 44px; height: 44px; border-radius: 14px; background: {{n.tint}}; color: {{n.modeColor}}; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{n.icon}}"></use></svg>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font: 700 15.5px/1.2 {{t.text}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{n.name}}</span>
+<span style="font: 600 13px/1.2 {{t.text}}; color: {{t.ink2}}">{{n.sub}}</span>
+</span>
+<span style="flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 5px">
+<span style="padding: 4px 8px; border-radius: 999px; background: {{n.affBg}}; color: {{n.affInk}}; font: 800 12px/1 {{t.text}}">{{n.aff}}</span>
+<span style="font: 700 12.5px/1 {{t.text}}; color: {{t.ink2}}">{{n.wait}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.recherche}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: {{t.bg}}; display: flex; flex-direction: column">
+<div style="padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 10px; background: {{t.card}}; box-shadow: 0 1px 0 {{t.line}}">
+<div style="display: flex; align-items: center; gap: 8px">
+<button class="nm-btn" type="button" aria-label="Retour" onClick="{{goHome}}" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: none; color: {{t.ink}}; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-back"></use></svg>
+</button>
+<label style="flex: 1; display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 8px 0 14px; border-radius: {{t.rSearch}}px; background: {{t.surface}}; border: 2px solid {{t.primary}}">
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Destination</span>
+<input class="nm-input" type="text" value="{{query}}" onChange="{{onQuery}}" placeholder="{{copy.search}}" autocomplete="off" style="flex: 1; min-width: 0; border: 0; background: none; font: 700 17px/1.2 {{t.text}}; color: {{t.ink}}">
+<button class="nm-btn" type="button" aria-label="Effacer" onClick="{{clearQuery}}" style="width: 36px; height: 36px; border-radius: 50%; border: 0; background: none; color: {{t.ink2}}; display: grid; place-items: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><use href="#i-close"></use></svg>
+</button>
+</label>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px; font: 600 14px/1.2 {{t.text}}; color: {{t.ink2}}">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: {{t.user}}; box-shadow: 0 0 0 4px {{t.userSoft}}"></span>
+<span>De : <strong style="color: {{t.ink}}">Ma position</strong> · Toits-Rouges, Yopougon</span>
+</div>
+</div>
+<div class="nm-noscroll" style="flex: 1; overflow-y: auto; padding: 8px 16px 16px; display: flex; flex-direction: column; gap: 2px">
+<span style="font: 800 12px/1 {{t.text}}; letter-spacing: .06em; text-transform: uppercase; color: {{t.ink2}}; padding: 12px 0 6px">Suggestions</span>
+<sc-for list="{{suggestions}}" as="s" hint-placeholder-count="4">
+<button class="nm-btn" type="button" onClick="{{s.go}}" style="display: flex; align-items: center; gap: 14px; width: 100%; padding: 11px 2px; border: 0; border-bottom: 1px solid {{t.line}}; background: none; font: inherit; color: {{t.ink}}; text-align: left">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 50%; background: {{t.surface}}; color: {{s.color}}; display: grid; place-items: center">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{s.icon}}"></use></svg>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font: 700 16px/1.2 {{t.text}}">{{s.name}}</span>
+<span style="font: 600 13px/1.2 {{t.text}}; color: {{t.ink2}}">{{s.sub}}</span>
+</span>
+<span style="flex: none; font: 700 13px/1 {{t.text}}; color: {{t.ink2}}">{{s.km}}</span>
+</button>
+</sc-for>
+<sc-if value="{{noSuggestion}}" hint-placeholder-val="{{ false }}">
+<span style="padding: 18px 2px; font: 600 15px/1.4 {{t.text}}; color: {{t.ink2}}">Aucun lieu trouvé. Dans la vraie appli, tu pourras l’ajouter en trois pressions.</span>
+</sc-if>
+<span style="font: 800 12px/1 {{t.text}}; letter-spacing: .06em; text-transform: uppercase; color: {{t.ink2}}; padding: 20px 0 6px">Enregistrés</span>
+<sc-for list="{{saved}}" as="s" hint-placeholder-count="2">
+<button class="nm-btn" type="button" onClick="{{s.go}}" style="display: flex; align-items: center; gap: 14px; width: 100%; padding: 11px 2px; border: 0; border-bottom: 1px solid {{t.line}}; background: none; font: inherit; color: {{t.ink}}; text-align: left">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 50%; background: {{t.accentSoft}}; color: {{t.accentInk}}; display: grid; place-items: center">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{s.icon}}"></use></svg>
+</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<span style="font: 700 16px/1.2 {{t.text}}">{{s.name}}</span>
+<span style="font: 600 13px/1.2 {{t.text}}; color: {{t.ink2}}">{{s.sub}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+<div style="padding: 12px 16px 18px; display: flex; justify-content: center; background: {{t.bg}}">
+<button class="nm-btn" type="button" onClick="{{goResultsPlateau}}" style="display: flex; align-items: center; gap: 12px; height: 60px; padding: 0 26px 0 8px; border-radius: 999px; border: 0; background: {{t.primary}}; color: {{t.onPrimary}}; font: 800 16px/1 {{t.display}}; box-shadow: 0 6px 18px rgba(0,0,0,.22)">
+<span style="width: 46px; height: 46px; border-radius: 50%; background: {{t.onPrimarySoft}}; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-mic"></use></svg>
+</span>
+<span>{{copy.voice}}</span>
+</button>
+</div>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 96px; padding: 12px 14px; border-radius: 14px; background: {{t.toastBg}}; color: {{t.toastInk}}; font: 600 14px/1.35 {{t.text}}; box-shadow: 0 6px 20px rgba(0,0,0,.25); animation: nm-up .3s ease-out">{{toast}}</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.resultats}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 12px; right: 12px; top: 12px; padding: 8px 8px 8px 4px; border-radius: 18px; background: {{t.card}}; box-shadow: {{t.shadow}}; display: flex; align-items: center; gap: 4px">
+<button class="nm-btn" type="button" aria-label="Retour" onClick="{{goSearch}}" style="flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: none; color: {{t.ink}}; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-back"></use></svg>
+</button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 10px; background: {{t.surface}}; font: 600 14px/1 {{t.text}}; color: {{t.ink2}}">
+<span style="flex: none; width: 9px; height: 9px; border-radius: 50%; background: {{t.user}}"></span>Ma position</div>
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 10px; background: {{t.surface}}; font: 700 14px/1 {{t.text}}; color: {{t.ink}}">
+<span style="flex: none; width: 9px; height: 9px; border-radius: 2px; background: {{t.dest}}"></span>{{destName}}</div>
+</div>
+<button class="nm-btn" type="button" aria-label="Inverser départ et arrivée" style="flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: none; color: {{t.ink}}; display: grid; place-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-swap"></use></svg>
+</button>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 432px; border-radius: {{t.rSheet}}px {{t.rSheet}}px 0 0; background: {{t.card}}; box-shadow: 0 -6px 24px rgba(0,0,0,.16); display: flex; flex-direction: column">
+<div style="padding: 10px 16px 6px; display: flex; flex-direction: column; gap: 8px">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: {{t.line}}"></span>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font: {{t.dw}} 20px/1.15 {{t.display}}; letter-spacing: {{t.dls}}">{{copy.results}}</h2>
+<button class="nm-btn" type="button" style="display: flex; align-items: center; gap: 4px; height: 34px; padding: 0 10px 0 12px; border-radius: 999px; border: 1px solid {{t.line}}; background: {{t.surface}}; color: {{t.ink}}; font: 700 13px/1 {{t.text}}">Partir à 7 h 34<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-down"></use></svg></button>
+</div>
+</div>
+<div class="nm-noscroll" style="flex: 1; overflow-y: auto; padding: 4px 16px 8px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{options}}" as="o" hint-placeholder-count="3">
+<button class="nm-btn" type="button" aria-pressed="{{o.selected}}" onClick="{{o.pick}}" style="display: flex; flex-direction: column; gap: 9px; width: 100%; padding: 12px 14px; border-radius: {{t.r}}px; border: 2px solid {{o.border}}; background: {{o.bg}}; font: inherit; color: {{t.ink}}; text-align: left">
+<span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%">
+<span style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{o.tags}}" as="tag" hint-placeholder-count="1">
+<span style="padding: 4px 9px; border-radius: 999px; background: {{tag.bg}}; color: {{tag.ink}}; font: 800 11.5px/1 {{t.text}}; letter-spacing: .01em">{{tag.label}}</span>
+</sc-for>
+</span>
+<span style="font: {{t.dw}} 19px/1 {{t.display}}; letter-spacing: {{t.dls}}; white-space: nowrap">{{o.duration}}</span>
+</span>
+<span style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap">
+<sc-for list="{{o.legs}}" as="lg" hint-placeholder-count="3">
+<span style="display: flex; align-items: center; gap: 4px">
+<span style="display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 9px 0 6px; border-radius: 8px; background: {{lg.bg}}; color: {{lg.ink}}; font: 700 12.5px/1 {{t.text}}">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{lg.icon}}"></use></svg>{{lg.text}}</span>
+<sc-if value="{{lg.more}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{t.ink2}}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-chev"></use></svg></sc-if>
+</span>
+</sc-for>
+</span>
+<span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; font: 600 13px/1.3 {{t.text}}; color: {{t.ink2}}">
+<span><strong style="color: {{t.ink}}; font-weight: 800">{{o.price}}</strong> · {{o.meta}}</span>
+<span style="white-space: nowrap">{{o.arrive}}</span>
+</span>
+<span style="display: flex; align-items: center; gap: 6px; font: 700 12px/1 {{t.text}}; color: {{o.freshColor}}">
+<span style="width: 7px; height: 7px; border-radius: 50%; background: {{o.freshColor}}"></span>{{o.fresh}}
+<span style="display: flex; gap: 2px; margin-left: 4px" aria-label="{{o.confLabel}}">
+<span style="width: 14px; height: 4px; border-radius: 2px; background: {{o.c1}}"></span>
+<span style="width: 14px; height: 4px; border-radius: 2px; background: {{o.c2}}"></span>
+<span style="width: 14px; height: 4px; border-radius: 2px; background: {{o.c3}}"></span>
+</span>
+</span>
+</button>
+</sc-for>
+</div>
+<div style="padding: 10px 16px 16px; border-top: 1px solid {{t.line}}">
+<button class="nm-btn" type="button" onClick="{{goTrip}}" style="width: 100%; height: 56px; border-radius: {{t.rButton}}px; border: 0; background: {{t.primary}}; color: {{t.onPrimary}}; font: 800 17px/1 {{t.display}}; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 14px rgba(0,0,0,.18)">{{copy.go}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.trajet}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 12px; right: 12px; top: 12px; border-radius: 20px; background: {{t.navBg}}; color: {{t.navInk}}; box-shadow: 0 8px 24px rgba(0,0,0,.25); overflow: hidden">
+<div style="display: flex; gap: 14px; align-items: center; padding: 16px 16px 14px">
+<span style="flex: none; width: 56px; height: 56px; border-radius: 18px; background: {{t.navIconBg}}; color: {{t.navInk}}; display: grid; place-items: center">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-woro"></use></svg>
+</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px">
+<span style="font: {{t.dw}} 21px/1.15 {{t.display}}; letter-spacing: {{t.dls}}">{{copy.alight}}</span>
+<span style="font: 700 15px/1.2 {{t.text}}; opacity: .88">dans 2 arrêts · environ 4 min</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 11px 16px; background: {{t.navNext}}; font: 700 14px/1.3 {{t.text}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><use href="#i-bateau"></use></svg>
+<span>Ensuite : bateau-bus vers le Plateau, départ vers 7 h 52</span>
+</div>
+</div>
+<div role="status" style="position: absolute; left: 24px; right: 24px; top: 186px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: {{t.card}}; color: {{t.ink}}; box-shadow: {{t.shadow}}; font: 700 13.5px/1.25 {{t.text}}; animation: nm-up .5s ease-out .8s both">
+<span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: {{t.accentSoft}}; color: {{t.accentInk}}; display: grid; place-items: center">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-bell"></use></svg>
+</span>
+<span>On te prévient un arrêt avant, par la voix et une vibration.</span>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; border-radius: {{t.rSheet}}px {{t.rSheet}}px 0 0; background: {{t.card}}; box-shadow: 0 -6px 24px rgba(0,0,0,.16); padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font: 700 12.5px/1 {{t.text}}; color: {{t.ink2}}; text-transform: uppercase; letter-spacing: .05em">Arrivée prévue</span>
+<span style="font: {{t.dw}} 32px/1 {{t.display}}; letter-spacing: {{t.dls}}; color: {{t.ink}}">8 h 12<span style="font: 700 16px/1 {{t.text}}; color: {{t.ink2}}"> à 8 h 18</span></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px; font: 700 13px/1.2 {{t.text}}; color: {{t.ink2}}">
+<span>24 min · 3,6 km restants</span>
+<span style="display: flex; align-items: center; gap: 6px; color: {{t.liveInk}}"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{t.liveInk}}; animation: nm-blink 1.6s ease-in-out infinite"></span>17 usagers sur ce trajet</span>
+</div>
+</div>
+<div style="display: flex; gap: 4px; height: 8px" aria-label="Avancement du trajet">
+<span style="flex: 0.6; border-radius: 4px; background: {{modeColors.walk}}"></span>
+<span style="flex: 4; border-radius: 4px; background: linear-gradient(90deg, {{modeColors.woro}} 62%, {{t.line}} 62%)"></span>
+<span style="flex: 2; border-radius: 4px; background: {{t.line}}"></span>
+<span style="flex: 1.4; border-radius: 4px; background: {{t.line}}"></span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<button class="nm-btn" type="button" style="height: 64px; border-radius: {{t.r}}px; border: 0; background: {{t.surface}}; color: {{t.ink}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font: 700 13px/1 {{t.text}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{t.primaryText}}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-shield"></use></svg>Partager</button>
+<button class="nm-btn" type="button" onClick="{{goReportFromTrip}}" style="height: 64px; border-radius: {{t.r}}px; border: 0; background: {{t.surface}}; color: {{t.ink}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font: 700 13px/1 {{t.text}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{t.reportIcon}}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-megaphone"></use></svg>Signaler</button>
+<button class="nm-btn" type="button" onClick="{{goHome}}" style="height: 64px; border-radius: {{t.r}}px; border: 0; background: {{t.surface}}; color: {{t.ink}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font: 700 13px/1 {{t.text}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{t.ink2}}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-stop"></use></svg>Terminer</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.signaler}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(8,12,24,.42)"></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; border-radius: {{t.rSheet}}px {{t.rSheet}}px 0 0; background: {{t.card}}; box-shadow: 0 -6px 24px rgba(0,0,0,.2); padding: 10px 16px 18px; display: flex; flex-direction: column; gap: 14px; animation: nm-up .3s ease-out">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: {{t.line}}"></span>
+<sc-if value="{{reportForm}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 5px">
+<h2 style="margin: 0; font: {{t.dw}} 23px/1.15 {{t.display}}; letter-spacing: {{t.dls}}">{{copy.reportTitle}}</h2>
+<span style="font: 600 14px/1.3 {{t.text}}; color: {{t.ink2}}">{{reportWhere}}</span>
+</div>
+<button class="nm-btn" type="button" aria-label="Fermer" onClick="{{closeReport}}" style="flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: {{t.surface}}; color: {{t.ink}}; display: grid; place-items: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><use href="#i-close"></use></svg>
+</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{reports}}" as="r" hint-placeholder-count="6">
+<button class="nm-btn" type="button" onClick="{{r.send}}" style="height: 112px; border-radius: {{t.r}}px; border: 0; background: {{t.surface}}; color: {{t.ink}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font: 800 13.5px/1.15 {{t.text}}; text-align: center; padding: 6px">
+<span style="width: 52px; height: 52px; border-radius: 50%; background: {{r.color}}; color: #FFFFFF; display: grid; place-items: center; box-shadow: 0 4px 10px rgba(0,0,0,.18)">
+<svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{r.icon}}"></use></svg>
+</span>
+<span>{{r.label}}</span>
+</button>
+</sc-for>
+</div>
+<span style="font: 600 12.5px/1.4 {{t.text}}; color: {{t.ink2}}; text-align: center">Deux pressions, d’une main. Ton signalement est anonyme et confirmé par les autres usagers.</span>
+</sc-if>
+<sc-if value="{{reportDone}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 18px 8px 4px; text-align: center">
+<span style="width: 84px; height: 84px; border-radius: 50%; background: {{t.okSoft}}; color: {{t.ok}}; display: grid; place-items: center; animation: nm-pop .45s ease-out">
+<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-check"></use></svg>
+</span>
+<h2 style="margin: 0; font: {{t.dw}} 24px/1.15 {{t.display}}; letter-spacing: {{t.dls}}">{{copy.thanks}}</h2>
+<span style="font: 600 15px/1.45 {{t.text}}; color: {{t.ink2}}; max-width: 300px">« {{reportLabel}} » est visible par les usagers autour de toi. Il disparaît seul si personne ne le confirme dans 30 min.</span>
+<span style="display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: {{t.accentSoft}}; color: {{t.accentInk}}; font: 800 14px/1 {{t.text}}">+10 points de confiance</span>
+<button class="nm-btn" type="button" onClick="{{closeReport}}" style="width: 100%; height: 54px; margin-top: 6px; border-radius: {{t.rButton}}px; border: 0; background: {{t.primary}}; color: {{t.onPrimary}}; font: 800 16px/1 {{t.display}}">Retour</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.gare}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 12px; top: 12px">
+<button class="nm-btn" type="button" aria-label="Retour" onClick="{{goHome}}" style="width: 46px; height: 46px; border-radius: 50%; border: 0; background: {{t.card}}; color: {{t.ink}}; box-shadow: {{t.shadow}}; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-back"></use></svg>
+</button>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 560px; border-radius: {{t.rSheet}}px {{t.rSheet}}px 0 0; background: {{t.card}}; box-shadow: 0 -6px 24px rgba(0,0,0,.16); display: flex; flex-direction: column; animation: nm-up .3s ease-out">
+<div class="nm-noscroll" style="flex: 1; overflow-y: auto; padding: 10px 16px 12px; display: flex; flex-direction: column; gap: 14px">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: {{t.line}}"></span>
+<div style="display: flex; gap: 12px; align-items: center">
+<span style="flex: none; width: 52px; height: 52px; border-radius: 16px; background: {{gare.tint}}; color: {{gare.modeColor}}; display: grid; place-items: center">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{gare.icon}}"></use></svg>
+</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font: {{t.dw}} 21px/1.15 {{t.display}}; letter-spacing: {{t.dls}}">{{gare.name}}</h2>
+<span style="font: 600 13.5px/1.2 {{t.text}}; color: {{t.ink2}}">{{gare.sub}}</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: {{t.r}}px; background: {{gare.affBg}}">
+<span style="display: flex; align-items: flex-end; gap: 3px; height: 22px" aria-hidden="true">
+<span style="width: 6px; height: 9px; border-radius: 2px; background: {{gare.b1}}"></span>
+<span style="width: 6px; height: 15px; border-radius: 2px; background: {{gare.b2}}"></span>
+<span style="width: 6px; height: 22px; border-radius: 2px; background: {{gare.b3}}"></span>
+</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<span style="font: 800 17px/1.1 {{t.text}}; color: {{gare.affInk}}">{{gare.aff}} en ce moment</span>
+<span style="font: 600 13px/1.25 {{t.text}}; color: {{t.ink2}}">{{gare.fresh}}</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font: 800 13px/1 {{t.text}}; color: {{t.ink}}">Affluence aujourd’hui</span>
+<div style="display: flex; align-items: flex-end; gap: 3px; height: 64px" aria-label="Affluence par heure, de 5 h à 21 h">
+<sc-for list="{{gare.hours}}" as="h" hint-placeholder-count="17">
+<span style="flex: 1; height: {{h.h}}px; border-radius: 3px 3px 1px 1px; background: {{h.color}}"></span>
+</sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; font: 600 11px/1 {{t.text}}; color: {{t.ink2}}"><span>5 h</span><span>9 h</span><span>13 h</span><span>17 h</span><span>21 h</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font: 800 13px/1 {{t.text}}; color: {{t.ink}}; padding-bottom: 6px">Départs</span>
+<sc-for list="{{gare.departures}}" as="dp" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid {{t.line}}">
+<span style="flex: none; width: 36px; height: 36px; border-radius: 10px; background: {{dp.color}}; color: #FFFFFF; display: grid; place-items: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{dp.icon}}"></use></svg>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font: 700 15px/1.2 {{t.text}}">{{dp.dest}}</span>
+<span style="font: 600 12.5px/1.2 {{t.text}}; color: {{t.ink2}}">{{dp.freq}}</span>
+</span>
+<span style="flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 3px">
+<span style="font: 800 14px/1 {{t.text}}">{{dp.wait}}</span>
+<span style="font: 600 12.5px/1 {{t.text}}; color: {{t.ink2}}">{{dp.price}}</span>
+</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="padding: 10px 16px 16px; border-top: 1px solid {{t.line}}; display: flex; gap: 10px">
+<button class="nm-btn" type="button" onClick="{{goResultsPlateau}}" style="flex: 1; height: 54px; border-radius: {{t.rButton}}px; border: 0; background: {{t.primary}}; color: {{t.onPrimary}}; font: 800 16px/1 {{t.display}}">Y aller</button>
+<button class="nm-btn" type="button" aria-label="Enregistrer la gare" style="flex: none; width: 54px; height: 54px; border-radius: {{t.rButton}}px; border: 1px solid {{t.line}}; background: {{t.surface}}; color: {{t.ink}}; display: grid; place-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-star"></use></svg>
+</button>
+<button class="nm-btn" type="button" aria-label="Partager la gare" style="flex: none; width: 54px; height: 54px; border-radius: {{t.rButton}}px; border: 1px solid {{t.line}}; background: {{t.surface}}; color: {{t.ink}}; display: grid; place-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-share"></use></svg>
+</button>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["gbe","yafohi","koro"],"default":"gbe","section":"Maquette"},"screen":{"editor":"enum","options":["carte","recherche","resultats","trajet","signaler","gare"],"default":"carte","section":"Maquette"},"satellite":{"editor":"boolean","default":false,"section":"Maquette"},"horsLigne":{"editor":"boolean","default":false,"section":"Maquette"},"$preview":{"width":390,"height":844}}'>
+const MW = 2098, MH = 2341, VW = 390, VH = 844;
+
+const D = {
+  home: [533.4, 1287.8],
+  dest: [935.3, 1391.9],
+  opts: {
+    rapide: [
+      { m: 'walk', d: 'M533.4,1287.8 L544.8,1299.4', b: [533.4, 1287.8, 544.8, 1299.4] },
+      { m: 'woro', d: 'M544.8,1299.4 L555.4,1310.2 L558.4,1323.4 L571.9,1320.7 L576,1317.5 L594.1,1335.9 L595.3,1334.7 L602.3,1341.2 L597.7,1345.9 L596.9,1348.4 L596.6,1378.8 L644,1378.9 L648.9,1379.8 L651.7,1382.4 L651.9,1464.8 L659.4,1465.3 L670.4,1463.7 L671.6,1470.5 L678.8,1468.8 L679.8,1475.3 L708.3,1469.5 L710.6,1478.2 L716.4,1487.1 L721.4,1492.8 L743,1510.7 L753.3,1497.1 L764.6,1506.7 L764.3,1507.3', b: [544.8, 1299.4, 764.6, 1510.7] },
+      { m: 'bateau', d: 'M767.6,1514.1 L781.3,1514.8 L799.5,1514.2 L858.2,1501.1 L949.5,1482.4 L964.5,1478.3 L966.7,1476.6 L968.5,1472.7', b: [767.6, 1472.7, 968.5, 1514.8] },
+      { m: 'walk', d: 'M966.5,1468.4 L964,1469.9 L956.5,1461.7 L939,1437.2 L937.3,1417.9 L936.7,1393.5 L935.4,1393.6 L935.3,1391.9', b: [935.3, 1391.9, 966.5, 1469.9] }
+    ],
+    eco: [
+      { m: 'walk', d: 'M533.4,1287.8 L555.4,1265.9', b: [533.4, 1265.9, 555.4, 1287.8] },
+      { m: 'bus', d: 'M555.4,1265.9 L540.2,1250.9 L536,1249.2 L523.8,1248.7 L523.7,1235.6 L528.9,1233.1 L595.9,1230.3 L621,1225.9 L641,1225 L658.4,1222.4 L692.5,1208.7 L761.6,1164.9 L772.9,1159 L780.5,1157.4 L792.1,1158.6 L801.5,1162.5 L808.5,1168 L812.7,1173.8 L818.8,1187.1 L824.3,1212.7 L825.6,1224.3 L824,1231.9 L816,1253.6 L814.7,1259.9 L815.1,1266.2 L819.7,1276.2 L831.8,1293.4 L836,1301.1 L836,1314.3 L838.9,1316.5 L862.2,1317.3 L870,1328.5 L874.8,1330.1 L887.5,1330.7 L899.3,1343 L924.4,1343.9 L924.1,1368.2 L925.3,1368.3', b: [523.7, 1157.4, 925.3, 1368.3] },
+      { m: 'walk', d: 'M925.3,1368.3 L935.4,1368.2 L935.3,1391.9', b: [925.3, 1368.2, 935.4, 1391.9] }
+    ],
+    gbaka: [
+      { m: 'walk', d: 'M533.4,1287.8 L555.4,1265.9', b: [533.4, 1265.9, 555.4, 1287.8] },
+      { m: 'gbaka', d: 'M555.4,1265.9 L540.2,1250.9 L536,1249.2 L523.8,1248.7 L523.7,1235.6 L528.9,1233.1 L595.9,1230.3 L621,1225.9 L641,1225 L658.4,1222.4 L689.2,1210.4 L696.3,1206.6 L791.2,1145.6 L798.4,1141.9 L808.6,1140.2 L858.4,1145.1 L861.1,1144.3 L862.3,1140.1 L865.4,1101.8 L869.9,1032.6 L869.5,1027.4 L866,1014.8 L849.5,981.2 L854.8,957.3 L853,948.7 L850.6,944.1 L846.9,940.3 L841.9,939.9 L834.9,943.1 L834.5,947 L838.2,959.9', b: [523.7, 939.9, 869.9, 1265.9] },
+      { m: 'woro', d: 'M838.2,959.9 L864,1015.7 L867.3,1027.7 L867.3,1043 L858.6,1166.8 L858.6,1172.8 L859.9,1180.1 L878.8,1244.4 L887.2,1258 L887,1266.1 L912.5,1266.5 L912.1,1317.4 L917.4,1317.4', b: [838.2, 959.9, 917.4, 1317.4] },
+      { m: 'walk', d: 'M917.4,1317.4 L924.6,1317.3 L924.4,1343.9 L935.4,1344.4 L935.3,1391.9', b: [917.4, 1317.3, 935.4, 1391.9] }
+    ]
+  },
+  veh: [
+    { m: 'gbaka', km: 5.8, d: 'M331.4,980.6 L331.4,985 L387.3,982.1 L392.2,979.4 L387.6,963.6 L389.4,957.3 L398.6,955 L410,946.4 L421.2,944 L494.3,949.8 L531.3,962.3 L555.6,962 L621.5,945.4 L693,935.2 L707.2,929.9 L747.6,907.7 L789.9,894.3 L805.3,891.1 L810.1,891.8 L821.8,899.9 L833.9,917.2 L837.3,928.4 L833,945 L838.2,959.9' },
+    { m: 'gbaka', km: 8.0, d: 'M838.2,959.9 L864,1015.7 L867.3,1027.7 L867.3,1043 L859.9,1140.1 L860.6,1144.7 L810.5,1138.6 L798,1140.4 L688.8,1208.6 L608,1226.1 L374.3,1226.1 L315.2,1223.6 L310,1221.5 L307.6,1222.9 L307.3,1227.7 L307.6,1231.6 L310.3,1233.6 L309.5,1267.4 L306.9,1272.5 L298.7,1281 L307.8,1290.3' },
+    { m: 'bus', km: 8.4, d: 'M385.1,1098.4 L381.8,1096.8 L374.6,1097 L374.5,1092.5 L426.9,1092.4 L427.3,1125.2 L437.1,1143.8 L439.4,1155.1 L439.5,1222.8 L436.7,1224.9 L436.6,1232.3 L439.5,1235.1 L444.9,1232.6 L475.8,1231.3 L595.9,1230.3 L621,1225.9 L641,1225 L658.4,1222.4 L692.5,1208.7 L772.9,1159 L785,1157.6 L792.1,1158.6 L801.5,1162.5 L808.5,1168 L812.7,1173.8 L819.9,1191.5 L825.6,1224.3 L816,1253.6 L815.1,1266.2 L819.7,1276.2 L836,1301.1 L836,1314.3 L838.9,1316.5 L862.2,1317.3 L870,1328.5 L887.5,1330.7 L899.3,1343 L924.4,1343.9 L924.1,1368.2 L925.3,1368.3' },
+    { m: 'bateau', km: 2.0, d: 'M767.6,1514.1 L781.3,1514.8 L799.5,1514.2 L858.2,1501.1 L949.5,1482.4 L964.5,1478.3 L966.7,1476.6 L968.5,1472.7' },
+    { m: 'bateau', km: 2.2, d: 'M761.9,1519 L765.8,1521.9 L775,1525.9 L799.8,1525.5 L916,1499.1 L936.1,1491.1 L946.8,1488.2 L952.4,1490.4 L980,1511.5' },
+    { m: 'woro', km: 1.7, d: 'M523.6,1266.3 L521.1,1263.7 L523.7,1256.9 L523.7,1235.6 L526.7,1232.8 L525.6,1223.6 L541.1,1223.6 L552.4,1210.3 L564.3,1203.3 L574.9,1193.8 L582.1,1191.2 L588,1168 L595.2,1168.7 L611.8,1164.9 L618.3,1161.8 L622,1157.8' },
+    { m: 'woro', km: 3.9, d: 'M886.4,1313 L887.2,1258 L878.8,1244.4 L858.6,1172.8 L865.4,1101.8 L869.5,1027.4 L866,1014.8 L849.5,981.2 L854.8,957.3 L853,948.7 L846.9,940.3 L841.9,939.9 L834.9,943.1 L834.5,947 L838.2,959.9' },
+    { m: 'bus', km: 6.1, d: 'M838.2,959.9 L845.2,976 L849,976.5 L850.6,974.8 L854.8,957.3 L853.9,951 L835.2,918 L830.5,905 L832.7,895.3 L836.6,888.1 L840.4,885.8 L845.6,885.4 L853.2,886.6 L861.5,890.5 L893.9,913.9 L905.3,920.3 L918.6,924.3 L951.1,928.4 L960.9,931.7 L968.2,936.3 L978.9,948.4 L1003.1,988.1 L1011.5,995 L1023.3,999.1 L1038,1000.1 L1097.4,997 L1121.7,999.5 L1141.4,1004.1 L1143.2,1006.6 L1144.1,1014.9 L1151.3,961.2 L1156.5,954.6 L1190.7,929 L1195.1,934.5 L1191.5,937.1 L1214.4,968.6 L1223.2,961.4' },
+    { m: 'woro', km: 3.1, d: 'M307.8,1290.3 L298.7,1281 L309,1269.2 L310.3,1233.6 L315.7,1231.2 L460.4,1231 L518.9,1232.8 L523.7,1235.6 L523.8,1248.7 L536,1249.2 L540.2,1250.9 L555.4,1265.9' },
+    { m: 'gbaka', km: 5.7, d: 'M746.9,932.5 L743.8,919 L730.9,909.9 L726.4,910.6 L711.6,922.6 L694.3,929.4 L686.1,927.6 L672.8,918.1 L662.4,916.2 L651.7,919.1 L639.6,927.3 L634.9,935.7 L635.2,950.8 L618.1,950.3 L561.5,964.8 L543.5,965.8 L529.4,965.1 L488.1,953.2 L480.9,954.6 L463.7,962.7 L437.2,961.6 L409.9,970.5 L392.2,979.4 L418.8,1012.8 L425,1026.7 L426.9,1042.3 L426.9,1092.4 L374.5,1092.5 L374.6,1097 L381.8,1096.8 L385.1,1098.4' }
+  ],
+  labels: [
+    ['Yopougon', 282, 1226, 'q'], ['Attécoubé', 768, 1075, 'q'], ['Adjamé', 906, 1017, 'q'], ['Le Plateau', 918, 1300, 'q'],
+    ['Cocody', 1224, 967, 'q'], ['Treichville', 1071, 1568, 'q'], ['Marcory', 1335, 1596, 'q'], ['Koumassi', 1648, 1724, 'q'],
+    ['Williamsville', 887, 835, 's'], ['Deux Plateaux', 1259, 823, 's'], ['Toits-Rouges', 500, 1250, 's'], ['Kouté', 311, 1344, 's'],
+    ['Blockauss', 1144, 1367, 's'], ['Vieux Cocody', 1130, 1178, 's'], ['Riviéra 2', 1459, 1095, 's'], ['Abobo', 929, 160, 'q'],
+    ['Biétri', 1456, 1900, 's'], ['Vridi', 1138, 2050, 's'], ['Port-Bouët', 1647, 2143, 'q'], ['Lycée Technique', 1093, 1040, 's'],
+    ['Lagune Ébrié', 470, 1560, 'w'], ['Baie du Banco', 725, 1345, 'w'], ['Parc national du Banco', 555, 560, 'f']
+  ]
+};
+
+const GARES = [
+  { id: 'mossikro', name: 'Gare Mossikro', short: 'Mossikro', x: 624, y: 1159, mode: 'woro', modes: 'Wôrô-wôrô, gbaka', where: 'Yopougon', km: '1,5 km', aff: 0, wait: '2–5 min', w: '3 min', fresh: 'En direct · il y a 1 min · 9 avis', near: 1 },
+  { id: 'koute', name: 'Gare Yopougon Kouté', short: 'Kouté', x: 305, y: 1292, mode: 'gbaka', modes: 'Gbaka', where: 'Yopougon', km: '2,2 km', aff: 1, wait: '6–12 min', w: '8 min', fresh: 'En direct · il y a 4 min · 6 avis', near: 2 },
+  { id: 'lag_yop', name: 'Gare lagunaire de Yopougon', short: 'Gare lagunaire', x: 768, y: 1514, mode: 'bateau', modes: 'Bateau-bus', where: 'Yopougon', km: '3,1 km', aff: 1, wait: '5–10 min', w: '7 min', fresh: 'En direct · il y a 3 min · 11 avis', near: 3 },
+  { id: 'sds', name: 'Gare SDS Yopougon', short: 'Gare SDS', x: 387, y: 1093, mode: 'gbaka', modes: 'Gbaka', where: 'Yopougon', km: '2,4 km', aff: 2, wait: '12–20 min', w: '15 min', fresh: 'En direct · il y a 2 min · 14 avis' },
+  { id: 'attecoube', name: 'Gare intercommunale d’Attécoubé', short: 'Attécoubé', x: 750, y: 931, mode: 'gbaka', modes: 'Gbaka', where: 'Attécoubé', km: '4,0 km', aff: 0, wait: '3–6 min', w: '4 min', fresh: 'En direct · il y a 6 min · 4 avis' },
+  { id: 'adjame', name: 'Gare d’Adjamé', short: 'Adjamé', x: 835, y: 962, mode: 'gbaka', modes: 'Gbaka, bus, cars', where: 'Adjamé', km: '4,2 km', aff: 2, wait: '10–25 min', w: '18 min', fresh: 'En direct · il y a 1 min · 31 avis' },
+  { id: 'plateau', name: 'Gare du Plateau', short: 'Gare du Plateau', x: 879, y: 1311, mode: 'bus', modes: 'Bus', where: 'Le Plateau', km: '3,3 km', aff: 1, wait: '5–12 min', w: '8 min', fresh: 'En direct · il y a 5 min · 7 avis' },
+  { id: 'lag_plateau', name: 'Gare lagunaire du Plateau', short: 'Lagunaire Plateau', x: 960, y: 1474, mode: 'bateau', modes: 'Bateau-bus', where: 'Le Plateau', km: '4,1 km', aff: 0, wait: '4–9 min', w: '6 min', fresh: 'En direct · il y a 8 min · 5 avis' },
+  { id: 'treichville', name: 'Gare de Treichville', short: 'Treichville', x: 1001, y: 1632, mode: 'woro', modes: 'Wôrô-wôrô, gbaka', where: 'Treichville', km: '5,4 km', aff: 1, wait: '4–9 min', w: '6 min', fresh: 'En direct · il y a 3 min · 8 avis' },
+  { id: 'cocody', name: 'Gare campus Cocody', short: 'Campus Cocody', x: 1246, y: 1099, mode: 'bus', modes: 'Bus', where: 'Cocody', km: '6,9 km', aff: 0, wait: '6–10 min', w: '7 min', fresh: 'En direct · il y a 9 min · 3 avis' }
+];
+
+const DEPARTURES = {
+  bateau: [
+    { m: 'bateau', dest: 'Le Plateau', freq: 'Toutes les 15 min · prochain vers 7 h 52', wait: '5–10 min', price: '250–300 F' },
+    { m: 'bateau', dest: 'Treichville', freq: 'Toutes les 20 min', wait: '8–15 min', price: '250–300 F' },
+    { m: 'woro', dest: 'Toits-Rouges, Siporex', freq: 'Départ dès que c’est plein', wait: '3–8 min', price: '200 F' }
+  ],
+  gbaka: [
+    { m: 'gbaka', dest: 'Adjamé', freq: 'Départ dès que c’est plein · ~ toutes les 4 min', wait: '4–10 min', price: '250–350 F' },
+    { m: 'gbaka', dest: 'Abobo', freq: 'Départ dès que c’est plein', wait: '8–15 min', price: '300–400 F' },
+    { m: 'woro', dest: 'Niangon, Toits-Rouges', freq: 'Départ dès que c’est plein', wait: '2–6 min', price: '200 F' }
+  ],
+  woro: [
+    { m: 'woro', dest: 'Toits-Rouges, Siporex', freq: 'Départ dès que c’est plein', wait: '2–5 min', price: '200 F' },
+    { m: 'woro', dest: 'Niangon, Kouté', freq: 'Départ dès que c’est plein', wait: '3–7 min', price: '200–250 F' },
+    { m: 'gbaka', dest: 'Adjamé', freq: '~ toutes les 5 min', wait: '5–10 min', price: '250–350 F' }
+  ],
+  bus: [
+    { m: 'bus', dest: 'Yopougon', freq: 'Toutes les 10 à 15 min', wait: '5–12 min', price: '200–300 F' },
+    { m: 'bus', dest: 'Cocody', freq: 'Toutes les 12 min', wait: '6–12 min', price: '200–300 F' },
+    { m: 'woro', dest: 'Adjamé', freq: 'Départ dès que c’est plein', wait: '2–6 min', price: '300 F' }
+  ]
+};
+
+const HOURS = [
+  [18, 52, 64, 46, 30, 24, 26, 28, 24, 22, 26, 34, 50, 58, 44, 28, 16],
+  [12, 34, 48, 40, 26, 20, 22, 24, 20, 18, 22, 30, 42, 50, 36, 22, 12]
+];
+
+const INCIDENTS = [
+  { x: 692, y: 1209, icon: 'i-traffic', kind: 'bouchon', label: 'Bouchon' },
+  { x: 438, y: 1170, icon: 'i-flood', kind: 'inondation', label: 'Route inondée' },
+  { x: 865, y: 1100, icon: 'i-danger', kind: 'accident', label: 'Accident' }
+];
+
+const MODE_NAME = { gbaka: 'Gbaka', woro: 'Wôrô-wôrô', bus: 'Bus', bateau: 'Bateau-bus', walk: 'À pied' };
+
+const THEMES = {
+  gbe: {
+    dark: false, display: '"Plus Jakarta Sans", system-ui, sans-serif', text: '"Plus Jakarta Sans", system-ui, sans-serif', dw: 800, dls: '-0.02em',
+    bg: '#FFFFFF', card: '#FFFFFF', surface: '#F2F5F6', line: '#DFE6E9', chipLine: '#DFE6E9', ink: '#0E1C22', ink2: '#4B5C63',
+    primary: '#0B6E87', primaryText: '#0B6E87', onPrimary: '#FFFFFF', onPrimarySoft: 'rgba(255,255,255,.18)',
+    accentSoft: '#FFEBDD', accentInk: '#A6450A', report: '#F2711C', onReport: '#1A0F06', reportIcon: '#C9560E',
+    ok: '#12805C', okSoft: '#DDF2E8', mid: '#B25E09', high: '#C42B2B', liveInk: '#12805C',
+    user: '#0B6E87', userSoft: 'rgba(11,110,135,.18)', dest: '#C42B2B', sea: '#9CCDE6',
+    avatarBg: '#0B6E87', avatarInk: '#FFFFFF', offlineBg: '#0E1C22', offlineInk: '#FFFFFF', toastBg: '#0E1C22', toastInk: '#FFFFFF',
+    navBg: '#0B6E87', navInk: '#FFFFFF', navIconBg: 'rgba(255,255,255,.16)', navNext: 'rgba(0,0,0,.16)',
+    modes: { gbaka: '#13855A', woro: '#BF5A00', bus: '#2B59C3', bateau: '#077B99', walk: '#5F6B70' },
+    r: 14, rSheet: 24, rSearch: 16, rButton: 14,
+    shadow: '0 1px 3px rgba(14,28,34,.12), 0 6px 18px rgba(14,28,34,.12)',
+    label: '#41525A', labelMinor: '#5D6D74', halo: '0 0 2px #FFFFFF, 0 0 3px #FFFFFF, 0 0 5px #FFFFFF', water: '#2C6F8F', forest: '#3F7A3B',
+    copy: { search: 'Tu vas où ?', go: 'Partir maintenant', nearby: 'Autour de toi', report: 'Signaler', results: '3 façons d’y aller', voice: 'Dis ta destination', reportTitle: 'Qu’est-ce qui se passe ?', thanks: 'Merci, c’est noté !', alight: 'Descends à la gare lagunaire' }
+  },
+  yafohi: {
+    dark: false, display: '"Baloo 2", "Nunito", system-ui, sans-serif', text: '"Nunito", system-ui, sans-serif', dw: 800, dls: '0',
+    bg: '#FFF9EE', card: '#FFFFFF', surface: '#FFF2D9', line: '#F0E3C8', chipLine: '#F0E3C8', ink: '#16130F', ink2: '#5E574C',
+    primary: '#16130F', primaryText: '#16130F', onPrimary: '#FFFFFF', onPrimarySoft: 'rgba(255,194,26,.95)',
+    accentSoft: '#FFE9A8', accentInk: '#16130F', report: '#FFC21A', onReport: '#16130F', reportIcon: '#B07800',
+    ok: '#1F7A47', okSoft: '#DDF1E2', mid: '#A35A00', high: '#C2332B', liveInk: '#1F7A47',
+    user: '#16130F', userSoft: 'rgba(255,194,26,.6)', dest: '#C2332B', sea: '#A9DDD6',
+    avatarBg: '#FFC21A', avatarInk: '#16130F', offlineBg: '#16130F', offlineInk: '#FFFFFF', toastBg: '#16130F', toastInk: '#FFFFFF',
+    navBg: '#16130F', navInk: '#FFFFFF', navIconBg: '#FFC21A', navNext: 'rgba(255,255,255,.08)',
+    modes: { gbaka: '#13855A', woro: '#BF5A00', bus: '#2B59C3', bateau: '#077B99', walk: '#6B655A' },
+    r: 20, rSheet: 30, rSearch: 999, rButton: 999,
+    shadow: '0 2px 4px rgba(22,19,15,.08), 0 8px 22px rgba(22,19,15,.12)',
+    label: '#5A4E3C', labelMinor: '#7A6D58', halo: '0 0 2px #FFF9EE, 0 0 3px #FFF9EE, 0 0 5px #FFF9EE', water: '#2F7F75', forest: '#4E7B33',
+    copy: { search: 'On va où ?', go: 'On y va !', nearby: 'Près de toi', report: 'Signaler', results: 'Trois façons d’y aller', voice: 'Dis-le, on cherche', reportTitle: 'Y’a quoi ?', thanks: 'Merci, c’est noté !', alight: 'Tu descends à la gare lagunaire' }
+  },
+  koro: {
+    dark: true, display: '"Sora", system-ui, sans-serif', text: '"Inter", system-ui, sans-serif', dw: 700, dls: '-0.015em',
+    bg: '#0E1430', card: '#18204A', surface: '#222B5C', line: '#2C3668', chipLine: '#2C3668', ink: '#F4F6FF', ink2: '#AEB7DA',
+    primary: '#FFD23F', primaryText: '#FFD23F', onPrimary: '#0E1430', onPrimarySoft: 'rgba(14,20,48,.14)',
+    accentSoft: 'rgba(59,212,229,.16)', accentInk: '#6FE3F0', report: '#FF6B5E', onReport: '#1B0805', reportIcon: '#FF8A7F',
+    ok: '#34D399', okSoft: 'rgba(52,211,153,.16)', mid: '#FBBF24', high: '#FB7185', liveInk: '#3BD4E5',
+    user: '#3BD4E5', userSoft: 'rgba(59,212,229,.25)', dest: '#FF6B5E', sea: '#0A1226',
+    avatarBg: '#FFD23F', avatarInk: '#0E1430', offlineBg: '#FFD23F', offlineInk: '#0E1430', toastBg: '#F4F6FF', toastInk: '#0E1430',
+    navBg: '#FFD23F', navInk: '#0E1430', navIconBg: 'rgba(14,20,48,.12)', navNext: 'rgba(14,20,48,.1)',
+    modes: { gbaka: '#2FCB8C', woro: '#FF9440', bus: '#7AA2FF', bateau: '#38BDF8', walk: '#AEB7DA' },
+    r: 18, rSheet: 26, rSearch: 18, rButton: 16,
+    shadow: '0 2px 6px rgba(0,0,0,.35), 0 10px 26px rgba(0,0,0,.35)',
+    label: '#C3CAEA', labelMinor: '#8C96C2', halo: '0 0 2px #0E1430, 0 0 4px #0E1430, 0 0 6px #0E1430', water: '#5D86C4', forest: '#5FAF8A',
+    copy: { search: 'Kôrô, on va où ?', go: 'Allons-y', nearby: 'Ça bouge autour de toi', report: 'Signaler', results: '3 trajets pour toi', voice: 'Dis-le à kôrô', reportTitle: 'Qu’est-ce que tu vois ?', thanks: 'Bien vu, merci !', alight: 'Descends à la gare lagunaire' }
+  }
+};
+
+function fit(b, rect, sMax) {
+  const bw = Math.max(b[2] - b[0], 40), bh = Math.max(b[3] - b[1], 40);
+  const s = Math.max(0.5, Math.min(sMax, (rect[2] - rect[0]) / bw, (rect[3] - rect[1]) / bh));
+  const cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2;
+  return { x: (rect[0] + rect[2]) / 2 - cx * s, y: (rect[1] + rect[3]) / 2 - cy * s, s: s };
+}
+
+function bboxOf(legs) {
+  return legs.reduce((a, l) => [Math.min(a[0], l.b[0]), Math.min(a[1], l.b[1]), Math.max(a[2], l.b[2]), Math.max(a[3], l.b[3])], [1e9, 1e9, -1e9, -1e9]);
+}
+
+function clampView(v) {
+  const minX = VW - MW * v.s, minY = VH - MH * v.s;
+  return { x: Math.min(0, Math.max(minX, v.x)), y: Math.min(0, Math.max(minY, v.y)), s: v.s };
+}
+
+function viewFor(screen, opt, gareId) {
+  if (screen === 'resultats') return clampView(fit(bboxOf(D.opts[opt]), [34, 132, 356, 392], 1.6));
+  if (screen === 'trajet') return clampView(fit([600, 1360, 800, 1520], [20, 240, 370, 600], 2.2));
+  if (screen === 'gare') {
+    const g = GARES.find((x) => x.id === gareId) || GARES[2];
+    return clampView({ x: 195 - g.x * 1.3, y: 170 - g.y * 1.3, s: 1.3 });
+  }
+  return clampView({ x: 195 - D.home[0], y: 330 - D.home[1], s: 1 });
+}
+
+function mix(hex, alpha) {
+  const n = parseInt(hex.slice(1), 16);
+  return 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + alpha + ')';
+}
+
+function norm(s) {
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const screen = props.screen || 'carte';
+    this.state = { screen: screen, sat: !!props.satellite, opt: 'rapide', query: 'Plat', report: null, gare: 'lag_yop', dest: 'Le Plateau', toast: null, anim: false, view: viewFor(screen, 'rapide', 'lag_yop'), from: 'carte' };
+    this.drag = null;
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.screen !== this.props.screen) this.go(this.props.screen || 'carte');
+    if (prev.satellite !== this.props.satellite) this.setState({ sat: !!this.props.satellite });
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.toastTimer);
+  }
+
+  go(screen, extra) {
+    const next = Object.assign({}, this.state, extra || {});
+    this.setState(Object.assign({}, extra || {}, { screen: screen, anim: true, view: viewFor(screen, next.opt, next.gare) }));
+  }
+
+  scaleOf(el) {
+    const r = el.getBoundingClientRect();
+    return { k: r.width / VW || 1, left: r.left, top: r.top };
+  }
+
+  zoomAt(px, py, factor) {
+    const v = this.state.view;
+    const s = Math.max(0.55, Math.min(2.6, v.s * factor));
+    const mx = (px - v.x) / v.s, my = (py - v.y) / v.s;
+    this.setState({ anim: false, view: clampView({ x: px - mx * s, y: py - my * s, s: s }) });
+  }
+
+  showToast(text) {
+    clearTimeout(this.toastTimer);
+    this.setState({ toast: text });
+    this.toastTimer = setTimeout(() => this.setState({ toast: null }), 2600);
+  }
+
+  renderVals() {
+    const themeKey = THEMES[this.props.theme] ? this.props.theme : 'gbe';
+    const t = THEMES[themeKey];
+    const st = this.state;
+    const v = st.view;
+    const inv = 1 / v.s;
+    const screen = st.screen;
+    const sat = st.sat;
+    const offline = !!this.props.horsLigne;
+    const affColors = [t.ok, t.mid, t.high];
+    const affNames = ['Fluide', 'Ça remplit', 'Ça déborde'];
+
+    const labels = D.labels.map((l) => {
+      const kind = l[3];
+      let font, color = t.label, ls = '0', tt = 'none', halo = t.halo;
+      if (kind === 'q') { font = '800 15px/1 ' + t.text; ls = '.08em'; tt = 'uppercase'; }
+      else if (kind === 's') { font = '700 12.5px/1 ' + t.text; color = t.labelMinor; }
+      else if (kind === 'w') { font = 'italic 600 13px/1 ' + t.text; color = t.water; ls = '.04em'; }
+      else { font = 'italic 700 13px/1 ' + t.text; color = t.forest; ls = '.02em'; }
+      if (sat) { color = '#FFFFFF'; halo = '0 0 3px rgba(0,0,0,.9), 0 1px 4px rgba(0,0,0,.8)'; }
+      return { name: l[0], x: l[1], y: l[2], inv: inv, font: font, color: color, halo: halo, ls: ls, tt: tt };
+    });
+
+    const vehicles = (screen === 'carte' || screen === 'signaler' || screen === 'gare') ? D.veh.map((x, i) => ({
+      d: x.d, icon: 'i-' + x.m, color: t.modes[x.m], ring: '#FFFFFF', r: 11 * Math.min(1.25, inv), rw: 2.5 * Math.min(1.25, inv), halo: 17 * Math.min(1.25, inv),
+      iconT: 'translate(' + (-7 * Math.min(1.25, inv)) + ' ' + (-7 * Math.min(1.25, inv)) + ') scale(' + (0.58 * Math.min(1.25, inv)) + ')',
+      dur: Math.round(x.km * 18 + 20) + 's', begin: '-' + ((i * 17) % 60) + 's', kp: '0;1;0', kt: '0;0.5;1'
+    })) : (screen === 'trajet' ? [{
+      d: D.opts.rapide[1].d, icon: 'i-woro', color: t.modes.woro, ring: '#FFFFFF', r: 14 * inv, rw: 3 * inv, halo: 24 * inv,
+      iconT: 'translate(' + (-9 * inv) + ' ' + (-9 * inv) + ') scale(' + (0.75 * inv) + ')', dur: '26s', begin: '0s', kp: '0.45;0.97', kt: '0;1'
+    }] : []);
+
+    const optLegs = (screen === 'resultats' || screen === 'trajet') ? D.opts[screen === 'trajet' ? 'rapide' : st.opt] : [];
+    const legs = optLegs.map((l) => {
+      const walk = l.m === 'walk';
+      return {
+        d: l.d, walk: walk, ride: !walk, color: walk ? t.modes.walk : t.modes[l.m], casing: t.dark ? '#0E1430' : '#FFFFFF',
+        w: (walk ? 5 : 6.5) * inv, cw: (walk ? 8 : 11) * inv, dash: '0.1 ' + (9 * inv), dashc: '0.1 ' + (9 * inv)
+      };
+    });
+
+    const gares = (screen === 'carte' || screen === 'gare' || screen === 'signaler') ? GARES.map((g) => {
+      const level = g.aff;
+      const ac = affColors[level];
+      const selected = screen === 'gare' && st.gare === g.id;
+      return {
+        x: g.x, y: g.y, inv: inv * (selected ? 1.18 : 1), icon: 'i-' + g.mode, modeColor: t.modes[g.mode], wait: offline ? '~' + g.w : g.w,
+        bg: t.card, ink: t.ink, ring: selected ? t.primary : t.card,
+        b1: ac, b2: level >= 1 ? ac : t.line, b3: level >= 2 ? ac : t.line,
+        short: g.short, showName: v.s >= 0.95, nameColor: sat ? '#FFFFFF' : t.ink, nameHalo: sat ? '0 0 3px rgba(0,0,0,.9)' : t.halo,
+        aria: g.name + ', ' + affNames[level] + ', attente ' + g.wait,
+        open: () => this.go('gare', { gare: g.id })
+      };
+    }) : [];
+
+    const incidents = (screen === 'carte' || screen === 'signaler') ? INCIDENTS.map((x) => ({
+      x: x.x, y: x.y, inv: inv, icon: x.icon, label: x.label,
+      color: x.kind === 'inondation' ? (t.dark ? '#3B82F6' : '#2563EB') : (x.kind === 'accident' ? t.high : (t.dark ? '#F97316' : '#E2620B'))
+    })) : [];
+
+    const near = GARES.filter((g) => g.near).sort((a, b) => a.near - b.near).map((g) => ({
+      name: g.name, sub: g.modes + ' · à ' + g.km, icon: 'i-' + g.mode, modeColor: t.modes[g.mode], tint: mix(t.modes[g.mode], t.dark ? 0.2 : 0.12),
+      aff: offline ? 'Habituel' : affNames[g.aff], affBg: offline ? t.surface : mix(affColors[g.aff], t.dark ? 0.2 : 0.13), affInk: offline ? t.ink2 : affColors[g.aff],
+      wait: (offline ? 'en général ' : 'attente ') + g.wait, open: () => this.go('gare', { gare: g.id })
+    }));
+
+    const chips = [
+      { label: 'Boulot', meta: '· 38 min', hasMeta: true, icon: 'i-work', color: t.primaryText, go: () => this.go('resultats', { dest: 'Le Plateau' }) },
+      { label: 'Maison', meta: '', hasMeta: false, icon: 'i-home', color: t.primaryText, go: () => this.showToast('Tu es déjà à la maison.') },
+      { label: 'Gares', meta: '', hasMeta: false, icon: 'i-bus', color: t.primaryText, go: () => this.go('gare', { gare: 'mossikro' }) },
+      { label: 'Marché', meta: '', hasMeta: false, icon: 'i-tag', color: t.primaryText, go: () => this.go('recherche', { query: 'Marché' }) }
+    ];
+
+    const PLACES = [
+      { name: 'Le Plateau', sub: 'Quartier · Abidjan', icon: 'i-pin', km: '3,7 km', ok: true },
+      { name: 'Gare du Plateau', sub: 'Gare · Le Plateau', icon: 'i-bus', km: '3,3 km', ok: true },
+      { name: 'Gare lagunaire du Plateau', sub: 'Embarcadère · Le Plateau', icon: 'i-bateau', km: '4,1 km', ok: true },
+      { name: 'Deux Plateaux', sub: 'Quartier · Cocody', icon: 'i-pin', km: '7,4 km', ok: false },
+      { name: 'Plateau Dokui', sub: 'Quartier · Abobo', icon: 'i-pin', km: '10,6 km', ok: false },
+      { name: 'Gare d’Adjamé', sub: 'Gare · Adjamé', icon: 'i-gbaka', km: '4,2 km', ok: false },
+      { name: 'Marché d’Adjamé', sub: 'Marché · Adjamé', icon: 'i-tag', km: '4,3 km', ok: false },
+      { name: 'Gare Mossikro', sub: 'Gare · Yopougon', icon: 'i-woro', km: '1,5 km', ok: false }
+    ];
+    const q = norm(st.query.trim());
+    const suggestions = PLACES.filter((p) => q.length === 0 || norm(p.name).indexOf(q) >= 0 || norm(p.sub).indexOf(q) >= 0).slice(0, 5).map((p) => ({
+      name: p.name, sub: p.sub, km: p.km, icon: p.icon, color: t.primaryText,
+      go: p.ok ? () => this.go('resultats', { dest: p.name }) : () => this.showToast('Démo : seul le trajet vers le Plateau est simulé.')
+    }));
+
+    const OPTS = [
+      { key: 'rapide', tags: [['Le plus rapide', 'primary']], duration: '35–44 min', arrive: 'Arrivée 8 h 09–8 h 18', price: '450–550 F', meta: '1 changement · attente ~7 min', fresh: 'En direct · il y a 2 min · 23 avis', conf: 3,
+        legs: [['woro', '13 min'], ['bateau', '9 min'], ['walk', '11 min']] },
+      { key: 'eco', tags: [['Le moins cher', 'ok'], ['Sans changement', 'soft']], duration: '45–65 min', arrive: 'Arrivée 8 h 19–8 h 39', price: '200–300 F', meta: '0 changement · attente ~9 min', fresh: 'Il y a 6 min · 9 avis', conf: 2,
+        legs: [['walk', '4 min'], ['bus', '38 min'], ['walk', '3 min']] },
+      { key: 'gbaka', tags: [['Le plus régulier', 'soft']], duration: '42–58 min', arrive: 'Arrivée 8 h 16–8 h 32', price: '450–600 F', meta: '1 changement · attente ~3 min', fresh: 'Habituel · pas d’avis récent', conf: 1,
+        legs: [['walk', '4 min'], ['gbaka', '24 min'], ['woro', '12 min'], ['walk', '6 min']] }
+    ];
+    const options = OPTS.map((o) => {
+      const selected = st.opt === o.key;
+      const live = o.conf >= 2 && !offline;
+      return {
+        selected: selected, border: selected ? t.primary : t.line, bg: selected ? (t.dark ? '#1E2858' : mix(t.primary, 0.05)) : t.card,
+        duration: o.duration, arrive: o.arrive, price: o.price, meta: o.meta,
+        fresh: offline ? 'Hors connexion · temps habituels' : o.fresh, freshColor: live ? t.liveInk : t.ink2,
+        c1: t.liveInk, c2: o.conf >= 2 ? t.liveInk : t.line, c3: o.conf >= 3 ? t.liveInk : t.line,
+        confLabel: 'Confiance ' + ['', 'faible', 'moyenne', 'élevée'][o.conf],
+        tags: o.tags.map((g) => ({ label: g[0], bg: g[1] === 'primary' ? t.primary : (g[1] === 'ok' ? mix(t.ok, t.dark ? 0.22 : 0.14) : t.surface), ink: g[1] === 'primary' ? t.onPrimary : (g[1] === 'ok' ? t.ok : t.ink) })),
+        legs: o.legs.map((lg, i) => ({ icon: 'i-' + lg[0], text: lg[0] === 'walk' ? lg[1] : MODE_NAME[lg[0]] + ' ' + lg[1], bg: lg[0] === 'walk' ? t.surface : t.modes[lg[0]], ink: lg[0] === 'walk' ? t.ink2 : (t.dark ? '#0E1430' : '#FFFFFF'), more: i < o.legs.length - 1 })),
+        pick: () => this.setState({ opt: o.key, anim: true, view: viewFor('resultats', o.key, st.gare) })
+      };
+    });
+
+    const REPORTS = [
+      ['Bouchon', 'i-traffic', t.dark ? '#F97316' : '#E2620B'], ['Gare pleine', 'i-crowd', t.dark ? '#A78BFA' : '#7C3AED'], ['Rien ne part', 'i-hourglass', t.dark ? '#94A3B8' : '#475569'],
+      ['Prix changé', 'i-tag', t.dark ? '#22C55E' : '#15803D'], ['Route inondée', 'i-flood', t.dark ? '#3B82F6' : '#2563EB'], ['Danger', 'i-danger', t.high]
+    ];
+    const reports = REPORTS.map((r) => ({ label: r[0], icon: r[1], color: r[2], send: () => this.setState({ report: r[0] }) }));
+
+    const g = GARES.find((x) => x.id === st.gare) || GARES[2];
+    const gac = affColors[g.aff];
+    const hours = HOURS[g.aff === 2 ? 0 : 1].map((h, i) => ({ h: Math.round(h * (g.aff === 0 ? 0.8 : 1)), color: i === 2 ? (offline ? t.ink2 : gac) : mix(t.dark ? '#AEB7DA' : '#4B5C63', t.dark ? 0.35 : 0.22) }));
+    const gare = {
+      name: g.name, sub: g.modes + ' · ' + g.where + ' · à ' + g.km, icon: 'i-' + g.mode, modeColor: t.modes[g.mode], tint: mix(t.modes[g.mode], t.dark ? 0.2 : 0.12),
+      aff: offline ? 'Habituellement ' + affNames[g.aff].toLowerCase() : affNames[g.aff], affInk: offline ? t.ink : gac, affBg: offline ? t.surface : mix(gac, t.dark ? 0.18 : 0.1),
+      fresh: offline ? 'Hors connexion · d’après les jours habituels' : g.fresh, b1: gac, b2: g.aff >= 1 ? gac : t.line, b3: g.aff >= 2 ? gac : t.line,
+      hours: hours,
+      departures: DEPARTURES[g.mode].map((dp) => ({ dest: dp.dest, freq: dp.freq, wait: dp.wait, price: dp.price, icon: 'i-' + dp.m, color: t.modes[dp.m] }))
+    };
+
+    const showMap = screen !== 'recherche';
+    const mapLabel = sat ? 'sat' : themeKey;
+    const attribution = sat ? '© OpenStreetMap · Sentinel-2 cloudless 2025, EOX' : '© contributeurs OpenStreetMap';
+
+    return {
+      t: t, copy: t.copy, view: { x: v.x, y: v.y, s: v.s, transition: st.anim ? 'transform .55s cubic-bezier(.2,.8,.2,1)' : 'none' },
+      maps: { gbe: mapLabel === 'gbe', yafohi: mapLabel === 'yafohi', koro: mapLabel === 'koro', sat: mapLabel === 'sat' },
+      logo: { gbe: themeKey === 'gbe', yafohi: themeKey === 'yafohi', koro: themeKey === 'koro' },
+      mapSea: sat ? '#1d3b4f' : t.sea, attribution: attribution, sat: sat,
+      screens: { carte: screen === 'carte', recherche: screen === 'recherche', resultats: screen === 'resultats', trajet: screen === 'trajet', signaler: screen === 'signaler', gare: screen === 'gare' },
+      showMap: showMap, showMapChrome: screen === 'carte', labels: labels, vehicles: vehicles, legs: legs, gares: gares, incidents: incidents,
+      showUser: screen !== 'trajet' && screen !== 'recherche', user: { x: D.home[0], y: D.home[1], inv: inv },
+      showDest: screen === 'resultats' || screen === 'trajet', dest: { x: D.dest[0], y: D.dest[1], inv: inv },
+      chrome: { badgeBottom: 308, layersTop: offline ? 182 : 124 },
+      satLabel: sat ? 'Revenir à la carte' : 'Vue satellite',
+      satBtn: { bg: sat ? t.primary : t.card, ink: sat ? t.onPrimary : t.ink },
+      offline: offline, freshColor: offline ? t.ink2 : t.liveInk, freshAnim: offline ? 'none' : 'nm-blink 1.6s ease-in-out infinite', freshText: offline ? 'Temps habituels' : 'En direct',
+      nearby: near, chips: chips, suggestions: suggestions, noSuggestion: suggestions.length === 0,
+      saved: [
+        { name: 'Boulot', sub: 'Le Plateau · en semaine à 7 h 30', icon: 'i-work', go: () => this.go('resultats', { dest: 'Le Plateau' }) },
+        { name: 'Maison', sub: 'Toits-Rouges, Yopougon', icon: 'i-home', go: () => this.showToast('Tu es déjà à la maison.') }
+      ],
+      query: st.query, destName: st.dest, options: options, reports: reports, gare: gare, modeColors: t.modes,
+      reportForm: !st.report, reportDone: !!st.report, reportLabel: st.report || '',
+      reportWhere: st.from === 'trajet' ? 'Sur ton trajet · wôrô-wôrô vers la gare lagunaire' : 'Près de Toits-Rouges, Yopougon · maintenant',
+      hasToast: !!st.toast, toast: st.toast || '',
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      clearQuery: () => this.setState({ query: '' }),
+      goSearch: () => this.go('recherche'),
+      goHome: () => this.go('carte', { report: null }),
+      goResultsPlateau: () => this.go('resultats', { dest: 'Le Plateau' }),
+      goTrip: () => this.go('trajet', { opt: 'rapide' }),
+      goReport: () => this.go('signaler', { report: null, from: 'carte' }),
+      goReportFromTrip: () => this.go('signaler', { report: null, from: 'trajet' }),
+      closeReport: () => this.go(st.from === 'trajet' ? 'trajet' : 'carte', { report: null }),
+      toggleSat: () => this.setState({ sat: !sat }),
+      recenter: () => this.setState({ anim: true, view: viewFor('carte', st.opt, st.gare) }),
+      onDown: (e) => {
+        const m = this.scaleOf(e.currentTarget);
+        this.drag = { x: e.clientX, y: e.clientY, vx: v.x, vy: v.y, k: m.k, moved: false, id: e.pointerId, el: e.currentTarget };
+      },
+      onMove: (e) => {
+        const d = this.drag;
+        if (!d) return;
+        const dx = (e.clientX - d.x) / d.k, dy = (e.clientY - d.y) / d.k;
+        if (!d.moved && Math.abs(dx) + Math.abs(dy) < 6) return;
+        if (!d.moved) { d.moved = true; try { d.el.setPointerCapture(d.id); } catch (err) { } }
+        this.setState({ anim: false, view: clampView({ x: d.vx + dx, y: d.vy + dy, s: this.state.view.s }) });
+      },
+      onUp: () => { this.drag = null; },
+      onWheel: (e) => {
+        const m = this.scaleOf(e.currentTarget);
+        this.zoomAt((e.clientX - m.left) / m.k, (e.clientY - m.top) / m.k, Math.exp(-e.deltaY * 0.0016));
+      },
+      onDouble: (e) => {
+        const m = this.scaleOf(e.currentTarget);
+        this.zoomAt((e.clientX - m.left) / m.k, (e.clientY - m.top) / m.k, 1.6);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -140,3 +140,12 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
     - kappa de Cohen d'au moins 0,60 sur les catégories de file, calculé sur 8 tranches au moins ;
   - **identifiants** : GA-0001 (gares), RL-0001 (relevés), PX-00001 (prix), PH-00001 (photos), donnés par le coordinateur ou à la saisie, jamais réutilisés ;
   - **mode relevé** : trace GPS seulement pendant un relevé en cours. Traces et photos supprimées du téléphone 7 jours après l'export. Usage soumis à Q-07 et à l'accord écrit de chaque Éclaireur.
+
+## Maquette d'identité (2026-11-10)
+
+- **H-036** (proposée) — Choix de la maquette des trois identités, à revoir avec le porteur et avec des usagers :
+  - **noms** : gbê, yafohi et mon kôrô viennent du nouchi. Leur sens et leur usage sont à confirmer avec des Abidjanais ; leur disponibilité (magasins d'applis, marque, nom de domaine) n'est pas vérifiée ;
+  - **données** : les rues, la côte, la lagune, les quartiers et les noms des gares viennent d'OpenStreetMap ; les trajets suivent les vraies rues. Les lignes, les véhicules, les attentes, l'affluence, les prix et les signalements sont simulés, et la maquette l'affiche (règle 1) ;
+  - **imagerie satellite** : Sentinel-2 cloudless 2025 d'EOX, sous licence CC BY-NC-SA 4.0 (pas d'usage commercial). Elle convient à une maquette interne, pas au produit ;
+  - **en ligne d'abord** : la maquette suit la décision du porteur du 2026-11-09. Hors connexion, elle garde les trajets enregistrés, les temps habituels et la recherche de lieux ; tout le reste demande le réseau ;
+  - **inspirations** : Google Maps, Wave et Waze inspirent l'esprit des écrans (la carte d'abord, la simplicité, la communauté), jamais leurs logos, couleurs ou éléments de marque.

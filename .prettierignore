@@ -11,3 +11,5 @@ apps/mobile/
 services/routing/
 # Types générés par openapi-typescript (vérifiés par types:check).
 packages/openapi/src/schema.ts
+# Sources du canevas de la maquette, gardées identiques aux fichiers publiés sur claude.ai.
+docs/UX/maquette-identites/sources/

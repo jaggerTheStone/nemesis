@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Planche d’identité</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Baloo+2:wght@600;700;800&amp;family=Nunito:wght@500;600;700;800&amp;family=Sora:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1720px; box-sizing: border-box; padding: 56px; background: {{b.boardBg}}; color: {{b.ink}}; font-family: {{b.text}}; display: grid; grid-template-columns: 500px minmax(0, 1fr); gap: 40px; -webkit-font-smoothing: antialiased">
+
+<section style="border-radius: 36px; background: {{b.heroBg}}; color: {{b.heroInk}}; padding: 44px 40px; display: flex; flex-direction: column; gap: 26px; overflow: hidden">
+<svg width="0" height="0" style="position: absolute" aria-hidden="true"><defs>
+<sc-if value="{{is.gbe}}" hint-placeholder-val="{{ true }}"><symbol id="brand-icon" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#0B6E87"></rect><path d="M24 40s-11.5-9.9-11.5-18.6a11.5 11.5 0 0 1 23 0C35.5 30.1 24 40 24 40z" fill="#FFFFFF"></path><path d="M18.6 21.6l3.8 3.8 7.2-7.4" fill="none" stroke="#F2711C" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol></sc-if>
+<sc-if value="{{is.yafohi}}" hint-placeholder-val="{{ false }}"><symbol id="brand-icon" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#16130F"></rect><path d="M13.5 12.5l9.8 12.6" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><path d="M34.5 12.5L23 31c-2.4 3.9-5.4 5.4-9.4 5.2" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><circle cx="35" cy="33.5" r="3.8" fill="#FFFFFF"></circle></symbol></sc-if>
+<sc-if value="{{is.koro}}" hint-placeholder-val="{{ false }}"><symbol id="brand-icon" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#FFD23F"></rect><rect x="9" y="8.5" width="30" height="29.5" rx="9" fill="#0E1430"></rect><rect x="13" y="12.5" width="22" height="7.5" rx="3" fill="#FFD23F" opacity=".22"></rect><circle cx="17.6" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="30.4" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="18.3" cy="28.7" r="2" fill="#0E1430"></circle><circle cx="31.1" cy="28.7" r="2" fill="#0E1430"></circle><path d="M14.4 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M27.2 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.6 33.6c2.1 1.4 4.7 1.4 6.8 0" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round"></path><rect x="12" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect><rect x="30" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect></symbol></sc-if>
+</defs></svg>
+<sc-if value="{{is.gbe}}" hint-placeholder-val="{{ true }}">
+<svg width="132" height="132" viewBox="0 0 48 48" role="img" aria-label="Icône de l’appli gbê"><rect width="48" height="48" rx="13" fill="#FFFFFF"></rect><path d="M24 40s-11.5-9.9-11.5-18.6a11.5 11.5 0 0 1 23 0C35.5 30.1 24 40 24 40z" fill="#0B6E87"></path><path d="M18.6 21.6l3.8 3.8 7.2-7.4" fill="none" stroke="#F2711C" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<div style="display: flex; align-items: flex-end; font: 800 132px/0.9 'Plus Jakarta Sans', system-ui, sans-serif; letter-spacing: -0.05em; color: #FFFFFF">gb<span style="position: relative; display: inline-block">e<svg width="58" height="30" viewBox="0 0 58 30" aria-hidden="true" style="position: absolute; left: 50%; top: -12px; transform: translateX(-50%)"><path d="M8 25L29 7l21 18" fill="none" stroke="#F2711C" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+</sc-if>
+<sc-if value="{{is.yafohi}}" hint-placeholder-val="{{ false }}">
+<svg width="132" height="132" viewBox="0 0 48 48" role="img" aria-label="Icône de l’appli yafohi"><rect width="48" height="48" rx="16" fill="#16130F"></rect><path d="M13.5 12.5l9.8 12.6" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><path d="M34.5 12.5L23 31c-2.4 3.9-5.4 5.4-9.4 5.2" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><circle cx="35" cy="33.5" r="3.8" fill="#FFFFFF"></circle></svg>
+<div style="display: flex; align-items: flex-end; font: 800 120px/0.95 'Baloo 2', system-ui, sans-serif; letter-spacing: -0.02em; color: #16130F">yafoh<span style="position: relative; display: inline-block">ı<span style="position: absolute; left: 50%; top: 4px; width: 30px; height: 30px; margin-left: -15px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 0 0 7px #16130F"></span></span></div>
+</sc-if>
+<sc-if value="{{is.koro}}" hint-placeholder-val="{{ false }}">
+<svg width="132" height="132" viewBox="0 0 48 48" role="img" aria-label="Icône de l’appli mon kôrô"><rect width="48" height="48" rx="14" fill="#FFD23F"></rect><rect x="9" y="8.5" width="30" height="29.5" rx="9" fill="#0E1430"></rect><rect x="13" y="12.5" width="22" height="7.5" rx="3" fill="#FFD23F" opacity=".22"></rect><circle cx="17.6" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="30.4" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="18.3" cy="28.7" r="2" fill="#0E1430"></circle><circle cx="31.1" cy="28.7" r="2" fill="#0E1430"></circle><path d="M14.4 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M27.2 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.6 33.6c2.1 1.4 4.7 1.4 6.8 0" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round"></path><rect x="12" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect><rect x="30" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect></svg>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font: 700 34px/1 'Sora', system-ui, sans-serif; color: #FFD23F; letter-spacing: 0.02em">mon</span>
+<div style="display: flex; align-items: flex-end; gap: 6px; font: 700 116px/0.9 'Sora', system-ui, sans-serif; letter-spacing: -0.03em; color: #F4F6FF">
+<span>k</span>
+<span style="position: relative; width: 68px; height: 68px; margin-bottom: 4px; border-radius: 50%; border: 14px solid #F4F6FF; box-sizing: border-box; display: grid; place-items: center"><span style="width: 18px; height: 18px; border-radius: 50%; background: #FFD23F; transform: translate(4px, 3px)"></span><svg width="46" height="22" viewBox="0 0 46 22" aria-hidden="true" style="position: absolute; left: 50%; top: -40px; transform: translateX(-50%)"><path d="M7 18L23 6l16 12" fill="none" stroke="#FFD23F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+<span>r</span>
+<span style="position: relative; width: 68px; height: 68px; margin-bottom: 4px; border-radius: 50%; border: 14px solid #F4F6FF; box-sizing: border-box; display: grid; place-items: center"><span style="width: 18px; height: 18px; border-radius: 50%; background: #FFD23F; transform: translate(4px, 3px)"></span><svg width="46" height="22" viewBox="0 0 46 22" aria-hidden="true" style="position: absolute; left: 50%; top: -40px; transform: translateX(-50%)"><path d="M7 18L23 6l16 12" fill="none" stroke="#FFD23F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+</div>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font: 700 15px/1.3 {{b.text}}; opacity: .8">{{b.say}}</span>
+<p style="margin: 0; font: 600 19px/1.5 {{b.text}}; text-wrap: pretty">{{b.meaning}}</p>
+</div>
+<p style="margin: 0; font: {{b.dw}} 40px/1.08 {{b.display}}; letter-spacing: {{b.dls}}; text-wrap: balance">{{b.tagline}}</p>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-for list="{{b.traits}}" as="tr" hint-placeholder-count="3">
+<span style="padding: 9px 16px; border-radius: 999px; background: {{b.traitBg}}; color: {{b.traitInk}}; font: 800 15px/1 {{b.text}}">{{tr.label}}</span>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: 22px; background: {{b.heroCard}}">
+<span style="font: 800 13px/1 {{b.text}}; letter-spacing: .08em; text-transform: uppercase; opacity: .75">Inspiration</span>
+<p style="margin: 0; font: 600 16.5px/1.5 {{b.text}}; text-wrap: pretty">{{b.inspiration}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: 22px; background: {{b.heroCard}}">
+<span style="font: 800 13px/1 {{b.text}}; letter-spacing: .08em; text-transform: uppercase; opacity: .75">Le logo</span>
+<p style="margin: 0; font: 600 16.5px/1.5 {{b.text}}; text-wrap: pretty">{{b.logoIdea}}</p>
+</div>
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 14px">
+<span style="font: 800 13px/1 {{b.text}}; letter-spacing: .08em; text-transform: uppercase; opacity: .75">L’icône sur le téléphone</span>
+<div style="display: flex; align-items: flex-end; gap: 24px; padding: 20px 22px; border-radius: 22px; background: #F4F6F8; color: #33424A">
+<sc-for list="{{sizes}}" as="sz" hint-placeholder-count="4">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+<svg width="{{sz.px}}" height="{{sz.px}}" viewBox="0 0 48 48" aria-hidden="true" style="border-radius: {{sz.radius}}px; box-shadow: 0 3px 10px rgba(0,0,0,.16)"><use href="#brand-icon" width="48" height="48"></use></svg>
+<span style="font: 700 12px/1 {{b.text}}; color: #4B5C63">{{sz.label}}</span>
+</span>
+</sc-for>
+</div>
+</div>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 28px; min-width: 0">
+
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font: {{b.dw}} 26px/1.1 {{b.display}}; letter-spacing: {{b.dls}}">Le logo, partout</h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+<sc-for list="{{b.tiles}}" as="tile" hint-placeholder-count="4">
+<div style="height: 168px; border-radius: 22px; background: {{tile.bg}}; border: 1px solid {{b.line}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px">
+<sc-if value="{{is.gbe}}" hint-placeholder-val="{{ true }}">
+<span style="display: flex; align-items: center; gap: 10px">
+<svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="13" fill="{{tile.mark}}"></rect><path d="M24 40s-11.5-9.9-11.5-18.6a11.5 11.5 0 0 1 23 0C35.5 30.1 24 40 24 40z" fill="{{tile.markInk}}"></path><path d="M18.6 21.6l3.8 3.8 7.2-7.4" fill="none" stroke="{{tile.accent}}" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span style="display: flex; align-items: flex-end; font: 800 40px/1 'Plus Jakarta Sans', system-ui, sans-serif; letter-spacing: -0.05em; color: {{tile.word}}">gb<span style="position: relative; display: inline-block">e<svg width="18" height="10" viewBox="0 0 58 30" aria-hidden="true" style="position: absolute; left: 50%; top: -5px; transform: translateX(-50%)"><path d="M8 25L29 7l21 18" fill="none" stroke="{{tile.accent}}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></span>
+</span>
+</sc-if>
+<sc-if value="{{is.yafohi}}" hint-placeholder-val="{{ false }}">
+<span style="display: flex; align-items: center; gap: 10px">
+<svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="16" fill="{{tile.mark}}"></rect><path d="M13.5 12.5l9.8 12.6" fill="none" stroke="{{tile.markInk}}" stroke-width="5.6" stroke-linecap="round"></path><path d="M34.5 12.5L23 31c-2.4 3.9-5.4 5.4-9.4 5.2" fill="none" stroke="{{tile.markInk}}" stroke-width="5.6" stroke-linecap="round"></path><circle cx="35" cy="33.5" r="3.8" fill="{{tile.accent}}"></circle></svg>
+<span style="font: 800 40px/1 'Baloo 2', system-ui, sans-serif; color: {{tile.word}}">yafohi</span>
+</span>
+</sc-if>
+<sc-if value="{{is.koro}}" hint-placeholder-val="{{ false }}">
+<span style="display: flex; align-items: center; gap: 10px">
+<svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="{{tile.mark}}"></rect><rect x="9" y="8.5" width="30" height="29.5" rx="9" fill="{{tile.markInk}}"></rect><circle cx="17.6" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="30.4" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="18.3" cy="28.7" r="2" fill="{{tile.markInk}}"></circle><circle cx="31.1" cy="28.7" r="2" fill="{{tile.markInk}}"></circle><path d="M14.4 23l3.2-2.3 3.2 2.3" fill="none" stroke="{{tile.mark}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M27.2 23l3.2-2.3 3.2 2.3" fill="none" stroke="{{tile.mark}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.6 33.6c2.1 1.4 4.7 1.4 6.8 0" fill="none" stroke="{{tile.mark}}" stroke-width="2" stroke-linecap="round"></path></svg>
+<span style="font: 700 25px/1 'Sora', system-ui, sans-serif; letter-spacing: -0.03em; color: {{tile.word}}; white-space: nowrap">mon kôrô</span>
+</span>
+</sc-if>
+<span style="font: 700 12.5px/1 {{b.text}}; color: {{tile.caption}}">{{tile.label}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font: {{b.dw}} 26px/1.1 {{b.display}}; letter-spacing: {{b.dls}}">Les couleurs</h2>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{b.colors}}" as="c" hint-placeholder-count="6">
+<div style="display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; border: 1px solid {{b.line}}; background: {{b.cardBg}}">
+<span style="height: 96px; background: {{c.hex}}"></span>
+<span style="padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 5px">
+<strong style="font: 800 15px/1.15 {{b.text}}">{{c.name}}</strong>
+<span style="font: 700 13px/1 ui-monospace, Menlo, monospace; color: {{b.ink2}}">{{c.hex}}</span>
+<span style="font: 600 12.5px/1.3 {{b.text}}; color: {{b.ink2}}">{{c.role}}</span>
+</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
+<span style="font: 700 14px/1 {{b.text}}; color: {{b.ink2}}">États d’affluence, toujours avec un mot et des barres :</span>
+<sc-for list="{{b.states}}" as="s" hint-placeholder-count="3">
+<span style="display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 10px; border-radius: 999px; background: {{s.bg}}; color: {{s.ink}}; font: 800 14px/1 {{b.text}}">
+<span style="display: flex; align-items: flex-end; gap: 2px; height: 14px" aria-hidden="true"><span style="width: 4px; height: 6px; border-radius: 1px; background: {{s.b1}}"></span><span style="width: 4px; height: 10px; border-radius: 1px; background: {{s.b2}}"></span><span style="width: 4px; height: 14px; border-radius: 1px; background: {{s.b3}}"></span></span>{{s.label}} · {{s.hex}}</span>
+</sc-for>
+</div>
+</section>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+<section style="display: flex; flex-direction: column; gap: 14px; padding: 26px; border-radius: 26px; background: {{b.cardBg}}; border: 1px solid {{b.line}}">
+<h2 style="margin: 0; font: {{b.dw}} 26px/1.1 {{b.display}}; letter-spacing: {{b.dls}}">La typographie</h2>
+<span style="font: 700 14px/1.4 {{b.text}}; color: {{b.ink2}}">{{b.fontsLine}}</span>
+<span style="font: {{b.dw}} {{b.specimenSize}}px/1.02 {{b.display}}; letter-spacing: {{b.dls}}; white-space: nowrap">{{b.specimen}}</span>
+<span style="font: {{b.dw}} 24px/1.2 {{b.display}}; letter-spacing: {{b.dls}}">Gare lagunaire de Yopougon</span>
+<span style="font: 600 17px/1.5 {{b.text}}; color: {{b.ink}}; text-wrap: pretty">Wôrô-wôrô 13 min, puis bateau-bus 9 min. Arrivée entre 8 h 09 et 8 h 18. Prix payé ce matin : 450 à 550 F.</span>
+<span style="font: 800 34px/1 {{b.text}}; font-variant-numeric: tabular-nums; color: {{b.accentText}}">35–44 min · 450 F</span>
+<span style="font: 600 13.5px/1.45 {{b.text}}; color: {{b.ink2}}; text-wrap: pretty">{{b.fontsWhy}}</span>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 14px; padding: 26px; border-radius: 26px; background: {{b.uiBg}}; color: {{b.uiInk}}; border: 1px solid {{b.line}}">
+<h2 style="margin: 0; font: {{b.dw}} 26px/1.1 {{b.display}}; letter-spacing: {{b.dls}}">Les composants</h2>
+<div style="display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 8px 0 18px; border-radius: {{b.rSearch}}px; background: {{b.uiCard}}; box-shadow: 0 2px 10px rgba(0,0,0,.12); font: 600 16px/1 {{b.text}}; color: {{b.uiInk2}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="M20.5 20.5l-4.9-4.9"></path></svg>
+<span style="flex: 1">{{b.search}}</span>
+<span style="width: 40px; height: 40px; border-radius: 50%; background: {{b.uiSurface}}"></span>
+</div>
+<div style="display: flex; gap: 10px">
+<span style="flex: 1; height: 52px; border-radius: {{b.rButton}}px; background: {{b.primary}}; color: {{b.onPrimary}}; display: grid; place-items: center; font: 800 16px/1 {{b.display}}">{{b.go}}</span>
+<span style="flex: none; height: 52px; padding: 0 20px; border-radius: 999px; background: {{b.report}}; color: {{b.onReport}}; display: flex; align-items: center; gap: 8px; font: 800 15px/1 {{b.display}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10.2v3.6A1.2 1.2 0 0 0 4.7 15H7l8.5 4.5V4.5L7 9H4.7a1.2 1.2 0 0 0-1.2 1.2z"></path><path d="M18.5 9a4.2 4.2 0 0 1 0 6"></path></svg>Signaler</span>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-for list="{{b.modes}}" as="m" hint-placeholder-count="5">
+<span style="display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px 0 8px; border-radius: 10px; background: {{m.bg}}; color: {{m.ink}}; font: 700 14px/1 {{b.text}}">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<sc-if value="{{m.gbaka}}" hint-placeholder-val="{{ false }}"><path d="M3.5 16.5v-8A2.5 2.5 0 0 1 6 6h9.6a2 2 0 0 1 1.6.8l2.9 3.9a2 2 0 0 1 .4 1.2v4.6"></path><path d="M3.5 11.5h17"></path><path d="M9.5 6v5.5"></path><circle cx="7.3" cy="17.3" r="1.8"></circle><circle cx="16.7" cy="17.3" r="1.8"></circle></sc-if>
+<sc-if value="{{m.woro}}" hint-placeholder-val="{{ false }}"><path d="M5.2 17H4.5A1.5 1.5 0 0 1 3 15.5V13l2.2-5.2A1.5 1.5 0 0 1 6.6 7h10.8a1.5 1.5 0 0 1 1.4.8L21 13v2.5a1.5 1.5 0 0 1-1.5 1.5h-.7"></path><path d="M3.4 12.5h17.2"></path><circle cx="7.5" cy="17" r="1.8"></circle><circle cx="16.5" cy="17" r="1.8"></circle></sc-if>
+<sc-if value="{{m.bus}}" hint-placeholder-val="{{ false }}"><rect x="5" y="3" width="14" height="15" rx="2.6"></rect><path d="M5 11h14"></path><path d="M8 21v-3"></path><path d="M16 21v-3"></path></sc-if>
+<sc-if value="{{m.bateau}}" hint-placeholder-val="{{ false }}"><path d="M3.5 14.5h17l-2.3 4H5.8z"></path><path d="M6.5 14.5V10h9l2.5 4.5"></path><path d="M10 10V6.5h3.5V10"></path><path d="M2.5 21.5c1.6 0 1.6-1 3.2-1s1.6 1 3.2 1 1.6-1 3.2-1 1.6 1 3.2 1 1.6-1 3.2-1 1.6 1 3.2 1"></path></sc-if>
+<sc-if value="{{m.walk}}" hint-placeholder-val="{{ false }}"><circle cx="13.5" cy="4.2" r="1.7"></circle><path d="M10.3 21l2.2-6.2"></path><path d="M12.5 14.8l2.6 2.6V21"></path><path d="M12.5 14.8l-.6-5.6"></path><path d="M11.9 9.2l-3.4 1.6-1 3.2"></path><path d="M11.9 9.2l2.6-1 2 3.2 2.8.9"></path></sc-if>
+</svg>{{m.label}}</span>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font: 700 13px/1 {{b.text}}">
+<span style="display: flex; align-items: center; gap: 6px; color: {{b.live}}"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{b.live}}"></span>En direct · il y a 2 min · 23 avis</span>
+<span style="display: flex; gap: 2px" aria-label="Confiance élevée"><span style="width: 16px; height: 5px; border-radius: 3px; background: {{b.live}}"></span><span style="width: 16px; height: 5px; border-radius: 3px; background: {{b.live}}"></span><span style="width: 16px; height: 5px; border-radius: 3px; background: {{b.live}}"></span></span>
+</div>
+<span style="font: 600 13px/1.4 {{b.text}}; color: {{b.uiInk2}}">Chaque estimation montre sa fraîcheur, sa source et sa confiance (règle d’honnêteté du cahier des charges).</span>
+</section>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+<section style="display: flex; flex-direction: column; gap: 14px; padding: 26px; border-radius: 26px; background: {{b.cardBg}}; border: 1px solid {{b.line}}">
+<h2 style="margin: 0; font: {{b.dw}} 26px/1.1 {{b.display}}; letter-spacing: {{b.dls}}">Le ton</h2>
+<span style="font: 600 14.5px/1.45 {{b.text}}; color: {{b.ink2}}">{{b.toneLine}}</span>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{b.voice}}" as="vo" hint-placeholder-count="4">
+<span style="align-self: flex-start; max-width: 92%; padding: 12px 16px; border-radius: 18px 18px 18px 6px; background: {{b.bubble}}; color: {{b.bubbleInk}}; font: 700 16px/1.35 {{b.text}}">{{vo.text}}</span>
+</sc-for>
+</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px; padding: 26px; border-radius: 26px; background: {{b.cardBg}}; border: 1px solid {{b.line}}">
+<h2 style="margin: 0; font: {{b.dw}} 26px/1.1 {{b.display}}; letter-spacing: {{b.dls}}">La carte</h2>
+<span style="font: 600 14.5px/1.45 {{b.text}}; color: {{b.ink2}}">{{b.mapLine}}</span>
+<div style="position: relative; height: 262px; border-radius: 18px; overflow: hidden; border: 1px solid {{b.line}}">
+<sc-if value="{{is.gbe}}" hint-placeholder-val="{{ true }}"><img src="/_blob/9f7ad46fd2389bfb4929f85606a38e6f" alt="Style de carte gbê, Le Plateau et Adjamé" style="position: absolute; left: -610px; top: -1010px; width: 2098px; height: 2341px; max-width: none"></sc-if>
+<sc-if value="{{is.yafohi}}" hint-placeholder-val="{{ false }}"><img src="/_blob/9dfb1fdd535bb7a1f48c41078af800c6" alt="Style de carte yafohi, Le Plateau et Adjamé" style="position: absolute; left: -610px; top: -1010px; width: 2098px; height: 2341px; max-width: none"></sc-if>
+<sc-if value="{{is.koro}}" hint-placeholder-val="{{ false }}"><img src="/_blob/d1f3ba9bda8654d1e13c712838fd3e83" alt="Style de carte mon kôrô, Le Plateau et Adjamé" style="position: absolute; left: -610px; top: -1010px; width: 2098px; height: 2341px; max-width: none"></sc-if>
+<span style="position: absolute; left: 10px; bottom: 8px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,.8); color: #33424A; font: 500 10px/1.3 system-ui, sans-serif">© contributeurs OpenStreetMap</span>
+</div>
+</section>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["gbe","yafohi","koro"],"default":"gbe"},"$preview":{"width":1440,"height":1720}}'>
+const MODE_LABELS = { gbaka: 'Gbaka', woro: 'Wôrô-wôrô', bus: 'Bus', bateau: 'Bateau-bus', walk: 'À pied' };
+
+const BRANDS = {
+  gbe: {
+    display: '"Plus Jakarta Sans", system-ui, sans-serif', text: '"Plus Jakarta Sans", system-ui, sans-serif', dw: 800, dls: '-0.025em',
+    boardBg: '#F6F8F9', heroBg: '#0B6E87', heroInk: '#FFFFFF', heroCard: 'rgba(255,255,255,.12)', traitBg: '#FFFFFF', traitInk: '#0B6E87',
+    ink: '#0E1C22', ink2: '#4B5C63', line: '#DFE6E9', cardBg: '#FFFFFF', accentText: '#0B6E87',
+    uiBg: '#F2F5F6', uiCard: '#FFFFFF', uiSurface: '#F2F5F6', uiInk: '#0E1C22', uiInk2: '#4B5C63', rSearch: 16, rButton: 14,
+    primary: '#0B6E87', onPrimary: '#FFFFFF', report: '#F2711C', onReport: '#1A0F06', live: '#12805C',
+    bubble: '#E7F1F4', bubbleInk: '#0E1C22',
+    say: 'Se dit « gbè ». Nouchi.',
+    meaning: 'En nouchi, « c’est gbê » veut dire « c’est vrai, c’est sûr ». Le nom promet ce que l’appli doit tenir : le bon trajet et le vrai prix.',
+    tagline: 'Le bon trajet, le vrai prix.',
+    traits: ['Précis', 'Fiable', 'Clair'],
+    inspiration: 'La clarté de Google Maps : la carte d’abord, une seule barre de recherche, des trajets que l’on compare d’un coup d’œil.',
+    logoIdea: 'Un repère de carte qui porte une coche orange : « le bon endroit, c’est sûr ». Dans le mot, l’accent du « ê » devient une flèche vers le haut.',
+    colors: [['Lagune', '#0B6E87', 'Marque, boutons, ta position'], ['Orange soleil', '#F2711C', 'Signaler, mises en avant'], ['Encre', '#0E1C22', 'Texte principal'], ['Ardoise', '#4B5C63', 'Texte secondaire'], ['Brume', '#F2F5F6', 'Fonds, champs'], ['Blanc', '#FFFFFF', 'Cartes, feuilles']],
+    states: [['Fluide', '#12805C'], ['Ça remplit', '#B25E09'], ['Ça déborde', '#C42B2B']],
+    fontsLine: 'Plus Jakarta Sans · ExtraBold pour les titres, SemiBold pour le texte',
+    fontsWhy: 'Géométrique et nette, avec des chiffres bien dessinés : les durées et les prix se lisent d’un coup d’œil, même en plein soleil.',
+    specimen: 'Tu vas où ?', specimenSize: 54, search: 'Tu vas où ?', go: 'Partir maintenant',
+    toneLine: 'Direct, précis, au tutoiement. On donne un chiffre et sa source, jamais un chiffre seul.',
+    voice: ['Ton gbaka part dans 4 à 7 min.', 'Prix payé ce matin : 300 F (12 avis).', 'Pas d’info récente ici : on affiche le temps habituel.', 'Descends au prochain arrêt.'],
+    mapLine: 'Carte claire et calme, grands axes en jaune, lagune bien lisible. Vue satellite en un geste.',
+    tiles: [['Sur blanc', '#FFFFFF', '#0B6E87', '#FFFFFF', '#F2711C', '#0E1C22', '#4B5C63'], ['Sur la couleur', '#0B6E87', '#FFFFFF', '#0B6E87', '#F2711C', '#FFFFFF', '#FFFFFF'], ['Sur la nuit', '#0E1C22', '#0B6E87', '#FFFFFF', '#F2711C', '#FFFFFF', '#AEBFC5'], ['Une couleur', '#F2F5F6', '#0E1C22', '#F2F5F6', '#0E1C22', '#0E1C22', '#4B5C63']]
+  },
+  yafohi: {
+    display: '"Baloo 2", system-ui, sans-serif', text: '"Nunito", system-ui, sans-serif', dw: 800, dls: '0',
+    boardBg: '#FFF9EE', heroBg: '#FFC21A', heroInk: '#16130F', heroCard: 'rgba(22,19,15,.08)', traitBg: '#16130F', traitInk: '#FFC21A',
+    ink: '#16130F', ink2: '#5E574C', line: '#F0E3C8', cardBg: '#FFFFFF', accentText: '#16130F',
+    uiBg: '#FFF2D9', uiCard: '#FFFFFF', uiSurface: '#FFF2D9', uiInk: '#16130F', uiInk2: '#5E574C', rSearch: 999, rButton: 999,
+    primary: '#16130F', onPrimary: '#FFFFFF', report: '#FFC21A', onReport: '#16130F', live: '#1F7A47',
+    bubble: '#FFE9A8', bubbleInk: '#16130F',
+    say: 'Se dit « ya-fo-hi ». Nouchi.',
+    meaning: '« Y’a fohi » : « y’a pas de souci », de « foyi », rien, en dioula. Le nom rassure : avec l’appli, se déplacer devient simple.',
+    tagline: 'Bouge tranquille.',
+    traits: ['Simple', 'Chaleureux', 'Rassurant'],
+    inspiration: 'La simplicité de Wave : un écran, une action, de gros boutons et zéro jargon. On comprend sans lire le mode d’emploi.',
+    logoIdea: 'Un « y » dont la queue devient une route qui mène à un point d’arrivée. Dans le mot, le point du « i » est un soleil.',
+    colors: [['Mangue', '#FFC21A', 'Marque, signaler, surfaces'], ['Encre', '#16130F', 'Boutons, texte principal'], ['Crème', '#FFF9EE', 'Fond de l’appli'], ['Sable', '#FFF2D9', 'Champs, cartes'], ['Terre', '#5E574C', 'Texte secondaire'], ['Feuille', '#1F7A47', 'Fluide, confirmé']],
+    states: [['Fluide', '#1F7A47'], ['Ça remplit', '#A35A00'], ['Ça déborde', '#C2332B']],
+    fontsLine: 'Baloo 2 · ExtraBold pour les titres, Nunito pour le texte',
+    fontsWhy: 'Des lettres rondes et généreuses, chaleureuses sans être enfantines. Nunito garde des chiffres très lisibles.',
+    specimen: 'On va où ?', specimenSize: 58, search: 'On va où ?', go: 'On y va !',
+    toneLine: 'Chaleureux et rassurant, des phrases très courtes. On parle comme un voisin serviable.',
+    voice: ['On y va !', 'Ton gbaka arrive. Y’a fohi.', 'Descends au prochain arrêt.', 'Hors connexion ? Tes trajets restent là.'],
+    mapLine: 'Carte crème et douce, très peu de détails : seulement ce qui aide à se repérer.',
+    tiles: [['Sur crème', '#FFF9EE', '#FFC21A', '#16130F', '#16130F', '#16130F', '#5E574C'], ['Sur la couleur', '#FFC21A', '#16130F', '#FFC21A', '#FFFFFF', '#16130F', '#16130F'], ['Sur l’encre', '#16130F', '#FFC21A', '#16130F', '#16130F', '#FFFFFF', '#CFC6B6'], ['Une couleur', '#FFFFFF', '#16130F', '#FFFFFF', '#FFFFFF', '#16130F', '#5E574C']]
+  },
+  koro: {
+    display: '"Sora", system-ui, sans-serif', text: '"Inter", system-ui, sans-serif', dw: 700, dls: '-0.02em',
+    boardBg: '#0B1028', heroBg: '#18204A', heroInk: '#F4F6FF', heroCard: 'rgba(255,255,255,.06)', traitBg: '#FFD23F', traitInk: '#0E1430',
+    ink: '#F4F6FF', ink2: '#AEB7DA', line: '#2C3668', cardBg: '#141B40', accentText: '#FFD23F',
+    uiBg: '#0E1430', uiCard: '#18204A', uiSurface: '#222B5C', uiInk: '#F4F6FF', uiInk2: '#AEB7DA', rSearch: 18, rButton: 16,
+    primary: '#FFD23F', onPrimary: '#0E1430', report: '#FF6B5E', onReport: '#1B0805', live: '#3BD4E5',
+    bubble: '#222B5C', bubbleInk: '#F4F6FF',
+    say: 'Se dit « mon ko-ro ». Nouchi.',
+    meaning: '« Kôrô » : le grand frère, en nouchi, du dioula. Celui qui connaît la route, qui te dit où descendre et qui te prévient s’il y a un souci.',
+    tagline: 'Le grand frère qui connaît la route.',
+    traits: ['Complice', 'Vivant', 'Communautaire'],
+    inspiration: 'L’esprit de Waze : la ville en direct, les signalements de la communauté, un compagnon de route sympathique. Pensé d’abord pour la nuit.',
+    logoIdea: 'Le visage d’un minibus vu de face : les deux « ô » de kôrô deviennent des phares-yeux, leurs accents des sourcils. Une mascotte prête à l’emploi.',
+    colors: [['Nuit', '#0E1430', 'Fond de l’appli'], ['Jaune kôrô', '#FFD23F', 'Marque, boutons'], ['Corail', '#FF6B5E', 'Signaler, alertes'], ['Cyan', '#3BD4E5', 'En direct, ta position'], ['Nuit claire', '#18204A', 'Cartes, feuilles'], ['Brume', '#AEB7DA', 'Texte secondaire']],
+    states: [['Fluide', '#34D399'], ['Ça remplit', '#FBBF24'], ['Ça déborde', '#FB7185']],
+    fontsLine: 'Sora · Bold pour les titres, Inter pour le texte',
+    fontsWhy: 'Sora donne une allure technique et amicale. Inter reste très lisible en petit, sur fond sombre.',
+    specimen: 'Kôrô, on va où ?', specimenSize: 40, search: 'Kôrô, on va où ?', go: 'Allons-y',
+    toneLine: 'Complice et vivant, comme un grand frère. On remercie, on encourage, on parle de la communauté.',
+    voice: ['Kôrô, on va où ?', 'Bien vu, merci ! 214 personnes le voient.', '17 usagers sur ce trajet en ce moment.', 'Attention, ça bouchonne vers Adjamé.'],
+    mapLine: 'Carte de nuit qui repose les yeux et la batterie : les véhicules et les alertes ressortent.',
+    tiles: [['Sur la nuit', '#0E1430', '#FFD23F', '#0E1430', '#FFD23F', '#F4F6FF', '#AEB7DA'], ['Sur la couleur', '#FFD23F', '#0E1430', '#FFD23F', '#0E1430', '#0E1430', '#0E1430'], ['Sur blanc', '#FFFFFF', '#FFD23F', '#0E1430', '#FFD23F', '#0E1430', '#4B5C63'], ['Une couleur', '#18204A', '#F4F6FF', '#18204A', '#F4F6FF', '#F4F6FF', '#AEB7DA']]
+  }
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const key = BRANDS[this.props.theme] ? this.props.theme : 'gbe';
+    const src = BRANDS[key];
+    const modeColors = key === 'koro'
+      ? { gbaka: '#2FCB8C', woro: '#FF9440', bus: '#7AA2FF', bateau: '#38BDF8', walk: '#222B5C' }
+      : { gbaka: '#13855A', woro: '#BF5A00', bus: '#2B59C3', bateau: '#077B99', walk: key === 'gbe' ? '#E3EAED' : '#FFF2D9' };
+    const b = Object.assign({}, src, {
+      traits: src.traits.map((label) => ({ label: label })),
+      colors: src.colors.map((c) => ({ name: c[0], hex: c[1], role: c[2] })),
+      states: src.states.map((s, i) => {
+        const n = parseInt(s[1].slice(1), 16);
+        const soft = 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + (key === 'koro' ? 0.18 : 0.13) + ')';
+        return { label: s[0], hex: s[1], ink: s[1], bg: soft, b1: s[1], b2: i >= 1 ? s[1] : src.line, b3: i >= 2 ? s[1] : src.line };
+      }),
+      modes: ['gbaka', 'woro', 'bus', 'bateau', 'walk'].map((m) => ({
+        label: MODE_LABELS[m], bg: modeColors[m], ink: m === 'walk' ? src.uiInk : (key === 'koro' ? '#0E1430' : '#FFFFFF'),
+        gbaka: m === 'gbaka', woro: m === 'woro', bus: m === 'bus', bateau: m === 'bateau', walk: m === 'walk'
+      })),
+      voice: src.voice.map((text) => ({ text: text })),
+      tiles: src.tiles.map((x) => ({ label: x[0], bg: x[1], mark: x[2], markInk: x[3], accent: x[4], word: x[5], caption: x[6] }))
+    });
+    const sizes = [[96, 22, '96 px'], [64, 15, '64 px'], [44, 10, '44 px'], [28, 7, '28 px']].map((x) => ({ px: x[0], radius: x[1], label: x[2] }));
+    return { b: b, sizes: sizes, is: { gbe: key === 'gbe', yafohi: key === 'yafohi', koro: key === 'koro' } };
+  }
+}
+</script>
+</body>
+</html>

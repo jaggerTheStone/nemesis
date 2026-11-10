@@ -2,7 +2,7 @@
 
 Ce fichier permet à une nouvelle session de reprendre le travail sans perte (partie 1.4 du cahier des charges).
 
-**Dernière mise à jour** : 2026-11-09.
+**Dernière mise à jour** : 2026-11-10.
 
 ## Où en est-on
 
@@ -29,7 +29,10 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - **Jugement** : appli « plate », sans design, fonctionnalités, innovation ni intuitivité. Le prototype d'I0.11 ne sert donc pas de base visuelle. Il faut une passe de design (maquettes haute fidélité validées par le porteur) avant de coder les écrans de la phase 1.
   - **Décision : l'appli n'est plus « hors ligne par défaut »**. Elle fonctionne d'abord en ligne, et certaines fonctions restent utilisables sans connexion. Cela remplace le principe 3.4.2 du cahier des charges et touche F-12, la partie 9.5, ARCHITECTURE.md (parité en ligne et hors ligne) et l'ADR-001. La liste des fonctions hors ligne est à arrêter avec le porteur.
   - **Question posée** : une cartographie plus moderne du transport, par satellite par exemple. Réponse donnée : le satellite aide pour les routes, les gares et les zones inondées, mais ne voit ni les lignes, ni les arrêts, ni les prix, ni les attentes. Il faut pour cela des traces GPS (Éclaireurs, puis usagers consentants), des traceurs dans les véhicules (partenariat) et des données de trafic.
+- **Maquette des trois identités (2026-11-10)** : [docs/UX/maquette-identites](UX/maquette-identites/README.md), canevas privé sur claude.ai. Trois propositions complètes (gbê, yafohi, mon kôrô) : nom en nouchi, logo, couleurs, typographie, ton, et la même appli sur la vraie carte d'Abidjan (OpenStreetMap, vue satellite Sentinel-2). Six écrans par identité, plus les états hors connexion et satellite. Trajets calculés sur les vraies rues ; lignes, attentes, prix et affluence simulés (H-036).
+  - **Le porteur choisit une identité**, ou un mélange. Ensuite : vérifier le nom avec des Abidjanais et sa disponibilité, tester la maquette avec 5 à 8 usagers (partie 10.1), puis l'intégrer au plan de la phase 1.
 - **En attente côté porteur** :
+  - **le choix d'une identité** dans la maquette (gbê, yafohi ou mon kôrô) et la validation de H-036 ;
   - **la licence du GTFS « Abidjan 2023 » (H-030)** : CC BY-NC 4.0, pas d'usage commercial. Demander l'autorisation à DigitalTransport4Africa (partenariat, 15.6) et faire valider la démarche par un juriste ;
   - la validation des hypothèses H-029 (emprise d'Abidjan) et H-031 (budget du fond de carte), et la relecture de l'ADR-009 (schéma des tuiles) ;
   - la relecture de l'ADR-003 (option B retenue) ; le choix du corridor pilote, dont les couples remplaceront ceux du spike ;
@@ -96,6 +99,7 @@ Les rapports complets (`rapports-reels`) et les tuiles d'Abidjan (`tuiles-abidja
 ## Points d'attention pour la reprise
 
 - **Environnement cloud** (H-021) :
+  - ajoutés le 2026-11-10 pour la maquette : `tiles.maps.eox.at` (imagerie satellite, accessible) et `overpass-api.de` (autorisé, mais le serveur coupe la connexion : l'extrait OSM passe par le workflow « Données de carte pour la maquette ») ;
   - bloqués : `download.geofabrik.de` (et les autres sources d'extraits OSM), `hub.tumidata.org`, `transit.land`, `dl.google.com` et `github.com` hors de ce dépôt ;
   - accessibles : `gitlab.com`, d'où vient le GTFS 2023, et `raw.githubusercontent.com` ;
   - conséquence : l'import OSM réel, les tuiles réelles et le build Android (I0.11) ne sont vérifiables qu'en GitHub Actions ;

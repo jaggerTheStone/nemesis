@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Trois identités pour l’appli</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@800&amp;family=Baloo+2:wght@800&amp;family=Sora:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}
+a:hover{opacity:.88}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; padding: 56px 64px; background: #F3F1EC; color: #15191C; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; gap: 32px; -webkit-font-smoothing: antialiased">
+
+<header style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 860px">
+<span style="font: 700 14px/1 Inter, system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #6A6F73">Abidjan · maquette de l’appli de transport · novembre 2026</span>
+<h1 style="margin: 0; font: 700 58px/1.02 'Space Grotesk', system-ui, sans-serif; letter-spacing: -0.03em; text-wrap: balance">Trois identités. Une appli simple et précise.</h1>
+<p style="margin: 0; font: 500 19px/1.5 Inter, system-ui, sans-serif; color: #3E4448; text-wrap: pretty">Chaque ligne du canevas est une proposition : sa planche (nom, logo, couleurs, typographie, ton), puis l’appli elle-même, sur la vraie carte d’Abidjan. Choisis celle qui te ressemble ; on peut aussi en mélanger deux.</p>
+</div>
+<div style="flex: none; width: 360px; display: flex; flex-direction: column; gap: 10px; padding: 20px 22px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E2DED5">
+<span style="font: 800 13px/1 Inter, system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #6A6F73">Pour essayer</span>
+<span style="font: 600 15px/1.45 Inter, system-ui, sans-serif; color: #2A2F33">1. Clique sur « Essayer l’appli ».<br>2. Touche la barre de recherche, choisis Le Plateau.<br>3. Compare les trajets, pars, signale un souci.</span>
+</div>
+</header>
+
+<div style="flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<article style="border-radius: 28px; background: #0B6E87; color: #FFFFFF; padding: 30px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 16px">
+<svg width="72" height="72" viewBox="0 0 48 48" role="img" aria-label="Icône gbê"><rect width="48" height="48" rx="13" fill="#FFFFFF"></rect><path d="M24 40s-11.5-9.9-11.5-18.6a11.5 11.5 0 0 1 23 0C35.5 30.1 24 40 24 40z" fill="#0B6E87"></path><path d="M18.6 21.6l3.8 3.8 7.2-7.4" fill="none" stroke="#F2711C" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span style="font: 800 64px/1 'Plus Jakarta Sans', system-ui, sans-serif; letter-spacing: -0.05em">gbê</span>
+</div>
+<span style="font: 700 15px/1.3 Inter, system-ui, sans-serif; opacity: .85">« C’est gbê » : c’est vrai, c’est sûr.</span>
+<span style="font: 800 28px/1.12 'Plus Jakarta Sans', system-ui, sans-serif; letter-spacing: -0.02em">Le bon trajet, le vrai prix.</span>
+<span style="font: 600 15px/1.5 Inter, system-ui, sans-serif; opacity: .9">Précis, fiable, clair. Inspiré de la clarté de Google Maps.</span>
+<div style="margin-top: auto; display: flex; gap: 10px">
+<a href="Prototype.dc.html" style="flex: 1; height: 50px; border-radius: 14px; background: #FFFFFF; color: #0B6E87; display: grid; place-items: center; font: 800 16px/1 Inter, system-ui, sans-serif; text-decoration: none">Essayer l’appli</a>
+<a href="Marque.dc.html" style="flex: 1; height: 50px; border-radius: 14px; border: 2px solid rgba(255,255,255,.6); color: #FFFFFF; display: grid; place-items: center; font: 800 16px/1 Inter, system-ui, sans-serif; text-decoration: none; box-sizing: border-box">Voir la planche</a>
+</div>
+</article>
+
+<article style="border-radius: 28px; background: #FFC21A; color: #16130F; padding: 30px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 16px">
+<svg width="72" height="72" viewBox="0 0 48 48" role="img" aria-label="Icône yafohi"><rect width="48" height="48" rx="16" fill="#16130F"></rect><path d="M13.5 12.5l9.8 12.6" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><path d="M34.5 12.5L23 31c-2.4 3.9-5.4 5.4-9.4 5.2" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><circle cx="35" cy="33.5" r="3.8" fill="#FFFFFF"></circle></svg>
+<span style="font: 800 62px/1 'Baloo 2', system-ui, sans-serif">yafohi</span>
+</div>
+<span style="font: 700 15px/1.3 Inter, system-ui, sans-serif; opacity: .85">« Y’a fohi » : y’a pas de souci.</span>
+<span style="font: 800 30px/1.1 'Baloo 2', system-ui, sans-serif">Bouge tranquille.</span>
+<span style="font: 600 15px/1.5 Inter, system-ui, sans-serif; opacity: .9">Simple, chaleureux, rassurant. Inspiré de la simplicité de Wave.</span>
+<div style="margin-top: auto; display: flex; gap: 10px">
+<a href="Yafohi-Carte.dc.html" style="flex: 1; height: 50px; border-radius: 999px; background: #16130F; color: #FFFFFF; display: grid; place-items: center; font: 800 16px/1 Inter, system-ui, sans-serif; text-decoration: none">Essayer l’appli</a>
+<a href="Yafohi-Marque.dc.html" style="flex: 1; height: 50px; border-radius: 999px; border: 2px solid #16130F; color: #16130F; display: grid; place-items: center; font: 800 16px/1 Inter, system-ui, sans-serif; text-decoration: none; box-sizing: border-box">Voir la planche</a>
+</div>
+</article>
+
+<article style="border-radius: 28px; background: #0E1430; color: #F4F6FF; padding: 30px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 16px">
+<svg width="72" height="72" viewBox="0 0 48 48" role="img" aria-label="Icône mon kôrô"><rect width="48" height="48" rx="14" fill="#FFD23F"></rect><rect x="9" y="8.5" width="30" height="29.5" rx="9" fill="#0E1430"></rect><rect x="13" y="12.5" width="22" height="7.5" rx="3" fill="#FFD23F" opacity=".22"></rect><circle cx="17.6" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="30.4" cy="28" r="4.3" fill="#FFFFFF"></circle><circle cx="18.3" cy="28.7" r="2" fill="#0E1430"></circle><circle cx="31.1" cy="28.7" r="2" fill="#0E1430"></circle><path d="M14.4 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M27.2 23l3.2-2.3 3.2 2.3" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.6 33.6c2.1 1.4 4.7 1.4 6.8 0" fill="none" stroke="#FFD23F" stroke-width="2" stroke-linecap="round"></path><rect x="12" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect><rect x="30" y="38" width="6" height="4.5" rx="1.6" fill="#0E1430"></rect></svg>
+<span style="font: 700 52px/1 'Sora', system-ui, sans-serif; letter-spacing: -0.03em">mon kôrô</span>
+</div>
+<span style="font: 700 15px/1.3 Inter, system-ui, sans-serif; opacity: .85">« Kôrô » : le grand frère.</span>
+<span style="font: 700 27px/1.12 'Sora', system-ui, sans-serif; letter-spacing: -0.02em">Le grand frère qui connaît la route.</span>
+<span style="font: 600 15px/1.5 Inter, system-ui, sans-serif; opacity: .9">Complice, vivant, communautaire. Inspiré de l’esprit de Waze.</span>
+<div style="margin-top: auto; display: flex; gap: 10px">
+<a href="Koro-Carte.dc.html" style="flex: 1; height: 50px; border-radius: 16px; background: #FFD23F; color: #0E1430; display: grid; place-items: center; font: 800 16px/1 Inter, system-ui, sans-serif; text-decoration: none">Essayer l’appli</a>
+<a href="Koro-Marque.dc.html" style="flex: 1; height: 50px; border-radius: 16px; border: 2px solid rgba(244,246,255,.5); color: #F4F6FF; display: grid; place-items: center; font: 800 16px/1 Inter, system-ui, sans-serif; text-decoration: none; box-sizing: border-box">Voir la planche</a>
+</div>
+</article>
+</div>
+
+<footer style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; font: 500 14px/1.5 Inter, system-ui, sans-serif; color: #3E4448">
+<p style="margin: 0"><strong style="color: #15191C">Vrai :</strong> les rues, la lagune, les quartiers et les noms des gares viennent d’OpenStreetMap ; l’image satellite vient de Sentinel-2 (2025, EOX). Les trajets suivent les vraies rues.</p>
+<p style="margin: 0"><strong style="color: #15191C">Simulé :</strong> les lignes, les véhicules qui bougent, les attentes, l’affluence, les prix et les signalements. L’appli l’indique sur la carte.</p>
+<p style="margin: 0"><strong style="color: #15191C">À vérifier avant de choisir :</strong> le sens et l’usage des mots avec des Abidjanais, et la disponibilité des noms (magasins d’applis, marque, nom de domaine).</p>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
