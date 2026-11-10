@@ -25,6 +25,16 @@ Les écrans, identiques d'une identité à l'autre :
 
 Les états **hors connexion** (temps habituels, trajets enregistrés) et **vue satellite** sont montrés pour gbê. Ils existent dans les trois.
 
+## yafohi sur les lignes réelles de 2023
+
+Une rangée du canevas, à côté de la page d'accueil, montre yafohi sur le corridor Yopougon – Adjamé – Plateau avec les données réelles :
+
+- **Les lignes et les arrêts** : 230 lignes et 28 arrêts principaux, tirés du GTFS 2023 de DigitalTransport4Africa.
+- **Les trajets** : calculés par le vrai moteur, de Toits-Rouges vers 11 lieux du corridor, aller et retour.
+- **Ce que l'appli ne sait pas, elle le dit** : « Prix inconnu », « Affluence inconnue », « Lignes de 2023 · à confirmer ».
+
+`Reel.dc.html` charge ces données depuis un fichier du canevas, produit par `tools/maquette/donnees_2023.py`. Ce fichier n'est pas versionné : il dérive d'un jeu sous licence non commerciale (H-030). Les constats de l'essai sont dans la [feuille de route](../../FEUILLE-DE-ROUTE.md).
+
 ## Vrai et simulé
 
 - **Vrai** : les rues, la lagune, les quartiers et les noms des gares viennent d'OpenStreetMap ; l'image satellite vient de Sentinel-2 (2025, EOX). Les trajets suivent les vraies rues.

@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>yafohi · lignes réelles de 2023</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Baloo+2:wght@600;700;800&amp;family=Nunito:wght@500;600;700;800&amp;family=Sora:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+@keyframes nm-pulse{0%{transform:scale(.5);opacity:.6}100%{transform:scale(2.6);opacity:0}}
+@keyframes nm-up{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}
+@keyframes nm-pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+.nm-btn{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease,filter .12s ease}
+.nm-btn:active{transform:scale(.97)}
+.nm-btn:hover{filter:brightness(.98)}
+.nm-btn:focus-visible{outline:3px solid #2B7FFF;outline-offset:2px}
+.nm-noscroll::-webkit-scrollbar{display:none}
+.nm-input::placeholder{color:inherit;opacity:.55}
+.nm-input:focus{outline:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; font-family: {{t.text}}; background: {{t.bg}}; color: {{t.ink}}; -webkit-font-smoothing: antialiased">
+
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+<defs>
+<symbol id="r-gbaka" viewBox="0 0 24 24"><path d="M3.5 16.5v-8A2.5 2.5 0 0 1 6 6h9.6a2 2 0 0 1 1.6.8l2.9 3.9a2 2 0 0 1 .4 1.2v4.6"></path><path d="M3.5 11.5h17"></path><path d="M9.5 6v5.5"></path><circle cx="7.3" cy="17.3" r="1.8"></circle><circle cx="16.7" cy="17.3" r="1.8"></circle><path d="M9.1 17.3h5.8"></path></symbol>
+<symbol id="r-woro" viewBox="0 0 24 24"><path d="M5.2 17H4.5A1.5 1.5 0 0 1 3 15.5V13l2.2-5.2A1.5 1.5 0 0 1 6.6 7h10.8a1.5 1.5 0 0 1 1.4.8L21 13v2.5a1.5 1.5 0 0 1-1.5 1.5h-.7"></path><path d="M3.4 12.5h17.2"></path><circle cx="7.5" cy="17" r="1.8"></circle><circle cx="16.5" cy="17" r="1.8"></circle><path d="M9.3 17h5.4"></path></symbol>
+<symbol id="r-walk" viewBox="0 0 24 24"><circle cx="13.5" cy="4.2" r="1.7"></circle><path d="M10.3 21l2.2-6.2"></path><path d="M12.5 14.8l2.6 2.6V21"></path><path d="M12.5 14.8l-.6-5.6"></path><path d="M11.9 9.2l-3.4 1.6-1 3.2"></path><path d="M11.9 9.2l2.6-1 2 3.2 2.8.9"></path></symbol>
+<symbol id="r-pin" viewBox="0 0 24 24"><path d="M12 21.5s-7-6.3-7-11.7a7 7 0 0 1 14 0c0 5.4-7 11.7-7 11.7z"></path><circle cx="12" cy="9.8" r="2.6"></circle></symbol>
+<symbol id="r-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11.5" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"></path><path d="M12 18v3"></path></symbol>
+<symbol id="r-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"></path></symbol>
+<symbol id="r-close" viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></symbol>
+<symbol id="r-swap" viewBox="0 0 24 24"><path d="M8 20V5"></path><path d="M4.5 8.5L8 5l3.5 3.5"></path><path d="M16 4v15"></path><path d="M12.5 15.5L16 19l3.5-3.5"></path></symbol>
+<symbol id="r-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"></path><path d="M3 12.5l9 5 9-5"></path><path d="M3 17l9 5 9-5"></path></symbol>
+<symbol id="r-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2.6"></circle><path d="M12 2v3"></path><path d="M12 19v3"></path><path d="M2 12h3"></path><path d="M19 12h3"></path></symbol>
+<symbol id="r-home" viewBox="0 0 24 24"><path d="M4 10.8L12 4l8 6.8V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"></path></symbol>
+<symbol id="r-work" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.2"></rect><path d="M9 7V5.2A1.2 1.2 0 0 1 10.2 4h3.6A1.2 1.2 0 0 1 15 5.2V7"></path><path d="M3 12.5h18"></path></symbol>
+<symbol id="r-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2.2"></circle><circle cx="18" cy="5" r="2.2"></circle><path d="M8.2 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.8"></path></symbol>
+<symbol id="r-megaphone" viewBox="0 0 24 24"><path d="M3.5 10.2v3.6A1.2 1.2 0 0 0 4.7 15H7l8.5 4.5V4.5L7 9H4.7a1.2 1.2 0 0 0-1.2 1.2z"></path><path d="M18.5 9a4.2 4.2 0 0 1 0 6"></path><path d="M7.5 15l1.2 5"></path></symbol>
+<symbol id="r-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5.5"></path><path d="M12 7.6h.01"></path></symbol>
+<symbol id="r-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></symbol>
+<symbol id="r-flag" viewBox="0 0 24 24"><path d="M5 21V4"></path><path d="M5 4h11l-2 4 2 4H5"></path></symbol>
+<symbol id="r-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2.5"></rect></symbol>
+</defs>
+</svg>
+
+<sc-if value="{{showMap}}" hint-placeholder-val="{{ true }}">
+<div onPointerDown="{{onDown}}" onPointerMove="{{onMove}}" onPointerUp="{{onUp}}" onPointerCancel="{{onUp}}" onWheel="{{onWheel}}" onDoubleClick="{{onDouble}}" style="position: absolute; inset: 0; overflow: hidden; background: #A9DDD6; touch-action: none; cursor: grab">
+<div style="position: absolute; left: 0; top: 0; width: 2098px; height: 2341px; transform-origin: 0 0; transform: translate({{view.x}}px, {{view.y}}px) scale({{view.s}}); transition: {{view.transition}}; will-change: transform">
+<img src="/_blob/9dfb1fdd535bb7a1f48c41078af800c6" alt="Carte d’Abidjan" draggable="false" style="position: absolute; left: 0; top: 0; width: 2098px; height: 2341px; user-select: none; pointer-events: none">
+
+<sc-for list="{{labels}}" as="l" hint-placeholder-count="10">
+<span style="position: absolute; left: {{l.x}}px; top: {{l.y}}px; transform: translate(-50%, -50%) scale({{l.inv}}); font: {{l.font}}; color: {{l.color}}; text-shadow: 0 0 2px #FFF9EE, 0 0 3px #FFF9EE, 0 0 5px #FFF9EE; letter-spacing: {{l.ls}}; text-transform: {{l.tt}}; white-space: nowrap; pointer-events: none">{{l.name}}</span>
+</sc-for>
+
+<svg width="2098" height="2341" viewBox="0 0 2098 2341" style="position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none" aria-hidden="true">
+<sc-for list="{{netLines}}" as="nl" hint-placeholder-count="20">
+<path d="{{nl.d}}" fill="none" stroke="{{nl.color}}" stroke-width="{{nl.w}}" stroke-linecap="round" stroke-linejoin="round" opacity="{{nl.op}}"></path>
+</sc-for>
+<sc-for list="{{legs}}" as="leg" hint-placeholder-count="3">
+<sc-if value="{{leg.walk}}" hint-placeholder-val="{{ false }}">
+<path d="{{leg.d}}" fill="none" stroke="#FFFFFF" stroke-width="{{leg.cw}}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="{{leg.dash}}" opacity=".9"></path>
+<path d="{{leg.d}}" fill="none" stroke="{{leg.color}}" stroke-width="{{leg.w}}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="{{leg.dash}}"></path>
+</sc-if>
+<sc-if value="{{leg.ride}}" hint-placeholder-val="{{ true }}">
+<path d="{{leg.d}}" fill="none" stroke="#FFFFFF" stroke-width="{{leg.cw}}" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="{{leg.d}}" fill="none" stroke="{{leg.color}}" stroke-width="{{leg.w}}" stroke-linecap="round" stroke-linejoin="round"></path>
+</sc-if>
+</sc-for>
+<sc-for list="{{pucks}}" as="v" hint-placeholder-count="1">
+<g>
+<circle r="{{v.halo}}" fill="{{v.color}}" opacity=".2"></circle>
+<circle r="{{v.r}}" fill="{{v.color}}" stroke="#FFFFFF" stroke-width="{{v.rw}}"></circle>
+<g transform="{{v.iconT}}"><use href="#{{v.icon}}" width="24" height="24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></use></g>
+<animateMotion dur="{{v.dur}}" begin="0s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1" keyTimes="0;1" path="{{v.d}}"></animateMotion>
+</g>
+</sc-for>
+</svg>
+
+<sc-for list="{{stops}}" as="g" hint-placeholder-count="8">
+<button class="nm-btn" type="button" aria-label="{{g.aria}}" onClick="{{g.open}}" style="position: absolute; left: {{g.x}}px; top: {{g.y}}px; transform: translate(-50%, -100%) scale({{g.inv}}); transform-origin: 50% 100%; border: 0; padding: 0; background: none; display: flex; flex-direction: column; align-items: center; font: inherit">
+<span style="display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 9px 0 3px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(0,0,0,.22); border: 2px solid {{g.ring}}">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: {{g.modeColor}}; display: grid; place-items: center">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{g.icon}}"></use></svg>
+</span>
+<span style="font: 800 12px/1 {{t.text}}; color: #16130F; white-space: nowrap">{{g.count}}</span>
+</span>
+<span style="width: 10px; height: 6px; background: {{g.ring}}; clip-path: polygon(0 0, 100% 0, 50% 100%)"></span>
+<sc-if value="{{g.showName}}" hint-placeholder-val="{{ false }}">
+<span style="margin-top: 3px; font: 700 11px/1.15 {{t.text}}; color: #16130F; text-shadow: 0 0 2px #FFF9EE, 0 0 3px #FFF9EE, 0 0 5px #FFF9EE; white-space: nowrap">{{g.name}}</span>
+</sc-if>
+</button>
+</sc-for>
+
+<sc-if value="{{showDest}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: {{dest.x}}px; top: {{dest.y}}px; transform: translate(-50%, -100%) scale({{dest.inv}}); transform-origin: 50% 100%; pointer-events: none">
+<svg width="34" height="44" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 43s14-13.4 14-25.4A14 14 0 0 0 3 17.6C3 29.6 17 43 17 43z" fill="#C2332B" stroke="#FFFFFF" stroke-width="2.5"></path><circle cx="17" cy="17.5" r="5.5" fill="#FFFFFF"></circle></svg>
+</div>
+</sc-if>
+
+<sc-if value="{{showUser}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: {{user.x}}px; top: {{user.y}}px; width: 0; height: 0; transform: scale({{user.inv}}); pointer-events: none">
+<span style="position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; background: #16130F; animation: nm-pulse 2.2s ease-out infinite"></span>
+<span style="position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%; background: #16130F; border: 3px solid #FFC21A; box-sizing: border-box; box-shadow: 0 2px 8px rgba(0,0,0,.3)"></span>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showMapChrome}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 12px; bottom: {{chrome.badgeBottom}}px; padding: 5px 10px; border-radius: 999px; background: #16130F; color: #FFFFFF; font: 700 11px/1.2 {{t.text}}; box-shadow: 0 1px 4px rgba(0,0,0,.2); pointer-events: none">Lignes de 2023 · à confirmer</div>
+<div style="position: absolute; right: 12px; bottom: {{chrome.badgeBottom}}px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,.8); color: #33424A; font: 500 9px/1.3 system-ui, sans-serif; pointer-events: none">GTFS 2023 DT4A · © OpenStreetMap</div>
+</sc-if>
+
+<sc-if value="{{screens.carte}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 12px; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 6px; height: 56px; padding: 0 6px 0 8px; border-radius: 999px; background: #FFFFFF; box-shadow: {{t.shadow}}">
+<button class="nm-btn" type="button" onClick="{{goSearch}}" style="flex: 1; min-width: 0; height: 48px; display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0 4px; font: inherit; color: {{t.ink2}}; text-align: left">
+<svg width="32" height="32" viewBox="0 0 48 48" role="img" aria-label="yafohi"><rect width="48" height="48" rx="16" fill="#16130F"></rect><path d="M13.5 12.5l9.8 12.6" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><path d="M34.5 12.5L23 31c-2.4 3.9-5.4 5.4-9.4 5.2" fill="none" stroke="#FFC21A" stroke-width="5.6" stroke-linecap="round"></path><circle cx="35" cy="33.5" r="3.8" fill="#FFFFFF"></circle></svg>
+<span style="font: 700 16.5px/1.2 {{t.text}}; color: {{t.ink2}}">On va où ?</span>
+</button>
+<button class="nm-btn" type="button" aria-label="Recherche vocale" onClick="{{goSearch}}" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFF2D9; color: #16130F; display: grid; place-items: center">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-mic"></use></svg>
+</button>
+</div>
+<div class="nm-noscroll" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -12px; padding: 0 12px 4px">
+<button class="nm-btn" type="button" onClick="{{goWork}}" style="flex: none; height: 38px; display: flex; align-items: center; gap: 7px; padding: 0 14px 0 11px; border-radius: 999px; border: 1px solid #F0E3C8; background: #FFFFFF; color: #16130F; font: 700 13.5px/1 {{t.text}}; box-shadow: 0 1px 4px rgba(0,0,0,.12); white-space: nowrap">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16130F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-work"></use></svg>Boulot<span style="color: {{t.ink2}}; font-weight: 600">· Le Plateau</span></button>
+<button class="nm-btn" type="button" aria-pressed="{{linesOn}}" onClick="{{toggleLines}}" style="flex: none; height: 38px; display: flex; align-items: center; gap: 7px; padding: 0 14px 0 11px; border-radius: 999px; border: 1px solid {{linesChip.line}}; background: {{linesChip.bg}}; color: {{linesChip.ink}}; font: 700 13.5px/1 {{t.text}}; box-shadow: 0 1px 4px rgba(0,0,0,.12); white-space: nowrap">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-route"></use></svg>{{linesChip.label}}</button>
+<button class="nm-btn" type="button" onClick="{{openNearest}}" style="flex: none; height: 38px; display: flex; align-items: center; gap: 7px; padding: 0 14px 0 11px; border-radius: 999px; border: 1px solid #F0E3C8; background: #FFFFFF; color: #16130F; font: 700 13.5px/1 {{t.text}}; box-shadow: 0 1px 4px rgba(0,0,0,.12); white-space: nowrap">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16130F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-gbaka"></use></svg>Arrêt le plus proche</button>
+</div>
+</div>
+
+<div style="position: absolute; right: 12px; bottom: 318px; display: flex; flex-direction: column; gap: 12px; align-items: flex-end">
+<button class="nm-btn" type="button" aria-label="Me recentrer" onClick="{{recenter}}" style="width: 46px; height: 46px; border-radius: 50%; border: 0; background: #FFFFFF; color: #16130F; box-shadow: {{t.shadow}}; display: grid; place-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-locate"></use></svg>
+</button>
+<button class="nm-btn" type="button" onClick="{{goReport}}" style="height: 58px; display: flex; align-items: center; gap: 9px; padding: 0 20px 0 16px; border-radius: 999px; border: 0; background: #FFC21A; color: #16130F; font: 800 15.5px/1 {{t.display}}; box-shadow: 0 6px 18px rgba(0,0,0,.28)">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-megaphone"></use></svg>Signaler</button>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; border-radius: 30px 30px 0 0; background: #FFFFFF; box-shadow: 0 -6px 24px rgba(0,0,0,.14); padding: 10px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: #F0E3C8"></span>
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font: 800 21px/1.15 {{t.display}}">Arrêts près de toi</h2>
+<span style="font: 700 12px/1 {{t.text}}; color: {{t.ink2}}">{{status}}</span>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{nearby}}" as="n" hint-placeholder-count="3">
+<button class="nm-btn" type="button" onClick="{{n.open}}" style="display: flex; align-items: center; gap: 12px; width: 100%; padding: 9px 4px; border: 0; border-bottom: 1px solid #F0E3C8; background: none; font: inherit; color: #16130F; text-align: left">
+<span style="flex: none; width: 44px; height: 44px; border-radius: 14px; background: {{n.tint}}; color: {{n.modeColor}}; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{n.icon}}"></use></svg>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font: 800 15.5px/1.2 {{t.text}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{n.name}}</span>
+<span style="font: 600 13px/1.2 {{t.text}}; color: {{t.ink2}}">{{n.sub}}</span>
+</span>
+<span style="flex: none; font: 700 12.5px/1 {{t.text}}; color: {{t.ink2}}">{{n.km}}</span>
+</button>
+</sc-for>
+</div>
+<div style="display: flex; gap: 8px; align-items: flex-start; font: 600 12.5px/1.35 {{t.text}}; color: {{t.ink2}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 1px"><use href="#r-info"></use></svg>
+<span>Pas encore d’info en direct : les attentes viennent des fréquences de 2023.</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.recherche}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: #FFF9EE; display: flex; flex-direction: column">
+<div style="padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 10px; background: #FFFFFF; box-shadow: 0 1px 0 #F0E3C8">
+<div style="display: flex; align-items: center; gap: 8px">
+<button class="nm-btn" type="button" aria-label="Retour" onClick="{{goHome}}" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: none; color: #16130F; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-back"></use></svg>
+</button>
+<label style="flex: 1; display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 8px 0 16px; border-radius: 999px; background: #FFF2D9; border: 2px solid #16130F">
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Destination</span>
+<input class="nm-input" type="text" value="{{query}}" onChange="{{onQuery}}" placeholder="On va où ?" autocomplete="off" style="flex: 1; min-width: 0; border: 0; background: none; font: 700 17px/1.2 {{t.text}}; color: #16130F">
+<button class="nm-btn" type="button" aria-label="Effacer" onClick="{{clearQuery}}" style="width: 36px; height: 36px; border-radius: 50%; border: 0; background: none; color: {{t.ink2}}; display: grid; place-items: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><use href="#r-close"></use></svg>
+</button>
+</label>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px; font: 600 14px/1.2 {{t.text}}; color: {{t.ink2}}">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #16130F; box-shadow: 0 0 0 4px rgba(255,194,26,.6)"></span>
+<span>De : <strong style="color: #16130F">Maison</strong> · Toits-Rouges, Yopougon</span>
+</div>
+</div>
+<div class="nm-noscroll" style="flex: 1; overflow-y: auto; padding: 8px 16px 16px; display: flex; flex-direction: column">
+<span style="font: 800 12px/1 {{t.text}}; letter-spacing: .06em; text-transform: uppercase; color: {{t.ink2}}; padding: 12px 0 6px">Lieux du corridor</span>
+<sc-for list="{{suggestions}}" as="s" hint-placeholder-count="5">
+<button class="nm-btn" type="button" onClick="{{s.go}}" style="display: flex; align-items: center; gap: 14px; width: 100%; padding: 11px 2px; border: 0; border-bottom: 1px solid #F0E3C8; background: none; font: inherit; color: #16130F; text-align: left">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 50%; background: #FFF2D9; color: #16130F; display: grid; place-items: center">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-pin"></use></svg>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font: 800 16px/1.2 {{t.text}}">{{s.name}}</span>
+<span style="font: 600 13px/1.2 {{t.text}}; color: {{t.ink2}}">{{s.sub}}</span>
+</span>
+<span style="flex: none; font: 700 13px/1 {{t.text}}; color: {{t.ink2}}">{{s.km}}</span>
+</button>
+</sc-for>
+<sc-if value="{{noSuggestion}}" hint-placeholder-val="{{ false }}">
+<span style="padding: 18px 2px; font: 600 15px/1.45 {{t.text}}; color: {{t.ink2}}">Pas encore ce lieu. Pour la démo, les trajets sont calculés vers onze lieux du corridor.</span>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.resultats}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 12px; right: 12px; top: 12px; padding: 8px 8px 8px 4px; border-radius: 22px; background: #FFFFFF; box-shadow: {{t.shadow}}; display: flex; align-items: center; gap: 4px">
+<button class="nm-btn" type="button" aria-label="Retour" onClick="{{goSearch}}" style="flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: none; color: #16130F; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-back"></use></svg>
+</button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 12px; border-radius: 999px; background: #FFF2D9; font: 700 14px/1 {{t.text}}; color: #16130F; white-space: nowrap; overflow: hidden">
+<span style="flex: none; width: 9px; height: 9px; border-radius: 50%; background: #16130F"></span>{{fromName}}</div>
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 12px; border-radius: 999px; background: #FFF2D9; font: 800 14px/1 {{t.text}}; color: #16130F; white-space: nowrap; overflow: hidden">
+<span style="flex: none; width: 9px; height: 9px; border-radius: 2px; background: #C2332B"></span>{{toName}}</div>
+</div>
+<button class="nm-btn" type="button" aria-label="Inverser départ et arrivée" onClick="{{swap}}" style="flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFF2D9; color: #16130F; display: grid; place-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-swap"></use></svg>
+</button>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 432px; border-radius: 30px 30px 0 0; background: #FFFFFF; box-shadow: 0 -6px 24px rgba(0,0,0,.16); display: flex; flex-direction: column">
+<div style="padding: 10px 16px 6px; display: flex; flex-direction: column; gap: 8px">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: #F0E3C8"></span>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font: 800 20px/1.15 {{t.display}}">{{resultsTitle}}</h2>
+<span style="padding: 7px 11px; border-radius: 999px; background: #FFF2D9; font: 700 12.5px/1 {{t.text}}">Départ 7 h 30</span>
+</div>
+</div>
+<div class="nm-noscroll" style="flex: 1; overflow-y: auto; padding: 4px 16px 8px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{options}}" as="o" hint-placeholder-count="3">
+<button class="nm-btn" type="button" aria-pressed="{{o.selected}}" onClick="{{o.pick}}" style="display: flex; flex-direction: column; gap: 9px; width: 100%; padding: 12px 14px; border-radius: 20px; border: 2px solid {{o.border}}; background: {{o.bg}}; font: inherit; color: #16130F; text-align: left">
+<span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%">
+<span style="padding: 4px 10px; border-radius: 999px; background: {{o.tagBg}}; color: {{o.tagInk}}; font: 800 11.5px/1 {{t.text}}">{{o.tag}}</span>
+<span style="font: 800 19px/1 {{t.display}}; white-space: nowrap">{{o.duration}}</span>
+</span>
+<span style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap">
+<sc-for list="{{o.legs}}" as="lg" hint-placeholder-count="3">
+<span style="display: flex; align-items: center; gap: 4px">
+<span style="display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 9px 0 6px; border-radius: 8px; background: {{lg.bg}}; color: {{lg.ink}}; font: 700 12.5px/1 {{t.text}}">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{lg.icon}}"></use></svg>{{lg.text}}</span>
+<sc-if value="{{lg.more}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5E574C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-chev"></use></svg></sc-if>
+</span>
+</sc-for>
+</span>
+<span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; font: 600 13px/1.3 {{t.text}}; color: {{t.ink2}}">
+<span><strong style="color: #16130F; font-weight: 800">Prix inconnu</strong> · {{o.meta}}</span>
+<span style="white-space: nowrap">{{o.arrive}}</span>
+</span>
+<span style="font: 600 12px/1.3 {{t.text}}; color: {{t.ink2}}">{{o.lines}}</span>
+</button>
+</sc-for>
+<span style="font: 600 12px/1.4 {{t.text}}; color: {{t.ink2}}; padding: 2px 2px 6px">Calculé par le moteur yafohi sur les lignes de 2023 (DigitalTransport4Africa). Les prix ne figurent pas dans ces données ; les attentes viennent des fréquences annoncées, pas d’observations.</span>
+</div>
+<div style="padding: 10px 16px 16px; border-top: 1px solid #F0E3C8">
+<button class="nm-btn" type="button" onClick="{{goTrip}}" style="width: 100%; height: 56px; border-radius: 999px; border: 0; background: #16130F; color: #FFFFFF; font: 800 17px/1 {{t.display}}; box-shadow: 0 4px 14px rgba(0,0,0,.18)">On y va !</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.trajet}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 12px; right: 12px; top: 12px; border-radius: 22px; background: #16130F; color: #FFFFFF; box-shadow: 0 8px 24px rgba(0,0,0,.25); overflow: hidden">
+<div style="display: flex; gap: 14px; align-items: center; padding: 16px 16px 14px">
+<span style="flex: none; width: 56px; height: 56px; border-radius: 18px; background: #FFC21A; color: #16130F; display: grid; place-items: center">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{nav.icon}}"></use></svg>
+</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px">
+<span style="font: 800 20px/1.15 {{t.display}}">{{nav.title}}</span>
+<span style="font: 700 14px/1.25 {{t.text}}; opacity: .88">{{nav.sub}}</span>
+</div>
+</div>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 410px; border-radius: 30px 30px 0 0; background: #FFFFFF; box-shadow: 0 -6px 24px rgba(0,0,0,.16); display: flex; flex-direction: column">
+<div style="padding: 14px 16px 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; border-bottom: 1px solid #F0E3C8">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font: 800 12px/1 {{t.text}}; color: {{t.ink2}}; text-transform: uppercase; letter-spacing: .05em">Arrivée estimée</span>
+<span style="font: 800 30px/1 {{t.display}}">{{eta.main}}<span style="font: 700 15px/1 {{t.text}}; color: {{t.ink2}}"> {{eta.late}}</span></span>
+</div>
+<span style="font: 700 12.5px/1.3 {{t.text}}; color: {{t.ink2}}; text-align: right; white-space: pre-line">{{eta.side}}</span>
+</div>
+<div class="nm-noscroll" style="flex: 1; overflow-y: auto; padding: 6px 16px 8px; display: flex; flex-direction: column">
+<sc-for list="{{steps}}" as="st" hint-placeholder-count="4">
+<div style="display: flex; gap: 12px; padding: 10px 0">
+<div style="flex: none; display: flex; flex-direction: column; align-items: center; width: 36px">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: {{st.bg}}; color: {{st.ink}}; display: grid; place-items: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{st.icon}}"></use></svg>
+</span>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font: 800 15px/1.25 {{t.text}}">{{st.title}}</span>
+<span style="font: 600 13px/1.3 {{t.text}}; color: {{t.ink2}}">{{st.sub}}</span>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="padding: 10px 16px 16px; border-top: 1px solid #F0E3C8; display: flex; gap: 10px">
+<button class="nm-btn" type="button" onClick="{{goReport}}" style="flex: 1; height: 52px; border-radius: 999px; border: 0; background: #FFC21A; color: #16130F; font: 800 15px/1 {{t.display}}">Signaler</button>
+<button class="nm-btn" type="button" onClick="{{goHome}}" style="flex: 1; height: 52px; border-radius: 999px; border: 0; background: #FFF2D9; color: #16130F; font: 800 15px/1 {{t.display}}">Terminer</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.signaler}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(8,12,24,.42)"></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; border-radius: 30px 30px 0 0; background: #FFFFFF; padding: 10px 16px 18px; display: flex; flex-direction: column; gap: 14px; animation: nm-up .3s ease-out">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: #F0E3C8"></span>
+<sc-if value="{{reportForm}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 5px">
+<h2 style="margin: 0; font: 800 23px/1.15 {{t.display}}">Y’a quoi ?</h2>
+<span style="font: 600 14px/1.3 {{t.text}}; color: {{t.ink2}}">Ton signalement corrige les lignes de 2023.</span>
+</div>
+<button class="nm-btn" type="button" aria-label="Fermer" onClick="{{closeReport}}" style="flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFF2D9; color: #16130F; display: grid; place-items: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><use href="#r-close"></use></svg>
+</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{reports}}" as="r" hint-placeholder-count="4">
+<button class="nm-btn" type="button" onClick="{{r.send}}" style="height: 96px; border-radius: 20px; border: 0; background: #FFF2D9; color: #16130F; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font: 800 14px/1.2 {{t.text}}; text-align: center; padding: 6px">
+<span style="width: 44px; height: 44px; border-radius: 50%; background: {{r.color}}; color: #FFFFFF; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{r.icon}}"></use></svg>
+</span>{{r.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{reportDone}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 18px 8px 4px; text-align: center">
+<span style="width: 84px; height: 84px; border-radius: 50%; background: #DDF1E2; color: #1F7A47; display: grid; place-items: center; animation: nm-pop .45s ease-out">
+<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+</span>
+<h2 style="margin: 0; font: 800 24px/1.15 {{t.display}}">Merci, c’est noté !</h2>
+<span style="font: 600 15px/1.45 {{t.text}}; color: {{t.ink2}}; max-width: 300px">« {{reportLabel}} » : d’autres usagers vont confirmer, puis la ligne sera corrigée pour tout le monde.</span>
+<button class="nm-btn" type="button" onClick="{{closeReport}}" style="width: 100%; height: 54px; margin-top: 6px; border-radius: 999px; border: 0; background: #16130F; color: #FFFFFF; font: 800 16px/1 {{t.display}}">Retour</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{screens.gare}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 12px; top: 12px">
+<button class="nm-btn" type="button" aria-label="Retour" onClick="{{goHome}}" style="width: 46px; height: 46px; border-radius: 50%; border: 0; background: #FFFFFF; color: #16130F; box-shadow: {{t.shadow}}; display: grid; place-items: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#r-back"></use></svg>
+</button>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 540px; border-radius: 30px 30px 0 0; background: #FFFFFF; box-shadow: 0 -6px 24px rgba(0,0,0,.16); display: flex; flex-direction: column; animation: nm-up .3s ease-out">
+<div class="nm-noscroll" style="flex: 1; overflow-y: auto; padding: 10px 16px 12px; display: flex; flex-direction: column; gap: 14px">
+<span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: #F0E3C8"></span>
+<div style="display: flex; gap: 12px; align-items: center">
+<span style="flex: none; width: 52px; height: 52px; border-radius: 16px; background: {{stop.tint}}; color: {{stop.modeColor}}; display: grid; place-items: center">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{stop.icon}}"></use></svg>
+</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font: 800 21px/1.15 {{t.display}}">{{stop.name}}</h2>
+<span style="font: 600 13.5px/1.2 {{t.text}}; color: {{t.ink2}}">{{stop.sub}}</span>
+</div>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 20px; background: #FFF2D9; font: 600 13.5px/1.4 {{t.text}}; color: #16130F">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 1px"><use href="#r-info"></use></svg>
+<span><strong>Affluence inconnue.</strong> Les données de 2023 ne disent pas s’il y a du monde. Elle s’affichera quand les usagers signaleront.</span>
+</div>
+<div style="display: flex; flex-direction: column">
+<span style="font: 800 13px/1 {{t.text}}; padding-bottom: 6px">Lignes qui passent ici en 2023</span>
+<sc-for list="{{stop.lines}}" as="dp" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F0E3C8">
+<span style="flex: none; width: 36px; height: 36px; border-radius: 10px; background: {{dp.color}}; color: #FFFFFF; display: grid; place-items: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#{{dp.icon}}"></use></svg>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font: 700 14.5px/1.25 {{t.text}}">{{dp.name}}</span>
+<span style="font: 600 12.5px/1.2 {{t.text}}; color: {{t.ink2}}">{{dp.sub}}</span>
+</span>
+<span style="flex: none; font: 700 12.5px/1 {{t.text}}; color: {{t.ink2}}">prix ?</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="padding: 10px 16px 16px; border-top: 1px solid #F0E3C8; display: flex; gap: 10px">
+<button class="nm-btn" type="button" onClick="{{goSearch}}" style="flex: 1; height: 54px; border-radius: 999px; border: 0; background: #16130F; color: #FFFFFF; font: 800 16px/1 {{t.display}}">Partir d’ici</button>
+<button class="nm-btn" type="button" onClick="{{goReport}}" style="flex: 1; height: 54px; border-radius: 999px; border: 0; background: #FFC21A; color: #16130F; font: 800 16px/1 {{t.display}}">Corriger l’arrêt</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{loading}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 24px; right: 24px; top: 140px; padding: 14px 16px; border-radius: 18px; background: #16130F; color: #FFFFFF; font: 700 14px/1.35 {{t.text}}; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,.25)">Chargement des lignes de 2023…</div>
+</sc-if>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 96px; padding: 12px 14px; border-radius: 16px; background: #16130F; color: #FFFFFF; font: 600 14px/1.35 {{t.text}}; box-shadow: 0 6px 20px rgba(0,0,0,.25); animation: nm-up .3s ease-out">{{toast}}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"screen":{"editor":"enum","options":["carte","recherche","resultats","trajet","signaler","gare"],"default":"carte","section":"Maquette"},"$preview":{"width":390,"height":844}}'>
+const DATA_URL = '/_blob/1d6cd46a3b80049bffb23e8b64465fb5';
+const MW = 2098, MH = 2341, VW = 390, VH = 844;
+const T = {
+  display: '"Baloo 2", "Nunito", system-ui, sans-serif', text: '"Nunito", system-ui, sans-serif',
+  bg: '#FFF9EE', ink: '#16130F', ink2: '#5E574C', shadow: '0 2px 4px rgba(22,19,15,.08), 0 8px 22px rgba(22,19,15,.12)'
+};
+const MODES = { gbaka: { color: '#13855A', name: 'gbaka', icon: 'r-gbaka' }, woro: { color: '#BF5A00', name: 'wôrô-wôrô', icon: 'r-woro' }, walk: { color: '#6B655A', name: 'à pied', icon: 'r-walk' } };
+const LABELS = [
+  ['Yopougon', 282, 1226, 'q'], ['Attécoubé', 768, 1075, 'q'], ['Adjamé', 906, 1017, 'q'], ['Le Plateau', 918, 1300, 'q'],
+  ['Williamsville', 887, 835, 's'], ['Toits-Rouges', 500, 1250, 's'], ['Kouté', 311, 1344, 's'], ['Siporex', 296, 1004, 's'],
+  ['Selmer', 349, 1166, 's'], ['Banco Sud', 592, 1293, 's'], ['Baie du Banco', 725, 1345, 'w'], ['Lagune Ébrié', 470, 1560, 'w'], ['Parc national du Banco', 555, 640, 'f']
+];
+const TAGS = { fastest: 'Le plus rapide', simplest: 'Le plus simple', cheapest: 'Le moins cher' };
+
+function hm(text) {
+  const p = String(text || '').split(':');
+  return p.length < 2 ? text : Number(p[0]) + ' h ' + p[1];
+}
+function bboxOfPaths(ds) {
+  const b = [1e9, 1e9, -1e9, -1e9];
+  ds.forEach((d) => {
+    const n = d.match(/-?[0-9.]+/g) || [];
+    for (let i = 0; i + 1 < n.length; i += 2) {
+      const x = +n[i], y = +n[i + 1];
+      if (x < b[0]) b[0] = x; if (y < b[1]) b[1] = y; if (x > b[2]) b[2] = x; if (y > b[3]) b[3] = y;
+    }
+  });
+  return b;
+}
+function clampView(v) {
+  return { x: Math.min(0, Math.max(VW - MW * v.s, v.x)), y: Math.min(0, Math.max(VH - MH * v.s, v.y)), s: v.s };
+}
+function fit(b, rect, sMax) {
+  const bw = Math.max(b[2] - b[0], 40), bh = Math.max(b[3] - b[1], 40);
+  const s = Math.max(0.55, Math.min(sMax, (rect[2] - rect[0]) / bw, (rect[3] - rect[1]) / bh));
+  return clampView({ x: (rect[0] + rect[2]) / 2 - (b[0] + b[2]) / 2 * s, y: (rect[1] + rect[3]) / 2 - (b[1] + b[3]) / 2 * s, s: s });
+}
+function mix(hex, a) {
+  const n = parseInt(hex.slice(1), 16);
+  return 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+}
+function norm(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+function km(a, b) { return (Math.hypot(a[0] - b[0], a[1] - b[1]) * 9.5 / 1000).toFixed(1).replace('.', ',') + ' km'; }
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const screen = props.screen || 'carte';
+    this.state = { data: null, screen: screen, place: 'plateau', dir: 'to', opt: 0, stop: null, query: '', lines: true, report: null, from: 'carte', toast: null, anim: false, view: clampView({ x: 195 - 533 * 0.9, y: 330 - 1288 * 0.9, s: 0.9 }) };
+    this.drag = null;
+  }
+
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => {
+      this.setState({ data: data, stop: data.stops.length ? data.stops[0].id : null }, () => this.go(this.state.screen));
+    }).catch(() => this.setState({ toast: 'Les lignes de 2023 n’ont pas pu être chargées.' }));
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.screen !== this.props.screen) this.go(this.props.screen || 'carte');
+  }
+
+  componentWillUnmount() { clearTimeout(this.toastTimer); }
+
+  trip(st) {
+    const d = st.data;
+    if (!d) return null;
+    const set = d.trips[st.place];
+    const list = (set && set[st.dir]) || [];
+    return list.slice(0, 3);
+  }
+
+  viewFor(screen, st) {
+    const d = st.data;
+    if (d && (screen === 'resultats' || screen === 'trajet')) {
+      const opts = this.trip(st) || [];
+      const o = opts[Math.min(st.opt, opts.length - 1)];
+      if (o) return fit(bboxOfPaths(o.legs.map((l) => l.d)), screen === 'trajet' ? [30, 130, 360, 420] : [34, 132, 356, 392], 1.8);
+    }
+    if (d && screen === 'gare') {
+      const s = d.stops.find((x) => x.id === st.stop) || d.stops[0];
+      return clampView({ x: 195 - s.x * 1.3, y: 170 - s.y * 1.3, s: 1.3 });
+    }
+    return clampView({ x: 195 - 533 * 0.9, y: 330 - 1288 * 0.9, s: 0.9 });
+  }
+
+  go(screen, extra) {
+    const next = Object.assign({}, this.state, extra || {});
+    this.setState(Object.assign({}, extra || {}, { screen: screen, anim: true, view: this.viewFor(screen, next) }));
+  }
+
+  showToast(text) {
+    clearTimeout(this.toastTimer);
+    this.setState({ toast: text });
+    this.toastTimer = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+
+  scaleOf(el) {
+    const r = el.getBoundingClientRect();
+    return { k: r.width / VW || 1, left: r.left, top: r.top };
+  }
+
+  zoomAt(px, py, f) {
+    const v = this.state.view;
+    const s = Math.max(0.55, Math.min(2.6, v.s * f));
+    const mx = (px - v.x) / v.s, my = (py - v.y) / v.s;
+    this.setState({ anim: false, view: clampView({ x: px - mx * s, y: py - my * s, s: s }) });
+  }
+
+  renderVals() {
+    const st = this.state;
+    const d = st.data;
+    const v = st.view;
+    const inv = 1 / v.s;
+    const screen = st.screen;
+    const home = [533.4, 1287.8];
+
+    const labels = LABELS.map((l) => {
+      const k = l[3];
+      return {
+        name: l[0], x: l[1], y: l[2], inv: inv,
+        font: k === 'q' ? '800 15px/1 ' + T.text : (k === 's' ? '700 12.5px/1 ' + T.text : 'italic 700 13px/1 ' + T.text),
+        color: k === 'q' ? '#5A4E3C' : (k === 's' ? '#7A6D58' : (k === 'w' ? '#2F7F75' : '#4E7B33')),
+        ls: k === 'q' ? '.08em' : '0', tt: k === 'q' ? 'uppercase' : 'none'
+      };
+    });
+
+    const showNet = d && st.lines && (screen === 'carte' || screen === 'gare' || screen === 'signaler');
+    const selectedStop = d && (d.stops.find((x) => x.id === st.stop) || d.stops[0]);
+    const stopLines = screen === 'gare' && selectedStop ? new Set(selectedStop.lines.map((l) => l.name)) : null;
+    const netLines = showNet ? d.lines.map((l) => {
+      const hit = stopLines && stopLines.has(l.name);
+      return { d: l.d, color: MODES[l.mode].color, w: (hit ? 3.2 : 1.7) * Math.min(1, inv), op: stopLines ? (hit ? 0.9 : 0.12) : 0.42 };
+    }) : [];
+
+    const opts = this.trip(st) || [];
+    const sel = opts[Math.min(st.opt, Math.max(0, opts.length - 1))];
+    const legs = (screen === 'resultats' || screen === 'trajet') && sel ? sel.legs.map((l) => ({
+      d: l.d, walk: l.type === 'walk', ride: l.type !== 'walk', color: l.type === 'walk' ? MODES.walk.color : MODES[l.mode].color,
+      w: (l.type === 'walk' ? 5 : 6.5) * inv, cw: (l.type === 'walk' ? 8 : 11) * inv, dash: '0.1 ' + (9 * inv)
+    })) : [];
+    const firstRide = sel && sel.legs.find((l) => l.type === 'ride');
+    const pucks = screen === 'trajet' && firstRide ? [{
+      d: firstRide.d, color: MODES[firstRide.mode].color, icon: MODES[firstRide.mode].icon, r: 14 * inv, rw: 3 * inv, halo: 24 * inv,
+      iconT: 'translate(' + (-9 * inv) + ' ' + (-9 * inv) + ') scale(' + (0.75 * inv) + ')', dur: '24s'
+    }] : [];
+
+    const stops = d && (screen === 'carte' || screen === 'gare' || screen === 'signaler') ? d.stops.map((s, i) => ({
+      x: s.x, y: s.y, inv: inv * (screen === 'gare' && s.id === st.stop ? 1.2 : 1), icon: MODES[s.mode].icon, modeColor: MODES[s.mode].color,
+      count: s.count + ' lignes', ring: screen === 'gare' && s.id === st.stop ? '#16130F' : '#FFFFFF', name: s.name, showName: v.s >= 1.1 || i < 6,
+      aria: s.name + ', ' + s.count + ' lignes en 2023', open: () => this.go('gare', { stop: s.id })
+    })) : [];
+
+    const near = d ? d.stops.map((s) => ({ s: s, dist: Math.hypot(s.x - home[0], s.y - home[1]) })).sort((a, b) => a.dist - b.dist).slice(0, 3).map((x) => ({
+      name: x.s.name, sub: x.s.count + ' lignes · ' + Array.from(new Set(x.s.lines.map((l) => MODES[l.mode].name))).join(', '),
+      km: km([x.s.x, x.s.y], home), icon: MODES[x.s.mode].icon, modeColor: MODES[x.s.mode].color, tint: mix(MODES[x.s.mode].color, 0.12),
+      open: () => this.go('gare', { stop: x.s.id })
+    })) : [];
+
+    const q = norm(st.query.trim());
+    const places = d ? d.places : [];
+    const suggestions = places.filter((p) => !q || norm(p.name).indexOf(q) >= 0 || norm(p.sub).indexOf(q) >= 0).map((p) => ({
+      name: p.name, sub: p.sub, km: p.km, go: () => this.go('resultats', { place: p.key, dir: 'to', opt: 0 })
+    }));
+
+    const place = places.find((p) => p.key === st.place) || { name: 'Le Plateau', x: 935, y: 1392 };
+    const options = opts.map((o, i) => {
+      const selected = i === Math.min(st.opt, opts.length - 1);
+      const tag = o.labels.length ? o.labels.map((x) => TAGS[x] || x).join(' · ') : 'Autre trajet';
+      const rides = o.legs.filter((l) => l.type === 'ride');
+      const wait = rides.reduce((a, l) => a + l.wait50, 0);
+      return {
+        selected: selected, border: selected ? '#16130F' : '#F0E3C8', bg: selected ? '#FFFBF2' : '#FFFFFF',
+        tag: tag, tagBg: i === 0 ? '#16130F' : '#FFF2D9', tagInk: i === 0 ? '#FFFFFF' : '#16130F',
+        duration: o.p50 + '–' + o.p80 + ' min', arrive: 'Arrivée ' + hm(o.arrive50) + '–' + hm(o.arrive80),
+        meta: (o.transfers === 0 ? 'sans changement' : o.transfers + ' changement' + (o.transfers > 1 ? 's' : '')) + ' · attente ~' + wait + ' min',
+        lines: rides.map((l) => MODES[l.mode].name + ' « ' + l.line + ' »').join(', puis '),
+        legs: o.legs.map((l, k) => ({
+          icon: l.type === 'walk' ? 'r-walk' : MODES[l.mode].icon, text: l.type === 'walk' ? l.minutes + ' min' : MODES[l.mode].name + ' ' + l.minutes + ' min',
+          bg: l.type === 'walk' ? '#FFF2D9' : MODES[l.mode].color, ink: l.type === 'walk' ? '#5E574C' : '#FFFFFF', more: k < o.legs.length - 1
+        })),
+        pick: () => this.setState({ opt: i, anim: true, view: this.viewFor('resultats', Object.assign({}, st, { opt: i })) })
+      };
+    });
+
+    const steps = [];
+    if (sel) {
+      const toName = st.dir === 'to' ? place.name : 'Maison';
+      sel.legs.forEach((l, k) => {
+        const next = sel.legs[k + 1];
+        if (l.type === 'walk') {
+          steps.push({ icon: 'r-walk', bg: '#FFF2D9', ink: '#16130F', title: 'Marche ' + l.minutes + ' min', sub: l.metres + ' m jusqu’à ' + (next && next.type === 'ride' ? next.board : toName) });
+        } else {
+          steps.push({ icon: MODES[l.mode].icon, bg: MODES[l.mode].color, ink: '#FFFFFF', title: 'Monte dans le ' + MODES[l.mode].name + ' « ' + l.line + ' »', sub: 'À ' + l.board + ' · attente ' + l.wait50 + ' à ' + l.wait80 + ' min' });
+          steps.push({ icon: 'r-stop', bg: '#FFFFFF', ink: MODES[l.mode].color, title: 'Descends à ' + l.alight, sub: 'Après environ ' + l.minutes + ' min de trajet' });
+        }
+      });
+      steps.push({ icon: 'r-flag', bg: '#16130F', ink: '#FFC21A', title: 'Arrivée : ' + toName, sub: 'Entre ' + hm(sel.arrive50) + ' et ' + hm(sel.arrive80) });
+    }
+    const navTitle = firstRide ? 'Monte dans le ' + MODES[firstRide.mode].name : 'Marche jusqu’à l’arrivée';
+    const firstWalk = sel && sel.legs[0] && sel.legs[0].type === 'walk' ? sel.legs[0] : null;
+    const nav = {
+      icon: firstRide ? MODES[firstRide.mode].icon : 'r-walk', title: navTitle,
+      sub: firstRide ? '« ' + firstRide.line + ' » à ' + firstRide.board + (firstWalk ? ', à ' + firstWalk.minutes + ' min à pied' : '') : ''
+    };
+
+    const stopView = selectedStop ? {
+      name: selectedStop.name, sub: 'Arrêt · ' + selectedStop.count + ' lignes en 2023 · à ' + km([selectedStop.x, selectedStop.y], home),
+      icon: MODES[selectedStop.mode].icon, modeColor: MODES[selectedStop.mode].color, tint: mix(MODES[selectedStop.mode].color, 0.12),
+      lines: selectedStop.lines.map((l) => ({ name: l.name, sub: MODES[l.mode].name + ' · toutes les ~' + l.every + ' min (annoncé en 2023)', icon: MODES[l.mode].icon, color: MODES[l.mode].color }))
+    } : { name: '', sub: '', icon: 'r-gbaka', modeColor: '#13855A', tint: '#FFF2D9', lines: [] };
+
+    const REPORTS = [['Ligne disparue', 'r-close', '#C2332B'], ['Arrêt déplacé', 'r-pin', '#2563EB'], ['Prix payé', 'r-flag', '#1F7A47'], ['Bouchon', 'r-woro', '#E2620B']];
+
+    return {
+      t: T, view: { x: v.x, y: v.y, s: v.s, transition: st.anim ? 'transform .55s cubic-bezier(.2,.8,.2,1)' : 'none' },
+      loading: !d, status: d ? d.lines.length + ' lignes de 2023' : '…',
+      screens: { carte: screen === 'carte', recherche: screen === 'recherche', resultats: screen === 'resultats', trajet: screen === 'trajet', signaler: screen === 'signaler', gare: screen === 'gare' },
+      showMap: screen !== 'recherche', showMapChrome: screen === 'carte', chrome: { badgeBottom: 308 },
+      labels: labels, netLines: netLines, legs: legs, pucks: pucks, stops: stops,
+      showUser: screen !== 'trajet' && screen !== 'recherche' && !(screen === 'resultats' && st.dir === 'back'), user: { x: home[0], y: home[1], inv: inv },
+      showDest: screen === 'resultats' || screen === 'trajet',
+      dest: st.dir === 'to' ? { x: place.x, y: place.y, inv: inv } : { x: home[0], y: home[1], inv: inv },
+      linesOn: st.lines, linesChip: st.lines ? { bg: '#16130F', ink: '#FFFFFF', line: '#16130F', label: 'Lignes 2023' } : { bg: '#FFFFFF', ink: '#16130F', line: '#F0E3C8', label: 'Lignes 2023' },
+      nearby: near, suggestions: suggestions, noSuggestion: d && suggestions.length === 0, query: st.query,
+      fromName: st.dir === 'to' ? 'Maison · Toits-Rouges' : place.name, toName: st.dir === 'to' ? place.name : 'Maison · Toits-Rouges',
+      resultsTitle: opts.length ? opts.length + ' trajet' + (opts.length > 1 ? 's' : '') + ' possible' + (opts.length > 1 ? 's' : '') : 'Aucun trajet trouvé',
+      options: options, steps: steps, nav: nav,
+      eta: sel ? { main: hm(sel.arrive50), late: 'à ' + hm(sel.arrive80), side: sel.p50 + ' à ' + sel.p80 + ' min\nposition simulée' } : { main: '', late: '', side: '' },
+      stop: stopView, reports: REPORTS.map((r) => ({ label: r[0], icon: r[1], color: r[2], send: () => this.setState({ report: r[0] }) })),
+      reportForm: !st.report, reportDone: !!st.report, reportLabel: st.report || '',
+      hasToast: !!st.toast, toast: st.toast || '',
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      clearQuery: () => this.setState({ query: '' }),
+      goSearch: () => this.go('recherche'),
+      goHome: () => this.go('carte', { report: null }),
+      goWork: () => this.go('resultats', { place: 'plateau', dir: 'to', opt: 0 }),
+      goTrip: () => this.go('trajet'),
+      goReport: () => this.go('signaler', { report: null, from: screen }),
+      closeReport: () => this.go(st.from === 'trajet' ? 'trajet' : 'carte', { report: null }),
+      swap: () => this.go('resultats', { dir: st.dir === 'to' ? 'back' : 'to', opt: 0 }),
+      toggleLines: () => this.setState({ lines: !st.lines }),
+      openNearest: () => { if (d) { const s = d.stops.map((x) => ({ x: x, dd: Math.hypot(x.x - home[0], x.y - home[1]) })).sort((a, b) => a.dd - b.dd)[0].x; this.go('gare', { stop: s.id }); } },
+      recenter: () => this.setState({ anim: true, view: this.viewFor('carte', st) }),
+      onDown: (e) => {
+        const m = this.scaleOf(e.currentTarget);
+        this.drag = { x: e.clientX, y: e.clientY, vx: v.x, vy: v.y, k: m.k, moved: false, id: e.pointerId, el: e.currentTarget };
+      },
+      onMove: (e) => {
+        const dr = this.drag;
+        if (!dr) return;
+        const dx = (e.clientX - dr.x) / dr.k, dy = (e.clientY - dr.y) / dr.k;
+        if (!dr.moved && Math.abs(dx) + Math.abs(dy) < 6) return;
+        if (!dr.moved) { dr.moved = true; try { dr.el.setPointerCapture(dr.id); } catch (err) { } }
+        this.setState({ anim: false, view: clampView({ x: dr.vx + dx, y: dr.vy + dy, s: this.state.view.s }) });
+      },
+      onUp: () => { this.drag = null; },
+      onWheel: (e) => { const m = this.scaleOf(e.currentTarget); this.zoomAt((e.clientX - m.left) / m.k, (e.clientY - m.top) / m.k, Math.exp(-e.deltaY * 0.0016)); },
+      onDouble: (e) => { const m = this.scaleOf(e.currentTarget); this.zoomAt((e.clientX - m.left) / m.k, (e.clientY - m.top) / m.k, 1.6); }
+    };
+  }
+}
+</script>
+</body>
+</html>

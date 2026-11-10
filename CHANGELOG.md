@@ -169,6 +169,7 @@ publication.
   - Charte : nom, logo, couleurs avec leurs contrastes, typographie, formes, ton, vérifications à faire avant de figer le nom.
   - Logo vectorisé (le mot en trois versions, l'icône en trois versions, PNG 512 px pour les magasins) et jetons de design (`tokens.json`).
   - Nom public « yafohi » dans les clés `app.name` et `appName` ; le nom de code technique reste `nemesis` (H-003, Q-01).
+- yafohi sur les lignes réelles de 2023 : 230 lignes et 28 arrêts du corridor Yopougon – Adjamé – Plateau, trajets calculés par le vrai moteur, affichage honnête de ce que les données ignorent (prix, affluence, actualité). Outil `tools/maquette/donnees_2023.py`. Feuille de route pour rendre l'appli vraiment utilisable (`docs/FEUILLE-DE-ROUTE.md`).
 
 ### Corrigé
 

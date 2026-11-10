@@ -9,6 +9,7 @@ Ces scripts fabriquent les fonds de carte et les tracés de la [maquette des tro
 | `frame.py` | Cadre commun : Abidjan en Web Mercator, de Yopougon à Koumassi, en pixels au zoom 14 (environ 9,5 m par pixel) | — |
 | `extraire.py` | Tire de l'extrait OSM les voies par classe, la côte, la lagune, la végétation, les quartiers, les gares et les embarcadères | `couches.json` |
 | `dessiner.py` et `rasteriser.cjs` | Dessine un fond de carte par identité (gbê clair, yafohi crème, mon kôrô de nuit) et les grands axes à poser sur l'image satellite, rendus par Chromium | `carte-*.webp` |
+| `donnees_2023.py` | Lignes, arrêts principaux et trajets du corridor Yopougon – Adjamé – Plateau d'après le GTFS 2023 et le vrai moteur (pack réel construit en local avec l'extrait de la maquette) | `yafohi-lignes-2023.json` |
 | `itineraires.py` | Calcule sur le vrai réseau de rues les trois trajets du scénario, de Toits-Rouges (Yopougon) au Plateau, et les parcours des véhicules animés | `scenario.json` |
 
 ## Refaire les cartes
