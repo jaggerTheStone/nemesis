@@ -35,12 +35,12 @@ Ce fichier permet à une nouvelle session de reprendre le travail sans perte (pa
   - **la vérification du nom « yafohi »** : sens auprès d'Abidjanais, marque à l'OAPI, noms de domaine, magasins d'applis, comptes de réseaux sociaux (charte, dernière partie) ;
   - **la licence du GTFS « Abidjan 2023 » (H-030)** : CC BY-NC 4.0, pas d'usage commercial. Demander l'autorisation à DigitalTransport4Africa (partenariat, 15.6) et faire valider la démarche par un juriste ;
   - la validation des hypothèses H-029 (emprise d'Abidjan) et H-031 (budget du fond de carte), et la relecture de l'ADR-009 (schéma des tuiles) ;
-  - la relecture de l'ADR-003 (option B retenue) ; le choix du corridor pilote, dont les couples remplaceront ceux du spike ;
+  - la relecture de l'ADR-003 (option B retenue). Corridor pilote choisi le 2026-11-10 : **Yopougon – Adjamé – Plateau** (Q-05) ; ses couples remplaceront ceux du spike ;
   - la validation de H-032 (paramètres du moteur v0 : tranches de marche, filtre des options, bornes de marche) ;
   - **la décision de l'ADR-001** : APK de 52,5 Mo (environ 21,3 Mo à télécharger pour 20 Mo de budget), dont 10,8 Mo pour la carte MapLibre. Recommandation : mesurer une carte dessinée en Dart avant de trancher entre Flutter et Kotlin natif ;
   - la validation de H-034 (choix du prototype mobile) et de H-035 (organisation et seuils de qualité de la campagne « Éclaireurs ») ;
   - la décision sur les corrections des formules d'attente proposées après le simulateur (ALGORITHMES.md 1.2 et 1.3), et la validation de H-033 (conventions des signalements, paramètres du simulateur) ;
-  - une équipe sur place pour lancer les collectes (Q-03) ;
+  - **les données du corridor** : personne n'est disponible sur place (Q-03). Le porteur doit choisir parmi les sources de H-037 : accord et mise à jour avec DigitalTransport4Africa, demandes à la SOTRA et à l'AMUGA, mission courte rémunérée. Google Maps est exclu par ses conditions d'utilisation ;
   - les contreparties des participants et des validateurs ;
   - la relecture juridique des consentements ;
   - la validation des hypothèses H-022 à H-028 ;

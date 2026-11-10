@@ -14,9 +14,9 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
 |----|----------|-----------------------------------|
 | Q-01 | Nom de l'application : `{{NOM_APP}}` n'a pas été remplacé ; le dépôt s'appelle `nemesis`. | `nemesis` sert de nom de code technique ; le nom public passe par la clé de traduction `app.name` (H-003). **Réponse du 2026-11-10 : le nom public est « yafohi »** ([charte](UX/identite-yafohi/README.md)), sous réserve des vérifications de sens, de marque et de disponibilité. |
 | Q-02 | Moyens : qui travaille sur le projet, avec quelles compétences, combien de temps, quel budget en phase 0, quel téléphone de référence physique ? | Je développe seul, tu valides ; budget proche de zéro (offre gratuite de la CI GitHub) ; pas de téléphone physique (H-001, H-004). |
-| Q-03 | Terrain : qui, à Abidjan, collecte les 300 requêtes réelles et les 200 trajets de référence, et mène les tests de maquettes en gare ? | Je livre protocoles et outillage ; la collecte attend qu'une personne soit disponible sur place. |
+| Q-03 | Terrain : qui, à Abidjan, collecte les 300 requêtes réelles et les 200 trajets de référence, et mène les tests de maquettes en gare ? | Je livre protocoles et outillage ; la collecte attend qu'une personne soit disponible sur place. **Réponse du 2026-11-10 : personne n'est disponible.** Google Maps est exclu comme source (ses conditions interdisent d'en extraire des données) ; options dans H-037. |
 | Q-04 | Porteur juridique du projet, relations existantes (AMUGA, SOTRA, syndicats, universités), accès à un juriste ivoirien ? | Responsable du traitement noté « à désigner » dans le brouillon ARTCI ; aucune convention supposée. |
-| Q-05 | Corridor pilote. | Choix motivé après analyse du GTFS 2023 entre Yopougon–Adjamé–Plateau et Abobo–Adjamé (H-006). |
+| Q-05 | Corridor pilote. | Choix motivé après analyse du GTFS 2023 entre Yopougon–Adjamé–Plateau et Abobo–Adjamé (H-006). **Réponse du 2026-11-10 : Yopougon – Adjamé – Plateau.** |
 | Q-06 | Licence du code (ouverte ou propriétaire) et politique de licences des données. | Propriétaire, « tous droits réservés » ; dépendances permissives uniquement (H-019). |
 | Q-07 | Arbitrage : aucune donnée personnelle réelle avant la déclaration ARTCI ou un avis juridique écrit, y compris pour le prototype WhatsApp « magicien d'Oz ». | Arbitrage appliqué : fiches anonymes en phase 0, prototype WhatsApp différé (H-020). |
 | Q-08 | Accès réseau de l'environnement de développement (hôtes bloqués, voir H-021). | Les imports et le build Android tournent uniquement dans GitHub Actions. |
@@ -149,3 +149,13 @@ Ces questions ont été posées dans le premier message. Réponse du 2026-11-04 
   - **imagerie satellite** : Sentinel-2 cloudless 2025 d'EOX, sous licence CC BY-NC-SA 4.0 (pas d'usage commercial). Elle convient à une maquette interne, pas au produit ;
   - **en ligne d'abord** : la maquette suit la décision du porteur du 2026-11-09. Hors connexion, elle garde les trajets enregistrés, les temps habituels et la recherche de lieux ; tout le reste demande le réseau ;
   - **inspirations** : Google Maps, Wave et Waze inspirent l'esprit des écrans (la carte d'abord, la simplicité, la communauté), jamais leurs logos, couleurs ou éléments de marque.
+
+## Données du corridor sans équipe sur place (2026-11-10)
+
+- **H-037** (proposée) — Le porteur n'a personne pour relever les lignes (Q-03). Sources possibles pour le corridor Yopougon – Adjamé – Plateau :
+  - **pas Google Maps** : les conditions de Google Maps Platform interdisent d'en extraire des données ou d'en tirer un autre jeu de données ;
+  - **GTFS 2023 de DigitalTransport4Africa** : 58 lignes touchent le corridor (46 entre Yopougon et Adjamé ou le Plateau, 12 entre Adjamé et le Plateau), dont 33 sont étiquetées « Gbaka d'Adjamé ». Il n'y a ni bus SOTRA ni bateau-bus. Le dépôt n'a pas de version plus récente (dernier ajout de données : août 2023). Ces lignes précèdent l'interdiction d'Adjamé aux gbakas (mars 2025) et la réorganisation de l'AMUGA (octobre 2026). Elles servent d'a priori, jamais d'état actuel, et leur usage dans le produit demande l'accord écrit de DT4A (H-030) ;
+  - **OpenStreetMap** : les gares, les embarcadères et les liaisons lagunaires sont déjà utilisés par la maquette ;
+  - **sources officielles** à demander : SOTRA (lignes de bus et de bateau-bus, arrêts), AMUGA (lignes et gares après la réorganisation), mairies de Yopougon, d'Adjamé et du Plateau ;
+  - **mission courte rémunérée** : une ou deux personnes, par exemple des étudiants ou des membres de la communauté OpenStreetMap de Côte d'Ivoire, avec les fiches de la campagne « Éclaireurs » ;
+  - **usagers de l'appli** : confirmer ou corriger une ligne en une pression. Les traces GPS anonymes attendent l'avis juridique (Q-07).
