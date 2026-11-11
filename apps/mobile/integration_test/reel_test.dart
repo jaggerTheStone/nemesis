@@ -39,10 +39,18 @@ void main() {
 
     // The 2023 lines run from 5 h to 22 h, whatever the time of the emulator.
     await tester.tap(find.text('Partir à 7 h 30'));
-    await waitFor(tester, find.textContaining(RegExp(r'^\d+ à \d+ min$')));
+    // The engine works on the real pack for a second or two: wait for its answer,
+    // then for the screen to settle, and tap only what can be tapped.
+    final duration = find
+        .textContaining(RegExp(r'^\d+ à \d+ min$'))
+        .hitTestable();
+    await waitFor(tester, duration);
+    await tester.pumpAndSettle();
     expect(find.textContaining('Prix inconnu'), findsWidgets);
 
-    await tester.tap(find.textContaining(RegExp(r'^\d+ à \d+ min$')).first);
+    await tester.ensureVisible(duration.first);
+    await tester.pumpAndSettle();
+    await tester.tap(duration.first);
     await waitFor(tester, find.text('Je pars'));
     final navigator = tester.state<NavigatorState>(
       find.byType(Navigator).first,
