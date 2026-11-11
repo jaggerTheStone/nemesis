@@ -173,19 +173,23 @@ jobs:
           name: apk-arm64-release
           path: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 14
-      # L'aperçu : le même APK, avec en plus le moteur x86_64, pour qu'il s'installe aussi
-      # sur l'émulateur d'Android Studio d'un PC. Il n'est pas mesuré : c'est l'APK arm64
-      # ci-dessus qui compte pour le budget de poids.
-      - name: APK d'aperçu (téléphone et émulateur de PC)
+      # L'APK de test : yafohi sur les lignes de 2023 d'Abidjan (H-030), avec le moteur
+      # arm64 et x86_64, pour un téléphone comme pour l'émulateur d'Android Studio d'un PC.
+      # Il n'est pas mesuré : c'est l'APK arm64 ci-dessus qui compte pour le budget de poids.
+      - name: APK de test yafohi, lignes de 2023 (téléphone et émulateur de PC)
         working-directory: apps/mobile
         run: |
-          flutter build apk --release --target-platform android-arm64,android-x64
-          cp build/app/outputs/flutter-apk/app-release.apk nemesis-apercu.apk
-      - name: Conserver l'APK d'aperçu
+          python3 tool/avec_donnees_2023.py
+          flutter build apk --release --target-platform android-arm64,android-x64 \
+            --dart-define=NEMESIS_DATA=reel
+          cp build/app/outputs/flutter-apk/app-release.apk yafohi-test-2023.apk
+          ls -la yafohi-test-2023.apk
+          git checkout pubspec.yaml
+      - name: Conserver l'APK de test
         uses: actions/upload-artifact@v4
         with:
-          name: apercu-nemesis
-          path: apps/mobile/nemesis-apercu.apk
+          name: yafohi-test-2023
+          path: apps/mobile/yafohi-test-2023.apk
           retention-days: 30
 
   emulator:
@@ -291,6 +295,13 @@ jobs:
             sleep 8
             echo "- mémoire (PSS totale, ko) : $(adb shell dumpsys meminfo ci.nemesis.nemesis_mobile | grep -m1 'TOTAL' | awk '{print $2}')"
           } | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: APK de test sur l'émulateur (lignes de 2023, vrai moteur, carte yafohi)
+        working-directory: apps/mobile
+        run: |
+          python3 tool/avec_donnees_2023.py
+          flutter test integration_test/reel_test.dart -d emulator-5554 \
+            --dart-define=NEMESIS_DATA=reel
+          git checkout pubspec.yaml
       - name: Journal de l'émulateur
         if: always()
         run: tail -n 200 "$RUNNER_TEMP/emulator.log" || true

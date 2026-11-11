@@ -33,6 +33,20 @@ flutter:
     - assets/fictif/
     - assets/fictif/pack/
     - assets/fictif/pack/gtfs/
+  # Polices de la charte yafohi (SIL Open Font License, sous-ensemble latin).
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
+          weight: 800
+    - family: Baloo 2
+      fonts:
+        - asset: assets/fonts/Baloo2-ExtraBold.ttf
+          weight: 800
 
 # SQLite (package sqlite3, hook de build) : sur Android, la version précompilée publiée
 # avec le paquet, vérifiée par SHA-256, est embarquée dans l'APK ; pour les tests sur la

@@ -83,3 +83,16 @@ Future<void> phone(WidgetTester tester, {double textScale = 1}) async {
   addTearDown(tester.view.reset);
   addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
 }
+
+/// The placeholder map for another city: a tap opens its first stop.
+MapBuilder mapPlaceholderFor(CityData city) =>
+    (context, city, mapJson, onStopTapped) => ColoredBox(
+      key: const Key('map'),
+      color: const Color(0xFFFBF6EC),
+      child: Center(
+        child: TextButton(
+          onPressed: () => onStopTapped(city.stops.first),
+          child: const Text('Carte'),
+        ),
+      ),
+    );

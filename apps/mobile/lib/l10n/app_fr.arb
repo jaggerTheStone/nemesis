@@ -6,6 +6,9 @@
   "fictionalBanner": "DONNÉES FICTIVES",
   "@fictionalBanner": {"description": "Bandeau permanent : la ville, les lignes et les prix sont inventés (règle 1)."},
   "fictionalBannerHint": "Ville, lignes et prix inventés pour tester l'appli.",
+  "evaluationBanner": "LIGNES DE 2023 · À CONFIRMER",
+  "@evaluationBanner": {"description": "Bandeau permanent de l'APK de test sur données réelles anciennes (H-030) : jamais présentées comme actuelles."},
+  "evaluationBannerHint": "Lignes relevées en 2023 par DigitalTransport4Africa. Certaines ont changé depuis ; les prix et l'affluence ne sont pas connus.",
 
   "tabTrip": "Trajet",
   "tabMap": "Carte",

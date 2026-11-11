@@ -30,21 +30,21 @@ class ModeStyle {
   );
 
   static const _byMode = {
-    'gbaka': ModeStyle('mode_gbaka', Icons.airport_shuttle, Color(0xFF1F4E79)),
+    'gbaka': ModeStyle('mode_gbaka', Icons.airport_shuttle, Color(0xFF13855A)),
     'woro_communal': ModeStyle(
       'mode_woro_communal',
       Icons.local_taxi,
-      Color(0xFF8A6D00),
+      Color(0xFFBF5A00),
     ),
     'woro_intercommunal': ModeStyle(
       'mode_woro_intercommunal',
       Icons.hail,
-      Color(0xFF6B4E00),
+      Color(0xFF8A4A00),
     ),
     'bus_sotra': ModeStyle(
       'mode_bus_sotra',
       Icons.directions_bus,
-      Color(0xFFB44A00),
+      Color(0xFF2B59C3),
     ),
     'bus_express': ModeStyle(
       'mode_bus_express',
@@ -54,7 +54,7 @@ class ModeStyle {
     'bateau_bus': ModeStyle(
       'mode_bateau_bus',
       Icons.directions_boat,
-      Color(0xFF00579B),
+      Color(0xFF077B99),
     ),
   };
 

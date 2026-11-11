@@ -11,8 +11,8 @@ abstract final class Tokens {
   static const double space5 = 24;
   static const double space6 = 32;
 
-  static const double radius = 12;
-  static const double radiusLarge = 20;
+  static const double radius = 16;
+  static const double radiusLarge = 28;
 
   /// Smallest touch target (10.3).
   static const double touch = 48;
@@ -24,30 +24,37 @@ abstract final class Tokens {
   static const double textHeadline = 24;
   static const double textDisplay = 28;
 
-  // Colours: high contrast, readable in full sun (10.3).
-  static const Color ink = Color(0xFF16181D);
-  static const Color inkMuted = Color(0xFF4A4F5A);
-  static const Color paper = Color(0xFFFFFFFF);
-  static const Color surface = Color(0xFFF3F5F7);
-  static const Color brand = Color(0xFF0A5C5A);
+  // Colours of the yafohi charter (docs/UX/identite-yafohi) : high contrast, readable
+  // in full sun (10.3). Mango never carries white text, only ink.
+  static const Color ink = Color(0xFF16130F);
+  static const Color inkMuted = Color(0xFF5E574C);
+  static const Color paper = Color(0xFFFFF9EE);
+  static const Color card = Color(0xFFFFFFFF);
+  static const Color surface = Color(0xFFFFF2D9);
+  static const Color line = Color(0xFFF0E3C8);
+  static const Color brand = Color(0xFF16130F);
   static const Color onBrand = Color(0xFFFFFFFF);
-  static const Color accent = Color(0xFFFFC233);
-  static const Color onAccent = Color(0xFF16181D);
+  static const Color accent = Color(0xFFFFC21A);
+  static const Color onAccent = Color(0xFF16130F);
   static const Color fictional = Color(0xFFA4001D);
   static const Color onFictional = Color(0xFFFFFFFF);
 
   // Dark mode, to save battery (10.3).
-  static const Color inkDark = Color(0xFFF1F3F5);
-  static const Color paperDark = Color(0xFF101214);
-  static const Color surfaceDark = Color(0xFF1D2125);
-  static const Color brandDark = Color(0xFF6FD3CF);
+  static const Color inkDark = Color(0xFFF4F1EA);
+  static const Color paperDark = Color(0xFF16130F);
+  static const Color surfaceDark = Color(0xFF26221C);
+  static const Color brandDark = Color(0xFFFFC21A);
+
+  /// Typefaces of the charter, embedded (SIL Open Font License).
+  static const String fontText = 'Nunito';
+  static const String fontDisplay = 'Baloo 2';
 }
 
 /// State of a queue (F-05) : couleur, icône et mot — jamais la couleur seule.
 enum QueueLevel {
-  peu(Color(0xFF1E7B34), Icons.sentiment_satisfied_alt),
-  moyen(Color(0xFFB25E00), Icons.sentiment_neutral),
-  beaucoup(Color(0xFFB3261E), Icons.sentiment_dissatisfied),
+  peu(Color(0xFF1F7A47), Icons.sentiment_satisfied_alt),
+  moyen(Color(0xFFA35A00), Icons.sentiment_neutral),
+  beaucoup(Color(0xFFC2332B), Icons.sentiment_dissatisfied),
   tresLong(Color(0xFF7A0019), Icons.sentiment_very_dissatisfied),
   inconnu(Color(0xFF5F6368), Icons.help_outline);
 
@@ -85,26 +92,42 @@ ThemeData buildTheme(Brightness brightness) {
     seedColor: Tokens.brand,
     brightness: brightness,
     primary: dark ? Tokens.brandDark : Tokens.brand,
-    onPrimary: dark ? Tokens.paperDark : Tokens.onBrand,
+    onPrimary: dark ? Tokens.ink : Tokens.onBrand,
+    primaryContainer: dark ? Tokens.surfaceDark : Tokens.surface,
+    onPrimaryContainer: dark ? Tokens.inkDark : Tokens.ink,
+    secondaryContainer: Tokens.accent,
+    onSecondaryContainer: Tokens.onAccent,
+    surfaceContainerHighest: dark ? Tokens.surfaceDark : Tokens.surface,
+    outlineVariant: dark ? const Color(0xFF3A342B) : Tokens.line,
     secondary: Tokens.accent,
     onSecondary: Tokens.onAccent,
     surface: dark ? Tokens.paperDark : Tokens.paper,
     onSurface: dark ? Tokens.inkDark : Tokens.ink,
     error: Tokens.fictional,
   );
-  const body = TextStyle(fontSize: Tokens.textBody, height: 1.35);
+  const body = TextStyle(
+    fontSize: Tokens.textBody,
+    height: 1.35,
+    fontWeight: FontWeight.w600,
+  );
   final text = TextTheme(
     displaySmall: const TextStyle(
+      fontFamily: Tokens.fontDisplay,
       fontSize: Tokens.textDisplay,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w800,
+      height: 1.1,
     ),
     headlineSmall: const TextStyle(
+      fontFamily: Tokens.fontDisplay,
       fontSize: Tokens.textHeadline,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w800,
+      height: 1.15,
     ),
     titleLarge: const TextStyle(
+      fontFamily: Tokens.fontDisplay,
       fontSize: Tokens.textTitle,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w800,
+      height: 1.2,
     ),
     titleMedium: const TextStyle(
       fontSize: Tokens.textBody,
@@ -115,32 +138,74 @@ ThemeData buildTheme(Brightness brightness) {
     bodySmall: body,
     labelLarge: const TextStyle(
       fontSize: Tokens.textBody,
+      fontWeight: FontWeight.w800,
+    ),
+    labelMedium: const TextStyle(
+      fontSize: Tokens.textLabel,
       fontWeight: FontWeight.w600,
     ),
-    labelMedium: const TextStyle(fontSize: Tokens.textLabel),
   ).apply(bodyColor: scheme.onSurface, displayColor: scheme.onSurface);
-  final shape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Tokens.radius),
-  );
+  const pill = StadiumBorder();
   const minimum = Size(Tokens.touch, Tokens.touch);
   return ThemeData(
     useMaterial3: true,
     colorScheme: scheme,
+    fontFamily: Tokens.fontText,
     textTheme: text,
     scaffoldBackgroundColor: dark ? Tokens.paperDark : Tokens.paper,
     materialTapTargetSize: MaterialTapTargetSize.padded,
     visualDensity: VisualDensity.standard,
     cardTheme: CardThemeData(
-      color: dark ? Tokens.surfaceDark : Tokens.surface,
+      color: dark ? Tokens.surfaceDark : Tokens.card,
       elevation: 0,
-      shape: shape,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Tokens.radiusLarge),
+        side: BorderSide(color: dark ? const Color(0xFF3A342B) : Tokens.line),
+      ),
       margin: EdgeInsets.zero,
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: dark ? Tokens.paperDark : Tokens.paper,
+      foregroundColor: dark ? Tokens.inkDark : Tokens.ink,
+      surfaceTintColor: Colors.transparent,
+      titleTextStyle: TextStyle(
+        fontFamily: Tokens.fontDisplay,
+        fontSize: Tokens.textTitle,
+        fontWeight: FontWeight.w800,
+        color: dark ? Tokens.inkDark : Tokens.ink,
+      ),
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: dark ? Tokens.paperDark : Tokens.card,
+      indicatorColor: Tokens.accent,
+      surfaceTintColor: Colors.transparent,
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: Tokens.accent,
+      foregroundColor: Tokens.onAccent,
+      shape: pill,
+    ),
     filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(minimumSize: minimum, shape: shape),
+      style: FilledButton.styleFrom(
+        minimumSize: minimum,
+        shape: pill,
+        textStyle: const TextStyle(
+          fontFamily: Tokens.fontDisplay,
+          fontSize: Tokens.textBody,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(minimumSize: minimum, shape: shape),
+      style: OutlinedButton.styleFrom(minimumSize: minimum, shape: pill),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: dark ? Tokens.surfaceDark : Tokens.surface,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(999),
+        borderSide: BorderSide.none,
+      ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(minimumSize: minimum),

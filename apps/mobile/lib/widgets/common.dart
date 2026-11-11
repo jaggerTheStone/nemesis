@@ -5,30 +5,37 @@ import '../design/tokens.dart';
 import '../format.dart';
 import '../l10n/app_localizations.dart';
 import '../routing/plan.dart';
+import '../services.dart';
 
-/// « DONNÉES FICTIVES », always on screen with the fictional city (règle 1).
+/// « DONNÉES FICTIVES », always on screen with the fictional city (règle 1) ; with
+/// the real lines of 2023, « LIGNES DE 2023 · À CONFIRMER » (H-030).
 class FictionalBanner extends StatelessWidget {
   const FictionalBanner({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final fictional = AppServices.of(context).city.isFictional;
+    final text = fictional ? l10n.fictionalBanner : l10n.evaluationBanner;
+    final hint = fictional
+        ? l10n.fictionalBannerHint
+        : l10n.evaluationBannerHint;
     return Semantics(
       container: true,
-      label: '${l10n.fictionalBanner}. ${l10n.fictionalBannerHint}',
+      label: '$text. $hint',
       excludeSemantics: true,
       child: Container(
         width: double.infinity,
-        color: Tokens.fictional,
+        color: fictional ? Tokens.fictional : Tokens.ink,
         padding: const EdgeInsets.symmetric(
           horizontal: Tokens.space4,
           vertical: Tokens.space1,
         ),
         child: Text(
-          l10n.fictionalBanner,
+          text,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Tokens.onFictional,
+          style: TextStyle(
+            color: fictional ? Tokens.onFictional : Tokens.accent,
             fontSize: Tokens.textLabel,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.2,
@@ -49,6 +56,7 @@ class ModeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final line = (this.line?.isEmpty ?? true) ? null : this.line;
     final name = line == null
         ? style.label(l10n)
         : '${style.label(l10n)} $line';
@@ -70,12 +78,19 @@ class ModeChip extends StatelessWidget {
             Icon(style.icon, color: Colors.white, size: 20),
             if (line != null) ...[
               const SizedBox(width: Tokens.space1),
-              Text(
-                line!,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: Tokens.textBody,
-                  fontWeight: FontWeight.w700,
+              // Real line names are long (« Yopougon Lavage ↔ Plateau Super U ») :
+              // they end in an ellipsis rather than leave the screen.
+              Flexible(
+                child: Text(
+                  line,
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: Tokens.textBody,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],

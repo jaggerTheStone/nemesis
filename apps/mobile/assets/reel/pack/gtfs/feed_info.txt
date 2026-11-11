@@ -1,0 +1,2 @@
+feed_publisher_name,feed_publisher_url,feed_lang,default_lang,feed_start_date,feed_end_date,feed_version,feed_contact_email,feed_contact_url
+Data Transport,http://data-transport.org,fr,,20230101,20231231,0.1,labs@data-transport.org,http://data-transport.org

@@ -48,7 +48,7 @@ class ItineraryScreen extends StatelessWidget {
               color: style.color,
               title: l10n.stepRide(style.label(l10n), leg.lineName),
               lines: [
-                if (line != null)
+                if (line != null && line.bodyColor.isNotEmpty)
                   l10n.stepAppearance(
                     line.bodyColor,
                     line.colorPattern ?? line.longName,

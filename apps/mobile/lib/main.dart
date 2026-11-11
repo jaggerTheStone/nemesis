@@ -1,6 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,7 +14,17 @@ import 'routing/native_engine.dart';
 import 'screens/map_view.dart';
 import 'services.dart';
 
-const _assets = 'assets/fictif/';
+/// Embedded data set: `fictif` (default, tests and measured APK) or `reel`, the lines
+/// of 2023 for the test APK (`--dart-define=NEMESIS_DATA=reel`, H-030).
+const _data = String.fromEnvironment('NEMESIS_DATA', defaultValue: 'fictif');
+const _assets = 'assets/$_data/';
+
+/// The lines of 2023 run on a 2023 calendar : the clock keeps the day of the week and
+/// the time of day, on a week of June 2023.
+DateTime in2023() {
+  final now = DateTime.now();
+  return DateTime(2023, 6, 11 + now.weekday, now.hour, now.minute);
+}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,21 +47,32 @@ Future<Loaded> loadEverything() async {
   final city = CityData.fromJson(
     await rootBundle.loadString('${_assets}city.json'),
   );
-  final mapJson = await rootBundle.loadString('${_assets}map.json');
+  var mapJson = await rootBundle.loadString('${_assets}map.json');
   final support = await getApplicationSupportDirectory();
   final pack = Directory('${support.path}/pack');
   final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
   for (final asset in manifest.listAssets()) {
-    if (!asset.startsWith('${_assets}pack/')) continue;
-    final target = File(
-      '${pack.path}/${asset.substring('${_assets}pack/'.length)}',
-    );
+    if (!asset.startsWith('${_assets}pack/') &&
+        !asset.startsWith('${_assets}carte/')) {
+      continue;
+    }
+    final target = File('${support.path}/${asset.substring(_assets.length)}');
     await target.parent.create(recursive: true);
     final bytes = await rootBundle.load(asset);
     await target.writeAsBytes(
       bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
       flush: true,
     );
+  }
+  // The map engine reads the background quarters from files.
+  final map = jsonDecode(mapJson) as Map<String, dynamic>;
+  final background = map['background'] as Map<String, dynamic>?;
+  if (background != null) {
+    for (final image
+        in (background['images'] as List).cast<Map<String, dynamic>>()) {
+      image['url'] = 'file://${support.path}/carte/${image['file']}';
+    }
+    mapJson = jsonEncode(map);
   }
   final routing = NativeRoutingService.open(pack.path);
   final store = SqliteStore.open('${support.path}/nemesis.db');
@@ -85,8 +106,8 @@ class _BootstrapState extends State<Bootstrap> {
             routing: loaded.routing,
             store: loaded.store,
             mapBuilder: mapLibreBuilder,
-            now: DateTime.now,
-            showFictionalBanner: loaded.city.isFictional || kDebugMode,
+            now: loaded.city.isFictional ? DateTime.now : in2023,
+            showFictionalBanner: true,
             storeChanges: _changes,
             child: child,
           ),

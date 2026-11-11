@@ -170,6 +170,7 @@ publication.
   - Logo vectorisé (le mot en trois versions, l'icône en trois versions, PNG 512 px pour les magasins) et jetons de design (`tokens.json`).
   - Nom public « yafohi » dans les clés `app.name` et `appName` ; le nom de code technique reste `nemesis` (H-003, Q-01).
 - yafohi sur les lignes réelles de 2023 : 230 lignes et 28 arrêts du corridor Yopougon – Adjamé – Plateau, trajets calculés par le vrai moteur, affichage honnête de ce que les données ignorent (prix, affluence, actualité). Outil `tools/maquette/donnees_2023.py`. Feuille de route pour rendre l'appli vraiment utilisable (`docs/FEUILLE-DE-ROUTE.md`).
+- APK de test yafohi sur les lignes de 2023 : identité yafohi dans l'appli Flutter (jetons, Nunito et Baloo 2, nom, icône) ; données réelles d'Abidjan embarquables (3 694 arrêts, 441 lignes, 759 lieux, fond yafohi avec les noms de quartiers, pack du moteur) ; bandeau « Lignes de 2023 · à confirmer » ; horloge ramenée en juin 2023. Artefact CI `yafohi-test-2023`, testé sur l'émulateur Android 8. Les noms de ligne longs ne débordent plus.
 
 ### Corrigé
 

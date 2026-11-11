@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "city": "abidjan",
+  "network_version": "gtfs_abidjan_2023@c17e7d92dc80+osm_abidjan_maquette@87ceaa98b339",
+  "is_fictional": false,
+  "usage": "evaluation",
+  "gtfs": "gtfs",
+  "walk_nodes": "walk_nodes.csv",
+  "walk_edges": "walk_edges.csv",
+  "sources": [
+    {
+      "source_id": "gtfs_abidjan_2023",
+      "url": "gitlab.com/digitaltransport/data/africa/abidjan_2",
+      "sha256": "c17e7d92dc80dc58167d9cedd9688aabddca2dfdd430132cf6fef39bdc1f63f0",
+      "retrieved_at": null,
+      "license": "CC BY-NC 4.0",
+      "attribution": "DigitalTransport4Africa",
+      "usage": "evaluation"
+    },
+    {
+      "source_id": "osm_abidjan_maquette",
+      "url": "download.geofabrik.de (extrait découpé par le workflow maquette-carte)",
+      "sha256": "87ceaa98b339dc42bfc9619339c452400b3962d8c5bb6c662f2553eeeea9aa52",
+      "retrieved_at": "2026-11-10",
+      "license": "ODbL 1.0",
+      "attribution": "© contributeurs OpenStreetMap",
+      "usage": "produit"
+    }
+  ]
+}
